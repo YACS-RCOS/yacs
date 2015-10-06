@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150921161159) do
+ActiveRecord::Schema.define(version: 20151006041418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,22 @@ ActiveRecord::Schema.define(version: 20150921161159) do
   end
 
   add_index "departments", ["code"], name: "index_departments_on_code", unique: true, using: :btree
+
+  create_table "sections", force: :cascade do |t|
+    t.integer  "number",      null: false
+    t.integer  "crn",         null: false
+    t.integer  "course_id",   null: false
+    t.integer  "semester_id", null: false
+    t.integer  "seats",       null: false
+    t.integer  "seats_taken", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "sections", ["semester_id", "course_id", "number"], name: "index_sections_on_semester_id_and_course_id_and_number", unique: true, using: :btree
+  add_index "sections", ["semester_id", "course_id"], name: "index_sections_on_semester_id_and_course_id", using: :btree
+  add_index "sections", ["semester_id", "crn"], name: "index_sections_on_semester_id_and_crn", unique: true, using: :btree
+  add_index "sections", ["semester_id"], name: "index_sections_on_semester_id", using: :btree
 
   create_table "semesters", force: :cascade do |t|
     t.string   "season",     null: false
