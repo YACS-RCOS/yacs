@@ -15,3 +15,11 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore .vagrant files
+/.vagrant
+
+# Ignore mac files
+/.DS_Store
+
+
