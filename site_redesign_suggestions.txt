@@ -1,0 +1,11 @@
+Don't like the two main buttons under the page title
+Shouldn't have to go out and back in to find courses in other departments
+Courses load latency
+No course list in schedule view - display course details some other way
+Kill the semester selector in top left
+Clearer/more intuitive directions for picking "busy" times on the schedule
+New color scheme(s)
+
+Selected courses display in some other way than checkboxes, like a color change or something.
+Allow conflicting classes; YACS does not let people make such schedules now, but the registrar does
+Search by number of credits
