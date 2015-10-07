@@ -28,32 +28,12 @@ sudo -H -u vagrant bash -i -c 'rbenv global 2.2.3'
 sudo -H -u vagrant bash -i -c 'gem install bundler --no-ri --no-rdoc'
 sudo -H -u vagrant bash -i -c 'rbenv rehash'
 
-# git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-# echo "clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build : SUCCESS"
-# echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
-# echo "'export PATH='$HOME/.rbenv/plugins/ruby-build/bin:$PATH' >> ~/.bashrc : SUCCESS"
-# # exec $SHELL
-
-# source ~/.bashrc
-# echo "source ~/.bashrc: SUCCESS"
-
-# git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
-
-# rbenv install 2.2.3
-# rbenv global 2.2.3
-# ruby -v
-
-# echo "Installing Bundler"
-# echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-# gem install bundler
-
 echo "Installing rails"
 sudo add-apt-repository ppa:chris-lea/node.js
 sudo apt-get update
 sudo apt-get -y install nodejs
 sudo -H -u vagrant bash -i -c 'gem install rails -v 4.2.4'
 sudo -H -u vagrant bash -i -c 'rbenv rehash'
-# rails -v
 
 echo "Installing PostgreSQL"
 sudo sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
