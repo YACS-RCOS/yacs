@@ -17,7 +17,7 @@
 /tmp
 
 # Ignore .vagrant files
-/.vagrant
+/.vagrant/
 
 # Ignore mac files
 /.DS_Store
