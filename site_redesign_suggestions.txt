@@ -5,6 +5,7 @@ No course list in schedule view - display course details some other way
 Kill the semester selector in top left
 Clearer/more intuitive directions for picking "busy" times on the schedule
 New color scheme(s)
+Mobile friendliness - no tiny text and zoom for everything
 
 Selected courses display in some other way than checkboxes, like a color change or something.
 Allow conflicting classes; YACS does not let people make such schedules now, but the registrar does
