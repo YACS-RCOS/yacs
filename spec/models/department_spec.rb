@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe Department do
   before do
-    @csci_dept = FactoryGirl.create(:csci_department)
-    @math_dept = FactoryGirl.create(:math_department)
+    @csci_dept = create(:csci_department)
+    @math_dept = create(:math_department)
   end
 
   it 'finds department by code' do
@@ -14,5 +14,16 @@ RSpec.describe Department do
   it 'finds department by name' do
     result = Department.where(name: 'Math')
     expect(result).to eq [@math_dept]
+  end
+
+  it 'invalidates duplicate departments' do
+    expect(build(:department, code: 'CSCI')).to_not be_valid
+    expect(build(:department, name: 'Computer Science')).to_not be_valid
+
+  end
+
+  it 'invalidates blank departments' do
+    expect(build(:department, code: '')).to_not be_valid
+    expect(build(:department, name: '')).to_not be_valid
   end
 end
