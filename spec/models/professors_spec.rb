@@ -9,26 +9,22 @@ RSpec.describe Professor do
   end
 
   it 'finds professor by full name' do
-    result = Professor.where(name: 'John Doe')
-    expect(result).to eq [@name]
+    expect(Professor.where(name: 'John Doe')). to eq [@name]
   end
 
   it 'finds professor by substring from first name' do
-    result = Professor.where('name LIKE ?', 'John%' )
-    expect(result).to eq [@name,@name2]
+    expect(Professor.name_like('John%')).to eq [@name,@name2]
   end
 
   it 'finds professor by substring from first character of name' do
-    result = Professor.where('name LIKE ?', 'J%' )
-    expect(result).to eq [@name,@name2,@name3]
+    expect(Professor.name_like('J%')).to eq [@name,@name2,@name3]
   end
 
   it 'finds professor by substring' do
-    result = Professor.where('name LIKE ?', '%Smith%' )
-    expect(result).to eq [@name2,@name3,@name4]
+    expect(Professor.name_like('%Smith%')).to eq [@name2,@name3,@name4]
   end
 
-  it 'does not find the names' do
+  it 'does not find a professor' do
     result = Professor.where(name: 'Andy')
     expect(result).to be_blank
   end
