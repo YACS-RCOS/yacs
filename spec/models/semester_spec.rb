@@ -5,7 +5,6 @@ RSpec.describe Semester do
     @season = FactoryGirl.create(:semester)
   end
   it 'finds semester by season' do
-    result = Semester.where(season: 'Fall 2015')
-    expect(result).to eq [@season]
+    expect(Semester.where(season: 'Fall 2015')).to eq [@season]
   end
 end

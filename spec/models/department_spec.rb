@@ -19,6 +19,16 @@ RSpec.describe Department do
       expect(build(:department, code: @dept.code)).to_not be_valid
       expect(build(:department, name: @dept.name)).to_not be_valid
     end
+
+    context 'there is a course' do
+      before do
+        @course = create(:course, department: @dept)
+      end
+
+      it 'has the course' do
+        expect([@course]).to eq @dept.courses.where(number: @course.number)
+      end
+    end
   end
 
   it 'invalidates blank departments' do

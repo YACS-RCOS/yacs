@@ -22,6 +22,15 @@ FactoryGirl.define do
   end
 
 
+  factory :section do
+    name        '1'
+    crn         11111
+    seats       10
+    seats_taken 5
+    semester_course
+  end
+
+
   factory :professor do
     name 'John Doe'
   end
@@ -30,6 +39,7 @@ FactoryGirl.define do
   factory :semester do
     season 'Fall 2015'
   end
+
 
   factory :semester_course do
     semester
