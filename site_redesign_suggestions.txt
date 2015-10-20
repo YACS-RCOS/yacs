@@ -18,5 +18,5 @@ Replace the semester selector in top left with some other way to select
 Clearer/more intuitive directions for picking "busy" times on the schedule
 Mobile friendliness - no tiny text and zoom for everything
 No two columns in department list
-
+Don't display times when listing sections
 
