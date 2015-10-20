@@ -1,0 +1,81 @@
+/* CSS Resets for all main displaying elements. */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, cite, code, em, img, q, s, strike, strong, sub, sup, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, section, summary, mark {
+    margin: 0;
+    padding: 0;
+    border: 0px none;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+body {
+    background-color:#efefef;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+nav#headerbar {
+    width:100%;
+    height:60px;
+    position:fixed;
+    background-color:#993333;
+}
+
+table#navtable {
+    width:100%;
+    height:100%;
+    border-collapse:collapse;
+}
+
+table#navtable td {
+    text-align:center;
+    vertical-align:middle;
+}
+
+table#navtable td.sidelink {
+    width:130px;
+}
+
+span#page-title {
+    font-size:35px;
+    font-weight:normal;
+}
+
+#search {
+    margin:auto;
+}
+
+#searchbar {
+    /* font needs to be specified again for some reason */
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size:20px;
+    font-weight:100;
+    width:25em;
+    padding:3px 6px;
+}
+
+#content {
+    padding: 60px 20px 0px 20px;
+}
+
+ul.school {
+    margin-bottom: 15px;
+    font-size:17px;
+    list-style-type:none;
+    border-top: 1px black solid;
+}
+
+ul.school li {
+    
+}
+
+ul.school li span.department {
+    font-family:"Andale Mono","Courier New",monospace;
+    /*font-weight:bold;*/
+    margin-right:1em;
+    font-size:120%;
+}
+
+h3.schoolheading {
+    font-size:24px;
+    font-style:italic;
+}
