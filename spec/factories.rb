@@ -18,7 +18,7 @@ FactoryGirl.define do
     number        1000
     min_credits   4
     max_credits   4
-    department    
+    department
   end
 
 
@@ -44,5 +44,17 @@ FactoryGirl.define do
   factory :semester_course do
     semester
     course
+  end
+
+  factory :period do
+    section_id '1'
+    time '4PM-6PM Tuesday'
+    period_type 'Lecture'
+    location 'DCC 318'
+  end
+
+  factory :period_professor do
+    period
+    professor
   end
 end

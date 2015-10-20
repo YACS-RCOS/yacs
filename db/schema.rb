@@ -39,17 +39,6 @@ ActiveRecord::Schema.define(version: 20151008012305) do
 
   add_index "departments", ["code"], name: "index_departments_on_code", unique: true, using: :btree
 
-  create_table "period_professors", force: :cascade do |t|
-    t.string   "professor_id", null: false
-    t.string   "period_id",    null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "period_professors", ["period_id"], name: "index_period_professors_on_period_id", using: :btree
-  add_index "period_professors", ["professor_id", "period_id"], name: "index_period_professors_on_professor_id_and_period_id", unique: true, using: :btree
-  add_index "period_professors", ["professor_id"], name: "index_period_professors_on_professor_id", using: :btree
-
   create_table "periods", force: :cascade do |t|
     t.integer  "section_id",  null: false
     t.string   "time",        null: false
@@ -60,6 +49,17 @@ ActiveRecord::Schema.define(version: 20151008012305) do
   end
 
   add_index "periods", ["section_id"], name: "index_periods_on_section_id", using: :btree
+
+  create_table "periods_professors", force: :cascade do |t|
+    t.integer  "professor_id", null: false
+    t.integer  "period_id",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "periods_professors", ["period_id"], name: "index_periods_professors_on_period_id", using: :btree
+  add_index "periods_professors", ["professor_id", "period_id"], name: "index_periods_professors_on_professor_id_and_period_id", unique: true, using: :btree
+  add_index "periods_professors", ["professor_id"], name: "index_periods_professors_on_professor_id", using: :btree
 
   create_table "professors", force: :cascade do |t|
     t.string   "name",       null: false
