@@ -53,7 +53,7 @@ FactoryGirl.define do
     location 'DCC 318'
   end
 
-  factory :period_professor do
+  factory :periods_professor do
     period
     professor
   end

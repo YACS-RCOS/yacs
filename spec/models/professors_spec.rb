@@ -12,7 +12,7 @@ RSpec.describe Professor do
 
     context 'when there are periods_professor' do
       before do
-        @period_professor = FactoryGirl.create(:period_professor, period: @period)
+        @period_professor = FactoryGirl.create(:periods_professor, professor: @professor, period: @period)
       end
 
       it 'has the periods' do
