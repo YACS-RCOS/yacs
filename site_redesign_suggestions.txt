@@ -1,15 +1,22 @@
-Don't like the two main buttons under the page title
-Shouldn't have to go out and back in to find courses in other departments
+Resolved suggestions:
+Don't like the two main buttons under the page title. Resolved with new header bar.
+Shouldn't have to go out and back in to find courses in other departments. Resolved with new header bar.
+New color scheme(s). Rejected in favor of keeping the maroon-and-light-gray scheme.
+Search by: # of credits, department, professor, keyword. Resolved with plan for universal search.
+Make it clear which courses are comm intensive and which are not. Resolved with plan to mark courses communication-intensive.
+Save schedule to file functionality. Resolved by creating a wishlist issue for it.
+Split screen with schedule and course list in the same window at once (also for schedule page only). Rejected as too visually complex.
+Selected courses display in some other way than checkboxes. Resolved by changing the background color of selected courses.
+Allow conflicting classes; YACS does not let people make such schedules now, but the registrar does. Resolved by making a wishlist issue for it.
+
+
+Unresolved suggestions:
+Green coloration is a bad color-theory choice; stick to the original color scheme
 Courses load latency
 No course list in schedule view - display course details some other way
-Kill the semester selector in top left
+Replace the semester selector in top left with some other way to select
 Clearer/more intuitive directions for picking "busy" times on the schedule
-New color scheme(s)
 Mobile friendliness - no tiny text and zoom for everything
-Make it clear which courses are comm intensive and which are not
-Save schedule to file functionality
-No two columns 
+No two columns in department list
+Don't display times when listing sections
 
-Selected courses display in some other way than checkboxes, like a color change or something.
-Allow conflicting classes; YACS does not let people make such schedules now, but the registrar does
-Search by: # of credits, department, professor, keyword
