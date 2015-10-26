@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Department do
-  context 'there is a department' do
+  context 'when there is a department' do
     before do
       @dept = create(:department)
     end
@@ -15,7 +15,7 @@ RSpec.describe Department do
     end
 
     it 'invalidates duplicate departments' do
-      expect(build(:department)).to_not be_valid
+      expect(build(:department, code: @dept.code, name: @dept.name)).to_not be_valid
       expect(build(:department, code: @dept.code)).to_not be_valid
       expect(build(:department, name: @dept.name)).to_not be_valid
     end

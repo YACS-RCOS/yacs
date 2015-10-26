@@ -1,17 +1,8 @@
 FactoryGirl.define do
   factory :department do
-    code 'TEST'
-    name 'Test Department'
+    sequence(:code) { |n| "DEPT#{n}" }
+    sequence(:name) { |n| "Department #{n}" }
   end
-  factory :csci_department, class: Department do
-    code 'CSCI'
-    name 'Computer Science'
-  end
-  factory :math_department, class: Department do
-    code 'MATH'
-    name 'Math'
-  end
-
 
   factory :course do
     name          'test course'
@@ -21,7 +12,6 @@ FactoryGirl.define do
     department
   end
 
-
   factory :section do
     name        '1'
     crn         11111
@@ -30,16 +20,13 @@ FactoryGirl.define do
     semester_course
   end
 
-
   factory :professor do
     name 'John Doe'
   end
 
-
   factory :semester do
     season 'Fall 2015'
   end
-
 
   factory :semester_course do
     semester
