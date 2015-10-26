@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   namespace :api do
-    namespace :v5 do
+    namespace :v5, defaults: { format: :json } do
       resources :departments, only: [:index, :show]
     end
   end
