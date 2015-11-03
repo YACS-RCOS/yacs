@@ -41,7 +41,7 @@ table#navtable td.sidelink {
     width:130px;
     cursor:pointer;
 }
-span#page-title {
+#page-title {
     font-size:35px;
     font-weight:normal;
 }
