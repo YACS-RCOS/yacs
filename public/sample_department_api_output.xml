@@ -1,0 +1,25 @@
+<yacs-school>
+  <yacs-school-name>School of Science</yacs-school-name>
+  <yacs-departments>
+    <yacs-department>
+      <yacs-department-id>1</yacs-department-id>
+      <yacs-department-code>BMED</yacs-department-code>
+      <yacs-department-name>Biomed</yacs-department-name>
+    </yacs-department>
+    <yacs-department>
+      <yacs-department-id>3</yacs-department-id>
+      <yacs-department-code>BIOL</yacs-department-code>
+      <yacs-department-name>Biology</yacs-department-name>
+    </yacs-department>
+  </yacs-departments>
+</yacs-school>
+<yacs-school>
+  <yacs-school-name>School of Engineering</yacs-school-name>
+  <yacs-departments>
+    <yacs-department>
+      <yacs-department-id>7</yacs-department-id>
+      <yacs-department-code>CIVL</yacs-department-code>
+      <yacs-department-name>Civil Engineering</yacs-department-name>
+    </yacs-department>
+  </yacs-departments>
+</yacs-school>
