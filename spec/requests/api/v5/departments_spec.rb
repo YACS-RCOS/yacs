@@ -1,21 +1,22 @@
 describe 'Departments API' do
   it '#index' do
     FactoryGirl.create_list(:department, 10)
-    get '/api/v5/departments'
+    get '/api/v5/departments.json'
+    byebug
     expect(response).to be_success
-    expect(json['result'].length).to eq 10
+    expect(json.length).to eq 10
     Department.all.each_with_index do |dept, n|
-      expect(json['result'][n]['code']).to eq dept.code
-      expect(json['result'][n]['name']).to eq dept.name
+      expect(json[n]['code']).to eq dept.code
+      expect(json[n]['name']).to eq dept.name
     end
   end
 
   it '#show' do
     dept = FactoryGirl.create(:department)
-    get "/api/v5/departments/#{dept.id}"
+    get "/api/v5/departments/#{dept.id}.json"
     expect(response).to be_success
-    expect(json['result']['id']).to eq dept.id
-    expect(json['result']['code']).to eq dept.code
-    expect(json['result']['name']).to eq dept.name
+    expect(json['id']).to eq dept.id
+    expect(json['code']).to eq dept.code
+    expect(json['name']).to eq dept.name
   end
 end
