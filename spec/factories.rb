@@ -5,8 +5,8 @@ FactoryGirl.define do
   end
 
   factory :course do
-    name          'test course'
-    number        1000
+    sequence(:name)   { |n| "Course #{n}" }
+    sequence(:number) { |n| 1000 + n }
     min_credits   4
     max_credits   4
     department

@@ -2,9 +2,15 @@ class Api::V5::CoursesController < Api::V5::ApiController
   def index
     if params[:department_id].present?
       @courses = Course.where(department_id: params[:department_id])
+    else
+      @courses = Course.all
     end
-    elsif params[:q].present?
-      # TODO search goes here?
+    if params[:q].present?
+      @courses = (@courses | Course).where
     end
+  end
+
+  def show
+    @course = Course.find(params[:id])
   end
 end
