@@ -70,35 +70,16 @@ ActiveRecord::Schema.define(version: 20151008012305) do
   add_index "professors", ["name"], name: "index_professors_on_name", using: :btree
 
   create_table "sections", force: :cascade do |t|
-    t.string   "name",               null: false
-    t.integer  "crn",                null: false
-    t.integer  "semester_course_id", null: false
-    t.integer  "seats",              null: false
-    t.integer  "seats_taken",        null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "sections", ["semester_course_id", "name"], name: "index_sections_on_semester_course_id_and_name", unique: true, using: :btree
-  add_index "sections", ["semester_course_id"], name: "index_sections_on_semester_course_id", using: :btree
-
-  create_table "semester_courses", force: :cascade do |t|
-    t.integer  "semester_id", null: false
+    t.string   "name",        null: false
+    t.integer  "crn",         null: false
     t.integer  "course_id",   null: false
+    t.integer  "seats",       null: false
+    t.integer  "seats_taken", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "semester_courses", ["course_id"], name: "index_semester_courses_on_course_id", using: :btree
-  add_index "semester_courses", ["semester_id", "course_id"], name: "index_semester_courses_on_semester_id_and_course_id", unique: true, using: :btree
-  add_index "semester_courses", ["semester_id"], name: "index_semester_courses_on_semester_id", using: :btree
-
-  create_table "semesters", force: :cascade do |t|
-    t.string   "season",     null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "semesters", ["season"], name: "index_semesters_on_season", unique: true, using: :btree
+  add_index "sections", ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true, using: :btree
+  add_index "sections", ["course_id"], name: "index_sections_on_course_id", using: :btree
 
 end

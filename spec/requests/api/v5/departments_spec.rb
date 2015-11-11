@@ -2,7 +2,6 @@ describe 'Departments API' do
   it '#index' do
     FactoryGirl.create_list(:department, 10)
     get '/api/v5/departments.json'
-    byebug
     expect(response).to be_success
     expect(json.length).to eq 10
     Department.all.each_with_index do |dept, n|

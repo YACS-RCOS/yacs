@@ -17,7 +17,7 @@ FactoryGirl.define do
     crn         11111
     seats       10
     seats_taken 5
-    semester_course
+    course
   end
 
   factory :professor do
@@ -26,11 +26,6 @@ FactoryGirl.define do
 
   factory :semester do
     season 'Fall 2015'
-  end
-
-  factory :semester_course do
-    semester
-    course
   end
 
   factory :period do

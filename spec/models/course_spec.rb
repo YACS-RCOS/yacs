@@ -5,24 +5,13 @@ RSpec.describe Course do
     before do
       @course = create(:course)
     end
-
-    context 'when there is a semester_course' do
+    context 'when there is a section' do
       before do
-        @semester_course = create(:semester_course, course: @course)
+        @section = create(:section, course: @course)
       end
 
-      it 'has the semester_course' do
-        expect(@course.semester_courses).to eq [@semester_course]
-      end
-
-      context 'when there is a section' do
-        before do
-          @section = create(:section, semester_course: @semester_course)
-        end
-
-        it 'has the section [semester_course]' do
-          expect(@semester_course.sections).to eq [@section]
-        end
+      it 'has the section' do
+        expect(@course.sections).to eq [@section]
       end
     end
 
