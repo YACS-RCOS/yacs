@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v5, defaults: { format: :json } do
       resources :departments, only: [:index, :show]
       resources :courses,     only: [:index, :show]
+      resources :sections,    only: [:index, :show]
     end
   end
 

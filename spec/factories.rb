@@ -29,10 +29,11 @@ FactoryGirl.define do
   end
 
   factory :period do
-    section_id '1'
+    # section_id '1'
     time '4PM-6PM Tuesday'
     period_type 'Lecture'
     location 'DCC 318'
+    section
   end
 
   factory :periods_professor do

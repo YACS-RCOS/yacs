@@ -6,7 +6,7 @@ class Api::V5::CoursesController < Api::V5::ApiController
       @courses = Course.all
     end
     if params[:q].present?
-      @courses = (@courses | Course).where
+      # search here
     end
   end
 
