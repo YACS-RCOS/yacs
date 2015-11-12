@@ -8,74 +8,184 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, cite
     vertical-align: baseline;
 }
 
+
+/* Styles for all pages: background color, font, spacing. */
 body {
     background-color:#efefef;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
+div#content {
+    padding: 70px 20px 0px 20px;
+}
 
+
+/* Styles for the headerbar and its component table */
 nav#headerbar {
     width:100%;
     height:60px;
     position:fixed;
-    background-color:#993333;
+    background-color:#c42222;
+    /*
+    border-bottom: 2px #822 solid;*/
 }
-
 table#navtable {
     width:100%;
     height:100%;
     border-collapse:collapse;
 }
-
 table#navtable td {
     text-align:center;
     vertical-align:middle;
 }
-
 table#navtable td.sidelink {
     width:130px;
+    cursor:pointer;
 }
-
-span#page-title {
+#page-title {
     font-size:35px;
     font-weight:normal;
 }
-
 #search {
     margin:auto;
 }
-
 #searchbar {
-    /* font needs to be specified again for some reason */
+    /* font needs to be specified again for some reason, I think it's
+       something to do with the form? */
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size:20px;
+    font-size:100%; /* 20px; */
     font-weight:100;
-    width:25em;
+    width:32em;
     padding:3px 6px;
 }
 
-#content {
-    padding: 60px 20px 0px 20px;
-}
 
+/* Styles for the home page. */
 ul.school {
     margin-bottom: 15px;
     font-size:17px;
     list-style-type:none;
     border-top: 1px black solid;
 }
-
-ul.school li {
-    
-}
-
-ul.school li span.department {
+ul.school li yacs-select-department {
     font-family:"Andale Mono","Courier New",monospace;
-    /*font-weight:bold;*/
     margin-right:1em;
     font-size:120%;
 }
-
 h3.schoolheading {
     font-size:24px;
     font-style:italic;
+}
+
+
+/* Styles for the course list pages. */
+yacs-course {
+    display:block;
+    margin: 0px 20px;
+    padding:15px;
+    border-radius: 15px;
+    border-bottom: 1px #bbb solid;
+    cursor:pointer;
+}
+
+yacs-course-title {
+    font-size: 150%;
+}
+
+yacs-course-num, yacs-course-credits, yacs-course-type {
+    font-size:110%;
+    margin-left: 1em;
+}
+
+yacs-section {
+    display:block;
+    margin:4px 0px 0px 10px;
+    padding:4px 4px 4px 8px;
+    border-radius: 8px;
+}
+
+yacs-section:hover {
+    background-color: #d0d0d0;
+}
+
+yacs-section.selected {
+    background-color: rgba(153,51,51,0.4);
+}
+
+/* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. */
+
+/* Styles for the schedule page */
+#schedulebar {
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 130%;
+}
+.scheduleswitch {
+    padding:0px 20px;
+    cursor:pointer;
+}
+.scheduleswitch.disabled {
+    color: #999;
+    cursor: default;
+}
+table#scheduleTable {
+    margin:10px auto auto auto;
+    border-collapse:collapse;
+}
+table#scheduleTable tr td {
+    width: 200px;
+    height:10px;
+    border-right: 1px #bbb solid;
+    border-bottom:1px #bbb solid;
+    text-align:center;
+}
+table#scheduleTable tr td:first-child {
+    text-align:right;
+    width:30px;
+    padding-right:0.5em;
+}
+table#scheduleTable tr#scheduleHeader td {
+    padding-bottom:0.5em;
+}
+/* NOTE: Schedule is centered on the page, but it should really be aligned so that the Wednesday cell is centered on the page. */
+
+/* Course colors used by YACS Original: (border/text/background)
+   #B62/#720/#FDC
+   #B44/#722/#EDD
+   #994/#661/#EED
+   #448/#227/#DDE
+   #499/#166/#DEE
+   #949/#616/#EDE
+   */
+
+/* Styles for courses on the schedule */
+.schedule1 {
+    color: #720;
+    background-color: #fdc;
+    border-left: 2px #b62 solid;
+}
+.schedule2 {
+    color: #722;
+    background-color: #edd;
+    border-left: 2px #b44 solid;
+}
+.schedule3 {
+    color: #661;
+    background-color: #EED;
+    border-left: 2px #994 solid;
+}
+.schedule4 {
+    color: #227;
+    background-color: #DDE;
+    border-left: 2px #448 solid;
+}
+.schedule5 {
+    color: #166;
+    background-color: #DEE;
+    border-left: 2px #499 solid;
+}
+.schedule6 {
+    color: #616;
+    background-color: #EDE;
+    border-left: 2px #949 solid;
 }
