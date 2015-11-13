@@ -1,10 +1,10 @@
 def match_courses(courses, dept)
   courses.each_with_index do |course, n|
-    expect(json[n]['id'])     .to eq course.id
-    expect(json[n]['number']) .to eq course.number
-    expect(json[n]['name'])   .to eq course.name
-    expect(json[n]['department']['id'])   .to eq dept.id
-    expect(json[n]['department']['code']) .to eq dept.code
+    expect(json[n]['course']['id'])     .to eq course.id
+    expect(json[n]['course']['number']) .to eq course.number
+    expect(json[n]['course']['name'])   .to eq course.name
+    expect(json[n]['course']['department']['id'])   .to eq dept.id
+    expect(json[n]['course']['department']['code']) .to eq dept.code
   end
 end
 
@@ -51,9 +51,9 @@ describe 'Courses API' do
       course = FactoryGirl.create(:course)
       get "/api/v5/courses/#{course.id}.json"
       expect(response).to be_success
-      expect(json['id'])    .to eq course.id
-      expect(json['number']).to eq course.number
-      expect(json['name'])  .to eq course.name
+      expect(json['course']['id'])    .to eq course.id
+      expect(json['course']['number']).to eq course.number
+      expect(json['course']['name'])  .to eq course.name
     end
   end
 end

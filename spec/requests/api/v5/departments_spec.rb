@@ -5,8 +5,8 @@ describe 'Departments API' do
     expect(response).to be_success
     expect(json.length).to eq 10
     Department.all.each_with_index do |dept, n|
-      expect(json[n]['code']).to eq dept.code
-      expect(json[n]['name']).to eq dept.name
+      expect(json[n]['department']['code']).to eq dept.code
+      expect(json[n]['department']['name']).to eq dept.name
     end
   end
 
@@ -14,8 +14,8 @@ describe 'Departments API' do
     dept = FactoryGirl.create(:department)
     get "/api/v5/departments/#{dept.id}.json"
     expect(response).to be_success
-    expect(json['id']).to eq dept.id
-    expect(json['code']).to eq dept.code
-    expect(json['name']).to eq dept.name
+    expect(json['department']['id']).to eq dept.id
+    expect(json['department']['code']).to eq dept.code
+    expect(json['department']['name']).to eq dept.name
   end
 end
