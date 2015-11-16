@@ -1,4 +1,8 @@
 FactoryGirl.define do
+  factory :school do
+    sequence(:name) { |n| "School of Thing ##{n}" }
+  end
+
   factory :department do
     sequence(:code) { |n| "DEPT#{n}" }
     sequence(:name) { |n| "Department #{n}" }
