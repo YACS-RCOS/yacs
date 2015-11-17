@@ -1,10 +1,11 @@
-object false
-child(@schools) do
+child(@schools => :schools) do
+  collection @schools, root: :schools, object_root: false
   attributes :id, :name
-  child(:departments) do
-    extends "api/v5/departments/show"
+  child(:departments, :object_root => false) do
+    attributes :id, :code, :name
   end
 end
-child(@departments) do
-  extends "api/v5/departments/show"
+child(@departments => :departments) do
+  collection @departments, root: :departments, object_root: false
+  attributes :id, :code, :name
 end

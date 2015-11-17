@@ -1,6 +1,6 @@
 class Api::V5::DepartmentsController < Api::V5::ApiController
   def index
-    if params[:use_schools]
+    if params[:use_schools] == '1'
       @departments = Department.where(school_id: nil)
       @schools = School.all
     else
