@@ -1,5 +1,8 @@
 object @course
 attributes :id, :name, :number, :min_credits, :max_credits
+node :credits do |c|
+  c.min_credits == c.max_credits ? c.min_credits : "#{c.min_credits}-#{c.max_credits}"
+end
 child(:department) do
   attributes :id, :name
     node :codename do |dept|
