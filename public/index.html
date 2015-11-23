@@ -18,9 +18,13 @@
     <table id="navtable"><tr>
 	<td class="sidelink" id="page-title">YACS</td>
 	<td>
-	  <form id="search">
-	    <input id="searchbar" name="query" placeholder="Search for courses, departments, and professors.."></input>
-	  </form>
+	  <!-- Not in a form. Was in a form, but there were some issues with
+	       default submit behaviors when pressing Enter. I then learned that
+	       <input> tags outside of a form are valid HTML. There's no
+	       particular reason for this to be in a form because the search
+	       will just replace the content in the page rather than loading a
+	       new page (there was no <form action="page1"> attribute -->
+	  <input id="searchbar" placeholder="Search for courses, departments, and professors.."></input>
 	</td>
 	<td class="sidelink" id="schedule-btn">Schedule</td>
     </tr></table>
