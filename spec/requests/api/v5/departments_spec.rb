@@ -5,7 +5,7 @@ describe 'Departments API' do
     expect(response).to be_success
     expect(json['departments'].length).to eq 10
     Department.all.each_with_index do |dept, n|
-      expect(json['departments'][n]['code']).to eq dept.code
+      expect(json['departments'][n]['codename']).to eq dept.code
       expect(json['departments'][n]['name']).to eq dept.name
     end
   end
@@ -19,7 +19,7 @@ describe 'Departments API' do
     expect(response).to be_success
     expect(json['departments']).to be_present
     expect(json['departments'].length).to eq 1
-    expect(json['departments'][0]['code']).to eq depts[1].code
+    expect(json['departments'][0]['codename']).to eq depts[1].code
     expect(json['departments'][0]['name']).to eq depts[1].name
     expect(json['schools']).to be_present
     expect(json['schools'].length).to eq 1
@@ -31,7 +31,7 @@ describe 'Departments API' do
     get "/api/v5/departments/#{dept.id}.json"
     expect(response).to be_success
     expect(json['id']).to eq dept.id
-    expect(json['code']).to eq dept.code
+    expect(json['codename']).to eq dept.code
     expect(json['name']).to eq dept.name
   end
 end
