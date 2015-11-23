@@ -24,10 +24,19 @@ function setup() {
 
   // Add click events to the YACS and schedule buttons
   nsYacs.homeButton.addEventListener("click", function() {
-    replaceContent("home.html");
+    replaceContent("/api/v5/departments.xml");
   });
   nsYacs.schedButton.addEventListener("click", function() {
+    //replaceContent("/api/v5/courses.xml");
     replaceContent("sampleSchedule.html");
+  });
+
+  //Add enter key listener to the searchbar
+  nsYacs.searchbar.addEventListener("keyup", function(event) {
+    if(event.keyCode == 13) {
+      alert("Your query is \""+nsYacs.searchbar.value+"\"");
+    }
+    replaceContent("sampleCourses.html");
   });
 }
 
