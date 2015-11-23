@@ -4,7 +4,7 @@ def match_courses(courses, dept)
     expect(json['courses'][n]['number']) .to eq course.number
     expect(json['courses'][n]['name'])   .to eq course.name
     expect(json['courses'][n]['department']['id'])   .to eq dept.id
-    expect(json['courses'][n]['department']['code']) .to eq dept.code
+    expect(json['courses'][n]['department']['codename']) .to eq dept.code
   end
 end
 
