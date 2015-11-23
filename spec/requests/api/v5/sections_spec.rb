@@ -55,9 +55,8 @@ describe 'Sections API' do
       section = FactoryGirl.create(:section)
       get "/api/v5/sections/#{section.id}.json"
       expect(response).to be_success
-      expect(json['section']['id'])    .to eq section.id
-      expect(json['section']['number']).to eq section.number
-      expect(json['section']['name'])  .to eq section.name
+      expect(json['id'])    .to eq section.id
+      expect(json['name'])  .to eq section.name
     end
   end
 end
