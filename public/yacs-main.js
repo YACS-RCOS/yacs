@@ -1,6 +1,12 @@
 // yacs namespace
 var nsYacs = {}
 
+/* Given a filename which is a public XML document on the server,
+   replace the interior of div#content with it. Styling should be done
+   automatically.
+   This will work with API documents, which should be on an root-relative path
+   like "/api/v5/whatever.xml"
+*/
 function replaceContent(filename) {
   var request = new XMLHttpRequest();
   request.addEventListener("load", function() {
@@ -8,6 +14,32 @@ function replaceContent(filename) {
   });
   request.open("GET", filename);
   request.send();
+}
+
+/* Given a search string (what the user entered in the search bar), restructure
+   it as a query string for the courses API.
+   When we get around to having a more intelligent search, the code for parsing
+   things like "Tuesday class at 4" will go in here.
+   The courses API expects a page request structured like
+   /api/v5/courses?q=BIOL+1010+Hardwick. This is responsible for providing
+   everything after the "q=".
+*/
+function searchToQuery(searchString) {
+  var searchTerms = searchString.split(" ");
+  var query = "";
+  var first = true;
+  for(var i=0; i<searchTerms.length; i++) {
+    var term = searchTerms[i];
+    if(term.length != 0) { // ignore double spaces creating "" terms
+      if(first) {
+	first = false;
+      } else {
+	query += "+";
+      }
+      query += term;
+    }
+  }
+  return query;
 }
 
 /* Setup function. Initializes all data that needs to be used by this script,
@@ -20,23 +52,24 @@ function setup() {
   nsYacs.searchbar = document.getElementById("searchbar");
   
   // Load the default home page 
-  replaceContent("home.html");
+  replaceContent("/api/v5/departments.xml");
 
   // Add click events to the YACS and schedule buttons
   nsYacs.homeButton.addEventListener("click", function() {
     replaceContent("/api/v5/departments.xml");
   });
   nsYacs.schedButton.addEventListener("click", function() {
-    //replaceContent("/api/v5/courses.xml");
+    // MUST BE REPLACED WITH REAL SCHEDULE API REQUEST
     replaceContent("sampleSchedule.html");
   });
 
   //Add enter key listener to the searchbar
   nsYacs.searchbar.addEventListener("keyup", function(event) {
     if(event.keyCode == 13) {
-      alert("Your query is \""+nsYacs.searchbar.value+"\"");
+      var searchURL = "/api/v5/courses.xml?q="+
+	searchToQuery(nsYacs.searchbar.value);
+      replaceContent(searchURL);
     }
-    replaceContent("sampleCourses.html");
   });
 }
 
