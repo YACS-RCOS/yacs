@@ -5,6 +5,7 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, cite
     border: 0px none;
     font-size: 100%;
     font: inherit;
+    color:#000;
     vertical-align: baseline;
 }
 
@@ -17,7 +18,12 @@ body {
 div#content {
     padding: 70px 20px 0px 20px;
 }
-
+id {
+    /* ID is a necessary part of the API but there is never any reason to show
+       it to the user. */
+    display:none;
+}
+    
 
 /* Styles for the headerbar and its component table */
 nav#headerbar {
@@ -25,8 +31,7 @@ nav#headerbar {
     height:60px;
     position:fixed;
     background-color:#c42222;
-    /*
-    border-bottom: 2px #822 solid;*/
+    /* border-bottom: 2px #822 solid; */
 }
 table#navtable {
     width:100%;
@@ -50,7 +55,7 @@ table#navtable td.sidelink {
 }
 #searchbar {
     /* font needs to be specified again for some reason, I think it's
-       something to do with the form? */
+       something to do with the input tag? */
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size:100%; /* 20px; */
     font-weight:100;
@@ -60,13 +65,32 @@ table#navtable td.sidelink {
 
 
 /* Styles for the home page. */
-ul.school {
+schools {
+    background-color:#369;
+    margin-top:15px;
+    margin-left:auto;
+    margin-right:auto;
+}
+school {
+    
+}
+departments {
+    
+    border-top: 1px black solid;
     margin-bottom: 15px;
     font-size:17px;
-    list-style-type:none;
-    border-top: 1px black solid;
+    background-color:#fbb;
 }
-ul.school li yacs-select-department {
+/* Styles for departments when there are no schools 
+departments {
+    margin-left:auto;
+    margin-right:auto;
+}
+*/
+department {
+    display:block;
+}
+department codename {
     font-family:"Andale Mono","Courier New",monospace;
     margin-right:1em;
     font-size:120%;
@@ -78,7 +102,7 @@ h3.schoolheading {
 
 
 /* Styles for the course list pages. */
-yacs-course {
+course {
     display:block;
     margin: 0px 20px;
     padding:15px;
@@ -87,29 +111,36 @@ yacs-course {
     cursor:pointer;
 }
 
-yacs-course-title {
+course name {
     font-size: 150%;
 }
 
-yacs-course-num, yacs-course-credits, yacs-course-type {
+course number, course min-credits, course max-credits, course department code {
     font-size:110%;
     margin-left: 1em;
 }
 
-yacs-section {
+section {
     display:block;
     margin:4px 0px 0px 10px;
     padding:4px 4px 4px 8px;
     border-radius: 8px;
 }
 
-yacs-section:hover {
+section:hover {
     background-color: #d0d0d0;
 }
+
+section.selected {
+    background-color: rgba(153,51,51,0.4);
+}
+
+/*
 
 yacs-section.selected {
     background-color: rgba(153,51,51,0.4);
 }
+*/
 
 /* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. */
 
