@@ -8,15 +8,13 @@ Save schedule to file functionality. Resolved by creating a wishlist issue for i
 Split screen with schedule and course list in the same window at once (also for schedule page only). Rejected as too visually complex.
 Selected courses display in some other way than checkboxes. Resolved by changing the background color of selected courses.
 Allow conflicting classes; YACS does not let people make such schedules now, but the registrar does. Resolved by making a wishlist issue for it.
+No two columns in department list. Resolved by having columns, but grouping all departments by school instead of alphabetically.
 
 
 Unresolved suggestions:
-Green coloration is a bad color-theory choice; stick to the original color scheme
 Courses load latency
-No course list in schedule view - display course details some other way
+No course list in schedule view (that part is resolved) - display course details some other way
 Replace the semester selector in top left with some other way to select
 Clearer/more intuitive directions for picking "busy" times on the schedule
 Mobile friendliness - no tiny text and zoom for everything
-No two columns in department list
-Don't display times when listing sections
 
