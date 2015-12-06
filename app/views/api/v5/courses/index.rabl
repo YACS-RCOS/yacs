@@ -1,6 +1,6 @@
 child(@courses => :courses) do
   collection @courses, root: :courses, object_root: false
-  attributes :id, :name, :number, :min_credits, :max_credits
+  attributes :id, :name, :number, :credits
   node :credits do |c|
     c.min_credits == c.max_credits ? c.min_credits : "#{c.min_credits}-#{c.max_credits}"
   end
