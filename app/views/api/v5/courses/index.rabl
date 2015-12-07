@@ -8,8 +8,8 @@ child(@courses => :courses) do
   #  attributes :id, :name
     c.department.code
   end
-  child(:sections => :course_sections) do
-    collection :sections, root: :course_sections, object_root: false
+  child(:sections => :sections) do
+    collection :sections, root: :sections, object_root: false
     attributes :id, :name, :crn, :seats, :seats_taken
   end
 end
