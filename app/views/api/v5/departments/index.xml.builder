@@ -3,7 +3,7 @@ xml.tag! 'schools' do
   if @schools.present?
     @schools.each do |school|
       xml.tag! 'school' do
-        xml.tag! 'school-id', school.id
+        # xml.tag! 'school-id', school.id
         xml.tag! 'school-name', school.name
         xml.tag! 'departments' do
           school.departments.each do |department|
