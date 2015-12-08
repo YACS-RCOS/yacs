@@ -1,6 +1,19 @@
 // yacs namespace
 var nsYacs = {}
 
+/* Format some items which appear on the search results page into their final
+   display. The API does not load text like "credits" or "Section"; the
+   application is responsible for this process.
+*/
+function formatSearchResults() {
+  $('credits').html(function(index, oldhtml) {
+    if(oldhtml == '1') { return oldhtml + ' credit'; }
+    else { return oldhtml + ' credits'; }
+  });
+  $('section name').before('Section ');
+  $('seats')
+}
+
 /* Given a filename which is a public XML document on the server,
    replace the interior of div#content with it. Styling should be done
    automatically.
@@ -12,17 +25,21 @@ function replaceContent(filename) {
   request.addEventListener("load", function() {
     nsYacs.contentContainer.innerHTML = request.response;
   });
-  request.open("GET", filename);
+  // I don't see a problem with forcing this request to be synchronous, because
+  // it's loading the entire page content. Other things like formatting that
+  // need to wait on this to work properly _should_ wait on it.
+  request.open("GET", filename, false); 
   request.send();
 }
 
 /* Given a search string (what the user entered in the search bar), restructure
    it as a query string for the courses API.
-   When we get around to having a more intelligent search, the code for parsing
-   things like "Tuesday class at 4" will go in here.
+   If anyone decides to implement a more intelligent search, the code for
+   parsing things like "Tuesday class at 4" will go in here.
    The courses API expects a page request structured like
    /api/v5/courses?q=BIOL+1010+Hardwick. This is responsible for providing
    everything after the "q=".
+   Possible improvement: let users quote multiword strings
 */
 function searchToQuery(searchString) {
   var searchTerms = searchString.split(" ");
@@ -69,6 +86,7 @@ function setup() {
       var searchURL = "/api/v5/courses.xml?q="+
 	searchToQuery(nsYacs.searchbar.value);
       replaceContent(searchURL);
+      formatSearchResults();
     }
   });
 }

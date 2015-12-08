@@ -87,6 +87,8 @@ departments {
     margin-right:auto;
 }
 */
+/* Need the departments qualifier because the courses view also uses the single
+   department tag */
 department {
     display:block;
 }
