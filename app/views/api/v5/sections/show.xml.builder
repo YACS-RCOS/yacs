@@ -1,17 +1,17 @@
 xml.instruct!
-xml.yacs_section do
-  xml.yacs_section_id @section.id
-  xml.yacs_section_name @section.name
-  xml.yacs_section_crn @section.crn
-  xml.yacs_section_course_id @section.course_id
-  xml.yacs_section_seats @section.seats
-  xml.yacs_section_seats_taken @section.seats_taken
-  xml.yacs_periods do
+xml.tag! 'section' do
+  xml.tag! 'section-id', @section.id
+  xml.tag! 'section-name', @section.name
+  xml.tag! 'section-crn', @section.crn
+  xml.tag! 'section-course-id', @section.course_id
+  xml.tag! 'section-seats', @section.seats
+  xml.tag! 'section-seats-taken', @section.seats_taken
+  xml.tag! 'periods' do
     @section.periods.each do |period|
-      xml.yacs_period_id period.id
-      xml.yacs_period_time period.time
-      xml.yacs_period_type period.period_type
-      xml.yacs_period_location period.location
+      xml.tag! 'period-id', @period.id
+      xml.tag! 'period-time', @period.time
+      xml.tag! 'period-type', @period.period_type
+      xml.tag! 'period-location', @period.location
     end
   end
 end

@@ -1,6 +1,6 @@
 xml.instruct!
-xml.yacs_department do
-  xml.yacs_department_id @department.id
-  xml.yacs_department_code @department.code
-  xml.yacs_department_name @department.name
+xml.tag! 'department' do
+  xml.tag! 'department-id', @department.id
+  xml.tag! 'department-code', @department.code
+  xml.tag! 'department-name', @department.name
 end

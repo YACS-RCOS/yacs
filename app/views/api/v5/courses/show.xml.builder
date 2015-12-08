@@ -1,18 +1,18 @@
 xml.instruct!
-xml.yacs_course do
-  xml.yacs_course_id @course.id
-  xml.yacs_course_name @course.name
-  xml.yacs_course_number @course.number
-  xml.yacs_course_credits @course.min_credits == @course.max_credits ? "#{@course.min_credits}" : "#{@course.min_credits}-#{@course.max_credits}"
-  xml.yacs_department_code @course.department.code
-  xml.yacs_sections do
+xml.tag! 'course' do
+  xml.tag! 'course-id', @course.id
+  xml.tag! 'course-name', @course.name
+  xml.tag! 'department-code', @course.department.code
+  xml.tag! 'course-number', @course.number
+  xml.tag! 'course-credits', @course.min_credits == @course.max_credits ? "#{@course.min_credits}" : "#{@course.min_credits}-#{@course.max_credits}"
+  xml.tag! 'sections' do
     @course.sections.each do |section|
-      xml.yacs_section do
-        xml.yacs_section_id section.id
-        xml.yacs_section_name section.name
-        xml.yacs_section_crn section.crn
-        xml.yacs_section_seats section.seats
-        xml.yacs_section_seats_taken section.seats_taken
+      xml.tag! 'section' do
+        xml.tag! 'section-id', section.id
+        xml.tag! 'section-name', section.name
+        xml.tag! 'section-crn', section.crn
+        xml.tag! 'section-seats', section.seats
+        xml.tag! 'section-seats-taken', section.seats_taken
       end
     end
   end

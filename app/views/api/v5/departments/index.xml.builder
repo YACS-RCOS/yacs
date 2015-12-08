@@ -1,16 +1,16 @@
 xml.instruct!
-xml.yacs_schools do
+xml.tag! 'schools' do
   if @schools.present?
     @schools.each do |school|
-      xml.yacs_school do
-        xml.yacs_school_id school.id
-        xml.yacs_school_name school.name
-        xml.yacs_departments do
+      xml.tag! 'school' do
+        xml.tag! 'school-id', school.id
+        xml.tag! 'school-name', school.name
+        xml.tag! 'departments' do
           school.department.each do
-            xml.yacs_department do
-              xml.yacs_department_id department.id
-              xml.yacs_department_code department.code
-              xml.yacs_department_name department.name
+            xml.tag! 'department' do
+              xml.tag! 'department-id', department.id
+              xml.tag! 'department-code', department.code
+              xml.tag! 'department-name', department.name
             end
           end
         end
@@ -18,13 +18,13 @@ xml.yacs_schools do
     end
   end
 end
-xml.yacs_departments do
+xml.tag! 'departments' do
   if @departments.present?
     @departments.each do |department|
-      xml.yacs_department do
-        xml.yacs_department_id department.id
-        xml.yacs_department_code department.code
-        xml.yacs_department_name department.name
+      xml.tag! 'department' do
+        xml.tag! 'department-id', department.id
+        xml.tag! 'department-code', department.code
+        xml.tag! 'department-name', department.name
       end
     end
   end
