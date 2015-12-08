@@ -6,7 +6,7 @@ xml.tag! 'schools' do
         xml.tag! 'school-id', school.id
         xml.tag! 'school-name', school.name
         xml.tag! 'departments' do
-          school.department.each do
+          school.departments.each do |department|
             xml.tag! 'department' do
               xml.tag! 'department-id', department.id
               xml.tag! 'department-code', department.code
