@@ -1,0 +1,65 @@
+STVSUBJ_CODE	STVSUBJ_DESC
+BIOL	Biology
+MATH	Mathematics
+CHEM	Chemistry
+PHYS	Physics
+BMED	Biomedical Engineering
+ECON	Economics
+PSYC	Psychology
+BCBP	Biochemistry & Biophysics
+ARTS	Arts
+CIVL	Civil Engineering
+ENGR	Core Engineering
+COMM	Communication
+CSCI	Computer Science
+DSES	Decision Sci & Engr. Systems
+ERTH	Earth & Environmental Science
+ESCI	Engineering Science
+EPOW	Electric Power Engineering
+ECSE	Electrical & Comp. Sys. Engr.
+GENL	General Institute Offerings
+IHSS	Interdisciplinary H&SS
+MGMT	Management
+LANG	Languages
+PHIL	Philosophy
+LITR	Literature
+STSH	Sci & Tech Studies - Humanity
+STSS	Sci & Tech Studies - Soc Sci
+MTLE	Materials Science &Engineering
+USAF	Aerospace Studies
+USAR	Military Science
+ISCI	Interdisciplinary Science
+USNA	Naval Science
+WRIT	Writing
+EMBA	Management - EXEC MBA
+COOP	Co-Operative Education
+MATP	Math Prgmg, Probab,& Math Stat
+ARCH	Architecture
+MEAE	Mech. Eng, Aero Eng,&Mechanics
+IENV	Interdiscip. Environmental
+ENVE	Environmental & Energy Engr.
+CHME	Chemical Engineering
+ADMN	Administrative Courses
+EXCH	Exchange
+ASTR	Astronomy
+METL	Metallurgy
+MPST	Math Prog, Prob & Math Stats
+ITEC	Information Technology
+BIOE	Bio - Med - Eng (H)
+LGHT	Lighting
+HLTH	Health Care Management (H)
+CISH	Computer Science (H)
+ZSPE	Systems and Power Engineering
+NSST	General Interdisciplinary
+URBN	Urban and Environmentl Studies
+ZANT	Anthropology
+ZCNS	Consortium
+ZHIS	History
+ZPHE	Physical Education
+ZPLS	Political Science
+ZSMI	Stat. Mgmt. & Info. Sciences
+ZSOC	Sociology
+MANE	Mech, Aero, Nucl Engr
+COGS	Cognitive Science
+ISYE	Industrial and Systems Engr
+ITWS	Information Technlgy & Web Sci
