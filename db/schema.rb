@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201214243) do
+ActiveRecord::Schema.define(version: 20151209041924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,11 +65,17 @@ ActiveRecord::Schema.define(version: 20151201214243) do
   end
 
   create_table "sections", force: :cascade do |t|
-    t.string  "name",        null: false
-    t.integer "crn",         null: false
-    t.integer "course_id",   null: false
-    t.integer "seats",       null: false
-    t.integer "seats_taken", null: false
+    t.string  "name",                       null: false
+    t.integer "crn",                        null: false
+    t.integer "course_id",                  null: false
+    t.integer "seats",                      null: false
+    t.integer "seats_taken",                null: false
+    t.integer "num_periods"
+    t.integer "periods_day",   default: [],              array: true
+    t.integer "periods_start", default: [],              array: true
+    t.integer "periods_end",   default: [],              array: true
+    t.integer "periods_type",  default: [],              array: true
+    t.string  "professors",    default: [],              array: true
   end
 
   add_index "sections", ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true, using: :btree
