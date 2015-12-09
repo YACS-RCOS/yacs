@@ -9,6 +9,14 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, cite
     vertical-align: baseline;
 }
 
+/*
+Note that we're using quite a few tags that are absent from any HTML standard
+and thus have no inherent semantic meaning. Many of them are intended as
+container elements, but the default behavior of browsers is to treat them as
+inline, and thus their CSS styles will not display on them or their children
+(in some cases). Use display:block on all elements that are supposed to be
+containers, as well as anything else that ought to show in a block.
+*/
 
 /* Styles for all pages: background color, font, spacing. */
 body {
@@ -16,9 +24,9 @@ body {
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 div#content {
-    padding: 70px 20px 0px 20px;
+    padding: 70px 15px 0px 15px;
 }
-id {
+department-id, course-id, section-id {
     /* ID is a necessary part of the API but there is never any reason to show
        it to the user. */
     display:none;
@@ -64,42 +72,44 @@ table#navtable td.sidelink {
 }
 
 
-/* Styles for the home page. */
-schools {
-    background-color:#369;
-    margin-top:15px;
+/* Styles for the home page. Note that <schools> and <departments> can expect
+ to be removed from the DOM and should NOT be styled.*/
+table#homeTable {
+    display:block;
+    margin-top:6px;
     margin-left:auto;
     margin-right:auto;
 }
 school {
-    
+    display:block;
+    width:600px;
+    padding:0px 10px;
+}
+school-name {
+    display:block;
+    font-size:21px;
+    font-style:italic;
+    border-bottom: 1px black solid;
 }
 departments {
-    
-    border-top: 1px black solid;
+    display:block;
     margin-bottom: 15px;
     font-size:17px;
-    background-color:#fbb;
 }
-/* Styles for departments when there are no schools 
-departments {
-    margin-left:auto;
-    margin-right:auto;
-}
-*/
-/* Need the departments qualifier because the courses view also uses the single
-   department tag */
 department {
     display:block;
+    cursor:pointer;
+    padding:2px 5px;
+    width:600px;
 }
-department codename {
+department:hover {
+    color: #fff;
+    background-color: #c42222;
+}
+department department-code {
     font-family:"Andale Mono","Courier New",monospace;
-    margin-right:1em;
+    margin-right:0.2em;
     font-size:120%;
-}
-h3.schoolheading {
-    font-size:24px;
-    font-style:italic;
 }
 
 
