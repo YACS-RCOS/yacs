@@ -54,12 +54,12 @@ ActiveRecord::Schema.define(version: 20151209041924) do
     t.integer  "seats_taken",                null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.integer  "num_periods"
-    t.integer  "periods_day",   default: [],              array: true
-    t.integer  "periods_start", default: [],              array: true
-    t.integer  "periods_end",   default: [],              array: true
-    t.integer  "periods_type",  default: [],              array: true
-    t.string   "professors",    default: [],              array: true
+    t.integer  "num_periods",   default: 0,  null: false
+    t.integer  "periods_day",   default: [], null: false, array: true
+    t.integer  "periods_start", default: [], null: false, array: true
+    t.integer  "periods_end",   default: [], null: false, array: true
+    t.string   "periods_type",  default: [], null: false, array: true
+    t.string   "instructors",   default: [], null: false, array: true
   end
 
   add_index "sections", ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true, using: :btree
