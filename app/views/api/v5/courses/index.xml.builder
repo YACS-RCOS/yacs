@@ -12,6 +12,7 @@ xml.tag! 'courses' do
           xml.tag! 'section' do
             xml.tag! 'section-id', section.id
             xml.tag! 'section-name', section.name
+            xml.tag! 'section-instructors', section.instructors.join(", ")
             xml.tag! 'section-crn', section.crn
             xml.tag! 'section-seats', section.seats
             xml.tag! 'section-seats-taken', section.seats_taken
