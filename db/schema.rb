@@ -11,17 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201214243) do
+ActiveRecord::Schema.define(version: 20151209041924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
-    t.integer "department_id", null: false
-    t.string  "name",          null: false
-    t.integer "number",        null: false
-    t.integer "min_credits",   null: false
-    t.integer "max_credits",   null: false
+    t.integer  "department_id", null: false
+    t.string   "name",          null: false
+    t.integer  "number",        null: false
+    t.integer  "min_credits",   null: false
+    t.integer  "max_credits",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   add_index "courses", ["department_id", "name"], name: "index_courses_on_department_id_and_name", unique: true, using: :btree
@@ -29,47 +31,35 @@ ActiveRecord::Schema.define(version: 20151201214243) do
   add_index "courses", ["name"], name: "index_courses_on_name", using: :btree
 
   create_table "departments", force: :cascade do |t|
-    t.string  "code",      null: false
-    t.string  "name",      null: false
-    t.integer "school_id"
+    t.string   "code",       null: false
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "school_id"
   end
 
   add_index "departments", ["code"], name: "index_departments_on_code", unique: true, using: :btree
 
-  create_table "periods", force: :cascade do |t|
-    t.integer "section_id",  null: false
-    t.string  "time",        null: false
-    t.string  "period_type", null: false
-    t.string  "location",    null: false
-  end
-
-  add_index "periods", ["section_id"], name: "index_periods_on_section_id", using: :btree
-
-  create_table "periods_professors", force: :cascade do |t|
-    t.integer "professor_id", null: false
-    t.integer "period_id",    null: false
-  end
-
-  add_index "periods_professors", ["period_id"], name: "index_periods_professors_on_period_id", using: :btree
-  add_index "periods_professors", ["professor_id", "period_id"], name: "index_periods_professors_on_professor_id_and_period_id", unique: true, using: :btree
-  add_index "periods_professors", ["professor_id"], name: "index_periods_professors_on_professor_id", using: :btree
-
-  create_table "professors", force: :cascade do |t|
-    t.string "name", null: false
-  end
-
-  add_index "professors", ["name"], name: "index_professors_on_name", using: :btree
-
   create_table "schools", force: :cascade do |t|
-    t.string "name", null: false
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sections", force: :cascade do |t|
-    t.string  "name",        null: false
-    t.integer "crn",         null: false
-    t.integer "course_id",   null: false
-    t.integer "seats",       null: false
-    t.integer "seats_taken", null: false
+    t.string   "name",                       null: false
+    t.integer  "crn",                        null: false
+    t.integer  "course_id",                  null: false
+    t.integer  "seats",                      null: false
+    t.integer  "seats_taken",                null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "num_periods",   default: 0,  null: false
+    t.integer  "periods_day",   default: [], null: false, array: true
+    t.integer  "periods_start", default: [], null: false, array: true
+    t.integer  "periods_end",   default: [], null: false, array: true
+    t.string   "periods_type",  default: [], null: false, array: true
+    t.string   "instructors",   default: [], null: false, array: true
   end
 
   add_index "sections", ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true, using: :btree
