@@ -2,6 +2,9 @@
 var nsYacs = {}
 // user namespace (holds user-specific data, in particular selected courses)
 var nsUser = {
+  // Array of section IDs the user selects. Allows selected courses to persist
+  // across content changes in the page. When we build the schedule API, we
+  // will be passing all the section IDs in the GET request.
   selectedSectionIDs : []
 }
 
