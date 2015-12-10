@@ -18,7 +18,7 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
       course              = dept.courses.build
-      course.name         = course_xml[:name]
+      course.name         = course_xml[:name].titleize
       course.number       = course_xml[:num]
       course.min_credits  = course_xml[:credmin]
       course.max_credits  = course_xml[:credmax]
