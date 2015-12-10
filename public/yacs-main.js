@@ -21,7 +21,7 @@ function formatSearchResults() {
     else { return oldhtml + ' credits'; }
   });
   $('section-name').prepend('Section ');
-  $('section-seats-taken').append(' seats');
+  $('section-seats-available').append(' seats');
 }
 
 /* Given a filename which is a public XML document on the server, return the
