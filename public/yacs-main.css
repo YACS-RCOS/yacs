@@ -122,29 +122,44 @@ course {
     border-bottom: 1px #bbb solid;
     cursor:pointer;
 }
-
-course name {
-    font-size: 150%;
+/* Note for anyone maintaining this in the distant future:
+   The original design goal for the course list is for the course and all its
+   sections to get highlighted when hovering over it, and for the sections
+   and NOT their parent course to get highlighted when hovering over them. In
+   the design there was only one hover color. I cannot make that work with pure
+   CSS, and doing it in Javascript is incredibly ugly (code), so I'm using two
+   different highlight colors. If CSS4 is out when you're looking at this code,
+   there should be some way to do it with negation selectors.
+   */
+course:hover {
+    background-color:#e7e7e7;
 }
-
-course number, course min-credits, course max-credits, course department code {
+course-name {
+    font-size: 130%;
+}
+course-number, course department-code, course-credits {
     font-size:110%;
-    margin-left: 1em;
 }
-
+course department-code {
+    margin-left:1em;
+}
+course-credits {
+    margin-left:0.7em;
+}
 section {
     display:block;
-    margin:4px 0px 0px 10px;
+    margin:0px 0px 0px 5px;
     padding:4px 4px 4px 8px;
     border-radius: 8px;
 }
-
 section:hover {
-    background-color: #d0d0d0;
+    background-color: #e0e0e0;
 }
-
 section.selected {
     background-color: rgba(153,51,51,0.4);
+}
+section-crn, section-seats {
+    display:none; /* hidden from the user in the course view */
 }
 
 /*

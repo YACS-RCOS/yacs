@@ -1,5 +1,9 @@
 // yacs namespace
 var nsYacs = {}
+// user namespace (holds user-specific data, in particular selected courses)
+var nsUser = {
+  selectedSectionIDs : []
+}
 
 // Global constants are all set here to keep them in one place.
 nsYacs.deptColumnWidth = 600; // should be the same as the width
@@ -12,12 +16,12 @@ nsYacs.deptColumnMargin = 10; // should be the same as side margins defined
    application is responsible for this process.
 */
 function formatSearchResults() {
-  $('credits').html(function(index, oldhtml) {
+  $('course-credits').html(function(index, oldhtml) {
     if(oldhtml == '1') { return oldhtml + ' credit'; }
     else { return oldhtml + ' credits'; }
   });
-  $('section name').before('Section ');
-  //$('seats').
+  $('section-name').prepend('Section ');
+  $('section-seats-taken').append(' seats');
 }
 
 /* Given a filename which is a public XML document on the server, return the
@@ -44,12 +48,17 @@ function getAPIContent(filename) {
 // Given a filename which is a public XML document on the server,
 // replace the interior of div#content with it
 function replaceContent(filename) {
+  // Using jQuery empty() is guaranteed to remove all event handlers that have
+  // been applied to anything in the content. Without this, event handlers may
+  // build up over time and slow down the program.
+  $('div#content').empty();
   nsYacs.contentContainer.innerHTML = getAPIContent(filename);
 }
 
 // Anything that has to be done when loading up the front page.
 function loadHomePage() {
-  replaceContent("/api/v5/departments.xml?use_schools=false");
+  //replaceContent("/api/v5/departments.xml?use_schools=false");
+  replaceContent("/api/v5/departments.xml");
 
   // When loading the home page, this must determine how many columns to
   // place the departments in, and then apply styling as needed to make them fit
@@ -167,6 +176,72 @@ function loadHomePage() {
 function loadCourses(apiString) {
   replaceContent(apiString);
   formatSearchResults();
+
+  // mark any sections that are already in the selected array with .selected
+  // class (used in revisiting pages)
+  $('section').each(function(i, section) {
+    var index =
+      nsUser.selectedSectionIDs.
+      indexOf(parseInt($(section).find('section-id').html()));
+    if (index > -1) {
+      $(this).addClass('selected');
+    }
+  });
+  
+  // bind section storing function to clicks
+  $('section').click(function(event) {
+    var sid = parseInt($(this).find('section-id').html());
+    var index = nsUser.selectedSectionIDs.indexOf(sid);
+    // care more about the data - so use that to determine how to change
+    // the styling; i.e. if the id is in the array, we will always deselect it
+    // regardless of whether it was being rendered as selected or not
+    if(index > -1) {
+      // index is real, section is selected, deselect it
+      $(this).removeClass('selected');
+      nsUser.selectedSectionIDs.splice(index, 1);
+    }
+    else {
+      // section is not selected, select it and add it to the array
+      $(this).addClass('selected');
+      nsUser.selectedSectionIDs.push(sid);
+    }
+    // don't bubble up to the course click handler!
+    event.stopPropagation();
+  });
+  
+  // courses can also be clicked
+  // if a course is clicked and all sections are selected, deselect all
+  // sections. Otherwise, select all sections.
+  $('course').click(function(event) {
+    // we are guaranteed that the user clicked on the course and not a section
+    var allSectionsSelected = true;
+
+    $(this).find('section-id').each(function(i, sid) {
+      // if a section id cannot be found in the selected array, they cannot
+      // all be selected
+      if(nsUser.selectedSectionIDs.indexOf(parseInt($(sid).html())) < 0) {
+	allSectionsSelected = false;
+	return false; // break the .each() loop
+      }
+    });
+
+    $(this).find('section').each(function(i, section) {
+      var sid = parseInt($(section).find('section-id').html());
+      var index = nsUser.selectedSectionIDs.indexOf(sid);
+      if(allSectionsSelected) {
+	if(index > -1) {
+	  nsUser.selectedSectionIDs.splice(index, 1);
+	}
+	$(section).removeClass('selected');
+      }
+      else {
+	if(index < 0) {
+	  nsUser.selectedSectionIDs.push(sid);
+	}
+	$(section).addClass('selected');
+      }
+    });
+  });
 }
 
 /* Given a search string (what the user entered in the search bar), restructure
