@@ -16,6 +16,7 @@ xml.tag! 'courses' do
             xml.tag! 'section-crn', section.crn
             xml.tag! 'section-seats', section.seats
             xml.tag! 'section-seats-taken', section.seats_taken
+            xml.tag! 'section-seats-available', section.seats - section.seats_taken
           end
         end
       end
