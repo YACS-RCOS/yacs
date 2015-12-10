@@ -118,7 +118,7 @@ course {
     display:block;
     margin: 0px 20px;
     padding:15px;
-    border-radius: 15px;
+    /*border-radius: 15px;*/
     border-bottom: 1px #bbb solid;
     cursor:pointer;
 }
@@ -150,15 +150,16 @@ section {
     display:block;
     margin:0px 0px 0px 5px;
     padding:4px 4px 4px 8px;
-    border-radius: 8px;
+    /* border-radius: 8px; */
 }
 section:hover {
     background-color: #e0e0e0;
 }
 section.selected {
-    background-color: rgba(153,51,51,0.4);
+    color: #efefef;
+    background-color: /*#ce5656;*/#c42222;
 }
-section-crn, section-seats {
+section-crn, section-seats, section-seats-taken {
     display:none; /* hidden from the user in the course view */
 }
 
