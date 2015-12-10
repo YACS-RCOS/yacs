@@ -3,7 +3,9 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
   public
   def load_catalog
     load_departments
+    load_schools
     load_courses
+    remove_empty
   end
 
   private
@@ -63,5 +65,27 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
       puts "#{data[0]} - #{data[1]}"
       Department.create(code: data[0], name: data[1])
     end
+  end
+
+  def load_schools
+    file = "schools.txt"
+    File.readlines(file).each do |line|
+      data = line.strip.split(/\t/)
+      school = School.create!(name: data[0])
+      data.drop(1).each do |code|
+        department = Department.where(code: code)[0]
+        department.update_attributes!(school_id: school.id)
+      end
+    end
+  end
+
+  def remove_empty
+    other = School.find_or_create_by(name: "Other")
+    empty = []
+    Department.all.each do |department|
+      empty << department if department.courses.empty?
+      department.update_attributes(school_id: other.id) if department.school_id == nil
+    end
+    empty.each { |e| e.destroy! }
   end
 end
