@@ -7,6 +7,7 @@ xml.tag! 'courses' do
       xml.tag! 'department-code', course.department.code
       xml.tag! 'course-number', course.number
       xml.tag! 'course-credits', course.min_credits == course.max_credits ? "#{course.min_credits}" : "#{course.min_credits}-#{course.max_credits}"
+      xml.tag! 'course-description', course.description
       xml.tag! 'sections' do
         course.sections.each do |section|
           xml.tag! 'section' do
