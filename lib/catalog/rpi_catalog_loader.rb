@@ -5,10 +5,10 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
     load_departments
     load_schools
     load_courses
+    load_descriptions
     remove_empty
   end
 
-  private
   def get_courses
     uri = "https://sis.rpi.edu/reg/rocs/201601.xml"
     @courses_xml ||= Nokogiri::XML(open(uri)).xpath("//COURSE")
@@ -56,6 +56,41 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
       end
     end
     puts errors
+  end
+
+  def load_descriptions
+    base = "http://catalog.rpi.edu/"
+    page_no = 1
+    while page_no <= 20 do
+      path = "content.php?catoid=14&catoid=14&navoid=336&filter%5Bitem_type%5D=3&filter%5Bonly_active%5D=1&filter%5B3%5D=1&filter%5Bcpage%5D="+page_no.to_s+"#acalog_template_course_filter"
+      page = base + path
+      page = Nokogiri::HTML(open(page))
+      page_no += 1
+
+      rows = page.css('td.block_content table tr')
+      rows[1..-2].each do |row|
+        courses = row.css('td a').to_a.compact
+        courses.each do |course|
+          href = course['href']
+          course_title = course.text.sub(/-.*/, '').strip.split
+          course_model = Course.where(number: course_title[1]).includes(:department).where(departments: {code: course_title[0]})[0]
+          if course_model
+            desc_path = base + href
+            desc_page = Nokogiri::HTML(open(desc_path))
+            desc = desc_page.css('td.block_content')
+            course_description = desc.text
+            course_description.slice! "HELP"
+            course_description.slice! "Rensselaer Catalog 2015-2016"
+            course_description.slice! "Print-Friendly Page [Add to Portfolio]"
+            course_description.slice! " Back to Top | Print-Friendly Page [Add to Portfolio]"
+            course_description = course_description.strip
+            puts "#{course_title} - #{course_description}"
+            course_model.update_attributes!(description: course_description)
+          end
+        end
+      end
+    end
+
   end
 
   def load_departments

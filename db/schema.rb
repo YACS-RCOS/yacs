@@ -11,19 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209041924) do
+ActiveRecord::Schema.define(version: 20151210162436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "courses", force: :cascade do |t|
-    t.integer  "department_id", null: false
-    t.string   "name",          null: false
-    t.integer  "number",        null: false
-    t.integer  "min_credits",   null: false
-    t.integer  "max_credits",   null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "department_id",              null: false
+    t.string   "name",                       null: false
+    t.integer  "number",                     null: false
+    t.integer  "min_credits",                null: false
+    t.integer  "max_credits",                null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.text     "description",   default: ""
   end
 
   add_index "courses", ["department_id", "name"], name: "index_courses_on_department_id_and_name", unique: true, using: :btree
