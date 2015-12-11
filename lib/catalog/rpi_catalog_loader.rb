@@ -62,7 +62,7 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
     base = "http://catalog.rpi.edu/"
     page_no = 1
     while page_no <= 20 do
-      path = "content.php?catoid=14&catoid=14&navoid=336&filter%5Bitem_type%5D=3&filter%5Bonly_active%5D=1&filter%5B3%5D=1&filter%5Bcpage%5D="+$page_no.to_s+"#acalog_template_course_filter"
+      path = "content.php?catoid=14&catoid=14&navoid=336&filter%5Bitem_type%5D=3&filter%5Bonly_active%5D=1&filter%5B3%5D=1&filter%5Bcpage%5D="+page_no.to_s+"#acalog_template_course_filter"
       page = base + path
       page = Nokogiri::HTML(open(page))
       page_no += 1
