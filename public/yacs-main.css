@@ -146,6 +146,10 @@ course department-code {
 course-credits {
     margin-left:0.7em;
 }
+course-description {
+    display:block;
+    font-size:87%;
+}
 section {
     display:block;
     margin:0px 0px 0px 5px;
