@@ -16,6 +16,9 @@ describe "Schedules API" do
     end
 
     it "schedules have one section of each course" do
+      get '/api/v5/schedules.xml', { sections: @sections.map { |s| s.id }}
+      binding.pry
+      expect(response) .to be_success
       courses = []
       xml.schedules.schedule[0].sections.section.each do |xs|
         courses << Section.find(xs.search('section-id').text).course
