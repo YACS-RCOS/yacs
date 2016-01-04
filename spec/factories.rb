@@ -32,12 +32,12 @@ FactoryGirl.define do
     season 'Fall 2015'
   end
 
-  factory :period do
-    time '4PM-6PM Tuesday'
-    period_type 'Lecture'
-    location 'DCC 318'
-    section
-  end
+  # factory :period do
+  #   time '4PM-6PM Tuesday'
+  #   period_type 'Lecture'
+  #   location 'DCC 318'
+  #   section
+  # end
 
   factory :periods_professor do
     period
@@ -54,9 +54,9 @@ FactoryGirl.define do
       transient do
         periods_count 5
       end
-      after(:create) do |section, evaluator|
-        create_list(:period, evaluator.periods_count, section: section)
-      end
+      # after(:create) do |section, evaluator|
+      #   create_list(:period, evaluator.periods_count, section: section)
+      # end
     end
   end
 end
