@@ -17,7 +17,7 @@ describe "Schedules API" do
 
     it "schedules have one section of each course" do
       get '/api/v5/schedules.xml', { sections: @sections.map { |s| s.id }}
-      binding.pry
+      # binding.pry
       expect(response) .to be_success
       courses = []
       xml.schedules.schedule[0].sections.section.each do |xs|
