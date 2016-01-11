@@ -1,3 +1,5 @@
+
+
 FactoryGirl.define do
   factory :school do
     sequence(:name) { |n| "School of Thing ##{n}" }
@@ -16,7 +18,7 @@ FactoryGirl.define do
     department
     factory :course_with_sections_with_periods do
       transient do
-        sections_count 5
+        sections_count 6
       end
       after(:create) do |course, evaluator|
         create_list(:section_with_periods, evaluator.sections_count, course: course)
@@ -32,17 +34,44 @@ FactoryGirl.define do
     season 'Fall 2015'
   end
 
-  # factory :period do
-  #   time '4PM-6PM Tuesday'
-  #   period_type 'Lecture'
-  #   location 'DCC 318'
-  #   section
-  # end
-
   factory :periods_professor do
     period
     professor
   end
+
+=begin
+[0, 2, 4]
+[1000, 1400, 1000]
+[1050, 1450, 1050]
+
+[0, 2, 4]
+[0900, 1500, 1100]
+[0950, 1550, 1150]
+
+[1, 3]
+[1000, 1000]
+[1150, 1150]
+
+[1, 3]
+[1400, 0900]
+[1550, 1050]
+
+[0, 2]
+[1300, 1000]
+[1450, 1150]
+
+[0, 2]
+[1500, 0800]
+[1650, 0950]
+
+In this test data, each course effectively has the same set of (N=6) sections,
+on the same days and times of every other course. Because of this, if N courses
+or fewer are selected, then (assuming every section from each course is selected),
+then the number of possible schedules should be non-zero and predictable.
+Conversely, if greater than N courses are chosen the number of possible schedules
+should be zero.
+
+=end
 
   factory :section do
     sequence(:name) { |n| "#{n}" }
@@ -51,12 +80,23 @@ FactoryGirl.define do
     seats_taken 5
     course
     factory :section_with_periods do
-      transient do
-        periods_count 5
+      sequence(:num_periods) do |n|
+        num_p = [3, 3, 2, 2, 2, 2]
+        num_p[n % 6]
       end
-      # after(:create) do |section, evaluator|
-      #   create_list(:period, evaluator.periods_count, section: section)
-      # end
+      sequence(:periods_day) do |n| 
+        p_day = [[0, 2, 4], [0, 2, 4], [1, 3], [1, 3], [0, 2], [0, 2]]
+        p_day[n % 6]
+      end
+      sequence(:periods_start) do |n|
+        p_start = [[1000, 1400, 1000], [900, 1500, 1100], [1000, 1000], [1400, 900], [1300, 1000], [1500, 800]]
+        p_start[n % 6]
+      end
+      sequence(:periods_end) do |n|
+        p_end = [[1050, 1450, 1050], [950, 1550, 1150], [1150, 1150], [1550, 1050], [1450, 1150], [1650, 950]]
+        p_end[n % 6]
+      end
+      periods_type 'LEC'
     end
   end
 end
