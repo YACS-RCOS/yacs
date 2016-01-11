@@ -3,6 +3,6 @@ class Api::V5::SchedulesController < Api::V5::ApiController
     sections = params[:sections].map do |id|
       Section.find(id)
     end
-    @schedules = Schedule::Scheduler.one_schedule(sections)
+    @schedules = Schedule::Scheduler.all_schedules(sections)
   end
 end

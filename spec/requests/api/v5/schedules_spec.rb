@@ -5,8 +5,8 @@ describe "Schedules API" do
       @sections = []
       @courses = []
       Course.all.each_with_index do |c, i|
-        @sections += c.sections.each_with_index do |s, ii|
-          if i % 4 == 0 && ii % 2 == 0
+        c.sections.each_with_index do |s, ii|
+          if i % 4 == 0 
             @sections << s
             @courses << c
           end
@@ -17,13 +17,17 @@ describe "Schedules API" do
 
     it "schedules have one section of each course" do
       get '/api/v5/schedules.xml', { sections: @sections.map { |s| s.id }}
-      # binding.pry
       expect(response) .to be_success
-      courses = []
-      xml.schedules.schedule[0].sections.section.each do |xs|
-        courses << Section.find(xs.search('section-id').text).course
+      xml.schedules.schedule.each do |x_schedule|
+        courses = []
+        sections = []
+        x_schedule.sections.section.each do |x_section|
+          sections << Section.find(x_section.search('section-id').text)
+          courses << sections.last.course
+        end
+        expect(courses) .to eq @courses
+        expect(Schedule::Scheduler.schedule_valid?(sections)) .to be true
       end
-      expect(courses) .to eq @courses
     end
   end  
 end
