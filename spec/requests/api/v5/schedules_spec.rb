@@ -15,7 +15,7 @@ describe "Schedules API" do
       @courses.uniq!
     end
 
-    it "schedules have one section of each course" do
+    it "[xml] schedules have one section of each course" do
       get '/api/v5/schedules.xml', { sections: @sections.map { |s| s.id }}
       expect(response) .to be_success
       xml.schedules.schedule.each do |x_schedule|
@@ -29,5 +29,23 @@ describe "Schedules API" do
         expect(Schedule::Scheduler.schedule_valid?(sections)) .to be true
       end
     end
-  end  
+
+    it "[json] schedules have one section of each course" do
+      get '/api/v5/schedules.json', { sections: @sections.map { |s| s.id }}
+      expect(response) .to be_success
+      schedules = []
+      json['schedules'].each do |j_schedule|
+        courses = []
+        sections = []
+        j_schedule['sections'].each do |j_section|
+          sections << Section.find(j_section['id'])
+          courses << sections.last.course
+        end
+        expect(courses) .to eq @courses
+        expect(Schedule::Scheduler.schedule_valid?(sections)) .to be true
+        schedules << sections.sort
+      end
+      expect(schedules.uniq) .to eq schedules
+    end
+  end 
 end
