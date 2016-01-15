@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   namespace :api do
-    namespace :v5, defaults: { format: :xml } do
+    namespace :v5 do
       resources :departments, only: [:index, :show]
       resources :courses,     only: [:index, :show]
       resources :sections,    only: [:index, :show]
