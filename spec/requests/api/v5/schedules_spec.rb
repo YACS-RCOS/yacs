@@ -1,5 +1,5 @@
 describe "Schedules API" do
-  context "when sections are chosen" do
+  context "enough courses are chosen" do
     before do
       FactoryGirl.create_list(:course_with_sections_with_periods, 20)
       @sections = []
@@ -47,5 +47,16 @@ describe "Schedules API" do
       end
       expect(schedules.uniq) .to eq schedules
     end
-  end 
+  end
+
+  context "too many courses are chosen" do
+    it "[json] finds no schedules" do
+      FactoryGirl.create_list(:course_with_sections_with_periods, 7)
+      @courses = Course.all
+      @sections = @courses.map { |course| course.sections }.flatten
+      get '/api/v5/schedules.json', { sections: @sections.map { |s| s.id }}
+      expect(response) .to be_success
+      expect(json['schedules']) .to be_empty
+    end
+  end
 end
