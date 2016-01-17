@@ -1,18 +1,9 @@
 describe "Schedules API" do
   context "enough courses are chosen" do
     before do
-      FactoryGirl.create_list(:course_with_sections_with_periods, 20)
-      @sections = []
-      @courses = []
-      Course.all.each_with_index do |c, i|
-        c.sections.each_with_index do |s, ii|
-          if i % 4 == 0 
-            @sections << s
-            @courses << c
-          end
-        end
-      end
-      @courses.uniq!
+      FactoryGirl.create_list(:course_with_sections_with_periods, 4)
+      @courses = Course.all
+      @sections = @courses.map { |course| course.sections }.flatten
     end
 
     it "[xml] schedules have one section of each course" do
@@ -50,10 +41,13 @@ describe "Schedules API" do
   end
 
   context "too many courses are chosen" do
-    it "[json] finds no schedules" do
+    before do
       FactoryGirl.create_list(:course_with_sections_with_periods, 7)
       @courses = Course.all
       @sections = @courses.map { |course| course.sections }.flatten
+    end
+
+    it "[json] finds no schedules" do
       get '/api/v5/schedules.json', { sections: @sections.map { |s| s.id }}
       expect(response) .to be_success
       expect(json['schedules']) .to be_empty
