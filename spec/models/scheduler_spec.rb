@@ -14,7 +14,7 @@ describe "Scheduler" do
   # In this case, n=6 (defined by factories.rb), and we will
   # test where k = 0..7. When k=0, there are no courses selected
   # and the number of schedules generated should obviously
-  # be zero. When k=n=6, there should only be one schedule.
+  # be zero. When k=n=6, there should only be six schedules
   # Finally, when k>n, k=7 zero schedules should be generated.
   
   (0..7).each do |course_count|

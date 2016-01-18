@@ -36,7 +36,6 @@ describe "Schedules API" do
         expect(Schedule::Scheduler.schedule_valid?(sections)) .to be true
         schedules << sections.sort
       end
-      # binding.pry
       expect(schedules.uniq) .to eq schedules
     end
   end
