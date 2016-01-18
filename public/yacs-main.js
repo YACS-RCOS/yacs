@@ -31,6 +31,8 @@ function formatSearchResults() {
    content of that document.
    This will work with API documents, which should be on an root-relative path
    like "/api/v5/whatever.xml"
+   Schedules get a JSON object. Using this will return it as text, which can
+   then be parsed into JSON with JSON.parse().
 */
 function getAPIContent(filename) {
   var request = new XMLHttpRequest();
@@ -274,6 +276,29 @@ function searchToQuery(searchString) {
   return query;
 }
 
+/* Schedule loading function; takes the selected section IDs, builds the API
+   string out of them (all the scheduling logic is done on the backend), gets
+   the JSON version of the schedules, and fills the table with them. */
+function loadSchedules() {
+  // If nothing is selected, take no action
+  if (nsUser.selectedSectionIDs.length < 1) return;
+  alert("AWK HELLO AWK");
+
+  // Construct the API request string that will be passed
+  var schedURL = "/api/v5/schedules.json?"
+  for(var i=0; i<nsUser.selectedSectionIDs.length; ++i) {
+    // NOTE: The & is necessary for multiple IDs stringing together.
+    // We'll see if having an extra one at the end of the string is a problem.
+    schedURL += "section_id[]="+nsUser.selectedSectionIDs[i]+"&";
+  }
+  alert("schedURL is "+schedURL);
+
+  // Get the schedules as a JSON object.
+  var schedulesData = JSON.parse(getAPIContent(schedURL));
+  replaceContent(sampleCourses.html);
+  
+}
+
 /* Setup function. Initializes all data that needs to be used by this script,
    and adds any necessary event listeners. */
 function setup() {
@@ -287,10 +312,7 @@ function setup() {
   nsYacs.homeButton.addEventListener("click", loadHomePage);
 
   // Add click event to the schedule button
-  nsYacs.schedButton.addEventListener("click", function() {
-    // MUST BE REPLACED WITH REAL SCHEDULE API REQUEST
-    replaceContent("sampleSchedule.html");
-  });
+  nsYacs.schedButton.addEventListener("click", loadSchedules);
 
   //Add enter key listener to the searchbar
   nsYacs.searchbar.addEventListener("keyup", function(event) {
@@ -307,4 +329,5 @@ function setup() {
   // 
 }
 
+// Only actually run this when the page finishes loading
 document.addEventListener("DOMContentLoaded", setup, false);
