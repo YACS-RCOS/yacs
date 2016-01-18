@@ -79,6 +79,7 @@ should be zero.
     seats       10
     seats_taken 5
     course
+    instructors ['Some Prof', 'Other Prof']
     factory :section_with_periods do
       sequence(:num_periods) do |n|
         num_p = [3, 3, 2, 2, 2, 2]
@@ -89,14 +90,19 @@ should be zero.
         p_day[n % 6]
       end
       sequence(:periods_start) do |n|
-        p_start = [[1000, 1400, 1000], [900, 1500, 1100], [1000, 1000], [1400, 900], [1300, 1000], [1500, 800]]
+        p_start = [[1000, 1400, 1000], [900, 1500, 1100], [1000, 1000], [1400, 800], [1300, 1000], [1500, 800]]
         p_start[n % 6]
       end
       sequence(:periods_end) do |n|
-        p_end = [[1050, 1450, 1050], [950, 1550, 1150], [1150, 1150], [1550, 1050], [1450, 1150], [1650, 950]]
+        p_end = [[1050, 1450, 1050], [950, 1550, 1150], [1150, 1150], [1550, 950], [1450, 1150], [1650, 950]]
         p_end[n % 6]
       end
-      periods_type 'LEC'
+      sequence(:periods_type) do |n|
+        num_p = [3, 3, 2, 2, 2, 2]
+        types = []
+        num_p[n % 6].times { types << 'LEC' }
+        types
+      end
     end
   end
 end

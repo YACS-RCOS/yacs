@@ -1,14 +1,4 @@
-class Schedule::Scheduler
-  def self.one_schedule(sections) # placeholder-ish method
-    courses = []
-    schedules = [[]]
-    sections.each do |s|
-      schedules[0] << s unless courses.include? s.course
-      courses << s.course
-    end
-    schedules
-  end
-
+class Scheduler
   def self.all_schedules(sections)
     params = expand_courses(sections)
     schedules = []
@@ -16,8 +6,8 @@ class Schedule::Scheduler
     schedules
   end
 
-
   def self.search(params, schedules, schedule=[])
+    return if params.size == 0
     if schedule.size < params.size
       params[schedule.size].each do |new_section|
         conflict = false
@@ -36,7 +26,6 @@ class Schedule::Scheduler
       schedules << schedule
     end
   end
-
 
   def self.schedule_valid?(schedule) #unoptimized
     schedule.each_with_index do |s1, i|
