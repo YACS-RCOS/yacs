@@ -17,7 +17,7 @@ describe "Schedules API" do
           courses << sections.last.course
         end
         expect(courses) .to eq @courses
-        expect(Schedule::Scheduler.schedule_valid?(sections)) .to be true
+        expect(Scheduler.schedule_valid?(sections)) .to be true
       end
     end
 
@@ -33,7 +33,7 @@ describe "Schedules API" do
           courses << sections.last.course
         end
         expect(courses) .to eq @courses
-        expect(Schedule::Scheduler.schedule_valid?(sections)) .to be true
+        expect(Scheduler.schedule_valid?(sections)) .to be true
         schedules << sections.sort
       end
       expect(schedules.uniq) .to eq schedules
