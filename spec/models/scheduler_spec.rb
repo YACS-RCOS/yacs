@@ -15,17 +15,16 @@ describe "Scheduler" do
   # and the number of schedules generated should obviously
   # be zero. When k=n=6, there should only be n=6 schedules
   # Finally, when k>n, e.g., k=7, zero schedules should be generated.
-  
   let(:n) { 6 }
   (0..7).each do |course_count|
     it "generates the correct number of valid schedules for #{course_count} courses of 6 sections each" do
       courses = FactoryGirl.create_list(:course_with_sections_with_periods, course_count)
       sections = courses.map { |course| course.sections }.flatten
-      schedules = Schedule::Scheduler.all_schedules(sections)
+      schedules = Scheduler.all_schedules(sections)
       s = (1..n).include?(course_count) ? factorial(6) / factorial(6 - course_count) : 0
       expect(schedules.count) .to eq s
       schedules.each do |schedule|
-        expect(Schedule::Scheduler.schedule_valid?(schedule)) .to eq true
+        expect(Scheduler.schedule_valid?(schedule)) .to eq true
       end
     end
   end
