@@ -22,12 +22,7 @@ describe "Scheduler" do
       courses = FactoryGirl.create_list(:course_with_sections_with_periods, course_count)
       sections = courses.map { |course| course.sections }.flatten
       schedules = Schedule::Scheduler.all_schedules(sections)
-      if course_count == 0 || course_count > n
-        s = 0
-      elsif course_count > 0 && 
-        s = factorial(6) / factorial(6 - course_count)
-      end
-        
+      s = (1..n).include?(course_count) ? factorial(6) / factorial(6 - course_count) : 0
       expect(schedules.count) .to eq s
       schedules.each do |schedule|
         expect(Schedule::Scheduler.schedule_valid?(schedule)) .to eq true
