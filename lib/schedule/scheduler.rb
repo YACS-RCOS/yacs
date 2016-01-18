@@ -18,6 +18,7 @@ class Schedule::Scheduler
 
 
   def self.search(params, schedules, schedule=[])
+    return if params.size == 0
     if schedule.size < params.size
       params[schedule.size].each do |new_section|
         conflict = false
