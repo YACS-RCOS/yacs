@@ -49,6 +49,7 @@ RSpec.configure do |config|
   end
 
   config.include Requests::ParseHelpers, type: :request
+  config.include Models::MathHelpers, type: :model
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
