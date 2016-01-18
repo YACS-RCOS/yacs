@@ -1,5 +1,4 @@
 describe "Scheduler" do 
-  let(:n) { 6 }
   # In order to truly test the scheduler, we must represent
   # it as a discrete mathematical problem.
   # The number of schedules generated should be equal to the
@@ -14,9 +13,10 @@ describe "Scheduler" do
   # In this case, n=6 (defined by factories.rb), and we will
   # test where k = 0..7. When k=0, there are no courses selected
   # and the number of schedules generated should obviously
-  # be zero. When k=n=6, there should only be one schedule.
-  # Finally, when k>n, k=7 zero schedules should be generated.
+  # be zero. When k=n=6, there should only be n=6 schedules
+  # Finally, when k>n, e.g., k=7, zero schedules should be generated.
   
+  let(:n) { 6 }
   (0..7).each do |course_count|
     it "generates the correct number of valid schedules for #{course_count} courses of 6 sections each" do
       courses = FactoryGirl.create_list(:course_with_sections_with_periods, course_count)
