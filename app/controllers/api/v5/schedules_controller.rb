@@ -1,13 +1,11 @@
 class Api::V5::SchedulesController < Api::V5::ApiController
   def index
     if params[:section_ids].present?
-      sections = params[:section_ids].split(',').map do |id|
-        Section.find(id)
-      end
+      sections = Section.find params[:section_ids].split(',')
     else
       sections = []
     end
-    @schedules = Scheduler.all_schedules(sections)
+    @schedules = Scheduler.all_schedules sections
     respond_to do |format|
       format.xml { render xml: @schedules }
       format.json { render }
