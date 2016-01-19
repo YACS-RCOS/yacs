@@ -1,7 +1,7 @@
 class Api::V5::SchedulesController < Api::V5::ApiController
   def index
     if params[:section_ids].present?
-      sections = params[:section_ids].map do |id|
+      sections = params[:section_ids].split(',').map do |id|
         Section.find(id)
       end
     else
