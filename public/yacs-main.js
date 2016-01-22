@@ -16,20 +16,26 @@ function getCookie(name) {
 
 // yacs namespace
 var nsYacs = {}
+
 // user namespace (holds user-specific data, in particular selected courses)
 var nsUser = {
-  // Array of section IDs the user selects. Allows selected courses to persist
-  // across content changes in the page. The schedule API needs to pass a list
-  // of all selected sections in its GET request.
+  /* We hold selected section IDs in a Javascript cookie in order to make them
+     persist if the user navigates away from the page. These functions access
+     and modify that cookie data. The section IDs are stored as a comma-
+     separated list.
+  */
+  // Get the raw cookie string (useful for passing straight to schedules)
   getSelectionsRaw: function() {
     return getCookie('selections');
-  }
+  },
 
+  // Get the selections from the cookie as an array of strings
   getSelections: function() {
     var selections = getCookie('selections');
     return selections ? selections.split(',') : [];
   },
 
+  // Add a selection to those already selected. Return the success value.
   addSelection: function(sid) {
     arr = this.getSelections();
     if (arr.indexOf(sid) != -1) return false;
@@ -38,6 +44,7 @@ var nsUser = {
     return true;
   },
 
+  // Remove a selection from the cookie. Return the success value.
   removeSelection: function(sid) {
     arr = this.getSelections();
     i = arr.indexOf(sid);
@@ -47,6 +54,7 @@ var nsUser = {
     return true;
   },
 
+  // Determine whether the user has already selected a given section ID
   hasSelection: function(sid) {
     return this.getSelections().indexOf(sid) != -1;
   }
@@ -123,7 +131,6 @@ function setupHomePage() {
   // children.
   var schoolsArray = $('schools').children();
   var numSchools = schoolsArray.length;
-console.log(numSchools);
   
   if(numSchools == 0) {
     // schools are not defined
@@ -155,7 +162,6 @@ console.log(numSchools);
   }
   else {
     // schools are defined
-    console.log(46);
     if(numColumns > 1) {
       // need to calculate the "height" of each school, not in pixels, but in
       // some arbitrary unit of height independent of the styling.
