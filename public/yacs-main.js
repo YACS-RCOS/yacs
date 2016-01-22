@@ -1,3 +1,19 @@
+// cookie helper functions
+function setCookie(name,value) {
+  document.cookie = name+"="+value+"; path=/";
+}
+
+function getCookie(name) {
+  name += "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+    if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+  }
+  return null;
+}
+
 // yacs namespace
 var nsYacs = {}
 // user namespace (holds user-specific data, in particular selected courses)
@@ -5,7 +21,35 @@ var nsUser = {
   // Array of section IDs the user selects. Allows selected courses to persist
   // across content changes in the page. The schedule API needs to pass a list
   // of all selected sections in its GET request.
-  selectedSectionIDs : []
+  getSelectionsRaw: function() {
+    return getCookie('selections');
+  }
+
+  getSelections: function() {
+    var selections = getCookie('selections');
+    return selections ? selections.split(',') : [];
+  },
+
+  addSelection: function(sid) {
+    arr = this.getSelections();
+    if (arr.indexOf(sid) != -1) return false;
+    arr.push(sid);
+    setCookie('selections', arr.join(','));
+    return true;
+  },
+
+  removeSelection: function(sid) {
+    arr = this.getSelections();
+    i = arr.indexOf(sid);
+    if (i == -1) return false;
+    arr.splice(i, 1);
+    setCookie('selections', arr.join(','));
+    return true;
+  },
+
+  hasSelection: function(sid) {
+    return this.getSelections().indexOf(sid) != -1;
+  }
 }
 
 // Global constants are all set here to keep them in one place.
@@ -192,30 +236,26 @@ function setupCourses() {
   // mark any sections that are already in the selected array with .selected
   // class (used in revisiting pages)
   $('section').each(function(i, section) {
-    var index =
-      nsUser.selectedSectionIDs.
-      indexOf(parseInt($(section).find('section-id').html()));
-    if (index > -1) {
+    var sid = $(section).find('section-id').html();
+    if (nsUser.hasSelection(sid)) {
       $(this).addClass('selected');
     }
   });
   
   // bind section storing function to clicks
   $('section').click(function(event) {
-    var sid = parseInt($(this).find('section-id').html());
-    var index = nsUser.selectedSectionIDs.indexOf(sid);
+    var sid = $(this).find('section-id').html();
     // care more about the data - so use that to determine how to change
     // the styling; i.e. if the id is in the array, we will always deselect it
     // regardless of whether it was being rendered as selected or not
-    if(index > -1) {
+    if(nsUser.removeSelection(sid)) {
       // index is real, section is selected, deselect it
       $(this).removeClass('selected');
-      nsUser.selectedSectionIDs.splice(index, 1);
     }
     else {
       // section is not selected, select it and add it to the array
+      nsUser.addSelection(sid);
       $(this).addClass('selected');
-      nsUser.selectedSectionIDs.push(sid);
     }
     // don't bubble up to the course click handler!
     event.stopPropagation();
@@ -227,30 +267,26 @@ function setupCourses() {
   $('course').click(function(event) {
     // we are guaranteed that the user clicked on the course and not a section
     var allSectionsSelected = true;
-
+    var selections = nsUser.getSelections();
     $(this).find('section-id').each(function(i, sid) {
       // if a section id cannot be found in the selected array, they cannot
       // all be selected
-      if(nsUser.selectedSectionIDs.indexOf(parseInt($(sid).html())) < 0) {
-  	allSectionsSelected = false;
-  	return false; // break the .each() loop
+      sid = $(sid).html();
+      if(selections.indexOf(sid) < 0) {
+  	   allSectionsSelected = false;
+  	   return false; // break the .each() loop
       }
     });
 
     $(this).find('section').each(function(i, section) {
-      var sid = parseInt($(section).find('section-id').html());
-      var index = nsUser.selectedSectionIDs.indexOf(sid);
+      var sid = $(section).find('section-id').html();
       if(allSectionsSelected) {
-  	if(index > -1) {
-  	  nsUser.selectedSectionIDs.splice(index, 1);
-  	}
-  	$(section).removeClass('selected');
+      	nsUser.removeSelection(sid);
+      	$(section).removeClass('selected');
       }
       else {
-  	if(index < 0) {
-  	  nsUser.selectedSectionIDs.push(sid);
-  	}
-  	$(section).addClass('selected');
+      	nsUser.addSelection(sid);
+      	$(section).addClass('selected');
       }
     });
   });
@@ -301,18 +337,14 @@ function searchToQuery(searchString) {
 */
 function loadSchedules() {
   // If nothing is selected, take no action
-  if (nsUser.selectedSectionIDs.length < 1) return;
+  selectionsRaw = nsUser.getSelectionsRaw();
+  if (selectionsRaw.length < 1) return;
 
   clearForNewPage();
 
   // Construct the API request string that will be passed
   // expects a comma-delimited list of numeric section IDs
-  var schedURL = "/api/v5/schedules.json?section_ids="
-  for(var i=0; i<nsUser.selectedSectionIDs.length; ++i) {
-    // NOTE: The , is necessary for multiple IDs stringing together.
-    // An extra one at the end of the string is probably not a problem.
-    schedURL += nsUser.selectedSectionIDs[i]+",";
-  }
+  var schedURL = "/api/v5/schedules.json?section_ids=" + selectionsRaw;
 
   // Get the schedules as a JSON object.
   doAjaxRequest(schedURL, function(response) {
