@@ -324,7 +324,7 @@ function searchToQuery(searchString) {
   var first = true;
   for(var i=0; i<searchTerms.length; i++) {
     var term = searchTerms[i];
-    if(term.length != 0) { // ignore double spaces creating "" terms
+    if(term.length != 0) { // ignore multiple spaces creating "" terms
       if(first) {
 	first = false;
       } else {
@@ -385,6 +385,7 @@ function setup() {
     if(event.keyCode == 13) {
       var searchURL = "/api/v5/courses.xml?q="+
 	searchToQuery(nsYacs.searchbar.value);
+      alert(searchURL);
       loadCourses(searchURL);
     }
   });
