@@ -1,4 +1,9 @@
-// cookie helper functions
+/*
+  cookie helper functions
+  based on W3C javascript cookie reference
+  http://www.w3schools.com/js/js_cookies.asp
+*/
+
 function setCookie(name,value) {
   document.cookie = name+"="+value+"; path=/";
 }
