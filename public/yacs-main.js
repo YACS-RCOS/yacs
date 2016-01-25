@@ -366,9 +366,36 @@ function loadSchedules() {
 }
 
 /* Given an empty div#content and a JSON object representing all possible
-   schedules, create the schedules page with that data. */
+   schedules, create the schedules page with that data.
+   Each schedule will get a DOMstring that is the interior of the table on the
+   page. These will then be stored in nsUser so they can be switched out
+   quickly. */
 function setupSchedules(schedData) {
+  // create the array in nsUser
+  nsUser.schedDOMData = []
   
+  for (var sched of schedData.schedules) {
+    
+    // get the min and max times of all the sections in the schedule
+    var earliestStart = 2400;
+    var latestEnd = 0000;
+    for (var sect of sched.sections) {
+      for (var startTime of sect.periods_start) {
+	if(earliestStart > startTime) earliestStart = startTime;
+      }
+      for (var endTime of sect.periods_end) {
+	if(latestEnd < endTime) latestEnd = endTime;
+      }	
+    }
+    
+    // begin constructing the DOMstring
+    var schedDOMString = '<tr id="scheduleHeader"><td></td><td>Monday</td><td>Tuesday</td><td>Wednesday</td><td>Thursday</td><td>Friday</td><td></td></tr>';
+
+    // number of extra rows the table will need in this schedule
+    var additionalRows =
+      (Math.ceil(latestEnd/100) - Math.floor(earliestStart/100)) * 2;
+    //alert(earliestStart + " " + latestEnd+", "+additionalRows);
+  }
 }
 
 /* Setup function. Initializes all data that needs to be used by this script,
