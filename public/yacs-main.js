@@ -115,6 +115,7 @@ function clearForNewPage() {
 
   // can add in some code to set the inner HTML of the content container to some
   // default "Loading..." message or whatever here
+  $('div#content').append('<img id="loading" src="loading.gif" />');
 }
 
 // Once the departments XML has been loaded into div#content, do any other steps
@@ -397,8 +398,6 @@ function setup() {
   
   // Load the default home page
   loadHomePage();
-
-  // 
 }
 
 // Only actually run this when the page finishes loading
