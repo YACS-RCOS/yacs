@@ -1,8 +1,6 @@
-/*
-  cookie helper functions
-  based on W3C javascript cookie reference
-  http://www.w3schools.com/js/js_cookies.asp
-*/
+/* cookie helper functions
+   based on W3C javascript cookie reference
+   http://www.w3schools.com/js/js_cookies.asp */
 
 function setCookie(name,value) {
   document.cookie = name+"="+value+"; path=/";
@@ -361,18 +359,28 @@ function loadSchedules() {
   // Get the schedules as a JSON object.
   doAjaxRequest(schedURL, function(response) {
     var schedulesData = JSON.parse(response);
+    // populate nsUser.schedDOMData with the schedule tables
     setupSchedules(schedulesData);
+
+    // then load the actual content
+    var numSchedules = nsUser.schedDOMData.length;
+    var contentDOMstring ='<div id="schedulebar"><span id="leftarrow" class="scheduleswitch">&#9664;</span>Schedule 1/'+numSchedules+'<span id="rightarrow" class="scheduleswitch">&#9654;</span></div>';
+    contentDOMstring += '<table id="scheduleTable">';
+    contentDOMstring += nsUser.schedDOMData[0];
+    contentDOMstring += '</table>';
+    $('div#content').html(contentDOMstring);
   });
 }
 
 /* Given an empty div#content and a JSON object representing all possible
-   schedules, create the schedules page with that data.
-   Each schedule will get a DOMstring that is the interior of the table on the
-   page. These will then be stored in nsUser so they can be switched out
-   quickly. */
+   schedules, create and populate an array of DOM strings in nsUser that
+   are the HTML representation of their respective schedule tables.
+   This function does NOT actually insert any of this data into the DOM; it
+   is the responsibility of loadSchedules() to do that.*/
 function setupSchedules(schedData) {
   // create the array in nsUser
   nsUser.schedDOMData = []
+  var sddctr = 0
   
   for (var sched of schedData.schedules) {
     
@@ -387,14 +395,26 @@ function setupSchedules(schedData) {
 	if(latestEnd < endTime) latestEnd = endTime;
       }	
     }
+    // cap them to the greatest 100s surrounding them and reduce them to hours
+    earliestStart = Math.floor(earliestStart/100);
+    latestEnd = Math.ceil(latestEnd/100);
+
+    
     
     // begin constructing the DOMstring
     var schedDOMString = '<tr id="scheduleHeader"><td></td><td>Monday</td><td>Tuesday</td><td>Wednesday</td><td>Thursday</td><td>Friday</td><td></td></tr>';
 
+    /*
     // number of extra rows the table will need in this schedule
     var additionalRows =
       (Math.ceil(latestEnd/100) - Math.floor(earliestStart/100)) * 2;
-    //alert(earliestStart + " " + latestEnd+", "+additionalRows);
+    */
+    for (var hour=earliestStart; hour<latestEnd; ++hour) {
+      schedDOMString += '<tr><td>'+hour+'</td><td></td><td></td><td></td><td></td><td></td><td>&nbsp;</td></tr>';
+      schedDOMString += '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td>&nbsp;</td></tr>';
+    }
+    nsUser.schedDOMData[sddctr] = schedDOMString;
+    sddctr++;
   }
 }
 
