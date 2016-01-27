@@ -213,10 +213,13 @@ table#scheduleTable tr td {
     border-bottom:1px #bbb solid;
     text-align:center;
 }
-table#scheduleTable tr td:first-child {
+table#scheduleTable tr td:first-child, table#scheduleTable tr td:last-child {
     text-align:right;
     width:30px;
     padding-right:0.5em;
+}
+table#scheduleTable tr td:last-child {
+    border:none;
 }
 table#scheduleTable tr#scheduleHeader td {
     padding-bottom:0.5em;
