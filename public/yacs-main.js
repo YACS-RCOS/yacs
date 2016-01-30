@@ -348,10 +348,17 @@ function searchToQuery(searchString) {
 function loadSchedules() {
   // If nothing is selected, take no action
   selectionsRaw = nsUser.getSelectionsRaw();
-  if (selectionsRaw.length < 1) return;
+  //if (selectionsRaw.length < 1) return;
 
   clearForNewPage();
 
+  /* Temporary redirect (for experimenting with the CSS) */
+  doAjaxRequest("sampleSchedule.html", function(response) {
+    $('div#content').html(response);
+  });
+  return;
+
+  
   // Construct the API request string that will be passed
   // expects a comma-delimited list of numeric section IDs
   var schedURL = "/api/v5/schedules.json?section_ids=" + selectionsRaw;
@@ -371,6 +378,18 @@ function loadSchedules() {
     $('div#content').html(contentDOMstring);
   });
 }
+
+/* Helper function for converting military time to its hour representation */
+function milToHour(milTime, doRoundDown) {
+  if(doRoundDown) return Math.floor(milTime/100);
+  else return Math.ceil(milTime/100);
+}
+
+/* Given a JSON object representing all possible schedules, transform it into anarray of an  object holding the data in an hour-oriented structure rather than the
+   input section-oriented structure.
+   The value returned from this will be an array with 48 
+*/
+//function convertSchedToHours
 
 /* Given an empty div#content and a JSON object representing all possible
    schedules, create and populate an array of DOM strings in nsUser that
@@ -396,22 +415,31 @@ function setupSchedules(schedData) {
       }	
     }
     // cap them to the greatest 100s surrounding them and reduce them to hours
-    earliestStart = Math.floor(earliestStart/100);
-    latestEnd = Math.ceil(latestEnd/100);
-
+    earliestStart = milToHour(earliestStart, true);
+    latestEnd = milToHour(latestEnd, false);
     
     
-    // begin constructing the DOMstring
+    // begin constructing the DOMstring (with the table headers)
     var schedDOMString = '<tr id="scheduleHeader"><td></td><td>Monday</td><td>Tuesday</td><td>Wednesday</td><td>Thursday</td><td>Friday</td><td></td></tr>';
 
-    /*
-    // number of extra rows the table will need in this schedule
-    var additionalRows =
-      (Math.ceil(latestEnd/100) - Math.floor(earliestStart/100)) * 2;
-    */
+    /* After a lot of thought, I think the best and most efficient way to
+       convert the section-based schedule JSON into the hour-based schedule
+       is to create a data structure (array of arrays) of the data and
+       populate it by iterating over the sections. Then iterate over the
+       hours and fill in schedule data when it exists in the array. */
+    var grid = [];
+    grid[1] = grid[2] = grid[3] = grid[4] = grid[5] = [];
+    for (var sect of sched.sections) {
+      // assume periods_start.length = periods_end.length (else it's invalid)
+      for (var i=0; i<sect.periods_start.length; ++i) {
+	//for(var i=
+      }
+    }
+    
     for (var hour=earliestStart; hour<latestEnd; ++hour) {
+      
       schedDOMString += '<tr><td>'+hour+'</td><td></td><td></td><td></td><td></td><td></td><td>&nbsp;</td></tr>';
-      schedDOMString += '<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td>&nbsp;</td></tr>';
+      schedDOMString += '<tr><td>&nbsp;</td><td class="schedule1"></td><td></td><td></td><td></td><td></td><td>&nbsp;</td></tr>';
     }
     nsUser.schedDOMData[sddctr] = schedDOMString;
     sddctr++;
