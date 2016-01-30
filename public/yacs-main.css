@@ -65,10 +65,13 @@ table#navtable td.sidelink {
     /* font needs to be specified again for some reason, I think it's
        something to do with the input tag? */
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size:100%; /* 20px; */
+    font-size: 16px;
     font-weight:100;
     width:32em;
     padding:3px 6px;
+}
+#schedule-btn {
+    font-size:18px;
 }
 
 /* Single style for the loading image */
@@ -224,6 +227,34 @@ table#scheduleTable tr td:last-child {
 table#scheduleTable tr#scheduleHeader td {
     padding-bottom:0.5em;
 }
+
+div#scheduleTable {
+    display:table;
+    margin: 10px auto auto auto;
+}
+div#scheduleTable ul {
+    display:block;
+    float:left;
+    width:200px;
+    border-right: 1px #bbb solid;
+    text-align:center;
+    list-style-type:none;
+}
+div#scheduleTable ul.narrowcol {
+    width:30px;
+}
+div#scheduleTable ul.narrowcol li {
+    text-align:right;
+    padding-right:0.5em;
+}
+div#scheduleTable ul li {
+    height:1.4em;
+    border-bottom:1px #bbb solid;
+}
+div#scheduleTable ul li.hour {
+    height:2.8em;
+    padding-bottom:1px; /* account for the missing border space */
+}
 /* NOTE: Schedule is centered on the page, but it should really be aligned so that the Wednesday cell is centered on the page. */
 
 /* Course colors used by YACS Original: (border/text/background)
@@ -240,6 +271,7 @@ table#scheduleTable tr#scheduleHeader td {
     color: #720;
     background-color: #fdc;
     border-left: 2px #b62 solid;
+    background-size: 10px 10px;
 }
 .schedule2 {
     color: #722;
