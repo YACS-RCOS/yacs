@@ -188,9 +188,10 @@ yacs-section.selected {
 }
 */
 
-/* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. */
+/* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. This may not be possible without CSS3. */
 
-/* Styles for the schedule page */
+/* Styles for the schedule page
+ Note that the */
 #schedulebar {
     text-align:center;
     margin-left: auto;
@@ -231,6 +232,8 @@ table#scheduleTable tr#scheduleHeader td {
 div#scheduleTable {
     display:table;
     margin: 10px auto auto auto;
+    padding-right: 30px; /* must be == to the width of .narrowcol */
+    font-size:16px;
 }
 div#scheduleTable ul {
     display:block;
@@ -240,6 +243,9 @@ div#scheduleTable ul {
     text-align:center;
     list-style-type:none;
 }
+/* div#scheduleTable ul:first-child {
+    border-top: 1px #bbb solid;
+}*/
 div#scheduleTable ul.narrowcol {
     width:30px;
 }
@@ -248,14 +254,15 @@ div#scheduleTable ul.narrowcol li {
     padding-right:0.5em;
 }
 div#scheduleTable ul li {
-    height:1.4em;
+    height:24px;
     border-bottom:1px #bbb solid;
 }
 div#scheduleTable ul li.hour {
     height:2.8em;
     padding-bottom:1px; /* account for the missing border space */
 }
-/* NOTE: Schedule is centered on the page, but it should really be aligned so that the Wednesday cell is centered on the page. */
+/* NOTE: Schedule is centered on the page, but it should really be aligned so that the Wednesday cell is centered on the page.
+ NB: With dynamic days, Wednesday will not always be centered. */
 
 /* Course colors used by YACS Original: (border/text/background)
    #B62/#720/#FDC
@@ -267,33 +274,43 @@ div#scheduleTable ul li.hour {
    */
 
 /* Styles for courses on the schedule */
-.schedule1 {
+/* "div#scheduleTable ul li" needed for CSS precedence rules */
+div#scheduleTable ul li.course1,
+div#scheduleTable ul li.course2,
+div#scheduleTable ul li.course3,
+div#scheduleTable ul li.course4,
+div#scheduleTable ul li.course5, 
+div#scheduleTable ul li.course6,
+div#scheduleTable ul li.end-off-interval { 
+    border-bottom:none;
+}
+.course1 {
     color: #720;
     background-color: #fdc;
     border-left: 2px #b62 solid;
     background-size: 10px 10px;
 }
-.schedule2 {
+.course2 {
     color: #722;
     background-color: #edd;
     border-left: 2px #b44 solid;
 }
-.schedule3 {
+.course3 {
     color: #661;
     background-color: #EED;
     border-left: 2px #994 solid;
 }
-.schedule4 {
+.course4 {
     color: #227;
     background-color: #DDE;
     border-left: 2px #448 solid;
 }
-.schedule5 {
+.course5 {
     color: #166;
     background-color: #DEE;
     border-left: 2px #499 solid;
 }
-.schedule6 {
+.course6 {
     color: #616;
     background-color: #EDE;
     border-left: 2px #949 solid;
