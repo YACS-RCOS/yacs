@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
   def self.search(params)
     query = <<-SQL
       SELECT *
-      FROM ( SELECT courses.* as cs,
+      FROM ( SELECT DISTINCT courses.*,
         to_tsvector(departments.name) ||
         to_tsvector(departments.code) ||
         to_tsvector(to_char(courses.number, '9999')) ||
@@ -21,6 +21,6 @@ class Course < ActiveRecord::Base
       ) c_search
       WHERE c_search.document @@ to_tsquery('#{params.join(' & ')}');
     SQL
-    find_by_sql(query).each {|c| c.name}
+    find_by_sql(query)
   end
 end
