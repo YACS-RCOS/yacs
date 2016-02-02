@@ -277,6 +277,8 @@ div#scheduleTable ul li.hour {
 /* "div#scheduleTable ul li" needed for CSS precedence rules */
 div#scheduleTable ul li.course { 
     border-bottom:none;
+    padding-left: 4px;
+    padding-right:4px;
 }
 div#scheduleTable ul li.course.end30 {
     border-bottom:1px #bbb solid;
