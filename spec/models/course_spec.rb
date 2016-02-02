@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Course do
-  context 'there is a course'
+  context 'there is a course' do
     before do
       @course = create(:course)
     end
@@ -15,6 +15,9 @@ RSpec.describe Course do
       end
     end
   end
+end
+
+=begin
   context 'search' do
     context 'there are courses' do
       before do 
@@ -31,9 +34,9 @@ RSpec.describe Course do
         depts.each_with_index do |dept, i|
           names.each_with_index do |name, j|
             course = FactoryGirl.create(:course, name: name, department: dept, number: numbers[j])
-            # instructors.each do |instructor|
-            #   FactoryGirl.create(:section, course: course, instructors: instructors[i])
-            # end
+            instructors.each do |instructor|
+              FactoryGirl.create(:section, course: course, instructors: instructors[i])
+            end
           end
         end
       end
@@ -41,10 +44,9 @@ RSpec.describe Course do
       context 'courses without instructors'
         it 'finds courses by part of name in the correct order' do
           name_tokens.each do |n|
-            courses = Course.search
           end
         end
       end
     end
   end
-end
+=end
