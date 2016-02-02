@@ -342,10 +342,8 @@ function searchToQuery(searchString) {
   return query;
 }
 
-/* Schedule loading function; takes the selected section IDs, builds the API
-   string out of them (all the scheduling logic is done on the backend), gets
-   the JSON version of the schedules, then calls setupSchedules to format the
-   page.
+/* Schedule loading function
+   TODO: rewrite this
 */
 function loadSchedules() {
   // If nothing is selected, take no action
@@ -369,8 +367,13 @@ function loadSchedules() {
   // Get the schedules as a JSON object.
   doAjaxRequest(schedURL, function(response) {
     var allSchedulesArray = (JSON.parse(response)).schedules;
-    // populate nsUser.schedDOMData with the schedule tables
-    //setupSchedules(schedulesData);
+
+    // Test for no schedules
+    if(allSchedulesArray.length === 0) {
+      $('div#content').html('<div class="error">No schedules are available for your selection of courses.</div>');
+      return;
+    }
+    
     var weeklySchedule =
       convertPeriodsToHTML(convertSchedToPeriods(allSchedulesArray[0]));
     
@@ -430,8 +433,10 @@ function convertSchedToPeriods(schedData) {
   // days must be initialized separately so they don't all refer to the same
   week[0] = []; week[1] = []; week[2] = []; week[3] = []; week[4] = [];
   week[5] = []; week[6] = [];
-  
-  var courseCtr = 1; // identifies which course a period belongs to
+
+  // identifies which course a period belongs to
+  // (used to color all periods of a course the same color)
+  var courseCtr = 1; 
 
   for (var sect of schedData.sections) {
     // assume the length of periods_start is the same as periods_end,
@@ -442,9 +447,14 @@ function convertSchedToPeriods(schedData) {
 	day       : sect.periods_day[i],
 	start     : roundTo5Min(sect.periods_start[i]),
 	end       : roundTo5Min(sect.periods_end[i]),
+	//prof      : sect.instructors,
+	code      : sect.department_code,
+	courseNum : sect.course_number,
+	sectNum   : sect.name, // Should probably be a better term than "name"
+	                       // but that's a problem with the API
 	type      : sect.periods_type[i],
-	prof      : sect.instructors,
-	courseNum : courseCtr
+	title     : sect.course_name,
+	schedNum  : courseCtr
       };
       
       // use a crude insertion sort based on start time (data set is small)
@@ -461,8 +471,8 @@ function convertSchedToPeriods(schedData) {
 	// period is later than anything else, or list is empty
 	week[period.day].push(period);
       }
-      courseCtr++;
     }
+    courseCtr++;
   }
   return week;
 }
@@ -533,10 +543,9 @@ function convertPeriodsToHTML(week) {
     */
        
     var columnHTML = '<ul><li class="heading">'+nsYacs.weekdayNames[i]+'</li>';
-    var currTime;
+    var currTime = earliestStart;
     for(var period of week[i]) {
-      currTime = earliestStart;
-      
+
       // step 1: fill in empty <li>s before period (these get bottom borders)
       if(period.start - currTime >= 30) {
 	// first one may be different
@@ -558,18 +567,38 @@ function convertPeriodsToHTML(week) {
       }
 
       // step 3: add the actual course
-      var classes = 'course c' + period.courseNum;
-      var courseText = 'Period: ' + period.start + ' ' + period.end;
+      var classes = 'course c' + period.schedNum;
+      var courseHeight = getHeight(period.start, period.end);
       if(is30Min(period.endTime)) {
 	classes += ' end30';
       }
       columnHTML += '<li class="' + classes + '" style="height:' +
-	getHeight(period.start, period.end) + 'px">' + courseText + '</li>';
+	courseHeight + 'px">' + getCourseText(period) + '</li>';
 
       // step 4: set currTime
       currTime = period.end;
     }
-    // TODO: add extra empty <li> after the last course until latestEnd
+    // add extra empty <li> after the last course until latestEnd
+    // basically step 1 except with endTime instead of period.start
+    if(latestEnd - currTime >= 30) {
+      // first one may be different
+      var nextInterval = next30Min(currTime);
+      if(currTime != nextInterval) {
+	columnHTML +=
+	'<li style="height:'+getHeight(currTime, nextInterval)+'px"></li>';
+	currTime = nextInterval;
+      }
+      for(; latestEnd - currTime >= 30; currTime += 30) {
+	columnHTML += '<li></li>';
+      }
+    }
+    // then, if there's any time left between currTime and latestEnd:
+    if(latestEnd - currTime > 0) {
+      // less than 30 minutes between currTime and latestEnd
+      columnHTML +=
+      '<li style="height:'+getHeight(currTime, latestEnd)+'px"></li>';
+    }
+    
 
     columnHTML += '</ul>';
     weekHTML += columnHTML;
@@ -577,52 +606,27 @@ function convertPeriodsToHTML(week) {
   return weekHTML;
 }
 
-/* Given an empty div#content and a JSON object representing all possible
-   schedules, create and populate an array of DOM strings in nsUser that
-   are the HTML representation of their respective schedule tables.
-   This function does NOT actually insert any of this data into the DOM; it
-   is the responsibility of loadSchedules() to do that.*/
-function setupSchedules(schedData) {
-  // create the array in nsUser
-  nsUser.schedDOMData = []
-  var sddctr = 0
-  
-  for (var sched of schedData.schedules) {
+/* Given a period, return the text that should display in its schedule box. */
+function getCourseText(period) {
+  // One line of text per 30 minutes in the class.
+  var lines = Math.floor((period.end-period.start)/30);
+  var basetext = period.code + '-' + period.courseNum + '-' + period.sectNum
+    + ' ' + period.type;
     
-    // get the min and max times of all the sections in the schedule
-    var earliestStart = 2400;
-    var latestEnd = 0000;
-    for (var sect of sched.sections) {
-      for (var startTime of sect.periods_start) {
-	if(earliestStart > startTime) earliestStart = startTime;
-      }
-      for (var endTime of sect.periods_end) {
-	if(latestEnd < endTime) latestEnd = endTime;
-      }	
-    }
-    // cap them to the greatest 100s surrounding them and reduce them to hours
-    earliestStart = milToHour(earliestStart, true);
-    latestEnd = milToHour(latestEnd, false);
-    
-    
-    // begin constructing the DOMstring (with the table headers)
-    var schedDOMString = '<tr id="scheduleHeader"><td></td><td>Monday</td><td>Tuesday</td><td>Wednesday</td><td>Thursday</td><td>Friday</td><td></td></tr>';
-
-    
-    
-    for (var hour=earliestStart; hour<latestEnd; ++hour) {
-      
-      schedDOMString += '<tr><td>'+hour+'</td><td></td><td></td><td></td><td></td><td></td><td>&nbsp;</td></tr>';
-      schedDOMString += '<tr><td>&nbsp;</td><td class="schedule1"></td><td></td><td></td><td></td><td></td><td>&nbsp;</td></tr>';
-    }
-    nsUser.schedDOMData[sddctr] = schedDOMString;
-    sddctr++;
+  if(lines < 2) {
+    // one line of text, make it count
+    return basetext;
+  }
+  else {
+    // TODO: truncate string according to the number of lines that can be used
+    return '<p>'+basetext+'</p>'+'<p>'+period.title;
   }
 }
 
+
 /* Setup function. Initializes all data that needs to be used by this script,
    and adds any necessary event listeners. */
-function setup() {
+function setupPage() {
   // Initialize all variables in the yacs namespace
   nsYacs.contentContainer = document.getElementById("content");
   nsYacs.homeButton = document.getElementById("page-title");
@@ -650,4 +654,4 @@ function setup() {
 }
 
 // Only actually run this when the page finishes loading
-document.addEventListener("DOMContentLoaded", setup, false);
+document.addEventListener("DOMContentLoaded", setupPage, false);
