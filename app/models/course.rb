@@ -23,6 +23,6 @@ class Course < ActiveRecord::Base
       WHERE c_search.document @@ to_tsquery('#{search_params}')
       ORDER BY ts_rank(c_search.document, to_tsquery('#{search_params}')) DESC;
     SQL
-    find_by_sql(query)
+    find_by_sql(query).uniq
   end
 end
