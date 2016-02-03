@@ -642,9 +642,7 @@ function setupPage() {
   //Add enter key listener to the searchbar
   nsYacs.searchbar.addEventListener("keyup", function(event) {
     if(event.keyCode === 13) {
-      var searchURL = "/api/v5/courses.xml?q="+
-	searchToQuery(nsYacs.searchbar.value);
-      alert(searchURL);
+      var searchURL = "/api/v5/courses.xml?search=" + nsYacs.searchbar.value;
       loadCourses(searchURL);
     }
   });
