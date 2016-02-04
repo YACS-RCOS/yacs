@@ -423,17 +423,10 @@ function loadSchedules() {
 }
 
 
-/* Helper function to determine whether a given time is a multiple of 30
-   minutes */
-function is30Min(time) {
-  return (time % 30) === 0;
-}
-
-
 /* Helper function to return the next multiple of 30 minutes
    If the given time is already a multiple of 30 minutes, return it. */
 function next30Min(time) {
-  if(is30Min(time)) return time;
+  if(time % 30 === 0) return time;
   return (time + 30 - (time % 30));
 }
 
@@ -458,7 +451,7 @@ function getHeight(startTime, endTime) {
   if(nextInterval < endTime) {
     intervals++;
   }
-  if(is30Min(startTime))
+  if(startTime % 30 === 0)
     intervals--; // exact 30min start/end times correction
   return ((timeDiff*4)/5) + intervals; 
 }
@@ -643,7 +636,7 @@ function convertPeriodsToHTML(week) {
 	// step 3: add the actual course
 	var classes = 'course c' + period.schedNum;
 	var courseHeight = getHeight(period.start, period.end);
-	if(is30Min(period.endTime)) {
+	if(period.endTime % 30 === 0) {
 	  classes += ' end30';
 	}
 	columnHTML += '<li class="' + classes + '" style="height:' +
