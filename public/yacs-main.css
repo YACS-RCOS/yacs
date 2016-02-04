@@ -187,9 +187,16 @@ section-crn, section-seats, section-seats-taken {
     display:none; /* hidden from the user in the course view */
 }
 periods {
+    font-size:80%;
     display:inline-block;
-    margin-left:10em;
+    margin-left:0em;
     float:right;
+}
+period {
+    margin-left:1em;
+}
+period-day {
+    font-weight:bold;
 }
 
 /* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. This may not be possible without CSS3. */
