@@ -82,6 +82,17 @@ function formatSearchResults() {
   });
   $('section-name').prepend('Section ');
   $('section-seats-available').append(' seats');
+  $('period-day').each(function() {
+    $(this).html(nsYacs.weekdayNames[$(this).html()].substring(0,3));
+  });
+  $('period').each(function() {
+    var start = milTimeToReadable($(this).children('period-start').html());
+    var end = milTimeToReadable($(this).children('period-end').html());
+    $(this).children('period-start').remove();
+    $(this).children('period-end').remove();
+    $(this).children('period-day').after(
+      ' <period-time>'+start+'-'+end+'</period-time>');
+  });
 }
 
 /* Helper function to do the actual AJAX request. Takes a filename (same public
@@ -430,6 +441,7 @@ function next30Min(time) {
   return (time + 30 - (time % 30));
 }
 
+
 /* Helper function .......
    currently converts from miltime to number of minutes since midnight in addition to rounding to nearest 5 min, this may change (TODO) */
 function roundTo5Min(milTime) {
@@ -517,8 +529,26 @@ function convertSchedToPeriods(schedData) {
 }
 
 
+/* Helper function to convert a military time into a hh:mm representation. Does
+   not currently use AM or PM.
+   Used in parsing period times when loading courses. */
+function milTimeToReadable(miltime) {
+  var hour = Math.floor(miltime/100);
+  if(hour > 12) {
+    hour -= 12;
+  }
+  if(hour == 0) {
+    hour = 12;
+  }
+  var minute = miltime % 100;
+  if (minute < 10) minute = '0'+minute;
+  return hour + ':' + minute;
+}
+
+
 /* Helper function to convert a numerical hours quantity into a string.
-   Input is a int that represents a 24-hour hour. */
+   Input is a int that represents a 24-hour hour.
+   Used to generate the left side of the schedule table. */
 function hourRepresentation(hour) {
   var ampm = (Math.floor(hour/12) % 2 ? 'PM' : 'AM');
   var newhour = hour % 12;
