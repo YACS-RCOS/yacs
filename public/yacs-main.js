@@ -1,6 +1,6 @@
 // yacs namespace
 // contains application constants
-var nsYacs = {
+const nsYacs = {
   deptColumnWidth : 600, // should be the same as the width
                          // defined for <school> in yacs-main.css
   deptColumnMargin : 10, // should be the same as side margins defined
@@ -483,22 +483,27 @@ function convertSchedToPeriods(schedData) {
     // assume the length of periods_start is the same as periods_end,
     // periods_type and periods_day. (else it's invalid)
     
-    for (var i=0; i<sect.periods_start.length; ++i) {
-      var period = { // the current period getting added into the structure
-	day       : sect.periods_day[i],
-	start     : roundTo5Min(sect.periods_start[i]),
-	end       : roundTo5Min(sect.periods_end[i]),
-	//prof      : sect.instructors,
-	code      : sect.department_code,
-	courseNum : sect.course_number,
-	sectNum   : sect.name, // Should probably be a better term than "name"
-	                       // but that's a problem with the API
-	type      : sect.periods_type[i],
-	title     : sect.course_name,
-	schedNum  : courseCtr
-      };
+    for (var i=0; i<sect.periods.length; ++i) {
+      // the current period getting added into the structure
+      var period = sect.periods[i]; 
+      //period.prof = sect.instructors,
+      // convert the times involved
+      period.start     = roundTo5Min(period.start);
+      period.end       = roundTo5Min(period.end);
+      period.code      = sect.department_code;
+      period.courseNum = sect.course_number;
+      period.sectNum   = sect.name; // Should be a better term than "name"
+	                          // but that's a problem with the API
+      period.title     = sect.course_name;
+      period.schedNum  = courseCtr;
       
       // use a crude insertion sort based on start time (data set is small)
+      /* If the API promises to sort the periods (by day and then by start
+	 time), we can get rid of this frontend sort and simply append each
+	 period to the end of its day array:
+	 week[period.day].push(period);
+	 13 lines down to 1! :O
+      */
       var inserted = false;
       for(var j=0; j<week[period.day].length; ++j) {
 	if(week[period.day][j].start > period.start) {
@@ -707,11 +712,8 @@ function setupPage() {
 
   // Add click event to the schedule button
   nsYacs.schedButton.addEventListener("click", loadSchedules);
-
-  //Add enter key listener to the searchbar
-  document.addEventListener("keydown", function(event) {
-    nsYacs.searchbar.focus();
-  });
+  
+  // Add enter key listener to the searchbar
   nsYacs.searchbar.addEventListener("keyup", function(event) {
     if(event.keyCode === 13) {
       if(nsYacs.searchbar.value)
@@ -719,6 +721,13 @@ function setupPage() {
       else
         loadHomePage();
     }
+  });
+
+  // Focus on the searchbar when any key is pressed.
+  // NOTE: This only works because there is only one text input in the whole
+  // site. If another is ever added, this must be removed.
+  document.addEventListener("keydown", function(event) {
+    nsYacs.searchbar.focus();
   });
   
   // Load the default home page
