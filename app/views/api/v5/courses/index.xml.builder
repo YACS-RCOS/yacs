@@ -18,15 +18,17 @@ xml.tag! 'courses' do
             xml.tag! 'section-seats', section.seats
             xml.tag! 'section-seats-taken', section.seats_taken
             xml.tag! 'section-seats-available', section.seats - section.seats_taken
-            p = 0
-            while p < section.num_periods
-              xml.tag! 'period' do
-                xml.tag! 'period-day', section.periods_day[p]
-                xml.tag! 'period-start', section.periods_start[p]
-                xml.tag! 'period-end', section.periods_end[p]
-                xml.tag! 'period-type', section.periods_type[p]
+            xml.tag! 'periods' do
+              p = 0
+              while p < section.num_periods
+                xml.tag! 'period' do
+                  xml.tag! 'period-day', section.periods_day[p]
+                  xml.tag! 'period-start', section.periods_start[p]
+                  xml.tag! 'period-end', section.periods_end[p]
+                  xml.tag! 'period-type', section.periods_type[p]
+                end
+                p += 1
               end
-              p += 1
             end
           end
         end
