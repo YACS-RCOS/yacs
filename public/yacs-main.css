@@ -251,7 +251,7 @@ div#scheduleTable ul {
     border-top: 1px #bbb solid;
 }*/
 div#scheduleTable ul.narrowcol {
-    width:30px;
+    width:60px;
 }
 div#scheduleTable ul.narrowcol li {
     text-align:right;
@@ -281,8 +281,9 @@ div#scheduleTable ul li.hour {
 /* "div#scheduleTable ul li" needed for CSS precedence rules */
 div#scheduleTable ul li.course { 
     border-bottom:none;
-    padding-left: 4px;
-    padding-right:4px;
+    padding: 0px 4px 0px 4px;
+    overflow: hidden;
+    text-overflow:ellipsis;
 }
 div#scheduleTable ul li.course.end30 {
     border-bottom:1px #bbb solid;
