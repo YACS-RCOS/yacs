@@ -177,16 +177,20 @@ section.selected {
     color: #efefef;
     background-color: /*#ce5656;*/#c42222;
 }
+/*
+section-name, section-instructors, section-seats-available {
+    display:block;
+    float:left;
+}
+*/
 section-crn, section-seats, section-seats-taken {
     display:none; /* hidden from the user in the course view */
 }
-
-/*
-
-yacs-section.selected {
-    background-color: rgba(153,51,51,0.4);
+periods {
+    display:inline-block;
+    margin-left:10em;
+    float:right;
 }
-*/
 
 /* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. This may not be possible without CSS3. */
 
