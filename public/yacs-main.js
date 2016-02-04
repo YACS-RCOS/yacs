@@ -343,22 +343,19 @@ function searchToQuery(searchString) {
 }
 
 /* Schedule loading function
-   TODO: rewrite this
+   Takes the selected courses from the cookie and passes them to the schedule
+   API. Using the JSON data it receives, convert each schedule to periods
+   and then to HTML, store those HTML schedules in nsUser, and load the first
+   one into the DOM.
 */
 function loadSchedules() {
-  // If nothing is selected, take no action
   selectionsRaw = nsUser.getSelectionsRaw();
+  // If nothing is selected, take no action
+  // We could make it show "No courses selected" or whatever but I don't think
+  // that's really necessary
   if (selectionsRaw.length < 1) return;
 
   clearForNewPage();
-
-  /* Temporary redirect (for experimenting with the CSS) *
-  doAjaxRequest("sampleSchedule.html", function(response) {
-    $('div#content').html(response);
-  });
-  return;
-  */
-
   
   // Construct the API request string that will be passed
   // expects a comma-delimited list of numeric section IDs
@@ -367,17 +364,31 @@ function loadSchedules() {
   // Get the schedules as a JSON object.
   doAjaxRequest(schedURL, function(response) {
     var allSchedulesArray = (JSON.parse(response)).schedules;
-
+    var numSchedules = allSchedulesArray.length;
+    
     // Test for no schedules
-    if(allSchedulesArray.length === 0) {
-      $('div#content').html('<div class="error">No schedules are available for your selection of courses.</div>');
+    if(numSchedules === 0) {
+      $('div#content').html('<div class="error">No schedules are available for this selection of courses.</div>');
       return;
     }
+
+    // Store the data in nsUser
+    nsUser.schedHTMLData = [];
+    for(var i=0; i<numSchedules; ++i) {
+      nsUser.schedHTMLData[i] =
+	convertPeriodsToHTML(convertSchedToPeriods(allSchedulesArray[i]));
+    }
     
-    var weeklySchedule =
-      convertPeriodsToHTML(convertSchedToPeriods(allSchedulesArray[0]));
+    var disableSecond = (numSchedules === 1);
+    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled">&#9664;</span>Schedule 1/' +
+      numSchedules +
+      '<span id="rightswitch" class="scheduleswitch' +
+      (numSchedules === 1 ? ' disabled' : '') +
+      '">&#9654;</span></div>';
     
-    $('div#content').html('<div id="scheduleTable">'+weeklySchedule+'</div>');
+    $('div#content').html(schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>');
+
+    // add event listeners to leftswitch and rightswitch
   });
 }
 
