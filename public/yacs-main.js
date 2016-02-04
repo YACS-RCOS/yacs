@@ -224,7 +224,7 @@ function setupHomePage() {
   // courses from the API
   $('department').click(function() {
     var dept = $(this);
-    nsYacs.searchbar.value = dept.children('department-code').html();
+    nsYacs.searchbar.value = dept.children('department-code').html() + " ";
     loadCourses("/api/v5/courses.xml?department_id=" +
   		dept.children('department-id').html());
       
@@ -640,12 +640,15 @@ function setupPage() {
   nsYacs.schedButton.addEventListener("click", loadSchedules);
 
   //Add enter key listener to the searchbar
+  document.addEventListener("keydown", function(event) {
+    nsYacs.searchbar.focus();
+  });
   nsYacs.searchbar.addEventListener("keyup", function(event) {
     if(event.keyCode === 13) {
-      var searchURL = "/api/v5/courses.xml?q="+
-	searchToQuery(nsYacs.searchbar.value);
-      alert(searchURL);
-      loadCourses(searchURL);
+      if(nsYacs.searchbar.value)
+        loadCourses("/api/v5/courses.xml?search=" + nsYacs.searchbar.value);
+      else
+        loadHomePage();
     }
   });
   
