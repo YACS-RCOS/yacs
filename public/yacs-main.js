@@ -371,13 +371,14 @@ function loadSchedules() {
       $('div#content').html('<div class="error">No schedules are available for this selection of courses.</div>');
       return;
     }
-
+    
     // Store the data in nsUser
     nsUser.schedHTMLData = [];
     for(var i=0; i<numSchedules; ++i) {
       nsUser.schedHTMLData[i] =
 	convertPeriodsToHTML(convertSchedToPeriods(allSchedulesArray[i]));
     }
+    nsUser.currentSchedule = 0;
     
     var disableSecond = (numSchedules === 1);
     var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled">&#9664;</span>Schedule 1/' +
@@ -389,6 +390,35 @@ function loadSchedules() {
     $('div#content').html(schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>');
 
     // add event listeners to leftswitch and rightswitch
+    $('#leftswitch').click(function() {
+      if(nsUser.currentSchedule <= 0)
+	return; // already at leftmost
+      
+      nsUser.currentSchedule--;
+
+      $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
+      
+      if(nsUser.currentSchedule === 0) {
+	$(this).addClass('disabled');
+      }
+      $('#rightswitch').removeClass('disabled');
+    });
+    
+    $('#rightswitch').click(function() {
+      console.log(nsUser.currentSchedule);
+      if(nsUser.currentSchedule >= nsUser.schedHTMLData.length-1)
+	return; // already at rightmost
+      
+      nsUser.currentSchedule++;
+      
+      $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
+
+      if(nsUser.currentSchedule === nsUser.schedHTMLData.length - 1) {
+	$(this).addClass('disabled');
+      }
+      $('#leftswitch').removeClass('disabled');
+    });
+    
   });
 }
 
@@ -488,6 +518,17 @@ function convertSchedToPeriods(schedData) {
   return week;
 }
 
+
+/* Helper function to convert a numerical hours quantity into a string.
+   Input is a int that represents a 24-hour hour. */
+function hourRepresentation(hour) {
+  var ampm = (Math.floor(hour/12) % 2 ? 'PM' : 'AM');
+  var newhour = hour % 12;
+  if (newhour === 0) newhour = 12;
+  return newhour + ' ' + ampm;
+}
+
+
 /* Given the array of arrays of periods returned from convertSchedToPeriods,
    convert it into a HTML string which will represent it as a schedule. */
 function convertPeriodsToHTML(week) {
@@ -522,43 +563,93 @@ function convertPeriodsToHTML(week) {
   earliestStart = 60 * Math.floor(earliestStart/60);
   latestEnd = 60 * Math.ceil(latestEnd/60);
 
-  var weekHTML = '';
-  for(var i=earliestDayWithPeriod; i<=latestDayWithPeriod; ++i) {
-    if(week[i].length === 0) {
-      // TODO: fill entire thing with empty <li>s
-      continue;
+  // generate column of hours
+  var hourColumn = '<ul class="narrowcol"><li class="heading"></li>';
+  for(var i = earliestStart; i < latestEnd; i+=30) {
+    if(i % 60 === 0) {
+      hourColumn += '<li>'+hourRepresentation(i/60)+'</li>';
     }
-    /* Strategy:
-       fill in empty <li>s before a period (adjust the height of the first one
-       if the difference between currTime and the next 30 minutes is less than
-       30 minutes) and increment currTime by 30 minutes until the difference
-       between currTime and the period start time is less than 30 minutes.
-       
-       Then, if this difference is nonzero, add a spacer li (which will have
-       no bottom border) with a custom height to fill the space until the course
-       begins.
-       If the difference is zero, do nothing (all space will have been filled
-       by the empty <li>s).
-       
-       Then, add the <li> for the course, with all its text (maybe broken up
-       with <p> tags TODO). This will have a course class defined by the
-       "course" field of the period and a custom height in pixels calculated
-       by the following:
-       (Total time in minutes)*0.8 +
-       (Number of multiples of 30 minutes spanned)
-       
-       If the period ends on a multiple of 30 minutes, add the "end30" class to
-       it, which will give it a bottom border.
+    else {
+      hourColumn += '<li></li>';
+    }
+  }
+  hourColumn += '</ul>';
 
-       Set currTime to this period's end time.
-    */
-       
+  var weekHTML = hourColumn;
+  for(var i=earliestDayWithPeriod; i<=latestDayWithPeriod; ++i) {
+    
     var columnHTML = '<ul><li class="heading">'+nsYacs.weekdayNames[i]+'</li>';
-    var currTime = earliestStart;
-    for(var period of week[i]) {
+    
+    if(week[i].length === 0) {
+      for(var j = earliestStart; j < latestEnd; j += 30) {
+	columnHTML+='<li></li>';
+      }
+      columnHTML+='</ul>';
+    }
+    else {
+      /* Strategy:
+	 fill in empty <li>s before a period (adjust the height of the first one
+	 if the difference between currTime and the next 30 minutes is less than
+	 30 minutes) and increment currTime by 30 minutes until the difference
+	 between currTime and the period start time is less than 30 minutes.
+	 
+	 Then, if this difference is nonzero, add a spacer li (which will have
+	 no bottom border) with a custom height to fill the space until the
+	 course begins.
+	 If the difference is zero, do nothing (all space will have been filled
+	 by the empty <li>s).
+	 
+	 Then, add the <li> for the course, with all its text (maybe broken up
+	 with <p> tags TODO). This will have a course class defined by the
+	 "course" field of the period and a custom height in pixels calculated
+	 by the following:
+	 (Total time in minutes)*0.8 +
+	 (Number of multiples of 30 minutes spanned)
+	 
+	 If the period ends on a multiple of 30 minutes, add the "end30" class to
+	 it, which will give it a bottom border.
 
-      // step 1: fill in empty <li>s before period (these get bottom borders)
-      if(period.start - currTime >= 30) {
+	 Set currTime to this period's end time.
+      */
+      
+      var currTime = earliestStart;
+      for(var period of week[i]) {
+
+	// step 1: fill in empty <li>s before period (these get bottom borders)
+	if(period.start - currTime >= 30) {
+	  // first one may be different
+	  var nextInterval = next30Min(currTime);
+	  if(currTime != nextInterval) {
+	    columnHTML +=
+	    '<li style="height:'+getHeight(currTime, nextInterval)+'px"></li>';
+	    currTime = nextInterval;
+	  }
+	  for(; period.start - currTime >= 30; currTime += 30) {
+	    columnHTML += '<li></li>';
+	  }
+	}
+
+	// step 2: add a spacer li (no border) if there is still a time gap
+	if(period.start - currTime > 0) {
+	  columnHTML += '<li class="spacer" style="height:' +
+	    getHeight(currTime, period.start) + 'px"></li>';
+	}
+
+	// step 3: add the actual course
+	var classes = 'course c' + period.schedNum;
+	var courseHeight = getHeight(period.start, period.end);
+	if(is30Min(period.endTime)) {
+	  classes += ' end30';
+	}
+	columnHTML += '<li class="' + classes + '" style="height:' +
+	  courseHeight + 'px">' + getCourseText(period) + '</li>';
+
+	// step 4: set currTime
+	currTime = period.end;
+      }
+      // add extra empty <li> after the last course until latestEnd
+      // basically step 1 except with endTime instead of period.start
+      if(latestEnd - currTime >= 30) {
 	// first one may be different
 	var nextInterval = next30Min(currTime);
 	if(currTime != nextInterval) {
@@ -566,50 +657,17 @@ function convertPeriodsToHTML(week) {
 	  '<li style="height:'+getHeight(currTime, nextInterval)+'px"></li>';
 	  currTime = nextInterval;
 	}
-	for(; period.start - currTime >= 30; currTime += 30) {
+	for(; latestEnd - currTime >= 30; currTime += 30) {
 	  columnHTML += '<li></li>';
 	}
       }
-
-      // step 2: add a spacer li (no border) if there is still a time gap
-      if(period.start - currTime > 0) {
-	columnHTML += '<li class="spacer" style="height:' +
-	  getHeight(currTime, period.start) + 'px"></li>';
-      }
-
-      // step 3: add the actual course
-      var classes = 'course c' + period.schedNum;
-      var courseHeight = getHeight(period.start, period.end);
-      if(is30Min(period.endTime)) {
-	classes += ' end30';
-      }
-      columnHTML += '<li class="' + classes + '" style="height:' +
-	courseHeight + 'px">' + getCourseText(period) + '</li>';
-
-      // step 4: set currTime
-      currTime = period.end;
-    }
-    // add extra empty <li> after the last course until latestEnd
-    // basically step 1 except with endTime instead of period.start
-    if(latestEnd - currTime >= 30) {
-      // first one may be different
-      var nextInterval = next30Min(currTime);
-      if(currTime != nextInterval) {
+      // then, if there's any time left between currTime and latestEnd:
+      if(latestEnd - currTime > 0) {
+	// less than 30 minutes between currTime and latestEnd
 	columnHTML +=
-	'<li style="height:'+getHeight(currTime, nextInterval)+'px"></li>';
-	currTime = nextInterval;
-      }
-      for(; latestEnd - currTime >= 30; currTime += 30) {
-	columnHTML += '<li></li>';
+	'<li style="height:'+getHeight(currTime, latestEnd)+'px"></li>';
       }
     }
-    // then, if there's any time left between currTime and latestEnd:
-    if(latestEnd - currTime > 0) {
-      // less than 30 minutes between currTime and latestEnd
-      columnHTML +=
-      '<li style="height:'+getHeight(currTime, latestEnd)+'px"></li>';
-    }
-    
 
     columnHTML += '</ul>';
     weekHTML += columnHTML;
