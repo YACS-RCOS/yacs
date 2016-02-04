@@ -275,42 +275,40 @@ div#scheduleTable ul li.hour {
 
 /* Styles for courses on the schedule */
 /* "div#scheduleTable ul li" needed for CSS precedence rules */
-div#scheduleTable ul li.course1,
-div#scheduleTable ul li.course2,
-div#scheduleTable ul li.course3,
-div#scheduleTable ul li.course4,
-div#scheduleTable ul li.course5, 
-div#scheduleTable ul li.course6,
-div#scheduleTable ul li.end-off-interval { 
+div#scheduleTable ul li.course { 
     border-bottom:none;
+    padding-left: 4px;
+    padding-right:4px;
 }
-.course1 {
+div#scheduleTable ul li.course.end30 {
+    border-bottom:1px #bbb solid;
+}
+.c1 {
     color: #720;
     background-color: #fdc;
     border-left: 2px #b62 solid;
-    background-size: 10px 10px;
 }
-.course2 {
+.c2 {
     color: #722;
     background-color: #edd;
     border-left: 2px #b44 solid;
 }
-.course3 {
+.c3 {
     color: #661;
     background-color: #EED;
     border-left: 2px #994 solid;
 }
-.course4 {
+.c4 {
     color: #227;
     background-color: #DDE;
     border-left: 2px #448 solid;
 }
-.course5 {
+.c5 {
     color: #166;
     background-color: #DEE;
     border-left: 2px #499 solid;
 }
-.course6 {
+.c6 {
     color: #616;
     background-color: #EDE;
     border-left: 2px #949 solid;
