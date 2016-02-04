@@ -649,11 +649,8 @@ function setupPage() {
 
   // Add click event to the schedule button
   nsYacs.schedButton.addEventListener("click", loadSchedules);
-
-  //Add enter key listener to the searchbar
-  document.addEventListener("keydown", function(event) {
-    nsYacs.searchbar.focus();
-  });
+  
+  // Add enter key listener to the searchbar
   nsYacs.searchbar.addEventListener("keyup", function(event) {
     if(event.keyCode === 13) {
       if(nsYacs.searchbar.value)
@@ -661,6 +658,13 @@ function setupPage() {
       else
         loadHomePage();
     }
+  });
+
+  // Focus on the searchbar when any key is pressed.
+  // NOTE: This only works because there is only one text input in the whole
+  // site. If another is ever added, this must be removed.
+  document.addEventListener("keydown", function(event) {
+    nsYacs.searchbar.focus();
   });
   
   // Load the default home page
