@@ -41,7 +41,7 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
             days_xml = period_xml.xpath("DAY")
             days_xml.each do |day_xml|
               section.num_periods += 1
-              section.periods_day   .push(day_xml.text)
+              section.periods_day   .push(day_xml.text.to_i + 1)
               section.periods_start .push(period_xml[:start])
               section.periods_end   .push(period_xml[:end])
               section.periods_type  .push(period_xml[:type])
