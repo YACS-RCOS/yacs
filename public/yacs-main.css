@@ -125,6 +125,11 @@ department department-code {
     margin-right:0.2em;
     font-size:120%;
 }
+noscript {
+    color:#c42222;
+    font-weight:bold;
+    font-size:150%;
+}
 
 
 /* Styles for the course list pages. */
