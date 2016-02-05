@@ -199,13 +199,17 @@ period-day {
 
 /* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. This may not be possible without CSS3. */
 
-/* Styles for the schedule page
- Note that the */
+/* Styles for the schedule page */
 #schedulebar {
-    text-align:center;
+    text-align: center;
     margin-left: auto;
     margin-right: auto;
     font-size: 130%;
+    /* note to maintainers: if the general user-select is standard by now,
+       please remove the vendor ones and replace with "user-select:none;" */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
 }
 .scheduleswitch {
     padding:0px 20px;
