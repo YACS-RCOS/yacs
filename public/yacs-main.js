@@ -76,6 +76,12 @@ var nsUser = {
    application is responsible for this process.
 */
 function formatSearchResults() {
+  $('section').each(function() {
+    var remaining = $(this).children('section-seats-available').html();
+    if(remaining < 1) { // this quantity can be and is often negative
+      $(this).addClass('closed');
+    }
+  });
   $('course-credits').html(function(index, oldhtml) {
     if(oldhtml === '1') { return oldhtml + ' credit'; }
     else { return oldhtml + ' credits'; }
@@ -498,8 +504,9 @@ function convertSchedToPeriods(schedData) {
       period.code      = sect.department_code;
       period.courseNum = sect.course_number;
       period.sectNum   = sect.name; // Should be a better term than "name"
-	                          // but that's a problem with the API
+	                            // but that's a problem with the API
       period.title     = sect.course_name;
+      period.remaining = sect.seats_available;
       period.schedNum  = courseCtr;
       
       // use a crude insertion sort based on start time (data set is small)
@@ -668,6 +675,9 @@ function convertPeriodsToHTML(week) {
 	var courseHeight = getHeight(period.start, period.end);
 	if(period.endTime % 30 === 0) {
 	  classes += ' end30';
+	}
+	if(period.remaining < 1) {
+	  classes += ' closed';
 	}
 	columnHTML += '<li class="' + classes + '" style="height:' +
 	  courseHeight + 'px">' + getCourseText(period) + '</li>';
