@@ -380,6 +380,8 @@ function movePrevSchedule() {
     $('#leftswitch').addClass('disabled');
   }
   $('#rightswitch').removeClass('disabled');
+  // change number of the schedule
+  $('#schedNum').html(nsUser.currentSchedule + 1);
 }
 function moveNextSchedule() {
   if(nsUser.currentSchedule >= nsUser.schedHTMLData.length-1 ||
@@ -394,6 +396,7 @@ function moveNextSchedule() {
     $('#rightswitch').addClass('disabled');
   }
   $('#leftswitch').removeClass('disabled');
+  $('#schedNum').html(nsUser.currentSchedule + 1);
 }
 
 /* Schedule loading function
@@ -435,7 +438,7 @@ function loadSchedules() {
     nsUser.currentSchedule = 0;
     
     var disableSecond = (numSchedules === 1);
-    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled">&#9664;</span>Schedule 1/' +
+    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled">&#9664;</span>Schedule <span id="schedNum">1</span> / ' +
       numSchedules +
       '<span id="rightswitch" class="scheduleswitch' +
       (numSchedules === 1 ? ' disabled' : '') +
