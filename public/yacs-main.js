@@ -321,7 +321,10 @@ function setupCourses() {
       }
       else {
       	nsUser.addSelection(sid);
-      	$(section).addClass('selected');
+	// never add closed sections
+	if(! $(this).hasClass('closed')) {
+      	  $(section).addClass('selected');
+	}
       }
     });
   });
