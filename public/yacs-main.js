@@ -6,7 +6,10 @@ const nsYacs = {
   deptColumnMargin : 10, // should be the same as side margins defined
                          // for <school> in yacs-main.css
   weekdayNames : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-		  'Friday', 'Saturday']
+		  'Friday', 'Saturday'],
+
+  // IDs for the different pages
+  homePage: 0, courselistPage: 1, schedulePage: 2
 }
 
 /* cookie helper functions
@@ -68,7 +71,9 @@ var nsUser = {
   // Determine whether the user has already selected a given section ID
   hasSelection: function(sid) {
     return this.getSelections().indexOf(sid) != -1;
-  }
+  },
+
+  currentPage: 0
 }
 
 /* Format some items which appear on the search results page into their final
@@ -254,6 +259,7 @@ function loadHomePage() {
   doAjaxRequest("/api/v5/departments.xml", function(response) {
     nsYacs.contentContainer.innerHTML = response;
     setupHomePage();
+    nsUser.currentPage = nsYacs.homePage;
   });
 }
 
@@ -329,6 +335,7 @@ function loadCourses(apiString) {
   doAjaxRequest(apiString, function(response) {
     nsYacs.contentContainer.innerHTML = response;
     setupCourses();
+    nsUser.currentPage = nsYacs.courselistPage;
   });
 }
 
@@ -357,6 +364,36 @@ function searchToQuery(searchString) {
     }
   }
   return query;
+}
+
+/* Function callbacks that activate when navigating between schedules. */
+function movePrevSchedule() {
+  if(nsUser.currentSchedule <= 0 ||
+     nsUser.currentPage != nsYacs.schedulePage)
+    return; // already at leftmost
+  
+  nsUser.currentSchedule--;
+  
+  $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
+  
+  if(nsUser.currentSchedule === 0) {
+    $('#leftswitch').addClass('disabled');
+  }
+  $('#rightswitch').removeClass('disabled');
+}
+function moveNextSchedule() {
+  if(nsUser.currentSchedule >= nsUser.schedHTMLData.length-1 ||
+     nsUser.currentPage != nsYacs.schedulePage)
+    return; // already at rightmost
+  
+  nsUser.currentSchedule++;
+  
+  $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
+
+  if(nsUser.currentSchedule === nsUser.schedHTMLData.length - 1) {
+    $('#rightswitch').addClass('disabled');
+  }
+  $('#leftswitch').removeClass('disabled');
 }
 
 /* Schedule loading function
@@ -407,35 +444,10 @@ function loadSchedules() {
     $('div#content').html(schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>');
 
     // add event listeners to leftswitch and rightswitch
-    $('#leftswitch').click(function() {
-      if(nsUser.currentSchedule <= 0)
-	return; // already at leftmost
-      
-      nsUser.currentSchedule--;
+    $('#leftswitch').click(movePrevSchedule);
+    $('#rightswitch').click(moveNextSchedule);
 
-      $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
-      
-      if(nsUser.currentSchedule === 0) {
-	$(this).addClass('disabled');
-      }
-      $('#rightswitch').removeClass('disabled');
-    });
-    
-    $('#rightswitch').click(function() {
-      console.log(nsUser.currentSchedule);
-      if(nsUser.currentSchedule >= nsUser.schedHTMLData.length-1)
-	return; // already at rightmost
-      
-      nsUser.currentSchedule++;
-      
-      $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
-
-      if(nsUser.currentSchedule === nsUser.schedHTMLData.length - 1) {
-	$(this).addClass('disabled');
-      }
-      $('#leftswitch').removeClass('disabled');
-    });
-    
+    nsUser.currentPage = nsYacs.schedulePage;
   });
 }
 
@@ -730,6 +742,28 @@ function getCourseText(period) {
   }
 }
 
+/* Global key press callback. Handles any key pressed at any time on any page
+   anywhere. */
+function handleKeydown(event) {
+  var c = event.keyCode;
+  if( ((c == 37) || (c == 38)) &&
+      (nsUser.currentPage == nsYacs.schedulePage) ) {
+    // Up/Left
+    movePrevSchedule();
+  }
+  else if ( ((c == 39) || (c == 40)) &&
+	    (nsUser.currentPage == nsYacs.schedulePage) ) {
+    // Right/Down
+    moveNextSchedule();
+  }
+  else {
+    // NOTE: The behavior focusing most key presses on the searchbar only
+    // works because there is only one text input in the whole site. If
+    // another is ever added, that behavior must be removed or modified.
+    nsYacs.searchbar.focus();
+  }
+}
+
 
 /* Setup function. Initializes all data that needs to be used by this script,
    and adds any necessary event listeners. */
@@ -756,11 +790,11 @@ function setupPage() {
     }
   });
 
-  // Focus on the searchbar when any key is pressed.
-  // NOTE: This only works because there is only one text input in the whole
-  // site. If another is ever added, this must be removed.
+  // General keydown event listener.
+  // It goes here because global keyboard events should be bound to document,
+  // and that only once.
   document.addEventListener("keydown", function(event) {
-    nsYacs.searchbar.focus();
+    handleKeydown(event);
   });
   
   // Load the default home page
