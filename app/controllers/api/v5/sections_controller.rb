@@ -5,6 +5,10 @@ class Api::V5::SectionsController < Api::V5::ApiController
     else
       @sections = Section.all
     end
+    respond_to do |format|
+      format.xml { render xml: @sections }
+      format.json { render }
+    end
   end
 
   def show

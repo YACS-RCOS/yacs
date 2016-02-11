@@ -1,0 +1,1 @@
+json.courses @courses, partial: '/api/v5/courses/course', as: :course
