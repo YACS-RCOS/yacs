@@ -73,7 +73,8 @@ var nsUser = {
     return this.getSelections().indexOf(sid) != -1;
   },
 
-  currentPage: 0
+  currentPage: 0,
+  currentSchedule: undefined,
 }
 
 /* Format some items which appear on the search results page into their final
@@ -320,9 +321,9 @@ function setupCourses() {
       	$(section).removeClass('selected');
       }
       else {
-      	nsUser.addSelection(sid);
 	// never add closed sections
 	if(! $(this).hasClass('closed')) {
+      	  nsUser.addSelection(sid);
       	  $(section).addClass('selected');
 	}
       }
@@ -420,7 +421,7 @@ function loadSchedules() {
   // Construct the API request string that will be passed
   // expects a comma-delimited list of numeric section IDs
   var schedURL = "/api/v5/schedules.json?section_ids=" + selectionsRaw;
-
+  
   // Get the schedules as a JSON object.
   doAjaxRequest(schedURL, function(response) {
     var allSchedulesArray = (JSON.parse(response)).schedules;
