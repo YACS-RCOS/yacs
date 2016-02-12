@@ -1,12 +1,19 @@
 describe 'Departments API' do
   it '#index' do
-    FactoryGirl.create_list(:department, 10)
+    departments = FactoryGirl.create_list(:department, 10)
     get '/api/v5/departments.xml'
     expect(response).to be_success
-    expect(xml.root.departments.department.length).to eq 10
-    Department.all.each_with_index do |dept, n|
+    expect(xml.root.departments.department.length).to eq departments.length
+    departments.each_with_index do |dept, n|
       expect(xml.root.departments.department[n].search('department-code').text).to eq dept.code
       expect(xml.root.departments.department[n].search('department-name').text).to eq dept.name
+    end
+
+    get '/api/v5/departments.json'
+    expect(response) .to be_success
+    expect(json['departments'].length) .to eq departments.length
+    departments.each_with_index do |dept, n|
+      expect(json['departments'][n]['id']) .to eq dept.id
     end
   end
 
@@ -26,6 +33,13 @@ describe 'Departments API' do
     expect(xml.root.schools.school[0].search('school-name').text).to eq schools[0].name
     expect(xml.root.schools.school[0].departments.department[0].search('department-code').text).to eq depts[0].code
     expect(xml.root.schools.school[0].departments.department[0].search('department-name').text).to eq depts[0].name
+
+    get '/api/v5/departments.json'
+    expect(response).to be_success
+    expect(json['departments'].length) .to eq 2
+    expect(json['departments'][0]['id']) .to eq depts[2].id
+    expect(json['schools'].length) .to eq 2
+    expect(json['schools'][0]['departments'][0]['id']) .to eq depts[0].id
   end
 
   it '#show' do
