@@ -12,6 +12,12 @@ def match_sections(sections, course)
   end
 end
 
+def json_match_sections(sections)
+  sections.each_with_index do |section, n|
+    expect(json['sections'][n]['id']) .to eq section.id
+  end
+end
+
 describe 'Sections API' do
   context 'when there is a course' do
     before do
@@ -19,11 +25,16 @@ describe 'Sections API' do
     end
 
     it '#index' do
-      FactoryGirl.create_list(:section, 10, course: @courses[0])
+      sections = FactoryGirl.create_list(:section, 10, course: @courses[0])
       get '/api/v5/sections.xml'
       expect(response)    .to be_success
-      expect(xml.sections.section.length) .to eq 10
-      match_sections(Section.all, @courses[0])
+      expect(xml.sections.section.length) .to eq sections.length
+      match_sections(sections, @courses[0])
+
+      get '/api/v5/sections.json'
+      expect(response) .to be_success
+      expect(json['sections'].length) .to eq sections.length
+      json_match_sections(sections)
     end
 
     context '#index?course_id=' do
@@ -36,6 +47,10 @@ describe 'Sections API' do
         get "/api/v5/sections.xml?course_id=#{@courses[2].id}" #@courses[2] should have no sections
         expect(response).to be_success
         expect(xml.sections.try(:section))    .to be_nil
+
+        get "/api/v5/sections.json?course_id=#{@courses[2].id}" #@courses[2] should have no sections
+        expect(response).to be_success
+        expect(json['sections'].length) .to eq 0
       end
 
       it "returns the correct sections" do
@@ -43,11 +58,19 @@ describe 'Sections API' do
         expect(response)    .to be_success
         expect(xml.sections.section.length) .to eq 5
         match_sections(@sections1, @courses[0])
-
         get "/api/v5/sections.xml?course_id=#{@courses[1].id}" #@courses[0,1] should have 5 sections each
         expect(response)    .to be_success
         expect(xml.sections.section.length) .to eq 5
         match_sections(@sections2, @courses[1])
+
+        get "/api/v5/sections.json?course_id=#{@courses[0].id}" #@courses[0,1] should have 5 sections each
+        expect(response)    .to be_success
+        expect(json['sections'].length) .to eq 5
+        json_match_sections(@sections1)
+        get "/api/v5/sections.json?course_id=#{@courses[1].id}" #@courses[0,1] should have 5 sections each
+        expect(response)    .to be_success
+        expect(json['sections'].length) .to eq 5
+        json_match_sections(@sections2)
       end
     end
 
@@ -55,8 +78,8 @@ describe 'Sections API' do
       section = FactoryGirl.create(:section)
       get "/api/v5/sections/#{section.id}.xml"
       expect(response).to be_success
-      expect(xml.search('section-id').text)    .to eq section.id.to_s
-      expect(xml.search('section-crn').text)  .to eq section.crn.to_s
+      expect(xml.search('section-id').text) .to eq section.id.to_s
+      expect(xml.search('section-crn').text) .to eq section.crn.to_s
     end
   end
 end
