@@ -7,6 +7,12 @@ def match_courses(courses, dept)
   end
 end
 
+def json_match_courses(courses)
+  courses.each_with_index do |course, n|
+    expect(json['courses'][n]['id']) .to eq course.id
+  end
+end
+
 describe 'Courses API' do
   context 'when there is a department' do
     before do
@@ -14,11 +20,16 @@ describe 'Courses API' do
     end
 
     it '#index' do
-      FactoryGirl.create_list(:course, 10, department: @depts[0])
+      courses = FactoryGirl.create_list(:course, 10, department: @depts[0])
       get '/api/v5/courses.xml'
       expect(response)    .to be_success
-      expect(xml.courses.course.length) .to eq 10
-      match_courses(Course.all, @depts[0])
+      expect(xml.courses.course.length) .to eq courses.length
+      match_courses(courses, @depts[0])
+
+      get '/api/v5/courses.json'
+      expect(response) .to be_success
+      expect(json['courses'].length) .to eq courses.length
+      json_match_courses(courses)
     end
 
     context '#index?department_id=' do
@@ -30,20 +41,33 @@ describe 'Courses API' do
       it 'returns no courses' do
         get "/api/v5/courses.xml?department_id=#{@depts[2].id}" #@depts[2] should have no courses
         expect(response).to be_success
-        # binding.pry
         expect(xml.courses.try(:course)) .to be_nil
+
+        get "/api/v5/courses.json?department_id=#{@depts[2].id}"
+        expect(response).to be_success
+        expect(json['courses']) .to be_empty
       end
 
       it "returns the correct courses" do
         get "/api/v5/courses.xml?department_id=#{@depts[0].id}" #@depts[0,1] should have 5 courses each
         expect(response)    .to be_success
-        expect(xml.courses.course.length) .to eq 5
+        expect(xml.courses.course.length) .to eq @depts[0].courses.length
         match_courses(@courses1, @depts[0])
 
         get "/api/v5/courses.xml?department_id=#{@depts[1].id}" #@depts[0,1] should have 5 courses each
         expect(response)    .to be_success
-        expect(xml.courses.course.length) .to eq 5
+        expect(xml.courses.course.length) .to eq @depts[1].courses.length
         match_courses(@courses2, @depts[1])
+
+        get "/api/v5/courses.json?department_id=#{@depts[0].id}" #@depts[0,1] should have 5 courses each
+        expect(response)    .to be_success
+        expect(json['courses'].length) .to eq @depts[0].courses.length
+        json_match_courses(@courses1)
+
+        get "/api/v5/courses.json?department_id=#{@depts[1].id}" #@depts[0,1] should have 5 courses each
+        expect(response)    .to be_success
+        expect(json['courses'].length) .to eq @depts[1].courses.length
+        json_match_courses(@courses2)
       end
     end
 

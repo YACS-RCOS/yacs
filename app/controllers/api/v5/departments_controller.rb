@@ -6,6 +6,10 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
     else
       @departments = Department.all
     end
+    respond_to do |format|
+      format.xml { render xml: @courses }
+      format.json { render }
+    end
   end
 
   def show

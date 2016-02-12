@@ -7,6 +7,10 @@ class Api::V5::CoursesController < Api::V5::ApiController
     else
       @courses = Course.all
     end
+    respond_to do |format|
+      format.xml { render xml: @courses }
+      format.json { render }
+    end
   end
 
   def show

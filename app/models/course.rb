@@ -25,4 +25,8 @@ class Course < ActiveRecord::Base
     SQL
     find_by_sql(query).uniq
   end
+
+  def credits
+    min_credits == max_credits ? "#{min_credits}" : "#{min_credits}-#{max_credits}"
+  end
 end
