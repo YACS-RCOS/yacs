@@ -82,29 +82,57 @@ var nsUser = {
    application is responsible for this process.
 */
 function formatSearchResults() {
-  $('section').each(function() {
-    var remaining = $(this).children('section-seats-available').html();
-    if(remaining < 1) { // this quantity can be and is often negative
-      $(this).addClass('closed');
+  // add "closed" class to sections with less than 1 seat
+  var nodes = document.getElementsByTagName('section');
+  for(var n of nodes) {
+    var subnodes = n.getElementsByTagName('section-seats-available');
+    // there should only be 1 <section-seats-available> child
+    if(parseInt(subnodes[0].innerHTML, 10) < 1) {
+      n.classList.add('closed');
     }
-  });
-  $('course-credits').html(function(index, oldhtml) {
-    if(oldhtml === '1') { return oldhtml + ' credit'; }
-    else { return oldhtml + ' credits'; }
-  });
-  $('section-name').prepend('Section ');
-  $('section-seats-available').append(' seats');
-  $('period-day').each(function() {
-    $(this).html(nsYacs.weekdayNames[$(this).html()].substring(0,3));
-  });
-  $('period').each(function() {
-    var start = milTimeToReadable($(this).children('period-start').html());
-    var end = milTimeToReadable($(this).children('period-end').html());
-    $(this).children('period-start').remove();
-    $(this).children('period-end').remove();
-    $(this).children('period-day').after(
-      ' <period-time>'+start+'-'+end+'</period-time>');
-  });
+  }
+
+  // add the actual "credit(s)" to credits elements, which only have the number
+  nodes = document.getElementsByTagName('course-credits');
+  for(var n of nodes) {
+    var word = 'credits';
+    if(parseInt(n.innerHTML, 10) === 1) { word = 'credit'; }
+    n.innerHTML = n.innerHTML + ' ' + word;
+  }
+
+  // prepend the "Section" to section numbers
+  nodes = document.getElementsByTagName('section-name');
+  for(var n of nodes) {
+    n.innerHTML = 'Section ' + n.innerHTML;
+  }
+
+  // append the " seats" to the available seats
+  nodes = document.getElementsByTagName('section-seats-available');
+  for(var n of nodes) {
+    n.innerHTML += ' seats';
+  }
+
+  // period-day is represented as a number; translate it into a short day code
+  nodes = document.getElementsByTagName('period-day');
+  for(var n of nodes) {
+    n.innerHTML = nsYacs.weekdayNames[parseInt(n.innerHTML, 10)].substring(0,3);
+  }
+
+  // for each period object, the period-start and period-end children are
+  // represented in military time, so replace them with a period-time element
+  // that formats them together as readable times
+  nodes = document.getElementsByTagName('period');
+  for(var n of nodes) {
+    var ps = n.getElementsByTagName('period-start')[0];
+    var pe = n.getElementsByTagName('period-end')[0];
+    var startTime = milTimeToReadable(ps.innerHTML);
+    var endTime = milTimeToReadable(pe.innerHTML);
+    var pt = document.createElement('period-time');
+    pt.innerHTML = startTime + '-' + endTime;
+    ps.parentNode.insertBefore(pt, ps);
+    ps.parentNode.removeChild(ps);
+    pe.parentNode.removeChild(pe);
+  }
 }
 
 /* Helper function to do the actual AJAX request. Takes a filename (same public
@@ -305,6 +333,7 @@ function setupCourses() {
     var allSectionsSelected = true;
     var selections = nsUser.getSelections();
     $(this).find('section-id').each(function(i, sid) {
+      alert(sid);
       // if a section id cannot be found in the selected array, they cannot
       // all be selected
       sid = $(sid).html();
