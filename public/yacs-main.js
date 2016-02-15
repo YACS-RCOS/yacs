@@ -75,6 +75,7 @@ var nsUser = {
 
   currentPage: 0,
   currentSchedule: undefined,
+  currentState: undefined // for history.js stuff
 }
 
 /* Format some items which appear on the search results page into their final
@@ -280,6 +281,7 @@ function setupHomePage() {
   		dept.children('department-id').html());
       
   });
+  History.pushState({state:nsYacs.homePage}, "Home page", "?state=0");
 }
 
 // Anything that has to be done when loading up the front page.
@@ -309,6 +311,7 @@ function setupCourses() {
   // bind section storing function to clicks
   $('section').click(function(event) {
     var sid = $(this).find('section-id').html();
+    alert(sid);
     // care more about the data - so use that to determine how to change
     // the styling; i.e. if the id is in the array, we will always deselect it
     // regardless of whether it was being rendered as selected or not
@@ -358,6 +361,7 @@ function setupCourses() {
       }
     });
   });
+  History.pushState({state:nsYacs.courselistPage}, "Course page", "?state=1");
 }
 
 // Anything that has to be done when loading up the courses/search results.
@@ -453,6 +457,10 @@ function loadSchedules() {
   
   // Get the schedules as a JSON object.
   doAjaxRequest(schedURL, function(response) {
+
+    // TODO: Move most of this code into a setupSchedules function
+    // will be done when we revamp schedule code and add deselection
+    
     var allSchedulesArray = (JSON.parse(response)).schedules;
     var numSchedules = allSchedulesArray.length;
     
@@ -484,6 +492,8 @@ function loadSchedules() {
     $('#rightswitch').click(moveNextSchedule);
 
     nsUser.currentPage = nsYacs.schedulePage;
+    
+    History.pushState({state:nsYacs.schedulePage}, "Schedule page", "?state=2");
   });
 }
 
@@ -835,6 +845,11 @@ function setupPage() {
   
   // Load the default home page
   loadHomePage();
+
+  // Bind History.js logging to state changes
+  History.Adapter.bind(window, 'statechange', function(){
+    var State = History.getState();
+  });
 }
 
 // Only actually run this when the page finishes loading
