@@ -75,6 +75,7 @@ var nsUser = {
 
   currentPage: 0,
   currentSchedule: undefined,
+  currentState: undefined // for history.js stuff
 }
 
 /* Format some items which appear on the search results page into their final
@@ -82,29 +83,57 @@ var nsUser = {
    application is responsible for this process.
 */
 function formatSearchResults() {
-  $('section').each(function() {
-    var remaining = $(this).children('section-seats-available').html();
-    if(remaining < 1) { // this quantity can be and is often negative
-      $(this).addClass('closed');
+  // add "closed" class to sections with less than 1 seat
+  var nodes = document.getElementsByTagName('section');
+  for(var n of nodes) {
+    var subnodes = n.getElementsByTagName('section-seats-available');
+    // there should only be 1 <section-seats-available> child
+    if(parseInt(subnodes[0].innerHTML, 10) < 1) {
+      n.classList.add('closed');
     }
-  });
-  $('course-credits').html(function(index, oldhtml) {
-    if(oldhtml === '1') { return oldhtml + ' credit'; }
-    else { return oldhtml + ' credits'; }
-  });
-  $('section-name').prepend('Section ');
-  $('section-seats-available').append(' seats');
-  $('period-day').each(function() {
-    $(this).html(nsYacs.weekdayNames[$(this).html()].substring(0,3));
-  });
-  $('period').each(function() {
-    var start = milTimeToReadable($(this).children('period-start').html());
-    var end = milTimeToReadable($(this).children('period-end').html());
-    $(this).children('period-start').remove();
-    $(this).children('period-end').remove();
-    $(this).children('period-day').after(
-      ' <period-time>'+start+'-'+end+'</period-time>');
-  });
+  }
+
+  // add the actual "credit(s)" to credits elements, which only have the number
+  nodes = document.getElementsByTagName('course-credits');
+  for(var n of nodes) {
+    var word = 'credits';
+    if(parseInt(n.innerHTML, 10) === 1) { word = 'credit'; }
+    n.innerHTML = n.innerHTML + ' ' + word;
+  }
+
+  // prepend the "Section" to section numbers
+  nodes = document.getElementsByTagName('section-name');
+  for(var n of nodes) {
+    n.innerHTML = 'Section ' + n.innerHTML;
+  }
+
+  // append the " seats" to the available seats
+  nodes = document.getElementsByTagName('section-seats-available');
+  for(var n of nodes) {
+    n.innerHTML += ' seats';
+  }
+
+  // period-day is represented as a number; translate it into a short day code
+  nodes = document.getElementsByTagName('period-day');
+  for(var n of nodes) {
+    n.innerHTML = nsYacs.weekdayNames[parseInt(n.innerHTML, 10)].substring(0,3);
+  }
+
+  // for each period object, the period-start and period-end children are
+  // represented in military time, so replace them with a period-time element
+  // that formats them together as readable times
+  nodes = document.getElementsByTagName('period');
+  for(var n of nodes) {
+    var ps = n.getElementsByTagName('period-start')[0];
+    var pe = n.getElementsByTagName('period-end')[0];
+    var startTime = milTimeToReadable(ps.innerHTML);
+    var endTime = milTimeToReadable(pe.innerHTML);
+    var pt = document.createElement('period-time');
+    pt.innerHTML = startTime + '-' + endTime;
+    ps.parentNode.insertBefore(pt, ps);
+    ps.parentNode.removeChild(ps);
+    pe.parentNode.removeChild(pe);
+  }
 }
 
 /* Helper function to do the actual AJAX request. Takes a filename (same public
@@ -252,6 +281,7 @@ function setupHomePage() {
   		dept.children('department-id').html());
       
   });
+  History.pushState({state:nsYacs.homePage}, "Home page", "?state=0");
 }
 
 // Anything that has to be done when loading up the front page.
@@ -281,6 +311,7 @@ function setupCourses() {
   // bind section storing function to clicks
   $('section').click(function(event) {
     var sid = $(this).find('section-id').html();
+    alert(sid);
     // care more about the data - so use that to determine how to change
     // the styling; i.e. if the id is in the array, we will always deselect it
     // regardless of whether it was being rendered as selected or not
@@ -305,6 +336,7 @@ function setupCourses() {
     var allSectionsSelected = true;
     var selections = nsUser.getSelections();
     $(this).find('section-id').each(function(i, sid) {
+      alert(sid);
       // if a section id cannot be found in the selected array, they cannot
       // all be selected
       sid = $(sid).html();
@@ -329,6 +361,7 @@ function setupCourses() {
       }
     });
   });
+  History.pushState({state:nsYacs.courselistPage}, "Course page", "?state=1");
 }
 
 // Anything that has to be done when loading up the courses/search results.
@@ -424,6 +457,10 @@ function loadSchedules() {
   
   // Get the schedules as a JSON object.
   doAjaxRequest(schedURL, function(response) {
+
+    // TODO: Move most of this code into a setupSchedules function
+    // will be done when we revamp schedule code and add deselection
+    
     var allSchedulesArray = (JSON.parse(response)).schedules;
     var numSchedules = allSchedulesArray.length;
     
@@ -455,6 +492,8 @@ function loadSchedules() {
     $('#rightswitch').click(moveNextSchedule);
 
     nsUser.currentPage = nsYacs.schedulePage;
+    
+    History.pushState({state:nsYacs.schedulePage}, "Schedule page", "?state=2");
   });
 }
 
@@ -806,6 +845,11 @@ function setupPage() {
   
   // Load the default home page
   loadHomePage();
+
+  // Bind History.js logging to state changes
+  History.Adapter.bind(window, 'statechange', function(){
+    var State = History.getState();
+  });
 }
 
 // Only actually run this when the page finishes loading
