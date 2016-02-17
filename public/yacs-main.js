@@ -192,6 +192,17 @@ function setupHomePage() {
   // This application does not know whether there are schools defined in the
   // database. If there are, the <schools> element will have a nonzero number of
   // children.
+
+  // This assumes there is only one <schools> element.
+  /*
+    // Waiting to see if we can remove whitespace from the XML API
+    // before replacing this 
+  var schoolsElem = document.getElementsByTagName('schools')[0];
+  var schoolsArray = schoolsElem.childNodes;
+  for(var x in schoolsArray) {
+    alert(schoolsArray[x].nodeName);
+  }
+  */
   var schoolsArray = $('schools').children();
   var numSchools = schoolsArray.length;
   
