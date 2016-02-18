@@ -83,9 +83,22 @@ var nsUser = {
    application is responsible for this process.
 */
 function formatSearchResults() {
+  /* These loops are all poorly readable. If anyone is ever maintaining this
+     code when for..of loops become cross-browser compatible, please go
+     through all of the YACS Javascript to replace things like
+     for(var n=0; n<nodes.length; ++n) {
+       var node = nodes[n];
+       ...
+     }
+     with loops like
+     for(var node of nodes) {
+       ...
+     }
+  */
+  
   // add "closed" class to sections with less than 1 seat
   var nodes = document.getElementsByTagName('section');
-  for(var n in nodes) {
+  for(var n=0; n<nodes.length; ++n) {
     var subnodes = nodes[n].getElementsByTagName('section-seats-available');
     // there should only be 1 <section-seats-available> child
     if(parseInt(subnodes[0].innerHTML, 10) < 1) {
@@ -95,7 +108,7 @@ function formatSearchResults() {
 
   // add the actual "credit(s)" to credits elements, which only have the number
   nodes = document.getElementsByTagName('course-credits');
-  for(var n in nodes) {
+  for(var n=0; n<nodes.length; ++n) {
     var word = 'credits';
     if(parseInt(nodes[n].innerHTML, 10) === 1) { word = 'credit'; }
     nodes[n].innerHTML = nodes[n].innerHTML + ' ' + word;
@@ -103,19 +116,19 @@ function formatSearchResults() {
 
   // prepend the "Section" to section numbers
   nodes = document.getElementsByTagName('section-name');
-  for(var n in nodes) {
+  for(var n=0; n<nodes.length; ++n) {
     nodes[n].innerHTML = 'Section ' + nodes[n].innerHTML;
   }
 
   // append the " seats" to the available seats
   nodes = document.getElementsByTagName('section-seats-available');
-  for(var n in nodes) {
+  for(var n=0; n<nodes.length; ++n) {
     nodes[n].innerHTML += ' seats';
   }
 
   // period-day is represented as a number; translate it into a short day code
   nodes = document.getElementsByTagName('period-day');
-  for(var n in nodes) {
+  for(var n=0; n<nodes.length; ++n) {
     nodes[n].innerHTML =
       nsYacs.weekdayNames[parseInt(nodes[n].innerHTML, 10)].substring(0,3);
   }
@@ -124,7 +137,7 @@ function formatSearchResults() {
   // represented in military time, so replace them with a period-time element
   // that formats them together as readable times
   nodes = document.getElementsByTagName('period');
-  for(var n in nodes) {
+  for(var n=0; n<nodes.length; ++n) {
     var ps = nodes[n].getElementsByTagName('period-start')[0];
     var pe = nodes[n].getElementsByTagName('period-end')[0];
     var startTime = milTimeToReadable(ps.innerHTML);
@@ -562,8 +575,8 @@ function convertSchedToPeriods(schedData) {
   // (used to color all periods of a course the same color)
   var courseCtr = 1; 
 
-  for (var s in schedData.sections) {
-    var sect = schedData.sections[s]
+  for (var s=0; s<schedData.sections.length; ++s) {
+    var sect = schedData.sections[s];
     // assume the length of periods_start is the same as periods_end,
     // periods_type and periods_day. (else it's invalid)
     
@@ -721,7 +734,7 @@ function convertPeriodsToHTML(week) {
       */
       
       var currTime = earliestStart;
-      for(var p in week[i]) {
+      for(var p=0; p<week[i].length; ++p) {
 	var period = week[i][p];
 
 	// step 1: fill in empty <li>s before period (these get bottom borders)
