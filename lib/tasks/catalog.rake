@@ -1,13 +1,11 @@
 require 'rufus-scheduler'
 
 namespace :catalog do
+  task load: :environment do
+    Catalog::RpiCatalogLoader.new.load_catalog
+  end
+
   task update_seats: :environment do
-    rufus = Rufus::Scheduler.singleton
-    updater = Catalog::RpiCatalogUpdater.new
-    rufus.every '5m' do
-      Rails.logger.info "initiating seat data update"
-      Rails.logger.flush
-      updater.update_section_seats
-    end
+    Catalog::RpiCatalogUpdater.new.update_section_seats
   end
 end
