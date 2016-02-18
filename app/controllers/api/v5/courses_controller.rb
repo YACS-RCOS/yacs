@@ -2,8 +2,9 @@ class Api::V5::CoursesController < Api::V5::ApiController
   def index
     if params[:department_id].present?
       @courses = Course.where(department_id: params[:department_id])
-    elsif params[:search].present?
-      @courses = Course.search(params[:search].split)
+    elsif params[:search]
+      search = params[:search].gsub(/[^0-9a-z\s]/i, '')
+      @courses = Course.search(search)
     else
       @courses = Course.all
     end

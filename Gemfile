@@ -42,8 +42,10 @@ gem 'rufus-scheduler'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'pry-rails'
-  gem 'byebug'
+  gem 'pry'
+  gem 'pry-remote'
+  gem 'pry-stack_explorer'
+  gem 'pry-byebug', '~> 1.3.3'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
