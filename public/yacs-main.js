@@ -315,11 +315,17 @@ function setupHomePage() {
   // courses from the API
   var allDepartments = document.getElementsByTagName('department');
   for(var i=0; i<allDepartments.length; ++i) {
-    var dept = allDepartments[i];
-    var code = firstChildWithTag(dept, 'department-code')[0];
-    dept.addEventListener('click', function() {
-      
-    });
+    // needs a closure to prevent deptID from being the same on all
+    // event listeners
+    (function () {
+      var dept = allDepartments[i];
+      var code = firstChildWithTag(dept, 'department-code').innerHTML;
+      var deptID = firstChildWithTag(dept, 'department-id').innerHTML;
+      dept.addEventListener('click', function() {
+	nsYacs.searchbar.value = code + ' ';
+	loadCourses('/api/v5/courses.xml?department_id=' + deptID);
+      });
+    }())
   }
   /*
   $('department').click(function() {
