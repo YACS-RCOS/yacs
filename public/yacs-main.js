@@ -78,6 +78,12 @@ var nsUser = {
   currentState: undefined // for history.js stuff
 }
 
+/* Helper function that, given a node, returns the node that is the first child
+   matching a given tag. We tend to do this a lot. */
+function firstChildWithTag(node, tagName) {
+  return node.getElementsByTagName(tagName)[0];
+}
+
 /* Format some items which appear on the search results page into their final
    display. The API does not load text like "credits" or "Section"; the
    application is responsible for this process.
@@ -138,8 +144,8 @@ function formatSearchResults() {
   // that formats them together as readable times
   nodes = document.getElementsByTagName('period');
   for(var n=0; n<nodes.length; ++n) {
-    var ps = nodes[n].getElementsByTagName('period-start')[0];
-    var pe = nodes[n].getElementsByTagName('period-end')[0];
+    var ps = firstChildWithTag(nodes[n], 'period-start');
+    var pe = firstChildWithTag(nodes[n], 'period-end');
     var startTime = milTimeToReadable(ps.innerHTML);
     var endTime = milTimeToReadable(pe.innerHTML);
     var pt = document.createElement('period-time');
@@ -294,15 +300,28 @@ function setupHomePage() {
       $('schools').wrapInner('<table id="homeTable"><tr></tr></table>');
     }
   }
-  // homeTable is either the child of departments or schools
-  // they are unnecessary containers that get in the way, so remove them from
-  // the DOM
-  $('table#homeTable').unwrap();
+
+  // homeTable is wrapped in a useless <departments> or <schools> tag; this
+  // has interfered with CSS, so remove it.
+  var homeTable = document.getElementById('homeTable');
+  var outsideElem = homeTable.parentNode;
+  outsideElem.parentNode.appendChild(homeTable);
+  outsideElem.parentNode.removeChild(outsideElem);
+  
   // page will not center unless homeTable is given a definite width
-  $('table#homeTable').css('width', schoolsFinalWidth);
+  homeTable.setAttribute('width', schoolsFinalWidth);
   
   // Add a click event listener to all departments to load that department's
   // courses from the API
+  var allDepartments = document.getElementsByTagName('department');
+  for(var i=0; i<allDepartments.length; ++i) {
+    var dept = allDepartments[i];
+    var code = firstChildWithTag(dept, 'department-code')[0];
+    dept.addEventListener('click', function() {
+      
+    });
+  }
+  /*
   $('department').click(function() {
     var dept = $(this);
     nsYacs.searchbar.value = dept.children('department-code').html() + " ";
@@ -310,6 +329,7 @@ function setupHomePage() {
   		dept.children('department-id').html());
       
   });
+  */
   History.pushState({state:nsYacs.homePage}, "Home page", "?state=0");
 }
 
@@ -359,6 +379,7 @@ function setupCourses() {
   // courses can also be clicked
   // if a course is clicked and all sections are selected, deselect all
   // sections. Otherwise, select all sections.
+  // TODO: deselect when all sections are selected OR CLOSED
   $('course').click(function(event) {
     // we are guaranteed that the user clicked on the course and not a section
     var allSectionsSelected = true;
