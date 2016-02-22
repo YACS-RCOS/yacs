@@ -8,6 +8,13 @@ const nsYacs = {
   weekdayNames : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
 		  'Friday', 'Saturday'],
 
+  // DOM elements that will not change between sub-pages
+  // undefined because they aren't there until the page actually loads
+  contentContainer : undefined,
+  homeButton       : undefined,
+  searchbar        : undefined,
+  schedButton      : undefined,  
+  
   // IDs for the different pages
   homePage: 0, courselistPage: 1, schedulePage: 2
 }
@@ -78,6 +85,12 @@ var nsUser = {
   currentState: undefined // for history.js stuff
 }
 
+/* Helper function that, given a node, returns the node that is the first child
+   matching a given tag. We tend to do this a lot. */
+function firstChildWithTag(node, tagName) {
+  return node.getElementsByTagName(tagName)[0];
+}
+
 /* Format some items which appear on the search results page into their final
    display. The API does not load text like "credits" or "Section"; the
    application is responsible for this process.
@@ -138,8 +151,8 @@ function formatSearchResults() {
   // that formats them together as readable times
   nodes = document.getElementsByTagName('period');
   for(var n=0; n<nodes.length; ++n) {
-    var ps = nodes[n].getElementsByTagName('period-start')[0];
-    var pe = nodes[n].getElementsByTagName('period-end')[0];
+    var ps = firstChildWithTag(nodes[n], 'period-start');
+    var pe = firstChildWithTag(nodes[n], 'period-end');
     var startTime = milTimeToReadable(ps.innerHTML);
     var endTime = milTimeToReadable(pe.innerHTML);
     var pt = document.createElement('period-time');
@@ -181,11 +194,10 @@ function clearForNewPage() {
 
   // add in some code to set the inner HTML of the content container to some
   // default "Loading..." message or whatever here
-  var contentDiv = document.getElementById('content');
   var imgNode = document.createElement('img');
   imgNode.id='loading';
   imgNode.src='loading.gif';
-  contentDiv.appendChild(imgNode);
+  nsYacs.contentContainer.appendChild(imgNode);
 }
 
 // Once the departments XML has been loaded into div#content, do any other steps
@@ -294,22 +306,33 @@ function setupHomePage() {
       $('schools').wrapInner('<table id="homeTable"><tr></tr></table>');
     }
   }
-  // homeTable is either the child of departments or schools
-  // they are unnecessary containers that get in the way, so remove them from
-  // the DOM
-  $('table#homeTable').unwrap();
+
+  // homeTable is wrapped in a useless <departments> or <schools> tag; this
+  // has interfered with CSS, so remove it.
+  var homeTable = document.getElementById('homeTable');
+  var outsideElem = homeTable.parentNode;
+  outsideElem.parentNode.appendChild(homeTable);
+  outsideElem.parentNode.removeChild(outsideElem);
+  
   // page will not center unless homeTable is given a definite width
-  $('table#homeTable').css('width', schoolsFinalWidth);
+  homeTable.setAttribute('width', schoolsFinalWidth);
   
   // Add a click event listener to all departments to load that department's
   // courses from the API
-  $('department').click(function() {
-    var dept = $(this);
-    nsYacs.searchbar.value = dept.children('department-code').html() + " ";
-    loadCourses("/api/v5/courses.xml?department_id=" +
-  		dept.children('department-id').html());
-      
-  });
+  var allDepartments = document.getElementsByTagName('department');
+  for(var i=0; i<allDepartments.length; ++i) {
+    // needs a closure to prevent deptID from being the same on all
+    // event listeners
+    (function () {
+      var dept = allDepartments[i];
+      var code = firstChildWithTag(dept, 'department-code').innerHTML;
+      var deptID = firstChildWithTag(dept, 'department-id').innerHTML;
+      dept.addEventListener('click', function() {
+	nsYacs.searchbar.value = code + ' ';
+	loadCourses('/api/v5/courses.xml?department_id=' + deptID);
+      });
+    }())
+  }
   History.pushState({state:nsYacs.homePage}, "Home page", "?state=0");
 }
 
@@ -359,6 +382,7 @@ function setupCourses() {
   // courses can also be clicked
   // if a course is clicked and all sections are selected, deselect all
   // sections. Otherwise, select all sections.
+  // TODO: deselect when all sections are selected OR CLOSED
   $('course').click(function(event) {
     // we are guaranteed that the user clicked on the course and not a section
     var allSectionsSelected = true;
@@ -477,23 +501,85 @@ function loadSchedules() {
   if (selectionsRaw.length < 1) return;
 
   clearForNewPage();
+
+  // Create the two subcontainer divs
+  nsYacs.contentContainer.innerHTML = '<div id="scheduleContent"></div><div id="deselectContent"></div>';
+
+  // Generate the actual schedules and populate div#scheduleContent with them
+  refreshSchedules();
+ 
+  // Now make a second AJAX request for the details of selected sections
+  var sectURL = '/api/v5/sections.xml?id=' + nsUser.getSelectionsRaw();
+  doAjaxRequest(sectURL, function(response) {
+    // TODO: Consider making a separate function for this code
+    
+    // insert sections into DOM
+    nsYacs.contentContainer.innerHTML += response;
+    
+    // give it an id to make the CSS rules more straightforward
+    var sectionsContainer =
+      firstChildWithTag(nsYacs.contentContainer, 'sections');
+    sectionsContainer.setAttribute('id', 'deselection');
+
+    // add event listeners
+    var sections = sectionsContainer.getElementsByTagName('section');
+    for(var i=0; i<sections.length; ++i) {
+      var sect = sections[i];
+      var sectID = firstChildWithTag(sect, 'section-id').innerHTML;
+      
+      // all event listeners in loops need closures
+      sect.addEventListener('click', function(theSection, theSID) {
+	
+	// sorry about poor variable naming but I'm juggling too many sects, sids,
+	// sections, sectionIDs, etc. to keep track
+	return function() {
+	  // test whether this is already deselected or not
+	  if(theSection.className.indexOf('deselected') <= -1) {
+	    // it is not deselected already, so deselect it
+	    nsUser.removeSelection(theSID);
+	    theSection.className += ' deselected';
+	    refreshSchedules();
+	  }
+	  else {
+	    // it is deselected and user clicked again, re-add to selections
+	    nsUser.addSelection(theSID);
+	    theSection.classList.remove('deselected');
+	    refreshSchedules();
+	  }
+	}
+      }(sect, sectID));
+    }
+  });
+  
+  nsUser.currentPage = nsYacs.schedulePage;
+  History.pushState({state:nsYacs.schedulePage}, "Schedule page", "?state=2");
+}
+
+
+/* Function that will be called when the schedule page is loaded or when the
+   list of selections changes (i.e. when it needs to regenerate the schedule
+   and deselection list.)
+   Will completely clear the content div and replace it with new schedules. */
+function refreshSchedules() {
   
   // Construct the API request string that will be passed
   // expects a comma-delimited list of numeric section IDs
-  var schedURL = "/api/v5/schedules.json?section_ids=" + selectionsRaw;
-  
-  // Get the schedules as a JSON object.
+  var schedURL = "/api/v5/schedules.json?section_ids=" + nsUser.getSelectionsRaw();
+
   doAjaxRequest(schedURL, function(response) {
 
-    // TODO: Move most of this code into a setupSchedules function
-    // will be done when we revamp schedule code and add deselection
+    // Constant DOM elements throughout this function
+    var container = document.getElementById('scheduleContent');
     
+    // Get the schedules as a JSON object
     var allSchedulesArray = (JSON.parse(response)).schedules;
     var numSchedules = allSchedulesArray.length;
     
     // Test for no schedules
     if(numSchedules === 0) {
-      $('div#content').html('<div class="error">No schedules are available for this selection of courses.</div>');
+      // TODO: when stuff gets moved, have it be a function that returns the
+      // schedule innerHTML instead
+      container.innerHTML = '<div class="error">No schedules are available for this selection of courses.</div>';
       return;
     }
     
@@ -506,21 +592,13 @@ function loadSchedules() {
     nsUser.currentSchedule = 0;
     
     var disableSecond = (numSchedules === 1);
-    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled">&#9664;</span>Schedule <span id="schedNum">1</span> / ' +
+    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled" onclick="movePrevSchedule()">&#9664;</span>Schedule <span id="schedNum">1</span> / ' +
       numSchedules +
       '<span id="rightswitch" class="scheduleswitch' +
       (numSchedules === 1 ? ' disabled' : '') +
-      '">&#9654;</span></div>';
-    
-    $('div#content').html(schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>');
+      '" onclick="moveNextSchedule()">&#9654;</span></div>';
 
-    // add event listeners to leftswitch and rightswitch
-    $('#leftswitch').click(movePrevSchedule);
-    $('#rightswitch').click(moveNextSchedule);
-
-    nsUser.currentPage = nsYacs.schedulePage;
-    
-    History.pushState({state:nsYacs.schedulePage}, "Schedule page", "?state=2");
+    container.innerHTML = schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>';
   });
 }
 

@@ -1,7 +1,9 @@
 class Api::V5::SectionsController < Api::V5::ApiController
   def index
     if params[:course_id].present?
-      @sections = Section.where(course_id: params[:course_id])
+      @sections = Section.where course_id: params[:course_id]
+    elsif params[:id].present?
+      @sections = Section.find params[:id].split(',')
     else
       @sections = Section.all
     end
@@ -9,9 +11,5 @@ class Api::V5::SectionsController < Api::V5::ApiController
       format.xml { render xml: @sections }
       format.json { render }
     end
-  end
-
-  def show
-    @section = Section.find(params[:id])
   end
 end
