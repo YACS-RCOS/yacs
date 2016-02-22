@@ -592,18 +592,13 @@ function refreshSchedules() {
     nsUser.currentSchedule = 0;
     
     var disableSecond = (numSchedules === 1);
-    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled">&#9664;</span>Schedule <span id="schedNum">1</span> / ' +
+    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled" onclick="movePrevSchedule()">&#9664;</span>Schedule <span id="schedNum">1</span> / ' +
       numSchedules +
       '<span id="rightswitch" class="scheduleswitch' +
       (numSchedules === 1 ? ' disabled' : '') +
-      '">&#9654;</span></div>';
+      '" onclick="moveNextSchedule()">&#9654;</span></div>';
 
     container.innerHTML = schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>';
-
-    // add event listeners to leftswitch and rightswitch
-    $('#leftswitch').click(movePrevSchedule);
-    $('#rightswitch').click(moveNextSchedule);
-    
   });
 }
 
