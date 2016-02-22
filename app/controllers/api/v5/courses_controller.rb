@@ -1,10 +1,11 @@
 class Api::V5::CoursesController < Api::V5::ApiController
   def index
     if params[:department_id].present?
-      @courses = Course.where(department_id: params[:department_id])
-    elsif params[:search]
-      search = params[:search].gsub(/[^0-9a-z\s]/i, '')
-      @courses = Course.search(search)
+      @courses = Course.where department_id: params[:department_id]
+    elsif params[:id].present?
+      @courses = Course.find params[:id].split(',')
+    elsif params[:search].present?
+      @courses = Course.search params[:search].gsub(/[^0-9a-z\s]/i, '').split
     else
       @courses = Course.all
     end
@@ -12,9 +13,5 @@ class Api::V5::CoursesController < Api::V5::ApiController
       format.xml { render xml: @courses }
       format.json { render }
     end
-  end
-
-  def show
-    @course = Course.find(params[:id])
   end
 end
