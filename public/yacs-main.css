@@ -250,7 +250,9 @@ table#scheduleTable tr#scheduleHeader td {
 div#scheduleTable {
     display:table;
     margin: 10px auto auto auto;
-    padding-right: 30px; /* must be == to the width of .narrowcol */
+    padding-right: 30px;
+    /* padding-right must be == to the width of .narrowcol to center the
+       table correctly */
     font-size:16px;
 }
 div#scheduleTable ul {
@@ -261,9 +263,6 @@ div#scheduleTable ul {
     text-align:center;
     list-style-type:none;
 }
-/* div#scheduleTable ul:first-child {
-    border-top: 1px #bbb solid;
-}*/
 div#scheduleTable ul.narrowcol {
     width:60px;
 }
@@ -279,8 +278,23 @@ div#scheduleTable ul li.hour {
     height:2.8em;
     padding-bottom:1px; /* account for the missing border space */
 }
-/* NOTE: Schedule is centered on the page, but it should really be aligned so that the Wednesday cell is centered on the page.
- NB: With dynamic days, Wednesday will not always be centered. */
+
+/* Deselection list styles */
+sections#deselection {
+    display:block;
+    width:200px;
+    margin: 20px auto 0 auto;
+    background-color: #bbf;
+}
+sections#deselection section {
+    
+}
+sections#deselection section.deselected {
+    color:#888;
+}
+sections#deselection section periods {
+    display:none;
+}
 
 /* Course colors used by YACS Original: (border/text/background)
    #B62/#720/#FDC
