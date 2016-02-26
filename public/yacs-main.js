@@ -205,7 +205,7 @@ function doAjaxRequest(filename, callback) {
 // the page. useLoadingMessage is optional.
 function clearForNewPage(useLoadingMessage) {
   if(useLoadingMessage === undefined)
-    useLoadingMessage = false;
+    useLoadingMessage = true;
   // Using jQuery empty() is guaranteed to remove all event handlers that have
   // been applied to anything in the content. Without this, event handlers may
   // build up over time and slow down the page.
