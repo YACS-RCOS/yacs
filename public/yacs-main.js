@@ -82,14 +82,31 @@ var nsUser = {
 
   currentPage: 0,
   currentSchedule: undefined,
-  currentState: undefined // for history.js stuff
+  currentState: undefined, // for history.js stuff
+
+  // For the home page: number of columns currently on the page
+  numHomePageColumns: 0
 }
+
 
 /* Helper function that, given a node, returns the node that is the first child
    matching a given tag. We tend to do this a lot. */
 function firstChildWithTag(node, tagName) {
   return node.getElementsByTagName(tagName)[0];
 }
+
+
+/* Helper function that calculates how many columns can fit on the home page.
+   This is its own function because it will be called from multiple locations
+   in the code. */
+function getNumHomePageColumns() {
+  // Get the width of the window, in as cross-browser a way as possible
+  var width = window.innerWidth || document.documentElement.clientWidth
+    || document.body.clientWidth;
+  return Math.floor(width /
+		    (nsYacs.deptColumnWidth + (nsYacs.deptColumnMargin * 2)));
+}
+
 
 /* Format some items which appear on the search results page into their final
    display. The API does not load text like "credits" or "Section"; the
@@ -186,18 +203,22 @@ function doAjaxRequest(filename, callback) {
 
 // Clear the main div of any content and possibly put a loading indicator on
 // the page.
-function clearForNewPage() {
+function clearForNewPage(useLoadingMessage=true) {
   // Using jQuery empty() is guaranteed to remove all event handlers that have
   // been applied to anything in the content. Without this, event handlers may
   // build up over time and slow down the page.
   $('div#content').empty();
+  // Note when replacing this: check out the contents of the global
+  // _eventhandlers array. 
 
   // add in some code to set the inner HTML of the content container to some
   // default "Loading..." message or whatever here
-  var imgNode = document.createElement('img');
-  imgNode.id='loading';
-  imgNode.src='loading.gif';
-  nsYacs.contentContainer.appendChild(imgNode);
+  if(useLoadingMessage) {
+    var imgNode = document.createElement('img');
+    imgNode.id='loading';
+    imgNode.src='loading.gif';
+    nsYacs.contentContainer.appendChild(imgNode);
+  }
 }
 
 // Once the departments XML has been loaded into div#content, do any other steps
@@ -208,9 +229,11 @@ function setupHomePage() {
   // into that many columns. Our approach is to always use the maximum possible
   // number of columns. The width of the output columns is always assumed to be
   // the maximum width of any school or department element.
-  var numColumns =
-    Math.floor(document.body.clientWidth /
-  	       (nsYacs.deptColumnWidth + (nsYacs.deptColumnMargin * 2)));
+  var numColumns = getNumHomePageColumns();
+  
+  // store into nsUser
+  nsUser.numHomePageColumns = numColumns;
+  
   var schoolsFinalWidth = numColumns *
     (nsYacs.deptColumnWidth + (nsYacs.deptColumnMargin * 2));
   
@@ -307,12 +330,17 @@ function setupHomePage() {
     }
   }
 
-  // homeTable is wrapped in a useless <departments> or <schools> tag; this
+  // There is now a useless <departments> or <schools> tag; this
   // has interfered with CSS, so remove it.
+  // TODO: find a way that works for both kinds of tags without relying on
+  // a #homeTable element. 
+  //var useless = firstChildWithTag(document, '
+  /*
   var homeTable = document.getElementById('homeTable');
   var outsideElem = homeTable.parentNode;
   outsideElem.parentNode.appendChild(homeTable);
   outsideElem.parentNode.removeChild(outsideElem);
+  */
   
   // page will not center unless homeTable is given a definite width
   homeTable.setAttribute('width', schoolsFinalWidth);
@@ -878,7 +906,12 @@ function convertPeriodsToHTML(week) {
   return weekHTML;
 }
 
-/* Given a period, return the text that should display in its schedule box. */
+/* Given a period, return the text that should display in its schedule box.
+   See issue #42 - this is a harder problem than it looks
+   Current approach is to always include the same identifying string at the top,
+   like "CSCI-1200-01 LEC". If there are more available lines, add in the
+   course title.
+*/
 function getCourseText(period) {
   // One line of text per 30 minutes in the class.
   var lines = Math.floor((period.end-period.start)/30);
@@ -899,13 +932,13 @@ function getCourseText(period) {
    anywhere. */
 function handleKeydown(event) {
   var c = event.keyCode;
-  if( ((c == 37) || (c == 38)) &&
+  if( ((c === 37) || (c === 38)) &&
       (nsUser.currentPage == nsYacs.schedulePage) ) {
     // Up/Left
     movePrevSchedule();
   }
-  else if ( ((c == 39) || (c == 40)) &&
-	    (nsUser.currentPage == nsYacs.schedulePage) ) {
+  else if ( ((c === 39) || (c === 40)) &&
+	    (nsUser.currentPage === nsYacs.schedulePage) ) {
     // Right/Down
     moveNextSchedule();
   }
@@ -914,6 +947,29 @@ function handleKeydown(event) {
     // works because there is only one text input in the whole site. If
     // another is ever added, that behavior must be removed or modified.
     nsYacs.searchbar.focus();
+  }
+}
+
+function handleResize(event) {
+  // No special resize behavior is implemented for the course or schedule pages
+  if(nsUser.currentPage === nsYacs.homePage) {
+    // On the home page, check the new width and determine whether it needs
+    // to reset the number of columns
+    if(getNumHomePageColumns() !== nsUser.numHomePageColumns) {
+      /* TODO: do stuff to strip away the table tags and reassign schools.
+	 This will require rewriting setupHomePage() to strip out the initial
+	 <schools> tag before it does this, moving the school-shuffling code
+	 into a separate function that can be called by both this and
+	 setupHomePage(). Alternatively, this could be approached by removing
+	 all tags in div#content (so it has just a bunch of <school> tags),
+	 then calling that function, which is designed to operate on a
+	 div#content with only <school> children, or a DOMstring of same.
+	 All in all it's probably best left until we use a templating framework
+	 here, thus it just reloads the home page for now.
+      */
+      console.log(getNumHomePageColumns(), nsUser.numHomePageColumns);
+      loadHomePage();
+    }
   }
 }
 
@@ -949,6 +1005,9 @@ function setupPage() {
   document.addEventListener("keydown", function(event) {
     handleKeydown(event);
   });
+
+  // General resize event listener
+  window.addEventListener("resize", handleResize);
   
   // Load the default home page
   loadHomePage();
