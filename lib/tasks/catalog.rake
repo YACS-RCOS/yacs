@@ -1,5 +1,3 @@
-require 'rufus-scheduler'
-
 namespace :catalog do
   task load: :environment do
     Catalog::RpiCatalogLoader.new.load_catalog
