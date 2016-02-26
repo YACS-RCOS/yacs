@@ -202,8 +202,10 @@ function doAjaxRequest(filename, callback) {
 
 
 // Clear the main div of any content and possibly put a loading indicator on
-// the page.
-function clearForNewPage(useLoadingMessage=true) {
+// the page. useLoadingMessage is optional.
+function clearForNewPage(useLoadingMessage) {
+  if(useLoadingMessage === undefined)
+    useLoadingMessage = false;
   // Using jQuery empty() is guaranteed to remove all event handlers that have
   // been applied to anything in the content. Without this, event handlers may
   // build up over time and slow down the page.
@@ -967,7 +969,6 @@ function handleResize(event) {
 	 All in all it's probably best left until we use a templating framework
 	 here, thus it just reloads the home page for now.
       */
-      console.log(getNumHomePageColumns(), nsUser.numHomePageColumns);
       loadHomePage();
     }
   }
