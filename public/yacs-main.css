@@ -51,12 +51,15 @@ table#navtable td {
     vertical-align:middle;
 }
 table#navtable td.sidelink {
-    width:130px;
+    width:160px;
     cursor:pointer;
 }
 #page-title {
     font-size:35px;
     font-weight:normal;
+}
+#page-title span.sub {
+    font-size:16px;
 }
 #search {
     margin:auto;
