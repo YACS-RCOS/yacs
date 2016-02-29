@@ -1,9 +1,12 @@
 class Api::V5::CoursesController < Api::V5::ApiController
   def index
     if params[:department_id].present?
-      @courses = Course.where department_id: params[:department_id]
+      @courses = Course.where department_id: params[:department_id].split(',')
     elsif params[:id].present?
       @courses = Course.find params[:id].split(',')
+    elsif params[:section_id].present?
+      ids = params[:section_id]
+      @courses = Course.distinct.joins(:sections).where "sections.id = ANY (ARRAY[#{ids}])"
     elsif params[:search].present?
       @courses = Course.search params[:search].gsub(/[^0-9a-z\s]/i, '').split
     else
