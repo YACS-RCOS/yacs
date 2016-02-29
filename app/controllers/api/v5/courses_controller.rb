@@ -5,7 +5,7 @@ class Api::V5::CoursesController < Api::V5::ApiController
     elsif params[:id].present?
       @courses = Course.find params[:id].split(',')
     elsif params[:search].present?
-      @courses = Course.search params[:search].split(',')
+      @courses = Course.search params[:search].gsub(/[^0-9a-z\s]/i, '').split
     else
       @courses = Course.all
     end
