@@ -21,7 +21,8 @@ class Course < ActiveRecord::Base
         GROUP BY courses.id, sections.id, departments.id
       ) c_search
       WHERE c_search.document @@ to_tsquery('#{search_params}')
-      ORDER BY ts_rank(c_search.document, to_tsquery('#{search_params}')) DESC;
+      ORDER BY ts_rank(c_search.document, to_tsquery('#{search_params}')) DESC
+      LIMIT 25;
     SQL
     find_by_sql(query).uniq
   end
