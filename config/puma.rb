@@ -12,7 +12,7 @@ environment ENV['RACK_ENV'] || 'development'
 
 if ENV['DSTATEDIR']
   pidfile "#{ENV['DSTATEDIR']}puma.pid"
-  state_file "#{ENV['DSTATEDIR']}puma.state"
+  state_path "#{ENV['DSTATEDIR']}puma.state"
   daemonize true
 end
 
