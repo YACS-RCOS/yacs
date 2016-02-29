@@ -39,8 +39,10 @@ class Scheduler
   def self.expand_courses(sections)
     hash = {}
     sections.each do |s|
-      hash[s.course] ||= []
-      hash[s.course] << s
+      if s.num_periods > 0
+        hash[s.course] ||= []
+        hash[s.course] << s
+      end
     end
     hash.values
   end
