@@ -10,9 +10,10 @@ rackup      DefaultRackup
 port        ENV['PORT']     || 3000
 environment ENV['RACK_ENV'] || 'development'
 
-if ENV['PIDFILE']
-  pidfile ENV['PIDFILE']
-  daemonize
+if ENV['DSTATEDIR']
+  pidfile "#{ENV['DSTATEDIR']}puma.pid"
+  state_path "#{ENV['DSTATEDIR']}puma.state"
+  daemonize true
 end
 
 on_worker_boot do
