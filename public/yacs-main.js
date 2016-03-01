@@ -381,35 +381,41 @@ function loadHomePage() {
 function setupCourses() {
   formatSearchResults();
 
-  // mark any sections that are already in the selected array with .selected
-  // class (used in revisiting pages)
   var nodes = document.getElementsByTagName('section');
   for(var i=0; i<nodes.length; ++i) {
-    var n = nodes[i];
-    var sid = firstChildWithTag(n, 'section-id').innerHTML;
+    /* important to use let rather than var for any of these loops with
+       an event handler inside them - let will define the variables at
+       the scope of this loop (i.e. different instance per loop) which will
+       prevent the common error of having every event handler refer to the
+       same element. */
+    let n = nodes[i];
+    
+    // mark any sections that are already in the selected array with .selected
+    // class (used in revisiting pages)
+    let sid = firstChildWithTag(n, 'section-id').innerHTML;
     if(nsUser.hasSelection(sid)) {
       n.className += ' selected';
     }
+
+    // add click functionality to sections
+    n.addEventListener('click', function(event) {
+      // we care more about the data - so use that to determine how to change
+      // the styling; i.e. if the id is in the array, we will always deselect
+      // it regardless of whether it was being rendered as selected or not
+      if(nsUser.removeSelection(sid)) {
+	// index is real, section is selected, remove selected class
+	n.classList.remove('selected');
+      }
+      else {
+	// section is not selected, select it and add it to the array
+	nsUser.addSelection(sid);
+	n.className += ' selected';
+      }
+      
+      // don't bubble up to the course click handler!
+      event.stopPropagation();
+    });
   }
-  
-  // bind section storing function to clicks
-  $('section').click(function(event) {
-    var sid = $(this).find('section-id').html();
-    // care more about the data - so use that to determine how to change
-    // the styling; i.e. if the id is in the array, we will always deselect it
-    // regardless of whether it was being rendered as selected or not
-    if(nsUser.removeSelection(sid)) {
-      // index is real, section is selected, deselect it
-      $(this).removeClass('selected');
-    }
-    else {
-      // section is not selected, select it and add it to the array
-      nsUser.addSelection(sid);
-      $(this).addClass('selected');
-    }
-    // don't bubble up to the course click handler!
-    event.stopPropagation();
-  });
   
   // courses can also be clicked
   // if a course is clicked:
@@ -566,8 +572,8 @@ function loadSchedules() {
       // all event listeners in loops need closures
       sect.addEventListener('click', function(theSection, theSID) {
 	
-	// sorry about poor variable naming but I'm juggling too many sects, sids,
-	// sections, sectionIDs, etc. to keep track
+	// sorry about poor variable naming but I'm juggling too many sects,
+	// sids, sections, sectionIDs, etc. to keep track
 	return function() {
 	  // test whether this is already deselected or not
 	  if(theSection.className.indexOf('deselected') <= -1) {
