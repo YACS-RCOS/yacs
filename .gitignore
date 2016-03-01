@@ -21,6 +21,7 @@
 
 # Ignore mac files
 */.DS_Store
+.DS_Store
 
 # Ignore compiled assets
 /public/assets/*
