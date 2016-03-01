@@ -22,4 +22,8 @@
 # Ignore mac files
 */.DS_Store
 
+# Ignore compiled assets
+/public/assets/*
 
+# Ignore caches pages
+/public/index.html

@@ -218,7 +218,7 @@ function clearForNewPage(useLoadingMessage) {
   if(useLoadingMessage) {
     var imgNode = document.createElement('img');
     imgNode.id='loading';
-    imgNode.src='loading.gif';
+    imgNode.src="<%=asset_path('loading.gif')%>";
     nsYacs.contentContainer.appendChild(imgNode);
   }
 }
