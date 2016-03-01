@@ -787,6 +787,12 @@ function convertPeriodsToHTML(week) {
       latestDayWithPeriod = i;
     }
   }
+  // always extend schedule to include all weekdays
+  if(earliestDayWithPeriod > 1)
+    earliestDayWithPeriod = 1;
+  if(latestDayWithPeriod < 5)
+    latestDayWithPeriod = 5;
+  
   // extend them to nearest hours on either side
   // perhaps change this to half-hours later (TODO)
   earliestStart = 60 * Math.floor(earliestStart/60);
