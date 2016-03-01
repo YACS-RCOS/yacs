@@ -383,12 +383,14 @@ function setupCourses() {
 
   // mark any sections that are already in the selected array with .selected
   // class (used in revisiting pages)
-  $('section').each(function(i, section) {
-    var sid = $(section).find('section-id').html();
-    if (nsUser.hasSelection(sid)) {
-      $(this).addClass('selected');
+  var nodes = document.getElementsByTagName('section');
+  for(var i=0; i<nodes.length; ++i) {
+    var n = nodes[i];
+    var sid = firstChildWithTag(n, 'section-id').innerHTML;
+    if(nsUser.hasSelection(sid)) {
+      n.className += ' selected';
     }
-  });
+  }
   
   // bind section storing function to clicks
   $('section').click(function(event) {
