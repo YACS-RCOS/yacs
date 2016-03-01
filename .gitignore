@@ -22,4 +22,4 @@
 # Ignore mac files
 */.DS_Store
 
-
+/public/assets/*
