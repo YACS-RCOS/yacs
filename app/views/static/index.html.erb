@@ -1,30 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta content="The usable course scheduler for Rensselaer Polytechnic Institute (RPI). Quickly and easily schedule courses for next semester!" name="description" />
-  <meta content="Richie Young, Cameron Root, and Arijit Deb" name="author" />
-  <meta content="&copy; 2015 Richie Young, Cameron Root, and Arijit Deb" name="copyright" />
-  <meta content="rpi courses, rpi course scheduler, course scheduling, schedule, yacs" name="keywords" />
-  <title>YACS 2015</title>
-</head>
-<body>
-  <nav id="headerbar">
-    <table id="navtable"><tr>
-	<td class="sidelink" id="page-title">YACS <span class="sub">beta</span></td>
-	<td>
-	  <input id="searchbar" placeholder="Search for courses, departments, and professors.."></input>
-	</td>
-	<td class="sidelink" id="schedule-btn">Schedule</td>
-    </tr></table>
-  </nav>
-  
-  <div id="content">
-    <noscript>
-      YACS requires Javascript to work. Please enable Javascript to use YACS.
-    </noscript>
-    <%= image_tag 'loading.gif', id: 'loading' %>
-  </div>
+<nav id="headerbar">
+  <table id="navtable"><tr>
+<td class="sidelink" id="page-title">YACS <span class="sub">beta</span></td>
+<td>
+  <input id="searchbar" placeholder="Search for courses, departments, and professors.."></input>
+</td>
+<td class="sidelink" id="schedule-btn">Schedule</td>
+  </tr></table>
+</nav>
 
-</body>
-</html>
+<div id="content">
+  <noscript>
+    YACS requires Javascript to work. Please enable Javascript to use YACS.
+  </noscript>
+  <%= image_tag 'loading.gif', id: 'loading' %>
+</div>
