@@ -410,20 +410,24 @@ function setupCourses() {
   });
   
   // courses can also be clicked
-  // if a course is clicked and all sections are selected, deselect all
-  // sections. Otherwise, select all sections.
-  // TODO: deselect when all sections are selected OR CLOSED
+  // if a course is clicked:
+  // if there are open, non-selected sections: select all open sections
+  // else: deselect all selections
+  
   $('course').click(function(event) {
     // we are guaranteed that the user clicked on the course and not a section
     var allSectionsSelected = true;
     var selections = nsUser.getSelections();
-    $(this).find('section-id').each(function(i, sid) {
-      // if a section id cannot be found in the selected array, they cannot
-      // all be selected
-      sid = $(sid).html();
-      if(selections.indexOf(sid) < 0) {
-  	   allSectionsSelected = false;
-  	   return false; // break the .each() loop
+    $(this).find('section').each(function(i, section) {
+      // ignore closed sections
+      if(! $(section).hasClass('closed')) {
+	var sid = $(section).find('section-id').html();
+	// if a section id cannot be found in the selected array, they cannot
+	// all be selected
+	if(selections.indexOf(sid) < 0) {
+	  allSectionsSelected = false;
+	  return false; // break the .each() loop
+	}
       }
     });
 
