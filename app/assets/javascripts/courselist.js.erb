@@ -92,7 +92,12 @@ function formatSearchResults() {
   }
 }
 
-
+function createfunc(theSection, theSID) {
+  return function() {
+    alert(theSID);
+  };
+}
+  
 
 /* ****************************************************************************
    Once a courses XML has been loaded into div#content, do any other steps
@@ -102,11 +107,16 @@ function setupCourses() {
 
   var nodes = document.getElementsByTagName('section');
   for(var i=0; i<nodes.length; ++i) {
-    /* important to use let rather than var for any of these loops with
-       an event handler inside them - let will define the variables at
-       the scope of this loop (i.e. different instance per loop) which will
-       prevent the common error of having every event handler refer to the
-       same element. */
+    /* Note to future maintainers:
+       all of the closures in the code ought to be replaced by using the let
+       keyword instead of var. Example for this code:
+       let n = nodes[i];
+       let sid = firstChildWithTag(n, 'section-id').innerHTML;
+       Then you can bind the click event handler normally using n and sid
+       without any need for a closure. Sadly, the EcmaScript draft enabling the
+       use of let is STILL not cross-platform (no Safari support, limited
+       Chromium support) after being out there for over 6 years.
+    */
     let n = nodes[i];
     
     // mark any sections that are already in the selected array with .selected
@@ -118,18 +128,24 @@ function setupCourses() {
 
     // add click functionality to sections
     n.addEventListener('click', function(event) {
-      // we care more about the data - so use that to determine how to change
-      // the styling; i.e. if the id is in the array, we will always deselect
-      // it regardless of whether it was being rendered as selected or not
-      if(nsUser.removeSelection(sid)) {
-	// index is real, section is selected, remove selected class
-	n.classList.remove('selected');
-      }
-      else {
-	// section is not selected, select it and add it to the array
-	nsUser.addSelection(sid);
-	n.className += ' selected';
-      }
+
+      (function(theSection, theSID) {
+	return function() {
+	  // we care more about the data - so use that to determine how to
+	  // change the styling; i.e. if the id is in the array, we will
+	  // always deselect it regardless of whether it was being rendered
+	  // as selected or not
+	  if(nsUser.removeSelection(theSID)) {
+	    // index is real, section is selected, remove selected class
+	    theSection.classList.remove('selected');
+	  }
+	  else {
+	    // section is not selected, select it and add it to the array
+	    nsUser.addSelection(theSID);
+	    theSection.className += ' selected';
+	  }
+	};
+      }(n, sid))();
       
       // don't bubble up to the course click handler!
       event.stopPropagation();
