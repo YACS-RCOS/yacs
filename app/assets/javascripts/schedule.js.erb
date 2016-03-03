@@ -403,12 +403,15 @@ function loadSchedules() {
   refreshSchedules();
  
   // Now make a second AJAX request for the details of selected sections
-  var sectURL = '/api/v5/sections.xml?id=' + nsUser.getSelectionsRaw();
-  doAjaxRequest(sectURL, function(response) {
+  //var sectURL = '/api/v5/sections.xml?id=' + nsUser.getSelectionsRaw();
+  var apiURL = '/api/v5/courses.xml?section_id='+nsUser.getSelectionsRaw();
+  doAjaxRequest(apiURL, function(response) {
     // TODO: Consider making a separate function for this code
     
     // insert sections into DOM
-    nsYacs.contentContainer.innerHTML += response;
+    var container = document.getElementById('deselectContent');
+    container.innerHTML += response;
+    return;
     
     // give it an id to make the CSS rules more straightforward
     var sectionsContainer =

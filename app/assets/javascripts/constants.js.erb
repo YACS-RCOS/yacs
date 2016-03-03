@@ -4,7 +4,10 @@
 
 // yacs namespace
 // contains application constants
-const nsYacs = {
+// This SHOULD be "const nsYacs" but const is apparently not cross-browser yet
+// so we can't use it. In the meantime, DON'T CHANGE ANY OF THESE VALUES
+// ELSEWHERE IN THE PROGRAM.
+var nsYacs = {
   deptColumnWidth : 600, // should be the same as the width
                          // defined for <school> in yacs-main.css
   deptColumnMargin : 10, // should be the same as side margins defined
