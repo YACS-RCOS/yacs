@@ -1,36 +1,4 @@
 /* index.js - file for global event listeners and the primary setup function */
-   
-
-/* Given a search string (what the user entered in the search bar), restructure
-   it as a query string for the courses API.
-   If anyone decides to implement a more intelligent search, the code for
-   parsing things like "Tuesday class at 4" will go in here.
-   The courses API expects a page request structured like
-   /api/v5/courses?q=BIOL+1010+Hardwick. This is responsible for providing
-   everything after the "q=".
-   Possible improvement: let users quote multiword strings
-
-   NOTE: This may be obsolete and removable.
-*/
-function searchToQuery(searchString) {
-  var searchTerms = searchString.split(" ");
-  var query = "";
-  var first = true;
-  for(var i=0; i<searchTerms.length; i++) {
-    var term = searchTerms[i];
-    if(term.length != 0) { // ignore multiple spaces creating "" terms
-      if(first) {
-	first = false;
-      } else {
-	query += "+";
-      }
-      query += term;
-    }
-  }
-  return query;
-}
-
-
 
 /* Global key press callback. Handles any key pressed at any time on any page
    anywhere. */
