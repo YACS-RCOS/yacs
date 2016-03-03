@@ -1,0 +1,169 @@
+/* homepage.js - file for all processing, rendering, and events on the home
+   page. */
+
+/* ****************************************************************************
+   Helper function that calculates how many columns can fit on the home page.
+   This is its own function because it will be called from multiple locations
+   in the code. */
+function getNumHomePageColumns() {
+  // Get the width of the window, in as cross-browser a way as possible
+  var width = window.innerWidth || document.documentElement.clientWidth
+    || document.body.clientWidth;
+  return Math.floor(width /
+		    (nsYacs.deptColumnWidth + (nsYacs.deptColumnMargin * 2)));
+}
+
+
+// Once the departments XML has been loaded into div#content, do any other steps
+// needed to crunch it into presentable form.
+function setupHomePage() {
+  // When loading the home page, this must determine how many columns to
+  // place the departments in, and then apply styling as needed to make them fit
+  // into that many columns. Our approach is to always use the maximum possible
+  // number of columns. The width of the output columns is always assumed to be
+  // the maximum width of any school or department element.
+  var numColumns = getNumHomePageColumns();
+  
+  // store into nsUser
+  nsUser.numHomePageColumns = numColumns;
+  
+  var schoolsFinalWidth = numColumns *
+    (nsYacs.deptColumnWidth + (nsYacs.deptColumnMargin * 2));
+  
+  // This application does not know whether there are schools defined in the
+  // database. If there are, the <schools> element will have a nonzero number of
+  // children.
+
+  // This assumes there is only one <schools> element.
+  /*
+    // Waiting to see if we can remove whitespace from the XML API
+    // before replacing this 
+  var schoolsElem = document.getElementsByTagName('schools')[0];
+  var schoolsArray = schoolsElem.childNodes;
+  for(var x in schoolsArray) {
+    alert(schoolsArray[x].nodeName);
+  }
+  */
+  var schoolsArray = $('schools').children();
+  var numSchools = schoolsArray.length;
+  
+  if(numSchools === 0) {
+    // schools are not defined
+    $('schools').remove();
+    if(numColumns > 1) {
+      // height calculations are much simpler; all we have to do is find a
+      // roughly equal number of departments per column. Still have to do <td>
+      // wrapping though.
+      var columnCtr = 0;
+      var deptsPerColumn =
+  	Math.ceil($('departments').children().length / numColumns);
+      var appendLastTD = true;
+      $('department').each(function(i, dept) {
+  	if(columnCtr === 0) {
+  	  $(dept).before('<td>');
+  	}
+  	columnCtr++;
+  	if(columnCtr === deptsPerColumn) {
+  	  $(dept).after('</td>');
+  	  columnCtr = 0;
+  	}
+      });
+      
+      if(appendLastTD) {
+  	$('departments').append('</td>');
+      }
+      $('departments').wrapInner('<table id="homeTable"><tr></tr></table>');
+    }
+  }
+  else {
+    // schools are defined
+    if(numColumns > 1) {
+      // need to calculate the "height" of each school, not in pixels, but in
+      // some arbitrary unit of height independent of the styling.
+      schoolHeights = [];
+      $('school').each(function(i, obj) {
+  	// school height = the number of <department> tags within its list plus
+  	// 1 for the school heading (assumed to be around the same height as a
+  	// department)
+  	schoolHeights[i] =
+  	  { 'height' : $(obj).find('department').length + 1,
+  	    'data' : '<school>'+$(obj).html()+'</school>' };
+      });
+      // Order the schoolHeights array by height
+      schoolHeights.sort(function(x,y) { return x.height < y.height });
+
+      // I'm not implementing the full general solution to this problem (how
+      // best to distribute elements of varying heights evenly in a number of
+      // columns) at this time. The current algorithm is: put them in columns
+      // 1, 2, ..., n; 1, 2, ..., n; and so on until all schools are gone.
+
+      // Iterate over the <school>s and wrap each group of numColumns of them
+      // in a td tag.
+      var columnCtr = 0;
+      var schoolsPerColumn = Math.ceil(numSchools / numColumns);
+      var appendLastTD = true;
+      if(numSchools / numColumns === 0) {
+  	appendLastTD = false; // it will be appended by the loop
+      }
+      $('school').each(function(i, school) {
+  	if(columnCtr === 0) {
+  	  $(school).before('<td>');
+  	}
+  	columnCtr++;
+  	if(columnCtr === schoolsPerColumn) {
+  	  $(school).after('</td>');
+  	  columnCtr = 0;
+  	}
+      });
+      
+      if(appendLastTD) {
+  	$('schools').append('</td>');
+      }
+      $('schools').wrapInner('<table id="homeTable"><tr></tr></table>');
+    }
+  }
+
+  // There is now a useless <departments> or <schools> tag; this
+  // has interfered with CSS, so remove it.
+  // TODO: find a way that works for both kinds of tags without relying on
+  // a #homeTable element. 
+  //var useless = firstChildWithTag(document, '
+  /*
+  var homeTable = document.getElementById('homeTable');
+  var outsideElem = homeTable.parentNode;
+  outsideElem.parentNode.appendChild(homeTable);
+  outsideElem.parentNode.removeChild(outsideElem);
+  */
+  
+  // page will not center unless homeTable is given a definite width
+  homeTable.setAttribute('width', schoolsFinalWidth);
+  
+  // Add a click event listener to all departments to load that department's
+  // courses from the API
+  var allDepartments = document.getElementsByTagName('department');
+  for(var i=0; i<allDepartments.length; ++i) {
+    // needs a closure to prevent deptID from being the same on all
+    // event listeners
+    (function () {
+      var dept = allDepartments[i];
+      var code = firstChildWithTag(dept, 'department-code').innerHTML;
+      var deptID = firstChildWithTag(dept, 'department-id').innerHTML;
+      dept.addEventListener('click', function() {
+	nsYacs.searchbar.value = code + ' ';
+	loadCourses('/api/v5/courses.xml?department_id=' + deptID);
+      });
+    }())
+  }
+  History.pushState({state:nsYacs.homePage}, "Home page", "?state=0");
+}
+
+
+// Anything that has to be done when loading up the front page.
+function loadHomePage() {
+  clearForNewPage();
+  doAjaxRequest("/api/v5/departments.xml", function(response) {
+    nsYacs.contentContainer.innerHTML = response;
+    setupHomePage();
+    nsUser.currentPage = nsYacs.homePage;
+  });
+}

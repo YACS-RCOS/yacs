@@ -1,0 +1,24 @@
+/* constants.js - file for the nsYacs namespace, which holds all application
+   constants. This includes some CSS values that must be the same as they
+   appear in the main CSS file(s). */
+
+// yacs namespace
+// contains application constants
+const nsYacs = {
+  deptColumnWidth : 600, // should be the same as the width
+                         // defined for <school> in yacs-main.css
+  deptColumnMargin : 10, // should be the same as side margins defined
+                         // for <school> in yacs-main.css
+  weekdayNames : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+		  'Friday', 'Saturday'],
+
+  // DOM elements that will not change between sub-pages
+  // undefined because they aren't there until the page actually loads
+  contentContainer : undefined,
+  homeButton       : undefined,
+  searchbar        : undefined,
+  schedButton      : undefined,  
+  
+  // IDs for the different pages
+  homePage: 0, courselistPage: 1, schedulePage: 2
+}
