@@ -117,39 +117,41 @@ function setupCourses() {
        use of let is STILL not cross-platform (no Safari support, limited
        Chromium support) after being out there for over 6 years.
     */
-    let n = nodes[i];
+    var n = nodes[i];
     
     // mark any sections that are already in the selected array with .selected
     // class (used in revisiting pages)
-    let sid = firstChildWithTag(n, 'section-id').innerHTML;
+    var sid = firstChildWithTag(n, 'section-id').innerHTML;
     if(nsUser.hasSelection(sid)) {
       n.className += ' selected';
     }
 
     // add click functionality to sections
-    n.addEventListener('click', function(event) {
+    // stupid, stupid cross-browser closures
+    (function() {
+      var theSection = n;
+      var theSID = sid;
+      theSection.addEventListener('click', function(event) {
+	
+	// we care more about the data - so use that to determine how to
+	// change the styling; i.e. if the id is in the array, we will
+	// always deselect it regardless of whether it was being rendered
+	// as selected or not
+	if(nsUser.removeSelection(theSID)) {
+	  // index is real, section is selected, remove selected class
+	  theSection.classList.remove('selected');
+	}
+	else {
+	  // section is not selected, select it and add it to the array
+	  nsUser.addSelection(theSID);
+	  theSection.className += ' selected';
+	}
+	
+	// don't bubble up to the course click handler!
+	event.stopPropagation();
+      });
+    })()
 
-      (function(theSection, theSID) {
-	return function() {
-	  // we care more about the data - so use that to determine how to
-	  // change the styling; i.e. if the id is in the array, we will
-	  // always deselect it regardless of whether it was being rendered
-	  // as selected or not
-	  if(nsUser.removeSelection(theSID)) {
-	    // index is real, section is selected, remove selected class
-	    theSection.classList.remove('selected');
-	  }
-	  else {
-	    // section is not selected, select it and add it to the array
-	    nsUser.addSelection(theSID);
-	    theSection.className += ' selected';
-	  }
-	};
-      }(n, sid))();
-      
-      // don't bubble up to the course click handler!
-      event.stopPropagation();
-    });
   }
   
   // courses can also be clicked
