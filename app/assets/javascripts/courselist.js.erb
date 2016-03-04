@@ -20,11 +20,11 @@ function milTimeToReadable(miltime) {
 
 
 /* ****************************************************************************
-   Format some items which appear on the search results page into their final
-   display. The API does not load text like "credits" or "Section"; the
-   application is responsible for this process.
+   Format the sections as they appear in the course list into their final
+   display. Argument is a single DOM node containing <section> elements from
+   the API.
 */
-function formatSearchResults() {
+function formatSections(parentNode) {
   /* These loops are all poorly readable. If anyone is ever maintaining this
      code when for..of loops become cross-browser compatible, please go
      through all of the YACS Javascript to replace things like
@@ -38,64 +38,85 @@ function formatSearchResults() {
      }
   */
   
+  // get list of section nodes
+  var nodes = parentNode.getElementsByTagName('section');
+  
   // add "closed" class to sections with less than 1 seat
-  var nodes = document.getElementsByTagName('section');
   for(var n=0; n<nodes.length; ++n) {
-    var subnodes = nodes[n].getElementsByTagName('section-seats-available');
+    var ssa = firstChildWithTag(nodes[n], 'section-seats-available');
     // there should only be 1 <section-seats-available> child
-    if(parseInt(subnodes[0].innerHTML, 10) < 1) {
+    if(parseInt(ssa.innerHTML, 10) < 1) {
       nodes[n].classList.add('closed');
     }
   }
 
+  // prepend the "Section" to section numbers
+  nodes = parentNode.getElementsByTagName('section-name');
+  for(var n=0; n<nodes.length; ++n) {
+    nodes[n].innerHTML = 'Section ' + nodes[n].innerHTML;
+  }
+
+  // append the " seats" to the available seats
+  nodes = parentNode.getElementsByTagName('section-seats-available');
+  for(var n=0; n<nodes.length; ++n) {
+    nodes[n].innerHTML += ' seats';
+  }
+
+  // period formatting
+  // first check for no periods
+  nodes = parentNode.getElementsByTagName('periods');
+  for(var n=0; n<nodes.length; ++n) {
+    console.log('loopstart');
+    var subnodes = nodes[n].getElementsByTagName('period');
+    if(subnodes.length === 0) {
+      nodes[n].className += ' noperiods';
+      nodes[n].innerHTML = 'No periods';
+    }
+    else {
+      // for each period object, the period-start and period-end children are
+      // represented in military time, so replace them with a period-time
+      // element
+      // that formats them together as readable times
+      for(var s=0; s<subnodes.length; ++s) {
+	var ps = firstChildWithTag(subnodes[s], 'period-start');
+	var pe = firstChildWithTag(subnodes[s], 'period-end');
+	var startTime = milTimeToReadable(ps.innerHTML);
+	var endTime = milTimeToReadable(pe.innerHTML);
+	var pt = parentNode.createElement('period-time');
+	pt.innerHTML = startTime + '-' + endTime;
+	ps.parentNode.insertBefore(pt, ps);
+	ps.parentNode.removeChild(ps);
+	pe.parentNode.removeChild(pe);
+
+	// period-day is represented as a number; translate it into a short day
+	// code
+	var days = subnodes[s].getElementsByTagName('period-day');
+	for(var d=0; d<days.length; ++d) {
+	  days[d].innerHTML = nsYacs.weekdayNames[parseInt(days[d].innerHTML,10)].substring(0,3);
+	}
+      }
+    }
+  }
+  
+}
+
+
+/* ****************************************************************************
+   Format the courses and sections which appear on the search results page into
+   their final display. The API does not load text like "credits" or "Section";
+   the frontend is responsible for this process.
+*/
+function formatCourseList() {
+
   // add the actual "credit(s)" to credits elements, which only have the number
-  nodes = document.getElementsByTagName('course-credits');
+  var nodes = document.getElementsByTagName('course-credits');
   for(var n=0; n<nodes.length; ++n) {
     var word = 'credits';
     if(parseInt(nodes[n].innerHTML, 10) === 1) { word = 'credit'; }
     nodes[n].innerHTML = nodes[n].innerHTML + ' ' + word;
   }
 
-  // prepend the "Section" to section numbers
-  nodes = document.getElementsByTagName('section-name');
-  for(var n=0; n<nodes.length; ++n) {
-    nodes[n].innerHTML = 'Section ' + nodes[n].innerHTML;
-  }
-
-  // append the " seats" to the available seats
-  nodes = document.getElementsByTagName('section-seats-available');
-  for(var n=0; n<nodes.length; ++n) {
-    nodes[n].innerHTML += ' seats';
-  }
-
-  // period-day is represented as a number; translate it into a short day code
-  nodes = document.getElementsByTagName('period-day');
-  for(var n=0; n<nodes.length; ++n) {
-    nodes[n].innerHTML =
-      nsYacs.weekdayNames[parseInt(nodes[n].innerHTML, 10)].substring(0,3);
-  }
-
-  // for each period object, the period-start and period-end children are
-  // represented in military time, so replace them with a period-time element
-  // that formats them together as readable times
-  nodes = document.getElementsByTagName('period');
-  for(var n=0; n<nodes.length; ++n) {
-    var ps = firstChildWithTag(nodes[n], 'period-start');
-    var pe = firstChildWithTag(nodes[n], 'period-end');
-    var startTime = milTimeToReadable(ps.innerHTML);
-    var endTime = milTimeToReadable(pe.innerHTML);
-    var pt = document.createElement('period-time');
-    pt.innerHTML = startTime + '-' + endTime;
-    ps.parentNode.insertBefore(pt, ps);
-    ps.parentNode.removeChild(ps);
-    pe.parentNode.removeChild(pe);
-  }
-}
-
-function createfunc(theSection, theSID) {
-  return function() {
-    alert(theSID);
-  };
+  formatSections(document);
 }
   
 
@@ -103,7 +124,7 @@ function createfunc(theSection, theSID) {
    Once a courses XML has been loaded into div#content, do any other steps
    needed to crunch it into presentable form. */
 function setupCourses() {
-  formatSearchResults();
+  formatCourseList();
 
   var nodes = document.getElementsByTagName('section');
   for(var i=0; i<nodes.length; ++i) {
@@ -138,11 +159,13 @@ function setupCourses() {
 	// always deselect it regardless of whether it was being rendered
 	// as selected or not
 	if(nsUser.removeSelection(theSID)) {
+	  console.log('Removing selected course');
 	  // index is real, section is selected, remove selected class
 	  theSection.classList.remove('selected');
 	}
 	else {
 	  // section is not selected, select it and add it to the array
+	  console.log('Adding selected course');
 	  nsUser.addSelection(theSID);
 	  theSection.className += ' selected';
 	}

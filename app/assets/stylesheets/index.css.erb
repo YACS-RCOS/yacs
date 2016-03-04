@@ -199,6 +199,9 @@ periods {
     float:right;
     padding:0.15em 0;
 }
+periods.noperiods {
+    font-weight: bold;
+}
 period {
     margin-left:1em;
 }
@@ -227,6 +230,10 @@ period-day {
 .scheduleswitch.disabled {
     color: #999;
     cursor: default;
+}
+
+div#scheduleContent {
+    margin-bottom:30px;
 }
 
 div#scheduleTable {
@@ -264,18 +271,16 @@ div#scheduleTable ul li.hour {
 /* Deselection list styles */
 div#deselectContent {
     display:block;
-    width:200px;
+    width:60%;
     margin: 20px auto 0 auto;
     background-color: #bbf;
 }
-sections#deselection section {
-    
-}
-sections#deselection section.deselected {
-    color:#888;
-}
-sections#deselection section periods {
+div#deselectContent department-code, div#deselectContent course-number,
+div#deselectContent course-credits, div#deselectContent course-description {
     display:none;
+}
+section.deselected {
+    color:#f00;
 }
 
 /* Course colors used by YACS Original: (border/text/background)
