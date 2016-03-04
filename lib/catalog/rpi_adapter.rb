@@ -1,5 +1,5 @@
 require 'open-uri'
-class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
+class Catalog::RpiAdapter < Catalog::AbstractAdapter
   public
   def load_catalog
     load_departments
@@ -9,14 +9,25 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
     remove_empty
   end
 
-  def get_courses
-    uri = "https://sis.rpi.edu/reg/rocs/201601.xml"
-    @courses_xml ||= Nokogiri::XML(open(uri)).xpath("//COURSE")
+  def update_section_seats
+    uri = "https://sis.rpi.edu/reg/rocs/YACS_201601.xml"
+    sections = Nokogiri::XML(open(uri)).xpath("//CourseDB/SECTION")
+    sections.each do |section_xml|
+      section = Section.find_by_crn(section_xml.attr("crn"))
+      if section
+        x = section.seats_taken
+        section.seats = section_xml.attr("seats")
+        section.seats_taken = section_xml.attr("students")
+        section.save
+      end
+    end
   end
-
+  
+  private
   def load_courses
     errors = []
-    get_courses
+    uri = "https://sis.rpi.edu/reg/rocs/201601.xml"
+    @courses_xml = Nokogiri::XML(open(uri)).xpath("//COURSE")
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
       course              = dept.courses.build
@@ -66,7 +77,6 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
       page = base + path
       page = Nokogiri::HTML(open(page))
       page_no += 1
-
       rows = page.css('td.block_content table tr')
       rows[1..-2].each do |row|
         courses = row.css('td a').to_a.compact
@@ -90,7 +100,6 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
         end
       end
     end
-
   end
 
   def load_departments
