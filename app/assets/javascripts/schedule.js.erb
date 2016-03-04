@@ -388,7 +388,7 @@ function refreshSchedules() {
    one into the DOM.
 */
 function loadSchedules() {
-  selectionsRaw = nsUser.getSelectionsRaw();
+  var selectionsRaw = nsUser.getSelectionsRaw();
   // If nothing is selected, take no action
   // We could make it show "No courses selected" or whatever but I don't think
   // that's really necessary
@@ -411,15 +411,11 @@ function loadSchedules() {
     // insert sections into DOM
     var container = document.getElementById('deselectContent');
     container.innerHTML += response;
-    return;
-    
-    // give it an id to make the CSS rules more straightforward
-    var sectionsContainer =
-      firstChildWithTag(nsYacs.contentContainer, 'sections');
-    sectionsContainer.setAttribute('id', 'deselection');
+
+    formatSections(container); // this function is in courselist.js
 
     // add event listeners
-    var sections = sectionsContainer.getElementsByTagName('section');
+    var sections = container.getElementsByTagName('section');
     for(var i=0; i<sections.length; ++i) {
       var sect = sections[i];
       var sectID = firstChildWithTag(sect, 'section-id').innerHTML;
@@ -430,17 +426,17 @@ function loadSchedules() {
 	// sorry about poor variable naming but I'm juggling too many sects,
 	// sids, sections, sectionIDs, etc. to keep track
 	return function() {
-	  // test whether this is already deselected or not
-	  if(theSection.className.indexOf('deselected') <= -1) {
-	    // it is not deselected already, so deselect it
-	    nsUser.removeSelection(theSID);
-	    theSection.className += ' deselected';
+	  // test whether this is already selected or not
+	  if(theSection.className.indexOf('selected') <= -1) {
+	    // it is not selected already, so select it
+	    nsUser.addSelection(theSID);
+	    theSection.className += ' selected';
 	    refreshSchedules();
 	  }
 	  else {
-	    // it is deselected and user clicked again, re-add to selections
-	    nsUser.addSelection(theSID);
-	    theSection.classList.remove('deselected');
+	    // it is selected already, remove from selections
+	    nsUser.removeSelection(theSID);
+	    theSection.classList.remove('selected');
 	    refreshSchedules();
 	  }
 	}
