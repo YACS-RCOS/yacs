@@ -130,6 +130,14 @@ function formatCourseList() {
    Once a courses XML has been loaded into div#content, do any other steps
    needed to crunch it into presentable form. */
 function setupCourses() {
+
+  // check for no courses (expected result from a search query that matches
+  // nothing)
+  if(nsYacs.contentContainer.getElementsByTagName('course').length === 0) {
+    nsYacs.contentContainer.innerHTML = '<div class="error">No courses match those search terms.</div>';
+    return;
+  }
+  
   formatCourseList();
 
   var nodes = document.getElementsByTagName('section');
