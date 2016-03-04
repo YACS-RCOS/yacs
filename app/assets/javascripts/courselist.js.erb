@@ -48,6 +48,13 @@ function formatSections(parentNode) {
     if(parseInt(ssa.innerHTML, 10) < 1) {
       nodes[n].classList.add('closed');
     }
+    
+    // mark any sections that are already in the selected array with .selected
+    // class (used in revisiting pages)
+    var sid = firstChildWithTag(nodes[n], 'section-id').innerHTML;
+    if(nsUser.hasSelection(sid)) {
+      nodes[n].className += ' selected';
+    }
   }
 
   // prepend the "Section" to section numbers
@@ -66,7 +73,6 @@ function formatSections(parentNode) {
   // first check for no periods
   nodes = parentNode.getElementsByTagName('periods');
   for(var n=0; n<nodes.length; ++n) {
-    console.log('loopstart');
     var subnodes = nodes[n].getElementsByTagName('period');
     if(subnodes.length === 0) {
       nodes[n].className += ' noperiods';
@@ -82,7 +88,7 @@ function formatSections(parentNode) {
 	var pe = firstChildWithTag(subnodes[s], 'period-end');
 	var startTime = milTimeToReadable(ps.innerHTML);
 	var endTime = milTimeToReadable(pe.innerHTML);
-	var pt = parentNode.createElement('period-time');
+	var pt = document.createElement('period-time');
 	pt.innerHTML = startTime + '-' + endTime;
 	ps.parentNode.insertBefore(pt, ps);
 	ps.parentNode.removeChild(ps);
@@ -139,13 +145,7 @@ function setupCourses() {
        Chromium support) after being out there for over 6 years.
     */
     var n = nodes[i];
-    
-    // mark any sections that are already in the selected array with .selected
-    // class (used in revisiting pages)
     var sid = firstChildWithTag(n, 'section-id').innerHTML;
-    if(nsUser.hasSelection(sid)) {
-      n.className += ' selected';
-    }
 
     // add click functionality to sections
     // stupid, stupid cross-browser closures
@@ -159,13 +159,11 @@ function setupCourses() {
 	// always deselect it regardless of whether it was being rendered
 	// as selected or not
 	if(nsUser.removeSelection(theSID)) {
-	  console.log('Removing selected course');
 	  // index is real, section is selected, remove selected class
 	  theSection.classList.remove('selected');
 	}
 	else {
 	  // section is not selected, select it and add it to the array
-	  console.log('Adding selected course');
 	  nsUser.addSelection(theSID);
 	  theSection.className += ' selected';
 	}
