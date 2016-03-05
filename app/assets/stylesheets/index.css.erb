@@ -284,6 +284,16 @@ div#deselectContent course-credits, div#deselectContent course-description {
     display:none;
 }
 
+/* Styles for courses on the schedule */
+/* "div#scheduleTable ul li" needed for CSS precedence rules */
+div#scheduleTable ul li.course { 
+    border-bottom:none;
+    padding: 0px 4px 0px 4px;
+    overflow:hidden;
+}
+div#scheduleTable ul li.course.end30 {
+    border-bottom:1px #bbb solid;
+}
 /* Course colors used by YACS Original: (border/text/background)
    #B62/#720/#FDC
    #B44/#722/#EDD
@@ -292,18 +302,6 @@ div#deselectContent course-credits, div#deselectContent course-description {
    #499/#166/#DEE
    #949/#616/#EDE
    */
-
-/* Styles for courses on the schedule */
-/* "div#scheduleTable ul li" needed for CSS precedence rules */
-div#scheduleTable ul li.course { 
-    border-bottom:none;
-    padding: 0px 4px 0px 4px;
-    overflow: hidden;
-    text-overflow:ellipsis;
-}
-div#scheduleTable ul li.course.end30 {
-    border-bottom:1px #bbb solid;
-}
 .c1 {
     color: #720;
     background-color: #fdc;
