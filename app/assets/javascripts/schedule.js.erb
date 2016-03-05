@@ -297,7 +297,8 @@ function convertPeriodsToHTML(week) {
 	  classes += ' closed';
 	}
 	columnHTML += '<li class="' + classes + '" style="height:' +
-	  courseHeight + 'px">' + getCourseText(period) + '</li>';
+	  courseHeight + 'px" title="' + period.title + '">'
+	  + getCourseText(period) + '</li>';
 
 	// step 4: set currTime
 	currTime = period.end;
