@@ -119,8 +119,8 @@ function setupHomePage() {
       if(appendLastTD) {
   	$('schools').append('</td>');
       }
-      $('schools').wrapInner('<table id="homeTable"><tr></tr></table>');
     }
+    $('schools').wrapInner('<table id="homeTable"><tr></tr></table>');
   }
 
   // There is now a useless <departments> or <schools> tag; this
@@ -136,6 +136,7 @@ function setupHomePage() {
   */
   
   // page will not center unless homeTable is given a definite width
+  var homeTable = document.getElementById('homeTable');
   homeTable.setAttribute('width', schoolsFinalWidth);
   
   // Add a click event listener to all departments to load that department's
