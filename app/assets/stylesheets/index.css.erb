@@ -251,15 +251,17 @@ div#scheduleTable {
     font-size:16px;
 }
 div#scheduleTable ul {
-    display:block;
-    float:left;
+    display:table-cell;
+    vertical-align:middle;
     width:200px;
+    min-width:200px;
     border-right: 1px #bbb solid;
     text-align:center;
     list-style-type:none;
 }
 div#scheduleTable ul.narrowcol {
     width:60px;
+    min-width:60px;
 }
 div#scheduleTable ul.narrowcol li {
     text-align:right;
