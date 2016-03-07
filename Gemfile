@@ -44,6 +44,8 @@ gem 'crono'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'annotate'
+  gem 'awesome_print'
   gem 'pry'
   gem 'pry-remote'
   gem 'pry-stack_explorer'
