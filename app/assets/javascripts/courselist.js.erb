@@ -140,6 +140,7 @@ function setupCourses() {
   
   formatCourseList();
 
+  // add section click event handler
   var nodes = document.getElementsByTagName('section');
   for(var i=0; i<nodes.length; ++i) {
     /* Note to future maintainers:
@@ -187,39 +188,58 @@ function setupCourses() {
   // if a course is clicked:
   // if there are open, non-selected sections: select all open sections
   // else: deselect all selections
-  
-  $('course').click(function(event) {
-    // we are guaranteed that the user clicked on the course and not a section
-    var allSectionsSelected = true;
-    var selections = nsUser.getSelections();
-    $(this).find('section').each(function(i, section) {
-      // ignore closed sections
-      if(! $(section).hasClass('closed')) {
-	var sid = $(section).find('section-id').html();
-	// if a section id cannot be found in the selected array, they cannot
-	// all be selected
-	if(selections.indexOf(sid) < 0) {
-	  allSectionsSelected = false;
-	  return false; // break the .each() loop
-	}
-      }
-    });
 
-    $(this).find('section').each(function(i, section) {
-      var sid = $(section).find('section-id').html();
-      if(allSectionsSelected) {
-      	nsUser.removeSelection(sid);
-      	$(section).removeClass('selected');
-      }
-      else {
-	// never add closed sections
-	if(! $(this).hasClass('closed')) {
-      	  nsUser.addSelection(sid);
-      	  $(section).addClass('selected');
+  nodes = document.getElementsByTagName('course');
+  for(var i=0; i<nodes.length; ++i) {
+    var theCourse = nodes[i];
+
+    // another closure here
+    (function() {
+      var c = theCourse;
+      c.addEventListener('click', function(event) {
+
+	// first loop over all sections to determine if all open sections are
+	// selected
+	var allSelected = true;
+	var selections = nsUser.getSelections();
+	var sections = c.getElementsByTagName('section');
+	for(var j = 0; j<sections.length; ++j) {
+	  var s = sections[j];
+	  // ignore closed sections
+	  if(s.className.indexOf('closed') < 0) {
+	    var sid = firstChildWithTag(s, 'section-id').innerHTML;
+	    // if a section id cannot be found in the selected array, they
+	    // cannot all be selected
+	    if(selections.indexOf(sid) < 0) {
+	      allSelected = false;
+	      break;
+	    }
+	  }
 	}
-      }
-    });
-  });
+
+	// select open sections
+	for(var j=0; j<sections.length; ++j) {
+	  var s = sections[j];
+	  var sid = firstChildWithTag(s, 'section-id').innerHTML;
+	  if(allSelected) {
+	    // removal functions won't do anything if not selected
+	    nsUser.removeSelection(sid);
+	    s.classList.remove('selected');
+	  }
+	  else {
+	    // never add closed sections
+	    if(s.className.indexOf('closed') < 0) {
+	    // addSelection doesn't add to the cookie if it's already selected
+	      nsUser.addSelection(sid);
+	      s.className += ' selected';
+	    }
+	  }
+	}
+	
+      });
+    })()
+  }
+  
   History.pushState({state:nsYacs.courselistPage}, "Course page", "?state=1");
 }
 
