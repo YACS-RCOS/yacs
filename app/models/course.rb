@@ -50,6 +50,6 @@ class Course < ActiveRecord::Base
 
   private
   def self.cache_key
-    "courses/all-#{count}-#{maximum(:updated_at)}"
+    "courses/all-#{count}-#{maximum(:updated_at).try(:utc).try(:to_s, :number)}"
   end
 end
