@@ -12,9 +12,11 @@ class Scheduler
       params[schedule.size].each do |new_section|
         conflict = false
         schedule.each do |last_section|
-          if new_section.conflicts_with(last_section)
-            conflict = true
-            break
+          Rails.cache.fetch("/conflict/#{new_section.id}-#{last_section.id}", expires_in: 10.minutes) do
+            if new_section.conflicts_with(last_section)
+              conflict = true
+              break
+            end
           end
         end
         if not conflict
