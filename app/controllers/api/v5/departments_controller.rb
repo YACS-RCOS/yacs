@@ -1,10 +1,16 @@
 class Api::V5::DepartmentsController < Api::V5::ApiController
   def index
     if params[:use_schools] != 'false'
-      @departments = Department.where school_id: nil
+      Rails.cache.fetch('departments_by_school', expires_in: 2.hours) do
+        @departments = Department.where school_id: nil
+        @departments
+      end
       @schools = School.all
     else
-      @departments = Department.all
+      Rails.cache.fetch('all_departments', expires_in: 2.hours) do
+        @departments = Department.all
+        @departments
+      end
     end
     respond_to do |format|
       format.xml { render xml: @courses }
