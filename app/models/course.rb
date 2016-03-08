@@ -21,7 +21,7 @@ class Course < ActiveRecord::Base
 
   def self.search(params)
     search_params = params.join(' & ')
-    Rails.cache.fetch("#{search_params}-#{cache_key}", expires_in: 3.hours) do
+    Rails.cache.fetch("#{cache_key}/search/#{search_params}/") do
       query = <<-SQL
         SELECT * FROM (
           SELECT DISTINCT
@@ -46,5 +46,10 @@ class Course < ActiveRecord::Base
 
   def credits
     min_credits == max_credits ? "#{min_credits}" : "#{min_credits}-#{max_credits}"
+  end
+
+  private
+  def self.cache_key
+    "courses/all-#{count}-#{maximum(:updated_at).try(:utc).try(:to_s, :number)}"
   end
 end
