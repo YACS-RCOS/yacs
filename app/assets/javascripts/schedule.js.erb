@@ -66,7 +66,7 @@ function getCourseText(period) {
     
   if(lines < 2) {
     // one line of text, make it count
-    return basetext;
+    return '<p>'+basetext+'</p>';
   }
   else {
     // TODO: truncate string according to the number of lines that can be used
@@ -85,6 +85,7 @@ function movePrevSchedule() {
   nsUser.currentSchedule--;
   
   $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
+  $('div#crns').html('CRNs: '+nsUser.schedCRNStrings[nsUser.currentSchedule]);
   
   if(nsUser.currentSchedule === 0) {
     $('#leftswitch').addClass('disabled');
@@ -101,6 +102,7 @@ function moveNextSchedule() {
   nsUser.currentSchedule++;
   
   $('div#scheduleTable').html(nsUser.schedHTMLData[nsUser.currentSchedule]);
+  $('div#crns').html('CRNs: '+nsUser.schedCRNStrings[nsUser.currentSchedule]);
 
   if(nsUser.currentSchedule === nsUser.schedHTMLData.length - 1) {
     $('#rightswitch').addClass('disabled');
@@ -331,6 +333,20 @@ function convertPeriodsToHTML(week) {
   return weekHTML;
 }
 
+/* ****************************************************************************
+   Function that extracts all CRNs from all sections in a schedule and returns
+   an array of them.
+*/
+function getAllCRNs(schedule) {
+  var crns = [];
+  
+  for (var s=0; s<schedule.sections.length; ++s) {
+    crns.push(schedule.sections[s].crn);
+  }
+
+  return crns;
+}
+
 
 /* ****************************************************************************
    Function that will be called when the schedule page is loaded or when the
@@ -362,9 +378,14 @@ function refreshSchedules() {
     
     // Store the data in nsUser
     nsUser.schedHTMLData = [];
+    nsUser.schedCRNStrings = [];
     for(var i=0; i<numSchedules; ++i) {
+      
       nsUser.schedHTMLData[i] =
 	convertPeriodsToHTML(convertSchedToPeriods(allSchedulesArray[i]));
+      
+      nsUser.schedCRNStrings[i] =
+	getAllCRNs(allSchedulesArray[i]).join(", ");
     }
     nsUser.currentSchedule = 0;
     
@@ -375,7 +396,9 @@ function refreshSchedules() {
       (numSchedules === 1 ? ' disabled' : '') +
       '" onclick="moveNextSchedule()">&#9654;</span></div>';
 
-    container.innerHTML = schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>';
+    var schedCRNs = '<div id="crns">CRNs: ' + nsUser.schedCRNStrings[0] + '</div>';
+    
+    container.innerHTML = schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>' + schedCRNs;
   });
 }
 
