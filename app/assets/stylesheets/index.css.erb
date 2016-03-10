@@ -237,6 +237,13 @@ period-day {
     color: #999;
     cursor: default;
 }
+#crns {
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:8px;
+    text-align:center;
+}
 
 div#scheduleContent {
     margin-bottom:30px;
@@ -251,15 +258,17 @@ div#scheduleTable {
     font-size:16px;
 }
 div#scheduleTable ul {
-    display:block;
-    float:left;
-    width:200px;
+    display:table-cell;
+    vertical-align:middle;
+    width:160px;
+    min-width:160px;
     border-right: 1px #bbb solid;
     text-align:center;
     list-style-type:none;
 }
 div#scheduleTable ul.narrowcol {
     width:60px;
+    min-width:60px;
 }
 div#scheduleTable ul.narrowcol li {
     text-align:right;
