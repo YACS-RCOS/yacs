@@ -1,4 +1,4 @@
-class SchoolsController < ApiController
+class Api::V5::SchoolsController < Api::V5::ApiController
   def index
     @show_departments = params[:show_departments] == 'true'
     if params[:id].present?

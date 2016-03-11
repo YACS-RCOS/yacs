@@ -8,7 +8,7 @@ def json_validate_schools(schools=@schools, departments=false)
         expect(json['schools'][n]['departments'][m]['id']) .to eq department.id
       end
     else
-      expect(json['schools'][n]['departments']) .to be_null
+      expect(json['schools'][n]['departments']) .to be_nil
     end
   end
 end
