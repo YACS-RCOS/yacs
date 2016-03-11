@@ -83,6 +83,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         courses.each do |course|
           href = course['href']
           course_title = course.text.sub(/-.*/, '').strip.split
+          course_name = course.text.split('-')[1..-1].join('-').gsub(/[^ -\~]/, '').strip
           course_model = Course.where(number: course_title[1]).includes(:department).where(departments: {code: course_title[0]})[0]
           if course_model
             desc_path = base + href
@@ -95,7 +96,8 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
             course_description.slice! " Back to Top | Print-Friendly Page [Add to Portfolio]"
             course_description = course_description.strip
             puts "#{course_title} - #{course_description}"
-            course_model.update_attributes!(description: course_description)
+            course_model.update_attributes!(description: course_description) if course_description.present?
+            course_model.update_attributes!(name: course_name) if course_name.present?
           end
         end
       end
