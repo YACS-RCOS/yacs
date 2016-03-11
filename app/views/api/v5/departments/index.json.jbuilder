@@ -1,1 +1,1 @@
-json.partial! '/api/v5/departments/departments', departments: @departments
+json.partial! '/api/v5/departments/departments', departments: @departments_, show_courses: @show_courses
