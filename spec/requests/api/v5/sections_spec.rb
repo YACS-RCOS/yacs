@@ -74,12 +74,12 @@ describe 'Sections API' do
       end
     end
 
-    it '#show' do
-      section = FactoryGirl.create(:section)
-      get "/api/v5/sections/#{section.id}.xml"
-      expect(response).to be_success
-      expect(xml.search('section-id').text) .to eq section.id.to_s
-      expect(xml.search('section-crn').text) .to eq section.crn.to_s
-    end
+    # it '#show' do
+    #   section = FactoryGirl.create(:section)
+    #   get "/api/v5/sections/#{section.id}.xml"
+    #   expect(response).to be_success
+    #   expect(xml.search('section-id').text) .to eq section.id.to_s
+    #   expect(xml.search('section-crn').text) .to eq section.crn.to_s
+    # end
   end
 end

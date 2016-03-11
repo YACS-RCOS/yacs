@@ -42,12 +42,12 @@ describe 'Departments API' do
     expect(json['schools'][0]['departments'][0]['id']) .to eq depts[0].id
   end
 
-  it '#show' do
-    dept = FactoryGirl.create(:department)
-    get "/api/v5/departments/#{dept.id}.xml"
-    expect(response).to be_success
-    expect(xml.search('department-id').text).to   eq dept.id.to_s
-    expect(xml.search('department-code').text).to eq dept.code
-    expect(xml.search('department-name').text).to eq dept.name
-  end
+  # it '#show' do
+  #   dept = FactoryGirl.create(:department)
+  #   get "/api/v5/departments/#{dept.id}.xml"
+  #   expect(response).to be_success
+  #   expect(xml.search('department-id').text).to   eq dept.id.to_s
+  #   expect(xml.search('department-code').text).to eq dept.code
+  #   expect(xml.search('department-name').text).to eq dept.name
+  # end
 end
