@@ -1,105 +1,221 @@
 # YACS API
 
-(this document is not final and currently subject to change)
-
-The YACS API is now in version 5. Continued support for versions <= 4 should not be expected.
+The YACS API is now in version 5. Continued support for versions <= 4 (yacs.me) should not be expected.
 Pervious versions provided data for courses across multiple semesters, however this functionality
 has been removed (for now). Only information for the current registration semester will be provided.
 
-The API provides three endpoints for accessing catalog data, and all data is available in JSON
-and XML format:
+The API provides three endpoints for accessing catalog data, and all data is available in JSON format.
 
-* `/api/v5/departments.<format>`
-
-  The departments API returns id, name, and code of all departments or a single department:
+### Schools
+* `/api/v5/schools.json`
+  
+  The Schools API returns the id and name of one or many schools.
   
   ```
-    [
-      {
-        "department": {
+    {
+      "schools":
+      [
+        {
+          "id": 7,
+          "name": "School of Humanties, Arts, and Social Sciences"
+        },
+        {
+          "id": 9,
+          "name": "School of Engineering"
+        }
+      ]
+    }
+  ```
+  
+  Queries available for Schools:
+  
+  #### id (one or many)
+  * `/api/v5/schools.json?id=<id>` (like `show` method)
+  * `/api/v5/schools.json?id=<id>,<id>,<id>`
+
+  #### show_departments
+    If you wish to include the associated departments of each school in the response,
+    use the show_departments query. This query can be chained with any other query.
+    * `/api/v5/schools.json?show_departments=true`
+    * `/api/v5/schools.json?id=<id>&show_departments=true`
+
+### Departments
+* `/api/v5/departments.json`
+
+  The departments API returns id, name, and code of one or many departments.
+  
+  ```
+    {
+      "departments":
+      [
+        {
           "id": 42, 
           "name": "Computer Science",
-          "code": "CSCI"
-        }
-      },
-      {
-        "department": {
+          "code": "CSCI",
+          "school_id": 3
+        },
+        {
           "id": 2,
           "name": "Math",
-          "code": "MATH"
+          "code": "MATH",
+          "school_id": 16
         }
-      }
-    ]
+      ]
+    }
   ```
+  Queries available for Departments:
   
-* `/api/v5/courses.<format>`
+  #### id (one or many)
+  * `/api/v5/departments.json?id=<id>` (like `show` method)
+  * `/api/v5/departments.json?id=<id>,<id>,<id>`
   
-  Courses can optionally be filtered by department,
+  #### school_id (one or many)
+  * `/api/v5/departments.json?school_id=<school_id>` (like `show` method)
+  * `/api/v5/departments.json?school_id=<school_id>,<school_id>,<school_id>`
+
+  #### show_courses
+    If you wish to include the associated courses of each department in the response,
+    use the show_courses query. This query can be chained with any other query.
+    * `/api/v5/departments.json?show_courses=true`
+    * `/api/v5/departments.json?id=<id>&show_courses=true`
+
+### Courses
+* `/api/v5/courses.json`
   
-  `/api/v5/courses.json?department_id=<department_id>`
-  
-  The Courses API returns the id, name, number, min_credits, and max_credits of courses,
-  as well as the id's and codes of their associated departments:
+  The Courses API returns the id, name, number, description, min_credits, and max_credits,
+  and department_id of one or many courses.
   
   ```
-  [
-    {
-      "course": {
+  {
+    courses: 
+    [
+      {
         "id": 11,
         "name": "Data Structures",
         "number": 1200,
+        "description": "Programming concepts: functions, parameter passing, pointers, arrays, strings, structs, classes, templates. Mathematical tools: sets, functions, and relations, order notation, complexity of algorithms, proof by induction. Data structures and their representations: data abstraction and internal representation, sequences, trees, binary search trees, associative structures. Algorithms: searching and sorting, generic algorithms, iterative and recursive algorithms. Methods of testing correctness and measuring performance.Prerequisites/Corequisites: Prerequisite: CSCI 1100 or permission of instructor.When Offered: Fall and spring terms annually",
         "min_credits": 4,
         "max_credits": 4,
-        "department": {
-          "id": 42,
-          "code": "CSCI"
-        }
-      }
-    },
-    {
-      "course": {
+        "department_id": 42,
+      },
+      {
         "id": 27,
         "name": "Calculus II",
         "number": 1010,
+        "description": "Techniques and applications of integration, polar coordinates, parametric equations, infinite sequences and series, vector functions and curves in space, functions of several variables, and partial derivatives.Prerequisites/Corequisites: Prerequisite:  MATH 1010.When Offered: Fall and spring terms annually.",
         "min_credits": 4,
         "max_credits": 4,
-        "department": {
-          "id": 2,
-          "code": "MATH"
-        }
-      }
-    } 
-  ]
+        "department_id": 2,
+      } 
+    ]
+  }
   ```
+  Queries available for Courses:
   
+  #### id (one or many)
+  * `/api/v5/courses.json?id=<id>` (like `show` method)
+  * `/api/v5/courses.json?id=<id>,<id>,<id>`
+  
+  #### department_id (one or many)
+  * `/api/v5/courses.json?department_id=<department_id>` (like `show` method)
+  * `/api/v5/courses.json?department_id=<department_id>,<department_id>,<department_id>`
+
+  #### section_id - reverse association (one or many)
+  * `/api/v5/courses.json?section_id=<section_id>`
+  * `/api/v5/courses.json?section_id=<section_id>,<section_id>,<section_id>`
+  
+  #### search
+    In addition to primary/foreign key queries, courses can be full-text searched.
+    The api will attempt to match a given search query against several columns in the
+    course table and its associated tables. This allows you to search against a course's
+    name and number, its department's name and code, and the instructors of its sections.
+    Again, the columns searched are:
+
+      * course.name
+      * course.number
+      * department.name
+      * department.code
+      * section.instructors
+      
+    A search query can be given as a plain-old url-formatted string, with search terms separated by spaces.
+    The courses returned are the closest matches to the provided query, in order of how closely they match the query.
+    * `/api/v5/courses.json?search=<some url formatted string>`
+  
+  #### show_sections
+    If you wish to include the associated sections of each course in the response,
+    use the show_sections query. This query can be chained with any other query.
+    * `/api/v5/courses.json?show_sections=true`
+    * `/api/v5/courses.json?id=<id>&show_sections=true`
+
+### Sections
 * `/api/v5/sections.<format>`
 
-  Sections can optionally be filtered by course, `/api/v5/sections.<format>?course_id=<course_id>`
-  
-  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken of sections,
-  as well as the id, time, period_type, and location of all of their associated periods:
+  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken of one or
+  many sections, as well as the type, day, start, and end of all of their associated periods. The start
+  and end are times in military form as strings.
   ```
-  [
-    {
-      "section": {
-        "id": 1,
-        "name": "1",
-        "crn": 11111,
-        "course_id": 1,
+  {
+    sections:
+    [
+      {
+        "id": 108,
+        "name": "01",
+        "crn": 87654,
+        "course_id": 65,
         "seats": 10,
         "seats_taken": 5,
         "periods": [
           {
-            "period": {
-              "id": 1,
-              "time": "4PM-6PM Tuesday",
-              "period_type": "Lecture",
-              "location": "DCC 318"
-            }
+            "type": "LEC"
+            "day": 1,
+            "start": "0800",
+            "end": "0950"
+          },
+          {
+            "type": "LEC"
+            "day": 4,
+            "start": "0800",
+            "end": "0950"
+          }
+        ]
+      },
+      {
+        "id": 112,
+        "name": "02",
+        "crn": 87655,
+        "course_id": 65,
+        "seats": 10,
+        "seats_taken": 10,
+        "periods": [
+          {
+            "type": "LEC"
+            "day": 1,
+            "start": "1000",
+            "end": "1050"
+          },
+          {
+            "type": "LEC"
+            "day": 4,
+            "start": "1000",
+            "end": "1050"
           }
         ]
       }
-    }
-  ]
+    ]
+  }
   ```
+  Queries available for Sections:
   
+  #### id (one or many)
+  * `/api/v5/sections.json?id=<id>` (like `show` method)
+  * `/api/v5/sections.json?id=<id>,<id>,<id>`
+  
+  #### course_id (one or many)
+  * `/api/v5/sections.json?course_id=<course_id>` (like `show` method)
+  * `/api/v5/sections.json?course_id=<course_id>,<course_id>,<course_id>`
+  
+  #### show_periods
+    If you wish to include the associated periods (meetings/blocks/etc.) of each section in the response,
+    use the show_periods query. This query can be chained with any other query.
+    * `/api/v5/sections.json?show_periods=true`
+    * `/api/v5/sections.json?id=<id>&show_periods=true`

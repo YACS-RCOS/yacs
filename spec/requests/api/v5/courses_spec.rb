@@ -7,9 +7,18 @@ def match_courses(courses, dept)
   end
 end
 
-def json_match_courses(courses)
+def json_validate_courses(courses=@courses, sections=false)
   courses.each_with_index do |course, n|
-    expect(json['courses'][n]['id']) .to eq course.id
+    ['id', 'name', 'number', 'min_credits', 'max_credits', 'description', 'department_id'].each do |field|
+      expect(json['courses'][n][field]) .to eq course.attributes[field]
+    end
+    if sections
+      course.sections.each_with_index do |section, m|
+        expect(json['courses'][n]['sections'][m]['id']) .to eq section.id
+      end
+    else
+      expect(json['courses'][n]['sections']) .to be_nil
+    end
   end
 end
 
@@ -71,13 +80,13 @@ describe 'Courses API' do
       end
     end
 
-    it '#show' do
-      course = FactoryGirl.create(:course)
-      get "/api/v5/courses/#{course.id}.xml"
-      expect(response).to be_success
-      expect(xml.search('course-id').text)     .to eq course.id.to_s
-      expect(xml.search('course-number').text) .to eq course.number.to_s
-      expect(xml.search('course-name').text)   .to eq course.name.to_s
-    end
+    # it '#show' do
+    #   course = FactoryGirl.create(:course)
+    #   get "/api/v5/courses/#{course.id}.xml"
+    #   expect(response).to be_success
+    #   expect(xml.search('course-id').text)     .to eq course.id.to_s
+    #   expect(xml.search('course-number').text) .to eq course.number.to_s
+    #   expect(xml.search('course-name').text)   .to eq course.name.to_s
+    # end
   end
 end
