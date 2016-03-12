@@ -14,23 +14,23 @@ def json_validate_departments(departments=@departments, courses=false)
 end
 
 describe 'Departments API' do
-  it '#index' do
-    departments = FactoryGirl.create_list(:department, 10)
-    get '/api/v5/departments.xml'
-    expect(response).to be_success
-    expect(xml.root.departments.department.length).to eq departments.length
-    departments.each_with_index do |dept, n|
-      expect(xml.root.departments.department[n].search('department-code').text).to eq dept.code
-      expect(xml.root.departments.department[n].search('department-name').text).to eq dept.name
-    end
+  # it '#index' do
+  #   departments = FactoryGirl.create_list(:department, 10)
+  #   get '/api/v5/departments.xml?use_schools=false'
+  #   expect(response).to be_success
+  #   expect(xml.root.departments.department.length).to eq departments.length
+  #   departments.each_with_index do |dept, n|
+  #     expect(xml.root.departments.department[n].search('department-code').text).to eq dept.code
+  #     expect(xml.root.departments.department[n].search('department-name').text).to eq dept.name
+  #   end
 
-    # get '/api/v5/departments.json'
-    # expect(response) .to be_success
-    # expect(json['departments'].length) .to eq departments.length
-    # departments.each_with_index do |dept, n|
-    #   expect(json['departments'][n]['id']) .to eq dept.id
-    # end
-  end
+  #   get '/api/v5/departments.json'
+  #   expect(response) .to be_success
+  #   expect(json['departments'].length) .to eq departments.length
+  #   departments.each_with_index do |dept, n|
+  #     expect(json['departments'][n]['id']) .to eq dept.id
+  #   end
+  # end
 
   it '#index (with schools)' do
     depts = FactoryGirl.create_list(:department, 4)
@@ -66,15 +66,15 @@ describe 'Departments API' do
   #   expect(xml.search('department-name').text).to eq dept.name
   # end
 
-  context "there are departments with courses" do
+  context "there are schools with departments with courses" do
     before do
-      @departments = FactoryGirl.create_list(:department, 5)
-      @courses = @departments.map do |department|
+      departments = FactoryGirl.create_list(:department, 5)
+      courses = departments.map do |department|
         FactoryGirl.create_list(:course, 5, department: department)
       end.flatten
-      @schools = FactoryGirl.create_list(:school, 2)
-      @departments[0..1].each { |d| d.update_attributes!(school_id: @schools[0].id) }
-      @departments[2..4].each { |d| d.update_attributes!(school_id: @schools[1].id) }
+      schools = FactoryGirl.create_list(:school, 2)
+      departments[0..1].each { |d| d.update_attributes!(school_id: schools[0].id) }
+      departments[2..4].each { |d| d.update_attributes!(school_id: schools[1].id) }
     end
 
     it '#index.json' do
@@ -106,8 +106,8 @@ describe 'Departments API' do
       json_validate_departments(schools[0].departments + schools[1].departments)
     end
 
-    it '#index.json?show_courses=true' do
-      get "/api/v5/departments.json?show_courses=true"
+    it '#index.json?show_courses' do
+      get "/api/v5/departments.json?show_courses"
       json_validate_departments(Department.all, true)
     end
   end

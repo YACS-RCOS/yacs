@@ -1,1 +1,1 @@
-json.partial! '/api/v5/courses/courses', courses: @courses, show_sections: @show_sections
+json.partial! '/api/v5/courses/courses', courses: @courses
