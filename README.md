@@ -164,8 +164,8 @@ The API provides three endpoints for accessing catalog data, and all data is ava
 ### Sections
 * `/api/v5/sections.<format>`
 
-  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken of one or
-  many sections, as well as the type, day, start, and end of all of their associated periods. The start
+  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken, and instrcutor(s)
+  of one or many sections, as well as the type, day, start, and end of all of their associated periods. The start
   and end are times in military form as strings.
   ```
   {
@@ -178,6 +178,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
         "course_id": 65,
         "seats": 10,
         "seats_taken": 5,
+        "instructors": ["Goldschmidt", "Krishnamoorthy"],
         "periods": [
           {
             "type": "LEC"
@@ -200,6 +201,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
         "course_id": 65,
         "seats": 10,
         "seats_taken": 10,
+        "instructors": [],
         "periods": [
           {
             "type": "LEC"
