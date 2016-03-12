@@ -15,10 +15,16 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     sections.each do |section_xml|
       section = Section.find_by_crn(section_xml.attr("crn"))
       if section
-        x = section.seats_taken
-        section.seats = section_xml.attr("seats")
-        section.seats_taken = section_xml.attr("students")
-        section.save
+        seats = section_xml.attr("seats").to_i
+        seats_taken = section_xml.attr("students").to_i
+        if section.seats != seats
+          puts "#{section.id}: #{section.seats} -> #{seats}"
+          section.update_attribute(:seats, seats)
+        end
+        if section.seats_taken != seats_taken
+          puts "#{section.id}: #{section.seats_taken} -> #{seats_taken}"
+          section.update_attribute(:seats_taken, seats_taken)
+        end
       end
     end
   end
