@@ -1,7 +1,7 @@
 class Api::V5::SectionsController < Api::V5::ApiController
   def index
     if params[:course_id].present?
-      @sections = Section.where course_id: params[:course_id]
+      @sections = Section.where course_id: params[:course_id].split(',')
     elsif params[:id].present?
       @sections = Section.find params[:id].split(',')
     else
