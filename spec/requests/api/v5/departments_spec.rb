@@ -1,6 +1,6 @@
 def json_validate_departments(departments=@departments, courses=false)
   departments.each_with_index do |department, n|
-    ['id', 'name', 'code'].each do |field|
+    ['id', 'name', 'code', 'school_id'].each do |field|
       expect(json['departments'][n][field]) .to eq department.attributes[field]
     end
     if courses
