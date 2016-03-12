@@ -162,7 +162,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
     * `/api/v5/courses.json?id=<id>&show_sections&show_periods`
     
 ### Sections
-* `/api/v5/sections.<format>`
+* `/api/v5/sections.json`
 
   The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken, and instrcutor(s)
   of one or many sections, as well as the type, day, start, and end of all of their associated periods. The start
