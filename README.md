@@ -16,7 +16,7 @@ The YACS API is now in version 5. Continued support for versions <= 4 (yacs.me) 
 Pervious versions provided data for courses across multiple semesters, however this functionality
 has been removed (for now). Only information for the current registration semester will be provided.
 
-The API provides three endpoints for accessing catalog data, and all data is available in JSON format.
+The API provides four endpoints for accessing catalog data, and all data is available in JSON format.
 
 ### Schools
 * `/api/v5/schools.json`
@@ -54,7 +54,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
 ### Departments
 * `/api/v5/departments.json`
 
-  The departments API returns id, name, and code of one or many departments.
+  The departments API returns id, name, code, and school_id of one or many departments.
   
   ```
     {
@@ -108,7 +108,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
         "description": "Programming concepts: functions, parameter passing, pointers, arrays, strings, structs, classes, templates. Mathematical tools: sets, functions, and relations, order notation, complexity of algorithms, proof by induction. Data structures and their representations: data abstraction and internal representation, sequences, trees, binary search trees, associative structures. Algorithms: searching and sorting, generic algorithms, iterative and recursive algorithms. Methods of testing correctness and measuring performance.Prerequisites/Corequisites: Prerequisite: CSCI 1100 or permission of instructor.When Offered: Fall and spring terms annually",
         "min_credits": 4,
         "max_credits": 4,
-        "department_id": 42,
+        "department_id": 42
       },
       {
         "id": 27,
@@ -117,7 +117,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
         "description": "Techniques and applications of integration, polar coordinates, parametric equations, infinite sequences and series, vector functions and curves in space, functions of several variables, and partial derivatives.Prerequisites/Corequisites: Prerequisite:  MATH 1010.When Offered: Fall and spring terms annually.",
         "min_credits": 4,
         "max_credits": 4,
-        "department_id": 2,
+        "department_id": 2
       } 
     ]
   }
@@ -148,7 +148,35 @@ The API provides three endpoints for accessing catalog data, and all data is ava
     A search query can be given as a plain-old url-formatted string, with search terms separated by spaces.
     The courses returned are the closest matches to the provided query, in order of how closely they match the query.
     * `/api/v5/courses.json?search=<some url formatted string>`
-  
+
+    ```
+    {
+      courses: 
+      [
+        {
+          "id": 65,
+          "name": "Data Structures",
+          "number": 1200,
+          "description": "Programming concepts: functions, parameter passing, pointers, arrays, strings, structs, classes, templates. Mathematical tools: sets, functions, and relations, order notation, complexity of algorithms, proof by induction. Data structures and their representations: data abstraction and internal representation, sequences, trees, binary search trees, associative structures. Algorithms: searching and sorting, generic algorithms, iterative and recursive algorithms. Methods of testing correctness and measuring performance.Prerequisites/Corequisites: Prerequisite: CSCI 1100 or permission of instructor.When Offered: Fall and spring terms annually",
+          "min_credits": 4,
+          "max_credits": 4,
+          "department_id": 42,
+          "sections": [ < see sections api > ]
+        },
+        {
+          "id": 27,
+          "name": "Calculus II",
+          "number": 1010,
+          "description": "Techniques and applications of integration, polar coordinates, parametric equations, infinite sequences and series, vector functions and curves in space, functions of several variables, and partial derivatives.Prerequisites/Corequisites: Prerequisite:  MATH 1010.When Offered: Fall and spring terms annually.",
+          "min_credits": 4,
+          "max_credits": 4,
+          "department_id": 2,
+          "sections": [ < see sections api > ]
+        } 
+      ]
+    }
+    ```
+
   #### show_sections
     If you wish to include the associated sections of each course in the response,
     use the show_sections directive query. This query can be chained with any other query.
@@ -164,9 +192,10 @@ The API provides three endpoints for accessing catalog data, and all data is ava
 ### Sections
 * `/api/v5/sections.json`
 
-  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken, and instrcutor(s)
+  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken, and instrcutors
   of one or many sections, as well as the type, day, start, and end of all of their associated periods. The start
   and end are times in military form as strings.
+
   ```
   {
     sections:
@@ -179,20 +208,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
         "seats": 10,
         "seats_taken": 5,
         "instructors": ["Goldschmidt", "Krishnamoorthy"],
-        "periods": [
-          {
-            "type": "LEC"
-            "day": 1,
-            "start": "0800",
-            "end": "0950"
-          },
-          {
-            "type": "LEC"
-            "day": 4,
-            "start": "0800",
-            "end": "0950"
-          }
-        ]
+        "num_periods": 2
       },
       {
         "id": 112,
@@ -202,20 +218,7 @@ The API provides three endpoints for accessing catalog data, and all data is ava
         "seats": 10,
         "seats_taken": 10,
         "instructors": [],
-        "periods": [
-          {
-            "type": "LEC"
-            "day": 1,
-            "start": "1000",
-            "end": "1050"
-          },
-          {
-            "type": "LEC"
-            "day": 4,
-            "start": "1000",
-            "end": "1050"
-          }
-        ]
+        "num_periods": 2
       }
     ]
   }
@@ -235,3 +238,57 @@ The API provides three endpoints for accessing catalog data, and all data is ava
     use the show_periods directive query. This query can be chained with any other query.
     * `/api/v5/sections.json?show_periods`
     * `/api/v5/sections.json?id=<id>&show_periods`
+
+    ```
+    {
+      sections:
+      [
+        {
+          "id": 108,
+          "name": "01",
+          "crn": 87654,
+          "course_id": 65,
+          "seats": 10,
+          "seats_taken": 5,
+          "instructors": ["Goldschmidt", "Krishnamoorthy"],
+          "periods": [
+            {
+              "type": "LEC"
+              "day": 1,
+              "start": "0800",
+              "end": "0950"
+            },
+            {
+              "type": "LEC"
+              "day": 4,
+              "start": "0800",
+              "end": "0950"
+            }
+          ]
+        },
+        {
+          "id": 112,
+          "name": "02",
+          "crn": 87655,
+          "course_id": 65,
+          "seats": 10,
+          "seats_taken": 10,
+          "instructors": [],
+          "periods": [
+            {
+              "type": "LEC"
+              "day": 1,
+              "start": "1000",
+              "end": "1050"
+            },
+            {
+              "type": "LEC"
+              "day": 4,
+              "start": "1000",
+              "end": "1050"
+            }
+          ]
+        }
+      ]
+    }
+    ```

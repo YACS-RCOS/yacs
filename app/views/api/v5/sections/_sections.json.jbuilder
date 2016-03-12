@@ -1,5 +1,5 @@
 json.sections sections do |section|
-  json.(section, :id, :name, :crn, :seats, :seats_taken, :instructors, :num_periods)
+  json.(section, :id, :name, :crn, :seats, :seats_taken, :instructors, :num_periods, :course_id)
   if @show_periods
     json.periods do
       i = 0

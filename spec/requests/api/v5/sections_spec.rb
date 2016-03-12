@@ -14,7 +14,7 @@ end
 
 def json_validate_sections(sections=@sections, periods=false)
   sections.each_with_index do |section, n|
-    ['id', 'name', 'instructors'].each do |field|
+    ['id', 'name', 'instructors', 'crn', 'seats', 'seats_taken', 'num_periods'].each do |field|
       expect(json['sections'][n][field]) .to eq section.attributes[field]
     end
     if periods
