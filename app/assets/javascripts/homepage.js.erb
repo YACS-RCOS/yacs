@@ -31,7 +31,7 @@ function setupHomePage() {
 	nsYacs.searchbar.value = code + ' ';
 	loadCourses('/api/v5/courses.xml?department_id=' + deptID);
       });
-    }())
+    }());
   }
   //History.pushState({state:nsYacs.homePage}, "Home page", "?state=0");
 }
@@ -44,6 +44,10 @@ function loadHomePage() {
     nsYacs.contentContainer.innerHTML = response;
     setupHomePage();
     nsUser.currentPage = nsYacs.homePage;
-    nsYacs.contentContainer.innerHTML += '<div id="bottomtext">&copy; 2016 The YACS Dev Team. A Red Hat-supported RCOS project.</div>';
+    
+    var bot = document.createElement('div');
+    bot.setAttribute('id', 'bottomtext');
+    bot.innerHTML = '&copy; 2016 The YACS Dev Team. A Red Hat-supported RCOS project.';
+    nsYacs.contentContainer.appendChild(bot);
   });
 }
