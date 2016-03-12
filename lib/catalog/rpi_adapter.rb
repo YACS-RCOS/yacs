@@ -1,5 +1,5 @@
 require 'open-uri'
-class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
+class Catalog::RpiAdapter < Catalog::AbstractAdapter
   public
   def load_catalog
     load_departments
@@ -9,14 +9,31 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
     remove_empty
   end
 
-  def get_courses
-    uri = "https://sis.rpi.edu/reg/rocs/201601.xml"
-    @courses_xml ||= Nokogiri::XML(open(uri)).xpath("//COURSE")
+  def update_section_seats
+    uri = "https://sis.rpi.edu/reg/rocs/YACS_201601.xml"
+    sections = Nokogiri::XML(open(uri)).xpath("//CourseDB/SECTION")
+    sections.each do |section_xml|
+      section = Section.find_by_crn(section_xml.attr("crn"))
+      if section
+        seats = section_xml.attr("seats").to_i
+        seats_taken = section_xml.attr("students").to_i
+        if section.seats != seats
+          puts "#{section.id}: #{section.seats} -> #{seats}"
+          section.update_attribute(:seats, seats)
+        end
+        if section.seats_taken != seats_taken
+          puts "#{section.id}: #{section.seats_taken} -> #{seats_taken}"
+          section.update_attribute(:seats_taken, seats_taken)
+        end
+      end
+    end
   end
-
+  
+  private
   def load_courses
     errors = []
-    get_courses
+    uri = "https://sis.rpi.edu/reg/rocs/201601.xml"
+    @courses_xml = Nokogiri::XML(open(uri)).xpath("//COURSE")
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
       course              = dept.courses.build
@@ -66,13 +83,13 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
       page = base + path
       page = Nokogiri::HTML(open(page))
       page_no += 1
-
       rows = page.css('td.block_content table tr')
       rows[1..-2].each do |row|
         courses = row.css('td a').to_a.compact
         courses.each do |course|
           href = course['href']
           course_title = course.text.sub(/-.*/, '').strip.split
+          course_name = course.text.split('-')[1..-1].join('-').gsub(/[^ -\~]/, '').strip
           course_model = Course.where(number: course_title[1]).includes(:department).where(departments: {code: course_title[0]})[0]
           if course_model
             desc_path = base + href
@@ -85,12 +102,12 @@ class Catalog::RpiCatalogLoader < Catalog::AbstractCatalogLoader
             course_description.slice! " Back to Top | Print-Friendly Page [Add to Portfolio]"
             course_description = course_description.strip
             puts "#{course_title} - #{course_description}"
-            course_model.update_attributes!(description: course_description)
+            course_model.update_attributes!(description: course_description) if course_description.present?
+            course_model.update_attributes!(name: course_name) if course_name.present?
           end
         end
       end
     end
-
   end
 
   def load_departments
