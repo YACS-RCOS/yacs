@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v5 do
-      resources :departments, only: [:index, :show]
+      resources :schools,     only: [:index]
+      resources :departments, only: [:index]
       resources :courses,     only: [:index]
       resources :sections,    only: [:index]
       resources :schedules,   only: [:index]
