@@ -103,10 +103,19 @@ table#homeTable {
     margin-left:auto;
     margin-right:auto;
 }
-school {
+schools {
     display:block;
+    columns: 2 600px;
+    -moz-columns: 2 600px;
+    -webkit-columns: 2 600px;
+    column-gap:10px;
+    -moz-column-gap: 10px;
+    -webkit-column-gap: 10px;
+}
+school {
+    display:inline-block;
     width:600px;
-    padding:0px 10px;
+    padding: 0px 1px;
 }
 school-name {
     display:block;
@@ -246,7 +255,7 @@ period-day {
 }
 
 div#scheduleContent {
-    margin-bottom:30px;
+    margin-bottom:10px;
 }
 
 div#scheduleTable {
@@ -286,8 +295,7 @@ div#scheduleTable ul li.hour {
 /* Deselection list styles */
 div#deselectContent {
     display:block;
-    width:60%;
-    margin: 20px auto 0 auto;
+    margin: 0px auto 0 auto;
 }
 div#deselectContent department-code, div#deselectContent course-number,
 div#deselectContent course-credits, div#deselectContent course-description {
