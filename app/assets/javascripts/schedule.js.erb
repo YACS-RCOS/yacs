@@ -145,7 +145,7 @@ function convertSchedToPeriods(schedData) {
       period.sectNum   = sect.name; // Should be a better term than "name"
 	                            // but that's a problem with the API
       period.title     = sect.course_name;
-      period.remaining = sect.seats_available;
+      period.remaining = sect.seats - sect.seats_taken;
       period.schedNum  = courseCtr;
       
       // use a crude insertion sort based on start time (data set is small)
@@ -357,7 +357,7 @@ function refreshSchedules() {
   
   // Construct the API request string that will be passed
   // expects a comma-delimited list of numeric section IDs
-  var schedURL = "/api/v5/schedules.json?section_ids=" + nsUser.getSelectionsRaw();
+  var schedURL = "/api/v5/schedules.json?section_ids=" + nsUser.getSelectionsRaw() + "&show_periods";
 
   doAjaxRequest(schedURL, function(response) {
 
