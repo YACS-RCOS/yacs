@@ -17,6 +17,7 @@ function getNumHomePageColumns() {
 // Once the departments XML has been loaded into div#content, do any other steps
 // needed to crunch it into presentable form.
 function setupHomePage() {
+  /*
   // When loading the home page, this must determine how many columns to
   // place the departments in, and then apply styling as needed to make them fit
   // into that many columns. Our approach is to always use the maximum possible
@@ -43,9 +44,10 @@ function setupHomePage() {
   for(var x in schoolsArray) {
     alert(schoolsArray[x].nodeName);
   }
-  */
+  
   var schoolsArray = $('schools').children();
   var numSchools = schoolsArray.length;
+  console.log(numColumns);
   
   if(numSchools === 0) {
     // schools are not defined
@@ -133,11 +135,12 @@ function setupHomePage() {
   var outsideElem = homeTable.parentNode;
   outsideElem.parentNode.appendChild(homeTable);
   outsideElem.parentNode.removeChild(outsideElem);
-  */
+  
   
   // page will not center unless homeTable is given a definite width
   var homeTable = document.getElementById('homeTable');
   homeTable.setAttribute('width', schoolsFinalWidth);
+  */
   
   // Add a click event listener to all departments to load that department's
   // courses from the API
@@ -166,5 +169,6 @@ function loadHomePage() {
     nsYacs.contentContainer.innerHTML = response;
     setupHomePage();
     nsUser.currentPage = nsYacs.homePage;
+    //nsYacs.contentContainer.innerHTML += '<div id="bottomtext">&copy; 2016 The YACS Dev Team. A Red Hat-supported RCOS project.</div>';
   });
 }
