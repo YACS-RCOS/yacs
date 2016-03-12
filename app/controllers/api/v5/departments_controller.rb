@@ -8,7 +8,6 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
       @departments = Department.all
     end
     # new json api
-    @show_courses = params[:show_courses].present?
     if params[:id].present?
       @departments_ = Department.where id: params[:id].split(',')
     elsif params[:school_id].present?
@@ -17,7 +16,7 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
       @departments_ = Department.all
     end
     respond_to do |format|
-      format.xml { render xml: @departments }
+      format.xml { render xml: @courses }
       format.json { render }
     end
   end

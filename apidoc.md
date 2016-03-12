@@ -35,9 +35,9 @@ The API provides three endpoints for accessing catalog data, and all data is ava
 
   #### show_departments
     If you wish to include the associated departments of each school in the response,
-    use the show_departments query. This query can be chained with any other query.
-    * `/api/v5/schools.json?show_departments=true`
-    * `/api/v5/schools.json?id=<id>&show_departments=true`
+    use the show_departments directive query. This query can be chained with any other query.
+    * `/api/v5/schools.json?show_departments`
+    * `/api/v5/schools.json?id=<id>&show_departments`
 
 ### Departments
 * `/api/v5/departments.json`
@@ -75,9 +75,9 @@ The API provides three endpoints for accessing catalog data, and all data is ava
 
   #### show_courses
     If you wish to include the associated courses of each department in the response,
-    use the show_courses query. This query can be chained with any other query.
-    * `/api/v5/departments.json?show_courses=true`
-    * `/api/v5/departments.json?id=<id>&show_courses=true`
+    use the show_courses directive query. This query can be chained with any other query.
+    * `/api/v5/departments.json?show_courses`
+    * `/api/v5/departments.json?id=<id>&show_courses`
 
 ### Courses
 * `/api/v5/courses.json`
@@ -120,10 +120,6 @@ The API provides three endpoints for accessing catalog data, and all data is ava
   * `/api/v5/courses.json?department_id=<department_id>` (like `show` method)
   * `/api/v5/courses.json?department_id=<department_id>,<department_id>,<department_id>`
 
-  #### section_id - reverse association (one or many)
-  * `/api/v5/courses.json?section_id=<section_id>`
-  * `/api/v5/courses.json?section_id=<section_id>,<section_id>,<section_id>`
-  
   #### search
     In addition to primary/foreign key queries, courses can be full-text searched.
     The api will attempt to match a given search query against several columns in the
@@ -143,10 +139,16 @@ The API provides three endpoints for accessing catalog data, and all data is ava
   
   #### show_sections
     If you wish to include the associated sections of each course in the response,
-    use the show_sections query. This query can be chained with any other query.
-    * `/api/v5/courses.json?show_sections=true`
-    * `/api/v5/courses.json?id=<id>&show_sections=true`
-
+    use the show_sections directive query. This query can be chained with any other query.
+    * `/api/v5/courses.json?show_sections`
+    * `/api/v5/courses.json?id=<id>&show_sections`
+    
+  #### show_periods
+    If `show_sections` is used, then the periods of each section can be included with the
+    show_periods directive query. This query can be chained with any other query.
+    * `/api/v5/courses.json?show_sections&show_periods`
+    * `/api/v5/courses.json?id=<id>&show_sections&show_periods`
+    
 ### Sections
 * `/api/v5/sections.<format>`
 
@@ -216,6 +218,6 @@ The API provides three endpoints for accessing catalog data, and all data is ava
   
   #### show_periods
     If you wish to include the associated periods (meetings/blocks/etc.) of each section in the response,
-    use the show_periods query. This query can be chained with any other query.
-    * `/api/v5/sections.json?show_periods=true`
-    * `/api/v5/sections.json?id=<id>&show_periods=true`
+    use the show_periods directive query. This query can be chained with any other query.
+    * `/api/v5/sections.json?show_periods`
+    * `/api/v5/sections.json?id=<id>&show_periods`

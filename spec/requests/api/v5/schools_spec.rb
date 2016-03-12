@@ -39,8 +39,8 @@ describe 'Schools API' do
       json_validate_schools(schools)
     end
 
-    it '#index.json?show_departments=true' do
-      get "/api/v5/schools.json?show_departments=true"
+    it '#index.json?show_departments' do
+      get "/api/v5/schools.json?show_departments"
       json_validate_schools(School.all, true)
     end
   end
