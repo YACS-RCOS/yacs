@@ -22,27 +22,13 @@ function handleKeydown(event) {
   }
 }
 
+
+/* Global window resize handler. Originally used to reset the columns on the
+   home page when the page width changed enough, but now it is unused.
 function handleResize(event) {
-  // No special resize behavior is implemented for the course or schedule pages
-  if(nsUser.currentPage === nsYacs.homePage) {
-    // On the home page, check the new width and determine whether it needs
-    // to reset the number of columns
-    if(getNumHomePageColumns() !== nsUser.numHomePageColumns) {
-      /* TODO: do stuff to strip away the table tags and reassign schools.
-	 This will require rewriting setupHomePage() to strip out the initial
-	 <schools> tag before it does this, moving the school-shuffling code
-	 into a separate function that can be called by both this and
-	 setupHomePage(). Alternatively, this could be approached by removing
-	 all tags in div#content (so it has just a bunch of <school> tags),
-	 then calling that function, which is designed to operate on a
-	 div#content with only <school> children, or a DOMstring of same.
-	 All in all it's probably best left until we use a templating framework
-	 here, thus it just reloads the home page for now.
-      */
-      loadHomePage();
-    }
-  }
+  return;
 }
+*/
 
 
 /* Setup function. Initializes all data that needs to be used by this script,
@@ -78,15 +64,16 @@ function setupPage() {
   });
 
   // General resize event listener
-  window.addEventListener("resize", handleResize);
+  // not currently used
+  //window.addEventListener("resize", handleResize);
   
   // Load the default home page
   loadHomePage();
 
   // Bind History.js logging to state changes
-  History.Adapter.bind(window, 'statechange', function(){
+  /*History.Adapter.bind(window, 'statechange', function(){
     var State = History.getState();
-  });
+  });*/
 }
 
 // Only actually run this when the page finishes loading

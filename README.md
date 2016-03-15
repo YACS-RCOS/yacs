@@ -149,6 +149,18 @@ The API provides four endpoints for accessing catalog data, and all data is avai
     The courses returned are the closest matches to the provided query, in order of how closely they match the query.
     * `/api/v5/courses.json?search=<some url formatted string>`
 
+  #### show_sections
+    If you wish to include the associated sections of each course in the response,
+    use the show_sections directive query. This query can be chained with any other query.
+    * `/api/v5/courses.json?show_sections`
+    * `/api/v5/courses.json?id=<id>&show_sections`
+    
+  #### show_periods
+    If `show_sections` is used, then the periods of each section can be included with the
+    show_periods directive query. This query can be chained with any other query.
+    * `/api/v5/courses.json?show_sections&show_periods`
+    * `/api/v5/courses.json?id=<id>&show_sections&show_periods`
+    
     ```
     {
       courses: 
@@ -177,17 +189,6 @@ The API provides four endpoints for accessing catalog data, and all data is avai
     }
     ```
 
-  #### show_sections
-    If you wish to include the associated sections of each course in the response,
-    use the show_sections directive query. This query can be chained with any other query.
-    * `/api/v5/courses.json?show_sections`
-    * `/api/v5/courses.json?id=<id>&show_sections`
-    
-  #### show_periods
-    If `show_sections` is used, then the periods of each section can be included with the
-    show_periods directive query. This query can be chained with any other query.
-    * `/api/v5/courses.json?show_sections&show_periods`
-    * `/api/v5/courses.json?id=<id>&show_sections&show_periods`
     
 ### Sections
 * `/api/v5/sections.json`
