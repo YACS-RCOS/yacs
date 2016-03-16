@@ -2,6 +2,9 @@ require 'open-uri'
 class Catalog::RpiAdapter < Catalog::AbstractAdapter
   public
   def load_catalog
+    unless Section.count.zero? && Course.count.zero? && Department.count.zero? && School.count.zero?
+      raise "ERROR: Database must be empty!"
+    end
     load_departments
     load_schools
     load_courses
@@ -9,8 +12,20 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     remove_empty
   end
 
+  def update_catalog
+    update_courses
+    update_section_seats
+  end
+
+  def destroy_catalog
+    Section.destroy_all
+    Course.destroy_all
+    Department.destroy_all
+    School.destroy_all
+  end
+
   def update_section_seats
-    uri = "https://sis.rpi.edu/reg/rocs/YACS_201601.xml"
+    uri = "https://sis.rpi.edu/reg/rocs/YACS_#{sem_string}.xml"
     sections = Nokogiri::XML(open(uri)).xpath("//CourseDB/SECTION")
     sections.each do |section_xml|
       section = Section.find_by_crn(section_xml.attr("crn"))
@@ -30,9 +45,13 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
   end
   
   private
+  def sem_string
+    "201601"
+  end
+
   def load_courses
     errors = []
-    uri = "https://sis.rpi.edu/reg/rocs/201601.xml"
+    uri = "https://sis.rpi.edu/reg/rocs/#{sem_string}.xml"
     @courses_xml = Nokogiri::XML(open(uri)).xpath("//COURSE")
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
@@ -70,6 +89,56 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         end
       else
         errors << "#{dept.code} - #{course.number}"
+      end
+    end
+    puts errors
+  end
+
+  def update_courses
+    errors = []
+    uri = "https://sis.rpi.edu/reg/rocs/#{sem_string}.xml"
+    @courses_xml = Nokogiri::XML(open(uri)).xpath("//COURSE")
+    @courses_xml.each do |course_xml|
+      dept = Department.where(code: course_xml[:dept])[0]
+      course = dept.courses.find_by_number(course_xml[:num])
+      if course.nil?
+        course              = dept.courses.build
+        course.name         = course_xml[:name].titleize
+        course.number       = course_xml[:num]
+        course.min_credits  = course_xml[:credmin]
+        course.max_credits  = course_xml[:credmax]
+        next unless course.save
+        puts "course added - #{course.inspect}"
+      end
+      sections_xml = course_xml.xpath("SECTION")
+      sections_xml.each do |section_xml|
+        section = course.sections.find_by_crn(section_xml[:crn])
+        if section.nil?
+          section           = course.sections.build 
+          puts "section added to #{course.inspect} - #{section.inspect}"
+        end
+        section.name        = section_xml[:num]
+        section.crn         = section_xml[:crn]
+        section.seats       = section_xml[:seats]
+        section.seats_taken = section_xml[:students]
+        section.num_periods = 0
+        periods_xml = section_xml.xpath("PERIOD")
+        section.instructors = instructors = []
+        section.periods_day = section.periods_start = section.periods_end = section.periods_type = []
+        periods_xml.each do |period_xml|
+          section.instructors.concat(period_xml[:instructor].strip.split(/\//))
+          days_xml = period_xml.xpath("DAY")
+          days_xml.each do |day_xml|
+            section.num_periods += 1
+            section.periods_day   .push(day_xml.text.to_i + 1)
+            section.periods_start .push(period_xml[:start])
+            section.periods_end   .push(period_xml[:end])
+            section.periods_type  .push(period_xml[:type])
+          end
+        end
+        section.instructors.delete("Staff")
+        section.instructors.uniq!
+        section.save!
       end
     end
     puts errors
