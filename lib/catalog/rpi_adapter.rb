@@ -163,6 +163,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
           if course_model
             desc_path = base + href
             desc_page = Nokogiri::HTML(open(desc_path))
+            desc_page.search('h1').remove
             desc = desc_page.css('td.block_content')
             course_description = desc.text
             course_description.slice! "HELP"
