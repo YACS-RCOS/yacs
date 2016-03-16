@@ -1,0 +1,1 @@
+Rails.application.config.catalog_adapter = Catalog::RpiAdapter.new
