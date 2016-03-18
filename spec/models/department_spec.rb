@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: departments
+#
+#  id         :integer          not null, primary key
+#  code       :string           not null
+#  name       :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  school_id  :integer
+#
+
 require "rails_helper"
 
 RSpec.describe Department do

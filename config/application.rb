@@ -25,5 +25,11 @@ module Yacs
 
     # Autoload all lib files
     config.autoload_paths << Rails.root.join('lib')
+
+    if Rails.env.development?
+      require 'awesome_print'
+      AwesomePrint.irb!
+    end
+    
   end
 end
