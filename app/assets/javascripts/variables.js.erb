@@ -43,6 +43,11 @@ var nsUser = {
     return this.getSelections().indexOf(sid) != -1;
   },
 
+  // Remove all selections from cookie
+  clearSelections: function() {
+    setCookie('selections', '');
+  },
+
   currentPage: 0,
   currentSchedule: undefined,
   currentState: undefined, // for history.js stuff

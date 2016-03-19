@@ -252,7 +252,7 @@ function setupCourses() {
 */
 function loadCourses(apiString) {
   clearForNewPage();
-  doAjaxRequest(apiString, function(response) {
+  doAjaxRequest(apiString, function(response, status) {
     nsYacs.contentContainer.innerHTML = response;
     setupCourses();
     nsUser.currentPage = nsYacs.courselistPage;

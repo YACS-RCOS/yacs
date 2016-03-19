@@ -40,7 +40,7 @@ function setupHomePage() {
 // Anything that has to be done when loading up the front page.
 function loadHomePage() {
   clearForNewPage();
-  doAjaxRequest("/api/v5/departments.xml", function(response) {
+  doAjaxRequest("/api/v5/departments.xml", function(response, status) {
     nsYacs.contentContainer.innerHTML = response;
     setupHomePage();
     nsUser.currentPage = nsYacs.homePage;

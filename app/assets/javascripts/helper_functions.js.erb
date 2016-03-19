@@ -43,11 +43,14 @@ function firstChildWithTag(node, tagName) {
 */
 function doAjaxRequest(filename, callback) {
   var request = new XMLHttpRequest();
-  request.addEventListener("load", function() {
-    callback(request.response);
-  });
+  request.onreadystatechange = function () {
+    if (request.readyState == 4) {
+      callback(request.response, request.status)
+    }
+  };
   request.open("GET", filename, true); 
   request.send();
+
 } 
 
 
