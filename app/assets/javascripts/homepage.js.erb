@@ -40,6 +40,7 @@ function setupHomePage() {
 // Anything that has to be done when loading up the front page.
 function loadHomePage() {
   clearForNewPage();
+  nsYacs.searchbar.value = '';
   doAjaxRequest("/api/v5/departments.xml", function(response, status) {
     nsYacs.contentContainer.innerHTML = response;
     setupHomePage();
