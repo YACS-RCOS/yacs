@@ -4,8 +4,8 @@ class Api::V5::ApiController < ActionController::Metal
   include ActionController::MimeResponds
   include ActionController::ImplicitRender
   include ActionController::Caching
+  include ActionController::Instrumentation
   include ActionView::Layouts
-  NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
   append_view_path "#{Rails.root}/app/views"
 
