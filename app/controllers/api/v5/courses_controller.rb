@@ -1,6 +1,6 @@
 class Api::V5::CoursesController < Api::V5::ApiController
   caches_action :index, if: Proc.new { |c| c.request.format.xml? && c.params[:department_id].present? },
-    cache_path: Proc.new { |c| "api/v5/courses/index?department_id=#{c.params[:department_id]}" }
+    cache_path: Proc.new { |c| "api/v5/courses/index.xml?department_id=#{c.params[:department_id]}" }
 
   def index
     if params[:department_id].present?
