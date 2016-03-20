@@ -11,7 +11,7 @@ class Api::V5::ApiController < ActionController::Metal
 
   self.page_cache_directory = Rails.public_path
   self.perform_caching = true
-  self.cache_store = ActionController::Base.cache_store
+  self.cache_store = :dalli_store
   
   before_filter :nested_queries, only: [:index]
 
