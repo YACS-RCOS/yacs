@@ -1,12 +1,9 @@
 class Api::V5::DepartmentsController < Api::V5::ApiController
+  caches_page :index, if: Proc.new { |c| c.request.format.xml? }
   def index
     # this will be removed as we transition away from the old xml apis
-    if params[:use_schools] != 'false'
-      @departments = Department.where school_id: nil
-      @schools = School.all
-    else
-      @departments = Department.all
-    end
+    @departments = Department.where school_id: nil
+    @schools = School.all
     # new json api
     if params[:id].present?
       @departments_ = Department.where id: params[:id].split(',')

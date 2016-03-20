@@ -3,11 +3,16 @@ class Api::V5::ApiController < ActionController::Metal
   include AbstractController::Callbacks
   include ActionController::MimeResponds
   include ActionController::ImplicitRender
+  include ActionController::Caching
   include ActionView::Layouts
   NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
   append_view_path "#{Rails.root}/app/views"
 
+  self.page_cache_directory = Rails.public_path
+  self.perform_caching = true
+  self.cache_store = ActionController::Base.cache_store
+  
   before_filter :nested_queries, only: [:index]
 
   private
