@@ -53,6 +53,7 @@ GEM
     crono (0.9.0)
       activerecord (~> 4.0)
       activesupport (~> 4.0)
+    dalli (2.7.6)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
@@ -126,6 +127,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
+    rails-observers (0.1.2)
+      activemodel (~> 4.0)
     railties (4.2.4)
       actionpack (= 4.2.4)
       activesupport (= 4.2.4)
@@ -197,6 +200,7 @@ DEPENDENCIES
   actionpack-action_caching
   actionpack-page_caching
   crono
+  dalli
   database_cleaner
   factory_girl_rails
   jbuilder (~> 2.0)
@@ -210,6 +214,7 @@ DEPENDENCIES
   puma (= 2.16.0)
   railroady
   rails (= 4.2.4)
+  rails-observers
   responders (~> 2.0)
   rspec-rails
   sass-rails (~> 5.0)
