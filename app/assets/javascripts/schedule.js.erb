@@ -373,27 +373,89 @@ function loadDeselectionList() {
       var sectID = firstChildWithTag(sect, 'section-id').innerHTML;
       
       // all event listeners in loops need closures
-      sect.addEventListener('click', function(theSection, theSID) {
-  	
+      (function() {
         // sorry about poor variable naming but I'm juggling too many sects,
         // sids, sections, sectionIDs, etc. to keep track
-        return function() {
+        var theSection = sect;
+        var theSID = sectID;
+        
+        theSection.addEventListener('click', function(event) {
           // test whether this is already selected or not
-          if(theSection.className.indexOf('selected') <= -1) {
-            // it is not selected already, so select it
-            nsUser.addSelection(theSID);
-            theSection.className += ' selected';
-            refreshSchedules(false);
-          }
-          else {
-            // it is selected already, remove from selections
-            nsUser.removeSelection(theSID);
-            theSection.classList.remove('selected');
-            refreshSchedules(false);
-          }
-        }
-      }(sect, sectID));
+	  if(nsUser.removeSelection(theSID)) {
+	    // index is real, section is selected, remove selected class
+	    theSection.classList.remove('selected');
+	  }
+	  else {
+	    // section is not selected, select it and add it to the array
+	    nsUser.addSelection(theSID);
+	    theSection.className += ' selected';
+	  }
+          refreshSchedules(false);
+	  
+	  // don't bubble up to the course click handler!
+	  event.stopPropagation();
+        });
+      })()
     }
+    
+    // courses can also be clicked
+    // if a course is clicked:
+    // if there are open, non-selected sections: select all open sections
+    // else: deselect all selections
+
+    nodes = container.getElementsByTagName('course');
+    for(var i=0; i<nodes.length; ++i) {
+      var theCourse = nodes[i];
+
+      // another closure here
+      (function() {
+        var c = theCourse;
+        c.addEventListener('click', function(event) {
+
+	  // first loop over all sections to determine if all open sections are
+	  // selected
+	  var allSelected = true;
+	  var selections = nsUser.getSelections();
+	  var sections = c.getElementsByTagName('section');
+	  for(var j = 0; j<sections.length; ++j) {
+	    var s = sections[j];
+	    // ignore closed sections
+	    if(s.className.indexOf('closed') < 0) {
+	      var sid = firstChildWithTag(s, 'section-id').innerHTML;
+	      // if a section id cannot be found in the selected array, they
+	      // cannot all be selected
+	      if(selections.indexOf(sid) < 0) {
+	        allSelected = false;
+	        break;
+	      }
+	    }
+	  }
+
+	  // select open sections
+	  for(var j=0; j<sections.length; ++j) {
+	    var s = sections[j];
+	    var sid = firstChildWithTag(s, 'section-id').innerHTML;
+	    if(allSelected) {
+	      // removal functions won't do anything if not selected
+	      nsUser.removeSelection(sid);
+	      s.classList.remove('selected');
+	    }
+	    else {
+	      // never add closed sections
+	      if(s.className.indexOf('closed') < 0) {
+	        // addSelection doesn't add to the cookie if it's already selected
+	        nsUser.addSelection(sid);
+	        s.className += ' selected';
+	      }
+	    }
+	  }
+
+          refreshSchedules(false);
+        });
+      })()
+    }
+
+    
   });
 }
 
@@ -428,31 +490,32 @@ function refreshSchedules(alsoLoadDeselection) {
       // TODO: when stuff gets moved, have it be a function that returns the
       // schedule innerHTML instead
       container.innerHTML = '<div class="error">No schedules are available for this selection of courses.</div>';
-      return;
     }
-    
-    // Store the data in nsUser
-    nsUser.schedHTMLData = [];
-    nsUser.schedCRNStrings = [];
-    for(var i=0; i<numSchedules; ++i) {
-      nsUser.schedHTMLData[i] = convertPeriodsToHTML(convertSchedToPeriods(allSchedulesArray[i]));
-      nsUser.schedCRNStrings[i] = getAllCRNs(allSchedulesArray[i]).join(", ");
-    }
-    nsUser.currentSchedule = 0;
-    
-    var disableSecond = (numSchedules === 1);
-    var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled" onclick="movePrevSchedule()">&#9664;</span>Schedule <span id="schedNum">1</span> / ' +
-      numSchedules +
-      '<span id="rightswitch" class="scheduleswitch' +
-      (numSchedules === 1 ? ' disabled' : '') +
-      '" onclick="moveNextSchedule()">&#9654;</span></div>';
+    else {
+      // Store the data in nsUser
+      nsUser.schedHTMLData = [];
+      nsUser.schedCRNStrings = [];
+      for(var i=0; i<numSchedules; ++i) {
+        nsUser.schedHTMLData[i] = convertPeriodsToHTML(convertSchedToPeriods(allSchedulesArray[i]));
+        nsUser.schedCRNStrings[i] = getAllCRNs(allSchedulesArray[i]).join(", ");
+      }
+      nsUser.currentSchedule = 0;
+      
+      var disableSecond = (numSchedules === 1);
+      var schedBar = '<div id="schedulebar"><span id="leftswitch" class="scheduleswitch disabled" onclick="movePrevSchedule()">&#9664;</span>Schedule <span id="schedNum">1</span> / ' +
+        numSchedules +
+        '<span id="rightswitch" class="scheduleswitch' +
+        (numSchedules === 1 ? ' disabled' : '') +
+        '" onclick="moveNextSchedule()">&#9654;</span></div>';
 
-    var schedCRNs = '<div id="crns">CRNs: ' + nsUser.schedCRNStrings[0] + '</div>';
-    
-    container.innerHTML = schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>' + schedCRNs;
-    
-    if(alsoLoadDeselection === true)
+      var schedCRNs = '<div id="crns">CRNs: ' + nsUser.schedCRNStrings[0] + '</div>';
+      
+      container.innerHTML = schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>' + schedCRNs;
+    }
+      
+    if(alsoLoadDeselection === true) {
       loadDeselectionList();
+    }
   });
 }
 
