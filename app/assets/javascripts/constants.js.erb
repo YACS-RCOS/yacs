@@ -23,5 +23,13 @@ var nsYacs = {
   schedButton      : undefined,  
   
   // IDs for the different pages
-  homePage: 0, courselistPage: 1, schedulePage: 2
+  homePage: 0, courselistPage: 1, schedulePage: 2,
+
+  // Keys that should not focus the searchbar when pressed
+  blockedKeys : [ 9,   // tab
+                  16,  // shift
+                  17,  // ctrl
+                  18,  // alt
+                  20,  // capslock
+                  224] // command on OSX
 }
