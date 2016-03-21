@@ -349,11 +349,63 @@ function getAllCRNs(schedule) {
 
 
 /* ****************************************************************************
+   Function that makes a second AJAX request to populate the list
+   of deselections and format it appropriately. */
+function loadDeselectionList() {
+  
+  var apiURL = '/api/v5/courses.xml?section_id='+nsUser.getSelectionsRaw();
+  doAjaxRequest(apiURL, function(response, status) {
+    if (status >= 400) {
+      nsUser.clearSelections();
+      loadHomePage();
+      return;
+    }
+    // insert sections into DOM
+    var container = document.getElementById('deselectContent');
+    container.innerHTML += response;
+
+    formatSections(container); // this function is in courselist.js
+
+    // add event listeners
+    var sections = container.getElementsByTagName('section');
+    for(var i=0; i<sections.length; ++i) {
+      var sect = sections[i];
+      var sectID = firstChildWithTag(sect, 'section-id').innerHTML;
+      
+      // all event listeners in loops need closures
+      sect.addEventListener('click', function(theSection, theSID) {
+  	
+        // sorry about poor variable naming but I'm juggling too many sects,
+        // sids, sections, sectionIDs, etc. to keep track
+        return function() {
+          // test whether this is already selected or not
+          if(theSection.className.indexOf('selected') <= -1) {
+            // it is not selected already, so select it
+            nsUser.addSelection(theSID);
+            theSection.className += ' selected';
+            refreshSchedules(false);
+          }
+          else {
+            // it is selected already, remove from selections
+            nsUser.removeSelection(theSID);
+            theSection.classList.remove('selected');
+            refreshSchedules(false);
+          }
+        }
+      }(sect, sectID));
+    }
+  });
+}
+
+
+
+/* ****************************************************************************
    Function that will be called when the schedule page is loaded or when the
    list of selections changes (i.e. when it needs to regenerate the schedule
-   and deselection list.)
-   Will completely clear the content div and replace it with new schedules. */
-function refreshSchedules(callback) {
+   and/or deselection list.) The alsoLoadDeselection parameter determines
+   whether loadDeselectionList() will be called after all the other schedule
+   loading, which should happen only during the initial load. */
+function refreshSchedules(alsoLoadDeselection) {
   
   // Construct the API request string that will be passed
   // expects a comma-delimited list of numeric section IDs
@@ -398,8 +450,9 @@ function refreshSchedules(callback) {
     var schedCRNs = '<div id="crns">CRNs: ' + nsUser.schedCRNStrings[0] + '</div>';
     
     container.innerHTML = schedBar + '<div id="scheduleTable">' + nsUser.schedHTMLData[0] + '</div>' + schedCRNs;
-    if (callback)
-      callback();
+    
+    if(alsoLoadDeselection === true)
+      loadDeselectionList();
   });
 }
 
@@ -425,55 +478,8 @@ function loadSchedules() {
   nsYacs.contentContainer.innerHTML = '<div id="scheduleContent"></div><div id="deselectContent"></div>';
 
   // Generate the actual schedules and populate div#scheduleContent with them
-  refreshSchedules(function() {
- 
-    // Now make a second AJAX request for the details of selected sections
-    //var sectURL = '/api/v5/sections.xml?id=' + nsUser.getSelectionsRaw();
-    var apiURL = '/api/v5/courses.xml?section_id='+nsUser.getSelectionsRaw();
-    doAjaxRequest(apiURL, function(response, status) {
-      // TODO: Consider making a separate function for this code
-      if (status >= 400) {
-        nsUser.clearSelections();
-        loadHomePage();
-        return;
-      }
-      // insert sections into DOM
-      var container = document.getElementById('deselectContent');
-      container.innerHTML += response;
-
-      formatSections(container); // this function is in courselist.js
-
-      // add event listeners
-      var sections = container.getElementsByTagName('section');
-      for(var i=0; i<sections.length; ++i) {
-        var sect = sections[i];
-        var sectID = firstChildWithTag(sect, 'section-id').innerHTML;
-        
-        // all event listeners in loops need closures
-        sect.addEventListener('click', function(theSection, theSID) {
-  	
-        	// sorry about poor variable naming but I'm juggling too many sects,
-        	// sids, sections, sectionIDs, etc. to keep track
-        	return function() {
-        	  // test whether this is already selected or not
-        	  if(theSection.className.indexOf('selected') <= -1) {
-        	    // it is not selected already, so select it
-        	    nsUser.addSelection(theSID);
-        	    theSection.className += ' selected';
-        	    refreshSchedules();
-        	  }
-        	  else {
-        	    // it is selected already, remove from selections
-        	    nsUser.removeSelection(theSID);
-        	    theSection.classList.remove('selected');
-        	    refreshSchedules();
-        	  }
-        	}
-        }(sect, sectID));
-      }
-    });
+  refreshSchedules(true);
     
-    nsUser.currentPage = nsYacs.schedulePage;
-  });
+  nsUser.currentPage = nsYacs.schedulePage;
   //History.pushState({state:nsYacs.schedulePage}, "Schedule page", "?state=2");
 }
