@@ -46,7 +46,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
   
   private
   def sem_string
-    "201601"
+    "201609"
   end
 
   def load_courses
