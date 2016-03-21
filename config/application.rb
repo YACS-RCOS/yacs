@@ -26,6 +26,6 @@ module Yacs
     # Autoload all lib files
     config.autoload_paths << Rails.root.join('lib')
 
-    config.active_record.observers = %w{ CoursesSweeper }
+    config.active_record.observers = %w{ CoursesSweeper DepartmentsSweeper }
   end
 end
