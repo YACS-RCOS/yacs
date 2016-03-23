@@ -1,7 +1,5 @@
 # YACS - Yet Another Course Scheduler
 
-iOS repository https://github.com/JGrippo/YACSiOS
-
 Simple, Sane Course Scheduling.
 YACS is a web-based course scheduler with an emphasis on usability.
 YACS is 100% RPI home-grown and hosted. To use it, visit https://yacs.cs.rpi.edu
@@ -10,11 +8,13 @@ The old version of YACS (yacs.me) by Jeff Hui still exists but will not be updat
 
 Visit [our blog](https://yacsblog.wordpress.com/) for more updates and information.
 
+Our iOS app repository can be found at https://github.com/JGrippo/YACSiOS
+
 
 # YACS API
 
 The YACS API is now in version 5. Continued support for versions <= 4 (yacs.me) should not be expected.
-Pervious versions provided data for courses across multiple semesters, however this functionality
+Previous versions provided data for courses across multiple semesters, however this functionality
 has been removed (for now). Only information for the current registration semester will be provided.
 
 The API provides four endpoints for accessing catalog data, and all data is available in JSON format.
@@ -194,7 +194,7 @@ The API provides four endpoints for accessing catalog data, and all data is avai
 ### Sections
 * `/api/v5/sections.json`
 
-  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken, and instrcutors
+  The Sections API returns the id, name (number), crn, course_id, seats (total), and seats_taken, and instructors
   of one or many sections, as well as the type, day, start, and end of all of their associated periods. The start
   and end are times in military form as strings.
 
