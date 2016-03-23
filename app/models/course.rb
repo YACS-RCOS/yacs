@@ -1,7 +1,7 @@
 class Course < ActiveRecord::Base
   belongs_to  :department
-  has_many    :sections
-  validates :number, uniqueness: { scope: :department_id }
+  has_many    :sections, dependent: :destroy
+  validates   :number, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
 
   def self.search(params)
