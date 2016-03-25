@@ -54,10 +54,17 @@ group :development, :test do
   gem 'pry-remote'
   gem 'pry-stack_explorer'
   gem 'pry-byebug', '~> 1.3.3'
+  gem 'railroady'
+end
+
+group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'shoulda-matchers'
+  gem 'cucumber-rails', require: false
+  gem 'pickle'
+  gem 'webrat'
   gem 'database_cleaner'
-  gem 'railroady'
 end
 
 group :development do
