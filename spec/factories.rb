@@ -1,5 +1,3 @@
-
-
 FactoryGirl.define do
   factory :school do
     sequence(:name) { |n| "School of Thing ##{n}" }
@@ -26,18 +24,6 @@ FactoryGirl.define do
     end
   end
 
-  factory :professor do
-    name 'John Doe'
-  end
-
-  factory :semester do
-    season 'Fall 2015'
-  end
-
-  factory :periods_professor do
-    period
-    professor
-  end
 
 =begin
 [0, 2, 4]
