@@ -22,6 +22,7 @@ body {
     background-color:#efefef;
     color: #000;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:300;
 }
 div#content {
     padding: 70px 15px 0px 15px;
@@ -30,6 +31,11 @@ department-id, course-id, section-id {
     /* ID is a necessary part of the API but there is never any reason to show
        it to the user. */
     display:none;
+}
+a {
+    text-decoration:none;
+    color:#933;
+    font-weight:400;
 }
     
 
@@ -57,7 +63,7 @@ table#navtable td.sidelink {
 }
 #page-title {
     font-size:35px;
-    font-weight:normal;
+    font-weight:300;
 }
 #page-title span.sub {
     font-size:16px;
@@ -356,4 +362,43 @@ div#scheduleTable .closed {
     background-image: url("<%=asset_path('generic-closed.png')%>");
     background-repeat: repeat;
     color: #000;
+}
+
+
+/* Styles for the about page. */
+article#about {
+    text-align:center;
+    width: 60%;
+    min-width:400px;
+    margin: 0 auto;
+}
+article#about h1 {
+    padding:15px 0;
+    font-size:35px;
+}
+article#about p {
+    text-align:left;
+    margin: 0 auto 20px;
+}
+article#about h2 {
+    font-size: 25px;
+    padding:10px 0;
+    margin-bottom:8px;
+}
+article#about h2.bottomrule {
+    border-bottom:1px #b0b0b0 solid;
+}
+article#about h3 {
+    text-align:left;
+    font-size:20px;
+}
+article#about table {
+    margin: 8 auto;
+    border:1px black solid;
+}
+article#about table tr {
+    
+}
+article#about table tr td {
+    width:200px;
 }
