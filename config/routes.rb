@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   end
 
   get '/' => 'static#index'
+  get '/about' => 'static#about'
 end
