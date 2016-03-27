@@ -1,4 +1,3 @@
 class School < ActiveRecord::Base
-  has_many :departments
-  # default_scope { order(name: :asc) }
+  has_many :departments, dependent: :destroy
 end
