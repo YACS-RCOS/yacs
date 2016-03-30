@@ -35,65 +35,46 @@ Yacs = new function () {
 
   self.models = { };
 
-  // var cache = new function () {
-  //   var store = {};
-
-  //   this.read = function (ns, key) {
-  //     return store[key];
-  //   };
-
-  //   this.write = function (ns, key, val) {
-  //     store[key] = val;
-  //   };
-  // }();
-
   var Model = function (name, options={}) {
-    this.store = { all: [], id: {} }
-
+    var self = this;
     var childParam = 'show_' + options.has_many;
 
-    this.query = function (params, callback) {
-      // var paramsKeys = Object.keys(params);
-      // var all = (paramsKeys.length == 0
-      //         || (paramsKeys.length == 1
-      //         && paramsKeys.indexOf(childParam) != -1));
-      // if (this.preloaded && all) {
-      //   callback(cache.read(name), true);
-      // } else {
-        api(name, params, callback);
-      // }
+    self.store = { all: [], id: {} };
+    self.preloaded = false;
+
+    self.query = function (params, callback) {
+      api(name, params, callback);
     };
 
-    this.preloaded = false;
-
-    this.preload = function (callback) {
+    self.preload = function (callback) {
       var params = {};
-      if (options[has_many])
+      if (options.has_many)
         params[childParam] = true;
-      this.query(params, function (models, success) {
+      self.query(params, function (models, success) {
         if (success) {
           for (var m in models) {
-            this.store.all = models;
-            this.store.id[models[m].id] = models[m];
+            self.store.all = models;
+            self.store.id[models[m].id] = models[m];
             if (options.has_many) {
               var children = [];
               for (var n in models[m][options.has_many]) {
                 var child = models[m][options.has_many][n];
-                self.models[options.has_many].store.id[child.id] = child;
+                Yacs.models[options.has_many].store.id[child.id] = child;
                 children.push(child);
               }
-              self.models[options.has_many].store.all = children;
+              Yacs.models[options.has_many].store.all = children;
             }
           }
-          this.preloaded = true;
+          preloaded = true;
         }
-        callback(models, success);
+        if (callback)
+          callback(models, success);
       });
     }
   };
 
-  var addModel = function (name) {
-    return self.models[name] = new Model(name);
+  var addModel = function (name, option={}) {
+    return self.models[name] = new Model(name, option);
   }
 
   addModel('schools',     { has_many: 'departments' });
