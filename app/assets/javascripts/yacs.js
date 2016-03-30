@@ -35,24 +35,71 @@ Yacs = new function () {
 
   self.models = { };
 
+  // var cache = new function () {
+  //   var store = {};
+
+  //   this.read = function (ns, key) {
+  //     return store[key];
+  //   };
+
+  //   this.write = function (ns, key, val) {
+  //     store[key] = val;
+  //   };
+  // }();
+
   var Model = function (name, options={}) {
+    this.store = { all: [], id: {} }
+
+    var childParam = 'show_' + options.has_many;
 
     this.query = function (params, callback) {
-      if (options.has_many) {
-        self.models[has_many]
-      }
-      api(name, params, callback);
+      // var paramsKeys = Object.keys(params);
+      // var all = (paramsKeys.length == 0
+      //         || (paramsKeys.length == 1
+      //         && paramsKeys.indexOf(childParam) != -1));
+      // if (this.preloaded && all) {
+      //   callback(cache.read(name), true);
+      // } else {
+        api(name, params, callback);
+      // }
+    };
+
+    this.preloaded = false;
+
+    this.preload = function (callback) {
+      var params = {};
+      if (options[has_many])
+        params[childParam] = true;
+      this.query(params, function (models, success) {
+        if (success) {
+          for (var m in models) {
+            this.store.all = models;
+            this.store.id[models[m].id] = models[m];
+            if (options.has_many) {
+              var children = [];
+              for (var n in models[m][options.has_many]) {
+                var child = models[m][options.has_many][n];
+                self.models[options.has_many].store.id[child.id] = child;
+                children.push(child);
+              }
+              self.models[options.has_many].store.all = children;
+            }
+          }
+          this.preloaded = true;
+        }
+        callback(models, success);
+      });
     }
   };
 
   var addModel = function (name) {
-    self.models[name] = new Model(name);
+    return self.models[name] = new Model(name);
   }
 
-  addModel('schools');
-  addModel('departments')
-  addModel('courses');
-  addModel('sections');
+  addModel('schools',     { has_many: 'departments' });
+  addModel('departments', { has_many: 'courses'     });
+  addModel('courses',     { has_many: 'sections'    });
+  addModel('sections' );
   addModel('schedules');
 
 /* ======================================================================== *
