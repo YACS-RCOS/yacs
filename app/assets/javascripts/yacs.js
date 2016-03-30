@@ -7,7 +7,7 @@ Yacs = new function () {
 
   var get = function (uri, callback) {
     req = new XMLHttpRequest();
-    req.open("GET", uri);
+    req.open('GET', uri);
     req.onreadystatechange = function () {
       if (req.readyState == 4 && callback) {
         callback(req.responseText, req.status == 200)
@@ -21,10 +21,10 @@ Yacs = new function () {
     for (var param in params) {
       if (params.hasOwnProperty(param)) {
         var val = Array.isArray(params[param]) ? params[param].join(',') : params[param];
-        queryString += param + "=" + val + "&";
+        queryString += param + '=' + val + '&';
       }
     }
-    get("/api/v5/" + model + ".json" + queryString, function (response, success) {
+    get('/api/v5/' + model + '.json' + queryString, function (response, success) {
       callback(!success || JSON.parse(response)[model], success);
     });
   };
