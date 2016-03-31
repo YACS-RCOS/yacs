@@ -1,5 +1,5 @@
 Handlebars.registerHelper('department_code', function (id) {
-  return new Handlebars.SafeString(Yacs.models.departments.store.id[id]);
+  return new Handlebars.SafeString(Yacs.models.departments.store.id[id].code);
 });
 
 Handlebars.registerHelper('range', function (min, max) {

@@ -1,20 +1,20 @@
 <courses>
-  {{#each courses}}
+  {{#courses}}
     <course data-id="{{id}}">
       <course-name>{{name}}</course-name>
-      <department-code>{{#department_code department_id}}</department-code>
+      <department-code>{{department_code department_id}}</department-code>
       <course-number>{{number}}</course-number>
-      <course-credits>{{#range min_credits max_credits}}</course-credits>
+      <course-credits>{{range min_credits max_credits}}</course-credits>
       <course-description>{{description}}</course-description>
       <sections>
-        {{#each sections}}
+        {{#sections}}
           <section data-id="{{id}}">
             <section-name>Section {{name}}</section-name>
-            <section-instructors>{{#join instructors}}</section-instructors>
-            <section-seats-available>{{#subtract seats seats_taken}}</section-seats-available>
+            <section-instructors>{{join instructors}}</section-instructors>
+            <section-seats-available>{{subtract seats seats_taken}}</section-seats-available>
           </section>
-        {{/each}}
+        {{/sections}}
       </sections>
     </course>
-  {{/each}}
+  {{/courses}}
 </courses>
