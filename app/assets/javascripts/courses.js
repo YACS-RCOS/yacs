@@ -19,6 +19,6 @@ Yacs.views.courses = function (data) {
   console.log(html);
   console.log(data);
   setTimeout(function () {
-    document.querySelector('#content').innherHTML = html;
+    document.querySelector('#content').innerHTML = html;
   }, 500);
 };
