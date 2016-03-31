@@ -5,7 +5,7 @@ Yacs = new function () {
     Network
  * ======================================================================== */
 
-  var get = function (uri, callback) {
+  self.get = function (uri, callback) {
     req = new XMLHttpRequest();
     req.open('GET', uri);
     req.onreadystatechange = function () {
@@ -16,16 +16,18 @@ Yacs = new function () {
     req.send();
   };
 
-  var api = function (model, params, callback) {
-    var queryString = "?";
+  self.api = function (model, params, callback) {
+    var query = "?";
     for (var param in params) {
       if (params.hasOwnProperty(param)) {
-        var val = Array.isArray(params[param]) ? params[param].join(',') : params[param];
-        queryString += param + '=' + val + '&';
+        var val = params[param];
+        if (Array.isArray()) val = val.join(',')
+        query += param + '=' + val + '&';
       }
     }
-    get('/api/v5/' + model + '.json' + queryString, function (response, success) {
-      callback(!success || JSON.parse(response)[model], success);
+    var uri = '/api/v5/' + model + '.json' + query;
+    self.get(uri, function (response, success) {
+      callback(!success || JSON.parse(response), success);
     });
   };
 
@@ -43,15 +45,16 @@ Yacs = new function () {
     self.preloaded = false;
 
     self.query = function (params, callback) {
-      api(name, params, callback);
+      Yacs.api(name, params, callback);
     };
 
     self.preload = function (callback) {
       var params = {};
       if (options.has_many)
         params[childParam] = true;
-      self.query(params, function (models, success) {
+      self.query(params, function (data, success) {
         if (success) {
+          var models = data[name];
           for (var m in models) {
             self.store.all = models;
             self.store.id[models[m].id] = models[m];
@@ -68,13 +71,13 @@ Yacs = new function () {
           preloaded = true;
         }
         if (callback)
-          callback(models, success);
+          callback(data, success);
       });
     }
   };
 
-  var addModel = function (name, option={}) {
-    return self.models[name] = new Model(name, option);
+  var addModel = function (name, options={}) {
+    return self.models[name] = new Model(name, options);
   }
 
   addModel('schools',     { has_many: 'departments' });
@@ -104,4 +107,6 @@ Yacs = new function () {
       }
     }, false);
   };
+
+  self.views = {};
 }();
