@@ -3,7 +3,8 @@ Yacs.on('click', 'department', function (event) {
   Yacs.models.courses.query({
     department_id: department_id,
     show_sections: true },
-    function (courses, success) {
-      
+    function (data, success) {
+      if (success)
+        Yacs.views.courses(data);
     });
 });
