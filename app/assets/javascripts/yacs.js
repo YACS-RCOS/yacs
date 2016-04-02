@@ -90,23 +90,46 @@ Yacs = new function () {
     DOM
  * ======================================================================== */
 
+  self.views = {};
+
  // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
- var matches = function (elm, selector) {
+  var matches = function (elm, selector) {
     var matches = (elm.document || elm.ownerDocument).querySelectorAll(selector);
     var i = matches.length;
     while (--i >= 0 && matches.item(i) !== elm);
     return i > -1;
   }
 
-  self.on = function (event, selector, callback) {
-    document.addEventListener(event, function (e) {
-      e.target = e.target || e.srcElement;
-      if ((e.target.matches ? e.target.matches(selector) : matches(e.target, selector))) {
-        callback(e);
-        e.stopPropagation();
-      }
-    }, false);
-  };
+  var loaded = false;
+  self.onload = function (func) {
+    document.addEventListener("DOMContentLoaded", func, false);
+  }
+  self.onload(function () { loaded = true; })
 
-  self.views = {};
+  self.on = function (event, selector, callback) {
+    var addListener = function () {
+      document.body.addEventListener('click', function (e) {
+        var target = e.target || e.srcElement;
+        while (target) {
+          if ((target.matches ? target.matches(selector) : matches(target, selector))) {
+            e.matchedTarget = target;
+            callback(e);
+          }
+          target = target.parentElement;
+        }
+      }, false);
+    };
+    if (loaded) addListener();
+    else self.onload(addListener);
+  };
 }();
+
+/* ======================================================================== *
+    Initializers
+ * ======================================================================== */
+
+Yacs.onload(function () {
+  Yacs.models.schools.preload(function (data) {
+    Yacs.views.departments(data);
+  });
+});
