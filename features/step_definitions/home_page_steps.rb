@@ -6,12 +6,6 @@ Then(/^I should see the text "(.*?)"$/) do |text|
   expect(page).to have_content text
 end
 
-# Then(/^I should see (.*)$/) do |text|
-#   @root = text
-#   @children = []
-#   expect(page).to have_css(@root)
-# end
-
 Then(/^I should see the (.*) with id (\d+)$/) do |type, id|
   @root = "#{type.downcase}[data-id='#{id}']"
   @children = []
@@ -34,6 +28,6 @@ And(/^within it I should see the text "(.*)"$/) do |text|
 end
 
 And(/^within it I should also see the text "(.*)"$/) do |text|
-  css = "#{@root} #{@children[0..-1].join(' ')}"
+  css = "#{@root} #{@children[0..-2].join(' ')}"
   expect(page.find(css)).to have_content text
 end
