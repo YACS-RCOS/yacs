@@ -56,3 +56,21 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+require "Capybara"
+require "Capybara/cucumber"
+require "rspec-rails"
+require 'capybara/poltergeist'
+ 
+Capybara.default_driver = :poltergeist
+Capybara.register_driver :poltergeist do |app|
+    options = {
+        :js_errors => true,
+        :timeout => 120,
+        :debug => false,
+        :phantomjs_options => ['--load-images=no', '--disk-cache=false'],
+        :inspector => true,
+    }
+    Capybara::Poltergeist::Driver.new(app, options)
+end
+# Capybara.current_driver = :poltergeist
+# Capybara.javascript_driver = :poltergeist

@@ -60,11 +60,15 @@ end
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'shoulda-matchers'
-  gem 'cucumber-rails', require: false
+  # gem 'shoulda-matchers'
   gem 'pickle'
   gem 'webrat'
   gem 'database_cleaner'
+  gem "capybara"
+  gem "cucumber-rails"
+  gem "poltergeist"
+  gem "selenium-webdriver"
+
 end
 
 group :development do
