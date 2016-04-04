@@ -3,7 +3,16 @@ Handlebars.registerHelper('department_code', function (id) {
 });
 
 Handlebars.registerHelper('range', function (min, max) {
-  return new Handlebars.SafeString(min == max ? max : min + '-' + max);
+  var credits = max;
+  var outString = '';
+  // render "credit(s)" properly
+  if(min < max) {
+    outString = min + '-' + max + ' credits';
+  }
+  else {
+    outString = max + ' credit' + (max === 1 ? 's' : '');
+  }
+  return new Handlebars.SafeString(outString);
 });
 
 Handlebars.registerHelper('join', function (arr) {
@@ -16,7 +25,5 @@ Handlebars.registerHelper('subtract', function (a, b) {
 
 Yacs.views.courses = function (data) {
   var html = HandlebarsTemplates.courses(data);
-  console.log(html);
-  console.log(data);
   document.querySelector('#content').innerHTML = html;
 };
