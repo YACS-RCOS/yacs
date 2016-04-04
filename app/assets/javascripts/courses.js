@@ -18,7 +18,5 @@ Yacs.views.courses = function (data) {
   var html = HandlebarsTemplates.courses(data);
   console.log(html);
   console.log(data);
-  setTimeout(function () {
-    document.querySelector('#content').innerHTML = html;
-  }, 500);
+  document.querySelector('#content').innerHTML = html;
 };
