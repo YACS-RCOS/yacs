@@ -6,6 +6,7 @@
    not currently use AM or PM.
    Used in parsing period times when loading courses. */
 function milTimeToReadable(miltime) {
+  /*
   var hour = Math.floor(miltime/100);
   if(hour > 12) {
     hour -= 12;
@@ -16,6 +17,7 @@ function milTimeToReadable(miltime) {
   var minute = miltime % 100;
   if (minute < 10) minute = '0'+minute;
   return hour + ':' + minute;
+  */
 }
 
 
@@ -36,7 +38,7 @@ function formatSections(parentNode) {
      for(var node of nodes) {
        ...
      }
-  */
+  
   
   // get list of section nodes
   var nodes = parentNode.getElementsByTagName('section');
@@ -103,7 +105,7 @@ function formatSections(parentNode) {
       }
     }
   }
-  
+  */
 }
 
 
@@ -113,6 +115,7 @@ function formatSections(parentNode) {
    the frontend is responsible for this process.
 */
 function formatCourseList() {
+  /*
 
   // add the actual "credit(s)" to credits elements, which only have the number
   var nodes = document.getElementsByTagName('course-credits');
@@ -122,7 +125,7 @@ function formatCourseList() {
     nodes[n].innerHTML = nodes[n].innerHTML + ' ' + word;
   }
 
-  formatSections(document);
+  formatSections(document);*/
 }
   
 
@@ -130,7 +133,7 @@ function formatCourseList() {
    Once a courses XML has been loaded into div#content, do any other steps
    needed to crunch it into presentable form. */
 function setupCourses() {
-
+  /*
   // check for no courses (expected result from a search query that matches
   // nothing)
   if(nsYacs.contentContainer.getElementsByTagName('course').length === 0) {
@@ -152,7 +155,7 @@ function setupCourses() {
        without any need for a closure. Sadly, the EcmaScript draft enabling the
        use of let is STILL not cross-platform (no Safari support, limited
        Chromium support) after being out there for over 6 years.
-    */
+    
     var n = nodes[i];
     var sid = firstChildWithTag(n, 'section-id').innerHTML;
 
@@ -239,7 +242,7 @@ function setupCourses() {
       });
     })()
   }
-  
+  */
   //History.pushState({state:nsYacs.courselistPage}, "Course page", "?state=1");
 }
 
@@ -251,10 +254,12 @@ function setupCourses() {
    The string argument is the literal API request that will be made, unchanged.
 */
 function loadCourses(apiString) {
+  /*
   clearForNewPage();
   doAjaxRequest(apiString, function(response, status) {
     nsYacs.contentContainer.innerHTML = response;
     setupCourses();
     nsUser.currentPage = nsYacs.courselistPage;
   });
+  */
 }

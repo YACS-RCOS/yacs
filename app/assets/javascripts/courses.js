@@ -22,11 +22,31 @@ Handlebars.registerHelper('render_seats', function (a, b) {
   return new Handlebars.SafeString((a-b) + ' seat' + ((a-b) === 1 ? '' : 's'));
 });
 
+/* Course setup code */
 Yacs.views.courses = function (data) {
   var html = HandlebarsTemplates.courses(data);
-  document.querySelector('#content').innerHTML = html;
-};
+  document.getElementById('content').innerHTML = html;
 
-Yacs.on('click', 'section', function(sect) {
-  alert(sect.dataset.id);
-});
+  // Add event listeners to sections
+  var nodes = document.getElementsByTagName('section');
+  for(var i=0; i<nodes.length; ++i) {
+    Yacs.addEventListener('click', nodes[i], function(sect) {
+      /* If there happens to be a mismatch between the data and the display,
+         we care about the data - e.g. if the id is in the array, we will
+         always deselect it regardless of whether it was being rendered as
+         selected or not.
+      */
+      
+      var sid = sect.dataset.id;
+      if(Yacs.user.removeSelection(sid)) {
+        // index is real, section is selected, remove selected class
+        sect.classList.remove('selected');
+      }
+      else {
+        // section is not selected, select it and add it to the array
+        Yacs.user.addSelection(sid);
+        sect.className += ' selected';
+      }
+    });
+  }
+};
