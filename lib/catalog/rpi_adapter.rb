@@ -43,7 +43,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
       end
     end
   end
-  
+
   private
   def sem_string
     "201609"
@@ -125,7 +125,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         section = course.sections.find_by_crn(section_xml[:crn])
         # If specific section within does not exist, add section;
         if section.nil?
-          section           = course.sections.build 
+          section           = course.sections.build
           puts "section added to #{course.inspect} - #{section.inspect}"
         end
         section.name        = section_xml[:num]
@@ -196,7 +196,8 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     File.readlines(file).drop(1).each do |line|
       data = line.strip.split(/\t/)
       puts "#{data[0]} - #{data[1]}"
-      Department.create(code: data[0], name: data[1])
+      tmp_department = Department.new(code: data[0], name: data[1])
+      existing_department = Department.where(code: tmp_department.code)
     end
   end
 

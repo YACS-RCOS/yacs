@@ -17,6 +17,8 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
+gem 'activerecord-diff'
+gem 'awesome_print'
 gem 'rails-observers'
 gem 'dalli'
 

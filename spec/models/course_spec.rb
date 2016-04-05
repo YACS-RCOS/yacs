@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: courses
+#
+#  id            :integer          not null, primary key
+#  department_id :integer          not null
+#  name          :string           not null
+#  number        :integer          not null
+#  min_credits   :integer          not null
+#  max_credits   :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  description   :text             default("")
+#
+
 require "rails_helper"
 
 RSpec.describe Course do
