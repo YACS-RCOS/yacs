@@ -26,3 +26,7 @@ Yacs.views.courses = function (data) {
   var html = HandlebarsTemplates.courses(data);
   document.querySelector('#content').innerHTML = html;
 };
+
+Yacs.on('click', 'section', function(sect) {
+  alert(sect.dataset.id);
+});
