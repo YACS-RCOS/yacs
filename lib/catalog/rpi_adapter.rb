@@ -96,11 +96,14 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
 
   def update_courses
     errors = []
+    # Call API for XML of courses;
     uri = "https://sis.rpi.edu/reg/rocs/#{sem_string}.xml"
     @courses_xml = Nokogiri::XML(open(uri)).xpath("//COURSE")
+    # Iterate through each course of parsed XML;
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
       course = dept.courses.find_by_number(course_xml[:num])
+      # If course does not exist, add course;
       if course.nil?
         course              = dept.courses.build
         course.name         = course_xml[:name].titleize
@@ -110,9 +113,17 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         next unless course.save
         puts "course added - #{course.inspect}"
       end
+
+      # Check if course info is the same as the data that is stored in the DB;
+      # TODO: Add checks;
+      # Query DB, course number as index, save course for use now, then checking each section;
+      #
+
       sections_xml = course_xml.xpath("SECTION")
+      # Iterate through each section within the course;
       sections_xml.each do |section_xml|
         section = course.sections.find_by_crn(section_xml[:crn])
+        # If specific section within does not exist, add section;
         if section.nil?
           section           = course.sections.build 
           puts "section added to #{course.inspect} - #{section.inspect}"
