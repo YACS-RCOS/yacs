@@ -1,8 +1,11 @@
+/* user.js - file for handling session-specific variables */
+
 window.Yacs.user = new function () {
   var self = this;
 
 /* ======================================================================== *
-    Cookies
+    Low-level cookie-specific functions. In general, these should not be
+    used by external parts of the program.
  * ======================================================================== */
 
   // http://www.w3schools.com/js/js_cookies.asp
@@ -22,7 +25,7 @@ window.Yacs.user = new function () {
   }
 
 /* ======================================================================== *
-    Selections
+    Higher-level functions
  * ======================================================================== */
 
   self.getSelectionsRaw = function () {

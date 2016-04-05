@@ -1,17 +1,24 @@
 Yacs.views.departments = function (data) {
+  //
   data = data || { courses: Yacs.models.departments.store.all };
-  var html = HandlebarsTemplates.departments(data);
-  document.querySelector('#content').innerHTML = html;
-};
 
-Yacs.on('click', 'department', function (dept) {
-  document.querySelector('#content').innerHTML = "";
-  department_id = dept.dataset.id;
-  Yacs.models.courses.query({
-    department_id: department_id,
-    show_sections: true },
-    function (data, success) {
-      if (success)
-        Yacs.views.courses(data);
+  // render data out through departments template
+  Yacs.setContents(HandlebarsTemplates.departments(data));
+  
+  // add event listener to departments
+  var nodes = document.getElementsByTagName('department');
+  for(var i=0; i<nodes.length; ++i) {
+    Yacs.addEventListener('click', nodes[i], function(dept) {
+      // wipe contents and make query for that department id
+      Yacs.clearContents();
+      Yacs.models.courses.query(
+        { department_id: dept.dataset.id,
+          show_sections: true },
+        function (data, success) {
+          if (success) {
+            Yacs.views.courses(data);
+          }
+        });
     });
-});
+  }
+};

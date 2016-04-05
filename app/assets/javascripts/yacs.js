@@ -106,30 +106,20 @@ Yacs = new function () {
   }
   self.onload(function () { loaded = true; })
 
-  /* Types to pass to this:
-     event = string of the event type, will be passed to addEventListener
-     selector = string of the tag, class, id, or any combination to match
-     callback = function taking 1 or 2 arguments to operate on them. The first
-     argument is the element triggering the callback; the second is the actual
-     event itself (that holds the element and additional data, for example the
-     X and Y positions of a click.)
-  */
-  self.on = function (event, selector, callback) {
-    var addListener = function () {
-      document.body.addEventListener('click', function (e) {
-        var target = e.target || e.srcElement;
-        while (target) {
-          if ((target.matches ? target.matches(selector) : matches(target, selector))) {
-            e.matchedTarget = target;
-            callback(e.matchedTarget, e);
-          }
-          target = target.parentElement;
-        }
-      }, false);
-    };
-    if (loaded) addListener();
-    else self.onload(addListener);
+  self.setContents = function(html) {
+    document.getElementById('content').innerHTML = html;
+  }
+    
+  self.clearContents = function() {
+    Yacs.setContents('');
+  }
+  
+  self.addEventListener = function(eventType, elem, callback) {
+    elem.addEventListener(eventType, function() {
+      callback(elem);
+    });
   };
+
 }();
 
 /* ======================================================================== *
