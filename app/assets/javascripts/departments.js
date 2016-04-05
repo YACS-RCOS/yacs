@@ -4,9 +4,9 @@ Yacs.views.departments = function (data) {
   document.querySelector('#content').innerHTML = html;
 };
 
-Yacs.on('click', 'department', function (event) {
+Yacs.on('click', 'department', function (dept) {
   document.querySelector('#content').innerHTML = "";
-  department_id = event.matchedTarget.dataset.id;
+  department_id = dept.dataset.id;
   Yacs.models.courses.query({
     department_id: department_id,
     show_sections: true },
