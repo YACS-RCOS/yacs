@@ -10,12 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require analytics
-//= require handlebars.runtime
+//= require ../../../vendor/assets/javascripts/analytics
+//= require_tree ../../../vendor/assets/javascripts
 //= require yacs
 //= require courses
 //= require departments
 //= require user
 
 //= require_tree ./templates
-//= require_tree ../../../vendor/assets/javascripts
