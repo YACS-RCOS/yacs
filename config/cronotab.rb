@@ -3,8 +3,8 @@ Yacs::Application.load_tasks
 
 class UpdateSeats
   def perform
-    Rake::Task['catalog:update_seats'].invoke
+    Catalog::RpiAdapter.new.update_section_seats
   end
 end
 
-Crono.perform(UpdateSeats).every 5.minutes
+Crono.perform(UpdateSeats).every 1.minutes

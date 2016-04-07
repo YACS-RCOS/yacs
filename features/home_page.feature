@@ -23,13 +23,13 @@ Scenario: views departments
   When I go to the home page
   Then I should see the school with id 1
     Then within it I should see the text "School of Engineering"
-    And within it I should see the department with id 6
+    And I should also see the department with id 6
       Then within it I should see the text "CIVL"
-      And within it I should also see the text "Civil Engineering"
-    And within it I should also see the department with id 7
+      And I should also see the text "Civil Engineering"
+    And I should also see the department with id 7
   Then I should see the school with id 2
     Then within it I should see the text "School of Science"
     And within it I should see the department with id 8
       Then within it I should see the text "CSCI"
-      And within it I should also see the text "Computer Science"
-    And within it I should also see the department with id 9
+      And I should also see the text "Computer Science"
+    And I should also see the department with id 9

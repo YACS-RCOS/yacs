@@ -4,14 +4,14 @@
       <course-name>{{name}}</course-name>
       <department-code>{{department_code department_id}}</department-code>
       <course-number>{{number}}</course-number>
-      <course-credits>{{render_credits min_credits max_credits}}</course-credits>
+      <course-credits>{{course_credits min_credits max_credits}}</course-credits>
       <course-description>{{description}}</course-description>
       <sections>
         {{#sections}}
           <section data-id="{{id}}">
             <section-name>Section {{name}}</section-name>
             <section-instructors>{{join instructors}}</section-instructors>
-            <section-seats-available>{{render_seats seats seats_taken}}</section-seats-available>
+            <section-seats-available>{{course_seats seats seats_taken}}</section-seats-available>
           </section>
         {{/sections}}
       </sections>
