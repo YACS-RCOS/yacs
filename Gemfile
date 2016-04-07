@@ -65,7 +65,7 @@ group :test do
   gem 'webrat'
   gem 'database_cleaner'
   gem "capybara"
-  gem "cucumber-rails"
+  gem "cucumber-rails", require: false
   gem "poltergeist"
   gem "selenium-webdriver"
 

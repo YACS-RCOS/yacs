@@ -17,7 +17,7 @@ Then(/^within it I should see the (.*) with id (\d+)$/) do |type, id|
   expect(page).to have_css("#{@root} #{@children.join(' ')}")
 end
 
-And(/^within it I should also see the (.*) with id (\d+)$/) do |type, id|
+And(/^(?:within it )?I should also see the (.*) with id (\d+)$/) do |type, id|
   css = "#{type.downcase}[data-id='#{id}']"
   expect(page).to have_css("#{@root} #{@children[0..-2].join(' ')} #{css}")
 end
@@ -27,7 +27,11 @@ And(/^within it I should see the text "(.*)"$/) do |text|
   expect(page.find(css)).to have_content text
 end
 
-And(/^within it I should also see the text "(.*)"$/) do |text|
+And(/^(?:within it )?I should also see the text "(.*)"$/) do |text|
   css = "#{@root} #{@children[0..-2].join(' ')}"
   expect(page.find(css)).to have_content text
+end
+
+And(/I break$/) do
+  binding.pry
 end
