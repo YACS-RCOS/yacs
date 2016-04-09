@@ -7,4 +7,4 @@ class UpdateSeats
   end
 end
 
-Crono.perform(UpdateSeats).every 1.minutes
+Crono.perform(UpdateSeats).every 5.minutes
