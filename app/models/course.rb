@@ -4,7 +4,11 @@ class Course < ActiveRecord::Base
   validates   :number, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
 
-  def self.search(params)
+  def self.get code, number
+    joins(:department).where("departments.code = ? AND number = ?", code, number).first
+  end
+
+  def self.search params
     search_params = params.join(' & ')
     query = <<-SQL
       SELECT * FROM (
