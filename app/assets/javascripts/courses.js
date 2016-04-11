@@ -5,11 +5,11 @@ Handlebars.registerHelper('department_code', function (id) {
 Handlebars.registerHelper('course_credits', function (c) {
   var outString = '';
   // render "credit(s)" properly
-  if(c.min < c.max) {
-    outString = c.min + '-' + c.max + ' credits';
+  if(c.min_credits < c.max_credits) {
+    outString = c.min_credits + '-' + c.max_credits + ' credits';
   }
   else {
-    outString = c.max + ' credit' + (c.max === 1 ? 's' : '');
+    outString = c.max_credits + ' credit' + (c.max_credits === 1 ? 's' : '');
   }
   return new Handlebars.SafeString(outString);
 });
@@ -19,8 +19,8 @@ Handlebars.registerHelper('join', function (arr) {
 });
 
 Handlebars.registerHelper('course_seats', function (c) {
-  var seats = c.seats - c.seats_taken;
-  return new Handlebars.SafeString(seats + (seats == 1 ? ' seat' : ' seats'));
+  var remaining = c.seats - c.seats_taken;
+  return new Handlebars.SafeString(remaining);
 });
 
 /* Course setup code */
