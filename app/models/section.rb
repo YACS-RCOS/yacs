@@ -19,6 +19,9 @@
 #
 
 class Section < ActiveRecord::Base
+  include ActiveRecord::Diff
+  diff exclude: [:created_at, :updated_at]
+  
   belongs_to  :course
   default_scope { order(name: :asc) }
 

@@ -103,6 +103,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
       course = dept.courses.find_by_number(course_xml[:num])
+      found_course = course
       # If course does not exist, add course;
       if course.nil?
         course              = dept.courses.build
@@ -112,6 +113,14 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         course.max_credits  = course_xml[:credmax]
         next unless course.save
         puts "course added - #{course.inspect}"
+      elsif found_course.diff?(course)
+        # If course is found, check for differences
+        course              = dept.courses.build
+        course.name         = course_xml[:name].titleize
+        course.number       = course_xml[:num]
+        course.min_credits  = course_xml[:credmin]
+        course.max_credits  = course_xml[:credmax]
+        found_course.update(course)
       end
 
       # Check if course info is the same as the data that is stored in the DB;
@@ -123,6 +132,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
       # Iterate through each section within the course;
       sections_xml.each do |section_xml|
         section = course.sections.find_by_crn(section_xml[:crn])
+        found_section = section
         # If specific section within does not exist, add section;
         if section.nil?
           section           = course.sections.build
@@ -149,7 +159,13 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         end
         section.instructors.delete("Staff")
         section.instructors.uniq!
-        section.save!
+        # Update found section if there is one, else just save the section
+        if (not found_section.nil?)
+          found_section.update(section) if found_section.diff?(section)
+        else
+          section.save!
+        end
+
       end
     end
     puts errors
@@ -196,8 +212,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     File.readlines(file).drop(1).each do |line|
       data = line.strip.split(/\t/)
       puts "#{data[0]} - #{data[1]}"
-      tmp_department = Department.new(code: data[0], name: data[1])
-      existing_department = Department.where(code: tmp_department.code)
+      Department.create(code: data[0], name: data[1])
     end
   end
 
