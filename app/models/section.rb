@@ -20,7 +20,7 @@
 
 class Section < ActiveRecord::Base
   include ActiveRecord::Diff
-  diff exclude: [:created_at, :updated_at]
+  diff exclude: [:created_at, :seats, :seats_taken, :updated_at]
   
   belongs_to  :course
   default_scope { order(name: :asc) }

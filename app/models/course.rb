@@ -15,7 +15,7 @@
 
 class Course < ActiveRecord::Base
   include ActiveRecord::Diff
-  diff exclude: [:created_at, :updated_at]
+  diff exclude: [:created_at, :name, :updated_at]
   
   belongs_to  :department
   has_many    :sections, dependent: :destroy

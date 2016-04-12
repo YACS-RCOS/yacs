@@ -158,7 +158,8 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
       elsif found_course.diff?(course)
         # If course is found, check for differences
         course              = dept.courses.build
-        course.name         = course_xml[:name].titleize
+        # Ignore course name since it is scraped from RPI catalog, not SIS XML;
+        #course.name         = course_xml[:name].titleize
         course.number       = course_xml[:num]
         course.min_credits  = course_xml[:credmin]
         course.max_credits  = course_xml[:credmax]
