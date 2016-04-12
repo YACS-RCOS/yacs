@@ -166,11 +166,6 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         found_course.update(course)
       end
 
-      # Check if course info is the same as the data that is stored in the DB;
-      # TODO: Add checks;
-      # Query DB, course number as index, save course for use now, then checking each section;
-      #
-
       sections_xml = course_xml.xpath('SECTION')
       # Iterate through each section within the course;
       sections_xml.each do |section_xml|
