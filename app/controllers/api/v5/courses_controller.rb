@@ -1,7 +1,7 @@
 class Api::V5::CoursesController < Api::V5::ApiController
-  caches_action :index, if: Proc.new { |c| c.request.format.xml? && c.params[:department_id].present? },
-    cache_path: Proc.new { |c| "api/v5/courses/index.xml?department_id=#{c.params[:department_id]}" }
-    
+  caches_action :index, if: Proc.new { |c| c.params[:department_id].present? },
+    cache_path: Proc.new { |c| "/api/v5/courses.json?department_id=#{c.params[:department_id]}" } # TODO: rework caching scheme
+
   def index
     filter_model Course
     filter :search do 
@@ -14,5 +14,6 @@ class Api::V5::CoursesController < Api::V5::ApiController
       q.joins(:department).where :"departments.code" => any :department_code
     end
     filter_any :id, :department_id
+    query.includes(:sections) if @show_sections
   end
 end
