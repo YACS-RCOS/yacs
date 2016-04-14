@@ -22,4 +22,25 @@ class Api::V5::ApiController < ActionController::Metal
     @show_sections    = params.has_key? :show_sections
     @show_periods     = params.has_key? :show_periods
   end
+
+  protected
+  def any param
+    params[param].split(',')
+  end
+
+  def filter_model model
+    @records = model.all.distinct
+  end
+
+  def filter param
+    @records = yield(@records) if params[param].present?
+  end
+
+  def filter_any *param
+    param.each do |param|
+      filter param do |r|
+        r.where param => any param
+      end
+    end
+  end
 end
