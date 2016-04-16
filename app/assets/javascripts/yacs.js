@@ -90,7 +90,7 @@ Yacs = new function () {
     DOM
  * ======================================================================== */
 
-  self.views = {};
+  self.views = { };
 
  // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
   var matches = function (elm, selector) {
@@ -106,21 +106,49 @@ Yacs = new function () {
   }
   self.onload(function () { loaded = true; })
 
-  self.setContents = function(html) {
+  self.setContents = function (html) {
     document.getElementById('content').innerHTML = html;
   }
     
-  self.clearContents = function() {
+  self.clearContents = function () {
     Yacs.setContents('');
   }
   
-  self.addEventListener = function(eventType, elem, callback) {
-    elem.addEventListener(eventType, function() {
-      callback(elem);
+  self.on = function (eventType, elem, callback) {
+    elem.addEventListener(eventType, function (event) {
+      callback(elem, event);
     });
   };
-
 }();
+
+Yacs.views.header = function () {
+  var homeButton = document.getElementById('page-title');
+  var searchbar = document.getElementById('searchbar');
+  var scheduleButton = document.getElementById("schedule-btn");
+  Yacs.on('click', homeButton, function () { Yacs.views.departments(); });
+  Yacs.on('click', scheduleButton, function () { Yacs.views.schedule(); });
+  Yacs.on('keydown', document, function (elem, event) {
+    var key = event.keyCode;
+    if (!(event.ctrlKey || event.metaKey)) {
+      if (key >= 32 && key <= 127) {
+        if (key == 127 && searchbar.value.length <= 1)
+          Yacs.views.departments();
+        searchbar.focus();
+      } else if (key == 13) {
+        if (searchbar.value) {
+          Yacs.models.courses.query({ search: searchbar.value }, function (data, success) {
+            if (success)
+              Yacs.views.courses(data);
+          });
+        } else {
+          Yacs.views.departments();
+        }
+      } else if ((key == 8 || key == 46) && searchbar.value.length <= 1) {
+        Yacs.views.departments();
+      }
+    }
+  });
+};
 
 /* ======================================================================== *
     Initializers
@@ -130,4 +158,5 @@ Yacs.onload(function () {
   Yacs.models.schools.preload(function (data) {
     Yacs.views.departments(data);
   });
+  Yacs.views.header();
 });
