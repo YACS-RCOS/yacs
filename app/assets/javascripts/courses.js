@@ -31,7 +31,7 @@ Yacs.views.courses = function (data) {
   // Add event listeners to sections
   var nodes = document.getElementsByTagName('section');
   for(var i=0; i<nodes.length; ++i) {
-    Yacs.addEventListener('click', nodes[i], function(sect) {
+    Yacs.on('click', nodes[i], function(sect) {
       /* If there happens to be a mismatch between the data and the display,
          we care about the data - e.g. if the id is in the array, we will
          always deselect it regardless of whether it was being rendered as
