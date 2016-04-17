@@ -92,6 +92,9 @@ Yacs = new function () {
 
   self.views = { };
 
+  NodeList.prototype.each = Array.prototype.forEach;
+  HTMLCollection.prototype.each = Array.prototype.forEach;
+
  // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
   var matches = function (elm, selector) {
     var matches = (elm.document || elm.ownerDocument).querySelectorAll(selector);

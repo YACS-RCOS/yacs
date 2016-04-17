@@ -1,11 +1,13 @@
 <courses>
   {{#courses}}
     <course data-id="{{id}}">
-      <course-name>{{name}}</course-name>
-      <department-code>{{department_code department_id}}</department-code>
-      <course-number>{{number}}</course-number>
-      <course-credits>{{course_credits this}}</course-credits>
-      <course-description>{{description}}</course-description>
+      <course-info>
+        <course-name>{{name}}</course-name>
+        <department-code>{{department_code department_id}}</department-code>
+        <course-number>{{number}}</course-number>
+        <course-credits>{{course_credits this}}</course-credits>
+        <course-description>{{description}}</course-description>
+      </course-info>
       <sections>
         {{#sections}}
           <section data-id="{{id}}">
