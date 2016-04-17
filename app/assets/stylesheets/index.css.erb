@@ -176,15 +176,48 @@ course {
    different highlight colors. If CSS4 is out when you're looking at this code,
    there should be some way to do it with negation selectors.
    */
-course:hover {
+/*course:hover {
     background-color:#e7e7e7;
+}*/
+
+@keyframes hover-unselected {
+    0% {background-color: #cc8181;}
+    50% {background-color: #b87474;}
+    100% {background-color: #cc8181;}
+}
+
+@keyframes hover-selected {
+    0% {background-color: #933;}
+    50% {background-color: #cc8181;}
+    100% {background-color: #933;}
+}
+
+course:not(.selected) course-info:hover ~ sections section {
+    /*background-color: #995c5c;*/
+    color: #efefef;
+    background-color: #cc8181;
+    transition: background-color .2s, color .3s;
+/*    animation: hover-unselected;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-delay: .3s;*/
+}
+course.selected course-info:hover ~ sections section {
+    color: #efefef;
+    /*background-color: #cc8181;*/
+    transition: background-color .3s, color .3s;
+    animation: hover-selected, hover-selected;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-delay: .3s;
 }
 course-name {
     font-size: 130%;
+    font-weight: 400;
 }
-course-number, course department-code, course-credits {
+/*course-number, course department-code, course-credits {
     font-size:110%;
-}
+}*/
 course department-code {
     margin-left:1em;
 }
@@ -202,16 +235,33 @@ section {
     overflow:auto;
     /* border-radius: 8px; */
 }
-section:hover {
-    background-color: #e0e0e0;
+/*section-name {
+    padding: 5px;
+}*/
+
+section:not(.selected):hover {
+    color: #efefef;
+    background-color: #cc8181;
+    transition: background-color .3s, color .3s;
+/*    animation-delay: .3s;
+    animation: hover-unselected;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;*/
+}
+section.selected:hover {
+    animation-delay: .3s;
+    animation: hover-selected;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }
 section.selected {
     color: #efefef;
-    background-color: /*#ce5656;*/#933;
+    background-color: #933;
+    transition: background-color .3s, color .3s;
 }
-section.selected:hover {
+/*section.selected:hover {
     background-color: #b33;
-}
+}*/
 section.closed {
     color: #888;
 }
