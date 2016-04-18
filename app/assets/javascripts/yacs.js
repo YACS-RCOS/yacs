@@ -37,7 +37,8 @@ Yacs = new function () {
 
   self.models = { };
 
-  var Model = function (name, options={}) {
+  var Model = function (name, options) {
+    options = options || {};
     var self = this;
     var childParam = 'show_' + options.has_many;
 
@@ -76,7 +77,7 @@ Yacs = new function () {
     }
   };
 
-  var addModel = function (name, options={}) {
+  var addModel = function (name, options) {
     return self.models[name] = new Model(name, options);
   }
 

@@ -180,36 +180,12 @@ course {
     background-color:#e7e7e7;
 }*/
 
-@keyframes hover-unselected {
-    0% {background-color: #cc8181;}
-    50% {background-color: #b87474;}
-    100% {background-color: #cc8181;}
-}
-
-@keyframes hover-selected {
-    0% {background-color: #933;}
-    50% {background-color: #cc8181;}
-    100% {background-color: #933;}
-}
-
-course:not(.selected) course-info:hover ~ sections section {
-    /*background-color: #995c5c;*/
-    color: #efefef;
-    background-color: #cc8181;
-    transition: background-color .2s, color .3s;
-/*    animation: hover-unselected;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-delay: .3s;*/
+course:not(.selected) course-info:hover ~ sections section:not(.selected) {
+    background-color: #feae90;
 }
 course.selected course-info:hover ~ sections section {
     color: #efefef;
-    /*background-color: #cc8181;*/
-    transition: background-color .3s, color .3s;
-    animation: hover-selected, hover-selected;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-delay: .3s;
+    background-color: #b87474; 
 }
 course-name {
     font-size: 130%;
@@ -235,33 +211,18 @@ section {
     overflow:auto;
     /* border-radius: 8px; */
 }
-/*section-name {
-    padding: 5px;
-}*/
-
-section:not(.selected):hover {
+sections section:not(.selected):hover {
+    background-color: #feae90;
+}
+sections section.selected:hover {
     color: #efefef;
-    background-color: #cc8181;
-    transition: background-color .3s, color .3s;
-/*    animation-delay: .3s;
-    animation: hover-unselected;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;*/
+    background-color: #b87474;
 }
-section.selected:hover {
-    animation-delay: .3s;
-    animation: hover-selected;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-}
-section.selected {
+sections section.selected {
     color: #efefef;
     background-color: #933;
-    transition: background-color .3s, color .3s;
 }
-/*section.selected:hover {
-    background-color: #b33;
-}*/
+
 section.closed {
     color: #888;
 }
