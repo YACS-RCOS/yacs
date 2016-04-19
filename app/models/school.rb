@@ -9,5 +9,8 @@
 #
 
 class School < ActiveRecord::Base
+  include ActiveRecord::Diff
+  diff exclude: [:created_at, :updated_at]
+
   has_many :departments, dependent: :destroy
 end

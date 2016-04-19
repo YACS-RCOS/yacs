@@ -20,6 +20,7 @@ gem 'actionpack-action_caching'
 gem 'activerecord-diff'
 gem 'awesome_print'
 gem 'rails-observers'
+gem 'ruby-progressbar'
 gem 'dalli'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
