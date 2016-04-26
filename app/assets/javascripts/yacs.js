@@ -113,11 +113,11 @@ Yacs = new function () {
   self.setContents = function (html) {
     document.getElementById('content').innerHTML = html;
   }
-    
+
   self.clearContents = function () {
     Yacs.setContents('');
   }
-  
+
   self.on = function (eventType, elem, callback) {
     elem.addEventListener(eventType, function (event) {
       callback(elem, event);
@@ -130,7 +130,15 @@ Yacs.views.header = function () {
   var searchbar = document.getElementById('searchbar');
   var scheduleButton = document.getElementById("schedule-btn");
   Yacs.on('click', homeButton, function () { Yacs.views.departments(); });
-  Yacs.on('click', scheduleButton, function () { Yacs.views.schedule(); });
+  Yacs.on('click', scheduleButton, function () {
+    Yacs.models.schedules.query({ section_ids: Yacs.user.getSelectionsRaw(),
+                                  show_periods: true },
+      function(data, success) {
+        if(success)
+          Yacs.views.schedule(data);
+        }
+    );
+  });
   Yacs.on('keydown', document, function (elem, event) {
     var key = event.keyCode;
     if (!(event.ctrlKey || event.metaKey)) {
