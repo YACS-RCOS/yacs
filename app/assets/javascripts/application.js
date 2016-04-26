@@ -14,6 +14,7 @@
 //= require yacs
 //= require courses
 //= require departments
+//= require schedule
 //= require user
 
 //= require_tree ./templates
