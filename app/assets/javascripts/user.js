@@ -11,8 +11,8 @@ window.Yacs.user = new function () {
   /**
    * Sets the value of a cookie by name
    * http://www.w3schools.com/js/js_cookies.asp
-   * @param {String} name of cookie
-   * @param {String} value of cookie
+   * @param {String} name - name of cookie
+   * @param {String} value - value of cookie
    * @return {undefined}
    */
   var setCookie = function (name, value) {
@@ -22,7 +22,7 @@ window.Yacs.user = new function () {
   /**
    * Gets the value of a cookie by name
    * http://www.w3schools.com/js/js_cookies.asp
-   * @param  {String} name of cookie
+   * @param  {String} name - name of cookie
    * @return {String} value of cookie
    */
   var getCookie = function (name) {
@@ -59,7 +59,7 @@ window.Yacs.user = new function () {
 
   /**
    * Add a selection to those already selected. Return the success value.
-   * @param {String} the section id
+   * @param {String} sid - the section id
    * @return {Boolean} true if the selection was added, false if it was already present
    */
   self.addSelection = function (sid) {
@@ -72,7 +72,7 @@ window.Yacs.user = new function () {
 
   /**
    * Remove a selection from the cookie. Return the success value.
-   * @param  {String} the section id
+   * @param  {String} sid - the section id
    * @return {Boolean} true if the selection was removed, false if it was not present
    */
   self.removeSelection = function (sid) {
@@ -86,7 +86,7 @@ window.Yacs.user = new function () {
 
   /**
    * Determine whether the user has already selected a given section ID
-   * @param  {String}
+   * @param  {String} sid - the section id
    * @return {Boolean} true if the section is selected, false if it is not
    */
   self.hasSelection = function (sid) {
