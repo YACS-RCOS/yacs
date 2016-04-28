@@ -1,3 +1,6 @@
+/**
+ * YACS singleton. This object is the top-level namespace for all YACS functionality.
+ */
 Yacs = new function () {
   var self = this;
 
@@ -5,6 +8,12 @@ Yacs = new function () {
     Network
  * ======================================================================== */
 
+  /**
+   * Performs an AJAX request
+   * @param  {String} uri - URI of request
+   * @param  {Function} callback - callback
+   * @return {undefined}
+   */
   self.get = function (uri, callback) {
     req = new XMLHttpRequest();
     req.open('GET', uri);
@@ -16,6 +25,13 @@ Yacs = new function () {
     req.send();
   };
 
+  /**
+   * Performs an AJAX request to the YACS API. 
+   * @param  {String} model - name of the route to request
+   * @param  {Object} params - query parameters as a hash
+   * @param  {Function} callback - callback 
+   * @return {undefined}
+   */
   self.api = function (model, params, callback) {
     var query = "?";
     for (var param in params) {
@@ -36,7 +52,12 @@ Yacs = new function () {
  * ======================================================================== */
 
   self.models = { };
-
+  /**
+   * @constructor Represents a collection of objects obtained from the YACS API
+   * @param {String} name - pluralized name of collection
+   * @param {Object} [options] properties - extra properties of the collection
+   * @param {String} [options.has_many] - name of one-to-many association
+   */
   var Model = function (name, options) {
     options = options || {};
     var self = this;
