@@ -1,5 +1,7 @@
 /**
- * @namespace Persistant user data interface
+ * @namespace user
+ * @description Persistant user data interface
+ * @memberOf Yacs
  */
 window.Yacs.user = new function () {
   var self = this;
@@ -14,6 +16,7 @@ window.Yacs.user = new function () {
    * @param {String} name - name of cookie
    * @param {String} value - value of cookie
    * @return {undefined}
+   * @memberOf Yacs.user
    */
   var setCookie = function (name, value) {
     document.cookie = name + "=" + value + "; path=/";
@@ -24,6 +27,7 @@ window.Yacs.user = new function () {
    * http://www.w3schools.com/js/js_cookies.asp
    * @param  {String} name - name of cookie
    * @return {String} value of cookie
+   * @memberOf Yacs.user
    */
   var getCookie = function (name) {
     name += "=";
@@ -41,8 +45,10 @@ window.Yacs.user = new function () {
  * ======================================================================== */
 
   /**
+   * @description
    * Gets the value of the selection cookie
    * @return {String} section ids as comma separated values
+   * @memberOf Yacs.user
    */
   self.getSelectionsRaw = function () {
     return getCookie('selections');
@@ -51,6 +57,7 @@ window.Yacs.user = new function () {
   /**
    * Gets the selections from the cookie as an array of strings
    * @return {String[]} array of section ids
+   * @memberOf Yacs.user
    */
   self.getSelections = function () {
     var selections = getCookie('selections');
@@ -61,6 +68,7 @@ window.Yacs.user = new function () {
    * Add a selection to those already selected. Return the success value.
    * @param {String} sid - the section id
    * @return {Boolean} true if the selection was added, false if it was already present
+   * @memberOf Yacs.user
    */
   self.addSelection = function (sid) {
     arr = self.getSelections();
@@ -74,6 +82,7 @@ window.Yacs.user = new function () {
    * Remove a selection from the cookie. Return the success value.
    * @param  {String} sid - the section id
    * @return {Boolean} true if the selection was removed, false if it was not present
+   * @memberOf Yacs.user
    */
   self.removeSelection = function (sid) {
     arr = self.getSelections();
@@ -88,6 +97,7 @@ window.Yacs.user = new function () {
    * Determine whether the user has already selected a given section ID
    * @param  {String} sid - the section id
    * @return {Boolean} true if the section is selected, false if it is not
+   * @memberOf Yacs.user
    */
   self.hasSelection = function (sid) {
     return self.getSelections().indexOf(sid) != -1;
@@ -96,6 +106,7 @@ window.Yacs.user = new function () {
   /**
    * Remove all selections from cookie
    * @return {undefined}
+   * @memberOf Yacs.user
    */
   self.clearSelections = function () {
     setCookie('selections', '');

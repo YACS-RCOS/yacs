@@ -23,7 +23,13 @@ Handlebars.registerHelper('course_seats', function (c) {
   return new Handlebars.SafeString(remaining);
 });
 
-/* Course setup code */
+/**
+ * Courses view. Displays courses and their sections
+ * @param {Object} data - Object containing Courses model collection
+ * @param {Model[]} data.courses - Courses model collection
+ * @return {undefined}
+ * @memberOf Yacs.views
+ */
 Yacs.views.courses = function (data) {
   var html = HandlebarsTemplates.courses(data);
   Yacs.setContents(html);
