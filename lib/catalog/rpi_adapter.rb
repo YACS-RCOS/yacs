@@ -11,27 +11,12 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     load_departments
     load_schools
     load_courses_and_sections
-    # load_descriptions
+    load_descriptions
     remove_empty
     # Return logging to normal
     ActiveRecord::Base.logger.level = log_level
   end
 
-  # def load_catalog
-  #   unless Section.count.zero? && Course.count.zero? && Department.count.zero? && School.count.zero?
-  #     raise 'ERROR: Database must be empty!'
-  #   end
-  #   load_departments
-  #   load_schools
-  #   load_courses
-  #   load_descriptions
-  #   remove_empty
-  # end
-
-  def update_catalog
-    update_courses
-    update_section_seats
-  end
 
   def destroy_catalog
     Section.destroy_all
@@ -125,16 +110,15 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
   end
 
   def load_courses_and_sections
-    errCourses = Set.new
     uri = "https://sis.rpi.edu/reg/rocs/#{sem_string}.xml"
     @courses_xml = Nokogiri::XML(open(uri)).xpath('//COURSE')
 
     # Compose lists of courses and sections for comparison later
+    errCourses = Set.new
     dbCourses = Set.new Course.all.includes(:sections).map do |crs|
       {
-        name: crs.name,
-        department_id: crs.department_id,
-        # sections: crs.sections.pluck(:name, :crn)
+        number: crs.number,
+        department_id: crs.department_id
       }
     end
     xmlCourses = Set.new
@@ -162,27 +146,26 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
       tmpCourse.number       = course_xml[:num]
       tmpCourse.min_credits  = course_xml[:credmin]
       tmpCourse.max_credits  = course_xml[:credmax]
-      xmlCourses << { name: tmpCourse.name, department_id: dept.id }
+      xmlCourses << { number: tmpCourse.number, department_id: dept.id }
 
-      fndCourse = Course.includes(:sections).where(name: tmpCourse.name, department_id: tmpCourse.department_id).first
+      fndCourse = Course.includes(:sections).where(number: tmpCourse.number, department_id: tmpCourse.department_id).first
       sections_xml = course_xml.xpath('SECTION')
-      if fndCourse
+      if !fndCourse.nil?
         if fndCourse.diff?(tmpCourse)
-          if fndCourse.update!(tmpCourse.attributes.except('id', 'created_at', 'updated_at'))
-            sections_xml.each do |section_xml|
-              load_section(fndCourse, section_xml, xmlSections,errSections)
-            end
-          else
-            errCourses << { name: tmpCourse.name, department_id: dept.id }
+          unless fndCourse.update!(tmpCourse.attributes.except('id', 'name', 'created_at', 'updated_at'))
+            errCourses << { number: tmpCourse.number, department_id: dept.id }
           end
         end
+        sections_xml.each do |section_xml|
+          load_section(fndCourse, section_xml, xmlSections, errSections)
+        end
       else
-        if tmpCourse.save
+        if !tmpCourse.save
+          errCourses << { number: tmpCourse.number, department_id: dept.id }
+        else
           sections_xml.each do |section_xml|
             load_section(tmpCourse, section_xml, xmlSections, errSections)
           end
-        else
-          errCourses << { name: tmpCourse.name, department_id: dept.id }
         end
       end
     end
@@ -208,21 +191,22 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     # Compare lists, destroy old records if found
     puts '==============='
     puts 'Sections'
+    # ap dbSections
     toRejectSections = (dbSections - xmlSections) - errSections
     puts "\tCreated+ " << ((xmlSections - dbSections)- errSections).length.to_s
     puts "\tDeleted- " << toRejectSections.length.to_s
     puts "\tErrors!  " << errSections.length.to_s
     puts "\t\e[36m" << 'Total= ' << "\e[0m" << Section.count.to_s
-    ap toRejectSections
+    # ap toRejectSections
     if toRejectSections
-      toRejectSections.each do |crs|
-        Section.where({ name: crs[:name], department_id: crs[:department_id] }).first.destroy!
+      toRejectSections.each do |sec|
+        Section.where( name: sec[:name], crn: sec[:crn], course_id: sec[:course_id] ).first.destroy!
       end
     end
   end
 
-  def load_section(tmpCourse, section_xml, xmlSections, errSections)
-    tmpSection             = Section.new({course_id: tmpCourse.id})
+  def load_section(course, section_xml, xmlSections, errSections)
+    tmpSection             = Section.new({course_id: course.id})
     tmpSection.name        = section_xml[:num]
     tmpSection.crn         = section_xml[:crn]
     tmpSection.seats       = section_xml[:seats]
@@ -236,33 +220,81 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
       days_xml.each do |day_xml|
         tmpSection.num_periods += 1
         tmpSection.periods_day   .push(day_xml.text.to_i + 1)
-        tmpSection.periods_start .push(period_xml[:start])
-        tmpSection.periods_end   .push(period_xml[:end])
+        tmpSection.periods_start .push(period_xml[:start].to_i)
+        tmpSection.periods_end   .push(period_xml[:end].to_i)
         tmpSection.periods_type  .push(period_xml[:type])
       end
     end
     tmpSection.instructors.delete('Staff')
     tmpSection.instructors.uniq!
-    xmlSections << { name: tmpSection.name, crn: tmpSection.crn, course_id: tmpCourse.id }
+    xmlSections << { name: tmpSection.name, crn: tmpSection.crn, course_id: course.id }
     # Update or create
     fndSection = Section.where(name: tmpSection.name, crn: tmpSection.crn, course_id: tmpSection.course_id).first
     # We want to skip this if we don't have a full match, it'll be created later
-    return if Section.where(name: tmpSection.name, course_id: tmpSection.course_id).first and fndSection.nil?
-    # puts '============================'
-    # ap Section.where(name: tmpSection.name, course_id: tmpSection.course_id).first
-    # puts '++++++++++++++'
-    # ap tmpSection
-    # puts '============================'
+    if fndSection.nil? && !Section.where(name: tmpSection.name, course_id: tmpSection.course_id).first.nil?
+      fndSection = Section.where(name: tmpSection.name, course_id: tmpSection.course_id).first
+      errSections << { name: tmpSection.name, crn: tmpSection.crn, course_id: course.id }
+    end
     if fndSection
-      unless (fndSection.update(tmpSection.attributes.except('id', 'created_at', 'updated_at')) if fndSection.diff(tmpSection))
-        errSections << { name: tmpSection.name, crn: tmpSection.crn, course_id: tmpCourse.id }
+      if fndSection.diff?(tmpSection)
+        unless fndSection.update(tmpSection.attributes.except('id', 'created_at', 'updated_at'))
+          errSections << { name: tmpSection.name, crn: tmpSection.crn, course_id: course.id }
+        end
       end
     else
       unless tmpSection.save
-        errSections << { name: tmpSection.name, crn: tmpSection.crn, course_id: tmpCourse.id }
+        errSections << { name: tmpSection.name, crn: tmpSection.crn, course_id: course.id }
       end
     end
   end
+
+  def load_descriptions
+  base = 'http://catalog.rpi.edu/'
+  page_no = 1
+  xmlDescriptions=[]
+
+  puts "\e[95m" <<"Descriptions" << "\e[0m"
+  progressbar = ProgressBar.create(total: Course.count)
+  while page_no <= 20
+    path = 'content.php?catoid=14&catoid=14&navoid=336&filter%5Bitem_type%5D=3&filter%5Bonly_active%5D=1&filter%5B3%5D=1&filter%5Bcpage%5D=' + page_no.to_s + '#acalog_template_course_filter'
+    page = base + path
+    page = Nokogiri::HTML(open(page))
+    page_no += 1
+    rows = page.css('td.block_content table tr')
+    rows[1..-2].each do |row|
+      courses = row.css('td a').to_a.compact
+      courses.each do |course|
+        href = course['href']
+        course_title = course.text.sub(/-.*/, '').strip.split
+        course_name = course.text.split('-')[1..-1].join('-').gsub(/[^ -\~]/, '').strip
+        course_model = Course.where(number: course_title[1]).includes(:department).where(departments: { code: course_title[0] }).first
+        next unless course_model
+        progressbar.increment
+        desc_path = base + href# + '&print'
+        # FIXME THIS TAKES A LONG TIME vvvvvvvv
+        desc_page = Nokogiri::HTML(open(desc_path))
+        # FIXME THIS TAKES A LONG TIME ^^^^^^^^
+        desc_page.search('h1').remove
+        desc = desc_page.css('td.block_content')
+        course_description = desc.text
+        course_description.slice! 'HELP'
+        course_description.slice! 'Rensselaer Catalog 2015-2016'
+        course_description.slice! 'Print-Friendly Page [Add to Portfolio]'
+        course_description.slice! ' Back to Top | Print-Friendly Page [Add to Portfolio]'
+        course_description = course_description.strip
+        if course_description.present? && (course_model.description != course_description)
+          course_model.update!(description: course_description)
+          xmlDescriptions <<  "#{course_title} - #{course_description}"
+        end
+        if (course_name.present? && course_model.name != course_name)
+          course_model.update!(name: course_name)
+        end
+      end
+    end
+  end
+  progressbar.finish
+  puts "\tCreated+ " << xmlDescriptions.length.to_s
+end
 
 
   # CLEANUP ACTIONS
