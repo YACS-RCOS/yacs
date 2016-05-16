@@ -1,3 +1,8 @@
+/**
+ * @namespace
+ * @description
+ * YACS singleton. This object is the top-level namespace for all YACS functionality.
+ */
 Yacs = new function () {
   var self = this;
 
@@ -5,6 +10,12 @@ Yacs = new function () {
     Network
  * ======================================================================== */
 
+  /**
+   * Performs an AJAX request
+   * @param  {String} uri - URI of request
+   * @param  {Function} callback - callback
+   * @return {undefined}
+   */
   self.get = function (uri, callback) {
     req = new XMLHttpRequest();
     req.open('GET', uri);
@@ -16,6 +27,13 @@ Yacs = new function () {
     req.send();
   };
 
+  /**
+   * Performs an AJAX request to the YACS API.
+   * @param  {String} model - name of the route to request
+   * @param  {Object} params - query parameters as a hash
+   * @param  {Function} callback - callback
+   * @return {undefined}
+   */
   self.api = function (model, params, callback) {
     var query = "?";
     for (var param in params) {
@@ -36,19 +54,44 @@ Yacs = new function () {
  * ======================================================================== */
 
   self.models = { };
-
+  /**
+   * @constructor Model
+   * @description
+   * Represents a collection of objects obtained from the YACS API
+   * @param {String} name - pluralized name of collection
+   * @param {Object} [options] - extra properties of the collection
+   * @param {String} [options.has_many] - name of one-to-many association
+   * @memberOf Yacs
+   */
   var Model = function (name, options) {
     options = options || {};
     var self = this;
     var childParam = 'show_' + options.has_many;
 
+    /**
+     * Stores preloaded members of the collection for synchronous access
+     * @type {Object}
+     */
     self.store = { all: [], id: {} };
     self.preloaded = false;
 
+    /**
+     * Makes request to YACS API
+     * @param  {Object} params - query params as hash
+     * @param  {Function} callback - callback
+     * @return {undefined}
+     * @memberOf Yacs.Model
+     */
     self.query = function (params, callback) {
       Yacs.api(name, params, callback);
     };
 
+    /**
+     * Preloads the full collection into temporary storage to allow synchronous access
+     * @param  {Function} callback - callback
+     * @return {undefined}
+     * @memberOf Yacs.Model
+     */
     self.preload = function (callback) {
       var params = {};
       if (options.has_many)
@@ -77,6 +120,12 @@ Yacs = new function () {
     }
   };
 
+  /**
+   * Helper method to create and add collections to externally accessible models namespace
+   * @param {String} name - pluralized name of collection
+   * @param {Object} [options] - extra properties of the collection
+   * @memberOf Yacs
+   */
   var addModel = function (name, options) {
     return self.models[name] = new Model(name, options);
   }
@@ -91,6 +140,12 @@ Yacs = new function () {
     DOM
  * ======================================================================== */
 
+  /**
+   * @namespace views
+   * @description
+   * View functions are stored within this namespace
+   * @memberOf Yacs
+   */
   self.views = { };
 
   NodeList.prototype.each = Array.prototype.forEach;
@@ -105,19 +160,43 @@ Yacs = new function () {
   }
 
   var loaded = false;
+
+  /**
+   * Equivalent to JQuery's $(document).ready()
+   * @param  {Function} func - Event handler to be called
+   * @return {undefined}
+   * @memberOf Yacs
+   */
   self.onload = function (func) {
     document.addEventListener("DOMContentLoaded", func, false);
   }
   self.onload(function () { loaded = true; })
 
+  /**
+   * Sets the contents of the content pane
+   * @param {String} html - HTML to fill the content pane
+   * @return {undefined}
+   * @memberOf Yacs
+   */
   self.setContents = function (html) {
     document.getElementById('content').innerHTML = html;
   }
-
+  /**
+   * Clears the contents of the content pane
+   * @return {undefined}
+   * @memberOf Yacs
+   */
   self.clearContents = function () {
     Yacs.setContents('');
   }
 
+  /**
+   * @param  {String} eventType - name of event
+   * @param  {HTMLElement} elem - DOM element
+   * @param  {Function} callback - callback
+   * @return {undefined}
+   * @memberOf Yacs
+   */
   self.on = function (eventType, elem, callback) {
     elem.addEventListener(eventType, function (event) {
       callback(elem, event);
@@ -125,6 +204,11 @@ Yacs = new function () {
   };
 }();
 
+/**
+ * View for header bar. Controls site navigation and search
+ * @return {undefined}
+ * @memberOf Yacs.views
+ */
 Yacs.views.header = function () {
   var homeButton = document.getElementById('page-title');
   var searchbar = document.getElementById('searchbar');
