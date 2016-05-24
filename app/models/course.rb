@@ -1,4 +1,22 @@
+# == Schema Information
+#
+# Table name: courses
+#
+#  id            :integer          not null, primary key
+#  department_id :integer          not null
+#  name          :string           not null
+#  number        :integer          not null
+#  min_credits   :integer          not null
+#  max_credits   :integer          not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  description   :text             default("")
+#
+
 class Course < ActiveRecord::Base
+  include ActiveRecord::Diff
+  diff exclude: [:created_at, :name, :updated_at]
+  
   belongs_to  :department
   has_many    :sections, dependent: :destroy
   validates   :number, uniqueness: { scope: :department_id }
