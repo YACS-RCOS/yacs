@@ -1,0 +1,79 @@
+schedule-view {
+  display: block;
+  font-size: small;
+  position: relative;
+  height: 100%;
+  margin-left: 3em;
+}
+
+schedule-legend {
+  position: absolute;
+  height: 100%;
+  left: -3em;
+  width: 3em;
+  color: #777777;
+}
+
+legend-hour {
+  position: absolute;
+  height: 0.5em;
+  font-size: 0.5em;
+  right: 0.75em;
+}
+
+schedule-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+grid-day {
+  height: 100%;
+  float: left;
+}
+
+grid-hour {
+  display: block;
+  box-sizing: border-box;
+  opacity: 0.25;
+  border-bottom: 1px solid #999599;
+  border-right: 1px solid #999599;
+}
+
+grid-day:last-child grid-hour {
+  border-right: none;
+}
+
+grid-hour:last-child {
+  border-bottom: none;
+}
+
+/*
+grid-hour:nth-child(2n) {
+  background-color: #e2e2e2;
+}
+*/
+
+schedule-event {
+  position: absolute;
+  margin-top: 1px;
+  border-left: 2px solid;
+  border-opacity: 1;
+}
+
+event-background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  z-index: -1;
+}
+
+event-text {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 4px;
+  font-weight: bold;
+  font-size: small;
+}
