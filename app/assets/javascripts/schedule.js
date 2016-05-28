@@ -2,11 +2,11 @@ var Schedule = function (scheduleContainer, options) {
   var self = this;
   
   var NUM_COLORS        = 7;
-  var TEXT_COLORS       = ['#d1265d', '#d9652b', '#bf8a2e', '#008a2e', '#1577aa', '#853d80', '#9d5733'];
-  var BACKGROUND_COLORS = ['#ffd4df', '#ffe9cf', '#fff4d0', '#dcf7da', '#ceeffc', '#f7e2f7', '#ede6df'];
-  var BORDER_COLORS     = ['#ff2066', '#ff9332', '#ffcb45', '#48da58', '#00aff2', '#d373da', '#a48363'];
-  var SELECTED_COLORS   = ['#ff3575', '#ff9c46', '#ffcf56', '#59dc68', '#19b5f2', '#d57fdd', '#ac8f71'];
-  /*                         PINK       ORANGE     YELLOW     GREEN      BLUE       PURPLE     BROWN  */
+  var TEXT_COLORS       = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
+  var BACKGROUND_COLORS = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
+  var BORDER_COLORS     = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
+  var SELECTED_COLORS   = ['#ff3575', '#19b5f2', '#ffcf56', '#59dc68', '#d57fdd', '#ac8f71', '#ff9c46'];
+  /*                         PINK       BLUE       YELLOW ,   GREEN      PURPLE     BROWN      ORANGE */
   
   options = options || {};
   options.timeBegin = options.timeBegin || 8 * 60;
@@ -41,7 +41,7 @@ var Schedule = function (scheduleContainer, options) {
     eventText.style.color                 = TEXT_COLORS[colorIndex];
     eventElement.style.top                = timeSize(event.start - options.timeBegin);
     eventElement.style.left               = daySize(event.day - options.dayBegin);
-    eventElement.style.width              = 'calc(' + daySize(1) + ' - 4px)';
+    eventElement.style.width              = 'calc(' + daySize(1) + ' - 6px)';
     eventElement.style.height             = 'calc(' + timeSize(event.end - event.start) + ' - 2px)';
     eventElement.style.borderColor        = BORDER_COLORS[colorIndex];
     eventBackground.style.backgroundColor = BACKGROUND_COLORS[colorIndex];
@@ -50,6 +50,12 @@ var Schedule = function (scheduleContainer, options) {
     eventElement.appendChild(eventText);
     scheduleElement.appendChild(eventElement);
   };
+
+  self.clearEvents = function () {
+    var events = scheduleElement.querySelectorAll('schedule-event');
+    for (var e = 0; e < events.length; ++e)
+      events[e].remove();
+  }
   
   var drawLegend = function () {
     for (var r = 1; r < options.timeSpan / options.gridSize; ++r) {
@@ -85,7 +91,3 @@ var Schedule = function (scheduleContainer, options) {
   drawLegend();
   drawGrid();
 };
-
-var sched = new Schedule(document.querySelector('#schedule-container'));
-for (var p in periods)
-  sched.addEvent(periods[p]);
