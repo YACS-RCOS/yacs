@@ -57,7 +57,7 @@ grid-hour:nth-child(2n) {
 schedule-event {
   position: absolute;
   margin-top: 1px;
-  border-left: 2px solid;
+  border-left: 4px solid;
   border-opacity: 1;
 }
 
