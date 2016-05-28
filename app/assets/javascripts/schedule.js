@@ -1,4 +1,4 @@
-var Schedule = function (scheduleContainer, options) {
+window.Schedule = function (scheduleContainer, options) {
   var self = this;
   
   var NUM_COLORS        = 7;
