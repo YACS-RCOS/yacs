@@ -64,6 +64,9 @@ Yacs.views.courses = function (data) {
     });
   });
 
+  /* This does not actually add or remove sections from the selected list.
+     TODO: implement this
+  */
   document.getElementsByTagName('course').each(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var selected = c.classList.contains('selected');
