@@ -13,6 +13,6 @@
 //= require_tree ../../../vendor/assets/javascripts
 //= require yacs
 //= require user
-
+//= require schedule
 //= require_tree ./views
 //= require_tree ./templates
