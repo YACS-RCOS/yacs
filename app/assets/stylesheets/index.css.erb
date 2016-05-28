@@ -46,6 +46,7 @@ nav#headerbar {
     position:fixed;
     background-color:#933;
     color:#efefef;
+    z-index: 1;
     /* border-bottom: 2px #822 solid; */
 }
 table#navtable {
@@ -279,10 +280,9 @@ period-day {
 }
 
 #scheduleContainer {
-    position: relative;
     height: 600px;
-    width: 100%;
-    margin: auto;
+    margin-right: 15px;
+    margin-top: 10px;
 }
 
 div#scheduleContent {
@@ -333,7 +333,7 @@ div#deselectContent course-credits, div#deselectContent course-description {
 }
 
 /* Styles for courses on the schedule */
-/* "div#scheduleTable ul li" needed for CSS precedence rules */
+ "div#scheduleTable ul li" needed for CSS precedence rules 
 div#scheduleTable ul li.course {
     border-bottom:none;
     padding: 0px 4px 0px 4px;
