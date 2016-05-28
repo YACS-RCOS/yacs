@@ -91,20 +91,3 @@ var Schedule = function (scheduleContainer, options) {
   drawLegend();
   drawGrid();
 };
-
-/**
- * Schedule view. Displays periods of selected courses in a week grid.
- * @param {Object} data - Object containing schedule data as returned from the API
- * @return {undefined}
- * @memberOf Yacs.views
- */
-Yacs.views.schedule = function(data) {
-  console.log(data);
-  Yacs.setContents(data);
-};
-
-/*
-var sched = new Schedule(document.querySelector('#schedule-container'));
-for (var p in periods)
-  sched.addEvent(periods[p]);
-  */
