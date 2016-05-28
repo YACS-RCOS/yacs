@@ -1,6 +1,6 @@
 /**
  * @namespace user
- * @description Persistant user data interface
+ * @description Persistent storage for data relevant to the user
  * @memberOf Yacs
  */
 window.Yacs.user = new function () {
