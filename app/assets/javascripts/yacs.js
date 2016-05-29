@@ -211,7 +211,7 @@ Yacs = new function () {
  */
 Yacs.views.header = function () {
   var homeButton = document.getElementById('page-title');
-  var searchbar = document.getElementById('searchbar');
+  window.searchbar = document.getElementById('searchbar');
   var scheduleButton = document.getElementById("schedule-btn");
   Yacs.on('click', homeButton, function () { Yacs.views.departments(); });
   Yacs.on('click', scheduleButton, function () {
@@ -244,6 +244,9 @@ Yacs.views.header = function () {
       }
     }
   });
+  // Yacs.on('mousedown', document.body, function () { searchbar.focus() });
+  document.addEventListener('mousedown', function () { searchbar.focus() });
+  searchbar.focus();
 };
 
 /* ======================================================================== *
