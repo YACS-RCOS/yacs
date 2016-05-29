@@ -44,11 +44,15 @@ nav#headerbar {
     width:100%;
     height:60px;
     position:fixed;
-    background-color:#933;
-    color:#efefef;
+    /*background-color:#933;*/
+    color:#/*efefef*/;
     z-index: 1;
     /* border-bottom: 2px #822 solid; */
+    color: white;
+    background: linear-gradient(to bottom, rgba(25, 181, 242, 1) 0%, rgba(25, 181, 242, 0.75) 100%);
 }
+
+
 table#navtable {
     width:100%;
     height:100%;
@@ -72,15 +76,31 @@ table#navtable td.sidelink {
 #search {
     margin:auto;
 }
+
+#searchbar::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+#searchbar::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+#searchbar:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+
 #searchbar {
     /* font needs to be specified again for some reason, I think it's
        something to do with the input tag? */
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight:100;
     max-width:32em;
     width:100%;
     padding:3px 6px;
+    border: none;
+    border-bottom: 2px solid white;
+    color: white;
+    background-color: transparent;
+    outline: none;
 }
 #schedule-btn {
     font-size:22px;
@@ -139,8 +159,10 @@ department {
     width:500px;
 }
 department:hover {
-    color: #fff;
-    background-color: #933;
+/*    color: #fff;
+    background-color: #933;*/
+    color: white;
+    background-color: #19b5f2;
 }
 department department-code {
     font-family:"Andale Mono","Courier New",monospace;
