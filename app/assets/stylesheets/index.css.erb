@@ -42,14 +42,15 @@ a {
 /* Styles for the headerbar and its component table */
 nav#headerbar {
     width:100%;
-    height:60px;
+    height:50px;
     position:fixed;
     /*background-color:#933;*/
     color:#/*efefef*/;
     z-index: 1;
     /* border-bottom: 2px #822 solid; */
     color: white;
-    background: linear-gradient(to bottom, rgba(25, 181, 242, 1) 0%, rgba(25, 181, 242, 0.75) 100%);
+    /*background: linear-gradient(to bottom, rgba(25, 181, 242, 1) 0%, rgba(25, 181, 242, 0.75) 100%);*/
+    background-color: rgb(25, 181, 242);
 }
 
 
@@ -78,29 +79,35 @@ table#navtable td.sidelink {
 }
 
 #searchbar::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: white;
+  color: #fafafa;
 }
 #searchbar::-moz-placeholder { /* Firefox 19+ */
-  color: white;
+  color: #fafafa;
 }
 #searchbar:-ms-input-placeholder { /* IE 10+ */
-  color: white;
+  color: #fafafa;
 }
 
+
+#searchcontainer {
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-weight:400;
+}
 #searchbar {
     /* font needs to be specified again for some reason, I think it's
        something to do with the input tag? */
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 18px;
-    font-weight:100;
-    max-width:32em;
+    font-weight:300;
+    max-width:16em;
     width:100%;
-    padding:3px 6px;
+    /*padding:3px 0px;*/
     border: none;
     border-bottom: 2px solid white;
     color: white;
     background-color: transparent;
-    outline: none;
+    outline: white;
 }
 #schedule-btn {
     font-size:22px;
