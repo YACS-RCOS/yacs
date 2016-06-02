@@ -28,7 +28,9 @@ class Course < ActiveRecord::Base
       ORDER BY ts_rank(c_search.document, to_tsquery('#{search_params}')) DESC
       LIMIT 25;
     SQL
-    find_by_sql(query).uniq
+    courses = find_by_sql(query).uniq
+    ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
+    courses
   end
 
   def credits
