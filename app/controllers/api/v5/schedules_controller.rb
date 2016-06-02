@@ -2,6 +2,7 @@ class Api::V5::SchedulesController < Api::V5::ApiController
   def index
     if params[:section_ids].present?
       sections = Section.find any :section_ids
+      sections.includes! :course
     else
       sections = []
     end
