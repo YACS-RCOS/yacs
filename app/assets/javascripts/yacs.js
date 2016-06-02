@@ -1,3 +1,8 @@
+/**
+ * @namespace
+ * @description
+ * YACS singleton. This object is the top-level namespace for all YACS functionality.
+ */
 Yacs = new function () {
   var self = this;
 
@@ -5,6 +10,12 @@ Yacs = new function () {
     Network
  * ======================================================================== */
 
+  /**
+   * Performs an AJAX request
+   * @param  {String} uri - URI of request
+   * @param  {Function} callback - callback
+   * @return {undefined}
+   */
   self.get = function (uri, callback) {
     req = new XMLHttpRequest();
     req.open('GET', uri);
@@ -16,6 +27,13 @@ Yacs = new function () {
     req.send();
   };
 
+  /**
+   * Performs an AJAX request to the YACS API.
+   * @param  {String} model - name of the route to request
+   * @param  {Object} params - query parameters as a hash
+   * @param  {Function} callback - callback
+   * @return {undefined}
+   */
   self.api = function (model, params, callback) {
     var query = "?";
     for (var param in params) {
@@ -36,18 +54,44 @@ Yacs = new function () {
  * ======================================================================== */
 
   self.models = { };
-
-  var Model = function (name, options={}) {
+  /**
+   * @constructor Model
+   * @description
+   * Represents a collection of objects obtained from the YACS API
+   * @param {String} name - pluralized name of collection
+   * @param {Object} [options] - extra properties of the collection
+   * @param {String} [options.has_many] - name of one-to-many association
+   * @memberOf Yacs
+   */
+  var Model = function (name, options) {
+    options = options || {};
     var self = this;
     var childParam = 'show_' + options.has_many;
 
+    /**
+     * Stores preloaded members of the collection for synchronous access
+     * @type {Object}
+     */
     self.store = { all: [], id: {} };
     self.preloaded = false;
 
+    /**
+     * Makes request to YACS API
+     * @param  {Object} params - query params as hash
+     * @param  {Function} callback - callback
+     * @return {undefined}
+     * @memberOf Yacs.Model
+     */
     self.query = function (params, callback) {
       Yacs.api(name, params, callback);
     };
 
+    /**
+     * Preloads the full collection into temporary storage to allow synchronous access
+     * @param  {Function} callback - callback
+     * @return {undefined}
+     * @memberOf Yacs.Model
+     */
     self.preload = function (callback) {
       var params = {};
       if (options.has_many)
@@ -76,7 +120,13 @@ Yacs = new function () {
     }
   };
 
-  var addModel = function (name, options={}) {
+  /**
+   * Helper method to create and add collections to externally accessible models namespace
+   * @param {String} name - pluralized name of collection
+   * @param {Object} [options] - extra properties of the collection
+   * @memberOf Yacs
+   */
+  var addModel = function (name, options) {
     return self.models[name] = new Model(name, options);
   }
 
@@ -90,7 +140,16 @@ Yacs = new function () {
     DOM
  * ======================================================================== */
 
-  self.views = {};
+  /**
+   * @namespace views
+   * @description
+   * View functions are stored within this namespace
+   * @memberOf Yacs
+   */
+  self.views = { };
+
+  NodeList.prototype.each = Array.prototype.forEach;
+  HTMLCollection.prototype.each = Array.prototype.forEach;
 
  // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
   var matches = function (elm, selector) {
@@ -101,26 +160,93 @@ Yacs = new function () {
   }
 
   var loaded = false;
+
+  /**
+   * Equivalent to JQuery's $(document).ready()
+   * @param  {Function} func - Event handler to be called
+   * @return {undefined}
+   * @memberOf Yacs
+   */
   self.onload = function (func) {
     document.addEventListener("DOMContentLoaded", func, false);
   }
   self.onload(function () { loaded = true; })
 
-  self.setContents = function(html) {
+  /**
+   * Sets the contents of the content pane
+   * @param {String} html - HTML to fill the content pane
+   * @return {undefined}
+   * @memberOf Yacs
+   */
+  self.setContents = function (html) {
     document.getElementById('content').innerHTML = html;
   }
-    
-  self.clearContents = function() {
+  /**
+   * Clears the contents of the content pane
+   * @return {undefined}
+   * @memberOf Yacs
+   */
+  self.clearContents = function () {
     Yacs.setContents('');
   }
-  
-  self.addEventListener = function(eventType, elem, callback) {
-    elem.addEventListener(eventType, function() {
-      callback(elem);
+
+  /**
+   * @param  {String} eventType - name of event
+   * @param  {HTMLElement} elem - DOM element
+   * @param  {Function} callback - callback
+   * @return {undefined}
+   * @memberOf Yacs
+   */
+  self.on = function (eventType, elem, callback) {
+    elem.addEventListener(eventType, function (event) {
+      callback(elem, event);
     });
   };
-
 }();
+
+/**
+ * View for header bar. Controls site navigation and search
+ * @return {undefined}
+ * @memberOf Yacs.views
+ */
+Yacs.views.header = function () {
+  var homeButton = document.getElementById('page-title');
+  var searchbar = document.getElementById('searchbar');
+  var scheduleButton = document.getElementById("schedule-btn");
+  Yacs.on('click', homeButton, function () { Yacs.views.departments(); });
+  Yacs.on('click', scheduleButton, function () {
+    Yacs.models.schedules.query({ section_ids: Yacs.user.getSelectionsRaw(),
+                                  show_periods: true },
+      function(data, success) {
+        if(success)
+          Yacs.views.schedule(data);
+        }
+    );
+  });
+  Yacs.on('keydown', document, function (elem, event) {
+    var key = event.keyCode;
+    if (!(event.ctrlKey || event.metaKey)) {
+      if (key >= 32 && key <= 127) {
+        if (key == 127 && searchbar.value.length <= 1)
+          Yacs.views.departments();
+        searchbar.focus();
+      } else if (key == 13) {
+        if (searchbar.value) {
+          Yacs.models.courses.query({ search: searchbar.value }, function (data, success) {
+            if (success)
+              Yacs.views.courses(data);
+          });
+        } else {
+          Yacs.views.departments();
+        }
+      } else if ((key == 8 || key == 46) && searchbar.value.length <= 1) {
+        Yacs.views.departments();
+      }
+    }
+  });
+  Yacs.on('click', document.body, function () { searchbar.focus() });
+  searchbar.focus();
+};
 
 /* ======================================================================== *
     Initializers
@@ -130,4 +256,5 @@ Yacs.onload(function () {
   Yacs.models.schools.preload(function (data) {
     Yacs.views.departments(data);
   });
+  Yacs.views.header();
 });
