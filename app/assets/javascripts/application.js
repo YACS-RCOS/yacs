@@ -12,8 +12,7 @@
 //
 //= require_tree ../../../vendor/assets/javascripts
 //= require yacs
-//= require courses
-//= require departments
 //= require user
-
+//= require schedule
+//= require_tree ./views
 //= require_tree ./templates

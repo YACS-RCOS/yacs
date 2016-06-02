@@ -1,18 +1,34 @@
-/* user.js - file for handling session-specific variables */
-
+/**
+ * @namespace user
+ * @description Persistent storage for data relevant to the user
+ * @memberOf Yacs
+ */
 window.Yacs.user = new function () {
   var self = this;
 
 /* ======================================================================== *
-    Low-level cookie-specific functions. In general, these should not be
-    used by external parts of the program.
+    Cookies
  * ======================================================================== */
 
-  // http://www.w3schools.com/js/js_cookies.asp
+  /**
+   * Sets the value of a cookie by name
+   * http://www.w3schools.com/js/js_cookies.asp
+   * @param {String} name - name of cookie
+   * @param {String} value - value of cookie
+   * @return {undefined}
+   * @memberOf Yacs.user
+   */
   var setCookie = function (name, value) {
     document.cookie = name + "=" + value + "; path=/";
   }
 
+  /**
+   * Gets the value of a cookie by name
+   * http://www.w3schools.com/js/js_cookies.asp
+   * @param  {String} name - name of cookie
+   * @return {String} value of cookie
+   * @memberOf Yacs.user
+   */
   var getCookie = function (name) {
     name += "=";
     var ca = document.cookie.split(';');
@@ -25,20 +41,35 @@ window.Yacs.user = new function () {
   }
 
 /* ======================================================================== *
-    Higher-level functions
+    Selections
  * ======================================================================== */
 
+  /**
+   * @description
+   * Gets the value of the selection cookie
+   * @return {String} section ids as comma separated values
+   * @memberOf Yacs.user
+   */
   self.getSelectionsRaw = function () {
     return getCookie('selections');
   };
 
-  // Get the selections from the cookie as an array of strings
+  /**
+   * Gets the selections from the cookie as an array of strings
+   * @return {String[]} array of section ids
+   * @memberOf Yacs.user
+   */
   self.getSelections = function () {
     var selections = getCookie('selections');
     return selections ? selections.split(',') : [];
   };
 
-  // Add a selection to those already selected. Return the success value.
+  /**
+   * Add a selection to those already selected. Return the success value.
+   * @param {String} sid - the section id
+   * @return {Boolean} true if the selection was added, false if it was already present
+   * @memberOf Yacs.user
+   */
   self.addSelection = function (sid) {
     arr = self.getSelections();
     if (arr.indexOf(sid) != -1) return false;
@@ -47,7 +78,12 @@ window.Yacs.user = new function () {
     return true;
   };
 
-  // Remove a selection from the cookie. Return the success value.
+  /**
+   * Remove a selection from the cookie. Return the success value.
+   * @param  {String} sid - the section id
+   * @return {Boolean} true if the selection was removed, false if it was not present
+   * @memberOf Yacs.user
+   */
   self.removeSelection = function (sid) {
     arr = self.getSelections();
     i = arr.indexOf(sid);
@@ -57,12 +93,21 @@ window.Yacs.user = new function () {
     return true;
   };
 
-  // Determine whether the user has already selected a given section ID
+  /**
+   * Determine whether the user has already selected a given section ID
+   * @param  {String} sid - the section id
+   * @return {Boolean} true if the section is selected, false if it is not
+   * @memberOf Yacs.user
+   */
   self.hasSelection = function (sid) {
     return self.getSelections().indexOf(sid) != -1;
   };
 
-  // Remove all selections from cookie
+  /**
+   * Remove all selections from cookie
+   * @return {undefined}
+   * @memberOf Yacs.user
+   */
   self.clearSelections = function () {
     setCookie('selections', '');
   };

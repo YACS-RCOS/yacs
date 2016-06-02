@@ -23,21 +23,33 @@ Handlebars.registerHelper('course_seats', function (c) {
   return new Handlebars.SafeString(remaining);
 });
 
-/* Course setup code */
+/**
+ * Courses view. Displays courses and their sections
+ * @param {Object} data - Object containing Courses model collection
+ * @param {Model[]} data.courses - Courses model collection
+ * @return {undefined}
+ * @memberOf Yacs.views
+ */
 Yacs.views.courses = function (data) {
   var html = HandlebarsTemplates.courses(data);
-  document.getElementById('content').innerHTML = html;
+  Yacs.setContents(html);
+
+  var updateCourseSelected = function (course) {
+    if (course.querySelector('section:not(.selected)')) {
+      course.classList.remove('selected');
+    } else {
+      course.classList.add('selected');
+    }
+  }
 
   // Add event listeners to sections
-  var nodes = document.getElementsByTagName('section');
-  for(var i=0; i<nodes.length; ++i) {
-    Yacs.addEventListener('click', nodes[i], function(sect) {
+  document.getElementsByTagName('section').each(function (s) {
+    Yacs.on('click', s, function(sect) {
       /* If there happens to be a mismatch between the data and the display,
          we care about the data - e.g. if the id is in the array, we will
          always deselect it regardless of whether it was being rendered as
          selected or not.
       */
-      
       var sid = sect.dataset.id;
       if(Yacs.user.removeSelection(sid)) {
         // index is real, section is selected, remove selected class
@@ -46,8 +58,29 @@ Yacs.views.courses = function (data) {
       else {
         // section is not selected, select it and add it to the array
         Yacs.user.addSelection(sid);
-        sect.className += ' selected';
+        sect.classList.add('selected');
       }
+      updateCourseSelected(sect.closest('course'));
     });
-  }
+  });
+
+  /* This does not actually add or remove sections from the selected list.
+     TODO: implement this
+  */
+  document.getElementsByTagName('course').each(function (c) {
+    Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
+      var selected = c.classList.contains('selected');
+      c.getElementsByTagName('section').each(function (s) {
+        if (selected) {
+          s.classList.remove('selected');
+          Yacs.user.removeSelection(s.dataset.id);
+        } else {
+          s.classList.add('selected');
+          Yacs.user.addSelection(s.dataset.id);
+        }
+      })
+      if (selected) c.classList.remove('selected');
+      else c.classList.add('selected')
+    });
+  })
 };

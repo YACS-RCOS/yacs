@@ -19,7 +19,7 @@ containers, as well as anything else that ought to show in a block.
 
 /* Styles for all pages: background color, font, spacing. */
 body {
-    background-color:#efefef;
+    /*background-color:#efefef;*/
     color: #000;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight:300;
@@ -37,17 +37,19 @@ a {
     color:#933;
     font-weight:400;
 }
-    
+
 
 /* Styles for the headerbar and its component table */
 nav#headerbar {
     width:100%;
-    height:60px;
+    height:50px;
     position:fixed;
-    background-color:#933;
-    color:#efefef;
-    /* border-bottom: 2px #822 solid; */
+    z-index: 1;
+    color: white;
+    background-color: dodgerblue;
 }
+
+
 table#navtable {
     width:100%;
     height:100%;
@@ -71,15 +73,38 @@ table#navtable td.sidelink {
 #search {
     margin:auto;
 }
+
+#searchbar::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fafafa;
+}
+#searchbar::-moz-placeholder { /* Firefox 19+ */
+  color: #fafafa;
+}
+#searchbar:-ms-input-placeholder { /* IE 10+ */
+  color: #fafafa;
+}
+
+
+#searchcontainer {
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-weight:400;
+}
 #searchbar {
     /* font needs to be specified again for some reason, I think it's
        something to do with the input tag? */
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 16px;
-    font-weight:100;
-    max-width:32em;
-    width:100%;
-    padding:3px 6px;
+    font-size: 18px;
+    font-weight: 300;
+    max-width: 16em;
+    width: 100%;
+    padding: 3px 4px;
+    border: none;
+    color: white;
+    background-color: royalblue;
+    outline: white;
+    box-shadow: 0 2px 2px rgba(255, 255, 255, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    border-radius: 1px;
 }
 #schedule-btn {
     font-size:22px;
@@ -99,7 +124,7 @@ img#loading {
 
 /* Single style for any error messages that appear */
 .error {
-    
+
 }
 
 /* Styles for the home page. */
@@ -138,8 +163,10 @@ department {
     width:500px;
 }
 department:hover {
-    color: #fff;
-    background-color: #933;
+/*    color: #fff;
+    background-color: #933;*/
+    color: white;
+    background-color: dodgerblue;
 }
 department department-code {
     font-family:"Andale Mono","Courier New",monospace;
@@ -176,15 +203,24 @@ course {
    different highlight colors. If CSS4 is out when you're looking at this code,
    there should be some way to do it with negation selectors.
    */
-course:hover {
+/*course:hover {
     background-color:#e7e7e7;
+}*/
+
+course:not(.selected) course-info:hover ~ sections section:not(.selected) {
+    background-color: #feae90;
+}
+course.selected course-info:hover ~ sections section {
+    color: #efefef;
+    background-color: #b87474;
 }
 course-name {
     font-size: 130%;
+    font-weight: 400;
 }
-course-number, course department-code, course-credits {
+/*course-number, course department-code, course-credits {
     font-size:110%;
-}
+}*/
 course department-code {
     margin-left:1em;
 }
@@ -202,16 +238,18 @@ section {
     overflow:auto;
     /* border-radius: 8px; */
 }
-section:hover {
-    background-color: #e0e0e0;
+sections section:not(.selected):hover {
+    background-color: #feae90;
 }
-section.selected {
+sections section.selected:hover {
     color: #efefef;
-    background-color: /*#ce5656;*/#933;
+    background-color: #b87474;
 }
-section.selected:hover {
-    background-color: #b33;
+sections section.selected {
+    color: #efefef;
+    background-color: #933;
 }
+
 section.closed {
     color: #888;
 }
@@ -237,40 +275,51 @@ period-day {
     font-weight:bold;
 }
 
-/* NOTE: Should have it so that hovering over a course makes all its subsections appear hovered over. This may not be possible without CSS3. */
-
 /* Styles for the schedule page */
-#schedulebar {
-    text-align: center;
+#scheduleBar {
     margin-left: auto;
     margin-right: auto;
     font-size: 130%;
+    font-weight: 500;
+    margin: 5px;
+    margin-right: 20px;
     /* note to maintainers: if the general user-select is standard by now,
        please remove the vendor ones and replace with "user-select:none;" */
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select:none;
 }
+#scheduleBar:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+#crns {
+    font-size: 90%;
+    float: right;
+}
+#switch {
+    float: left;
+}
 .scheduleswitch {
-    padding:0px 20px;
+    padding:5px;
     cursor:pointer;
 }
 .scheduleswitch.disabled {
     color: #999;
     cursor: default;
 }
-#crns {
-    display:block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top:8px;
-    text-align:center;
+
+#scheduleContainer {
+    height: 600px;
+    margin-right: 15px;
+    margin-top: 10px;
 }
 
 div#scheduleContent {
     margin-bottom:10px;
 }
-
 div#scheduleTable {
     display:table;
     margin: 10px auto auto auto;
@@ -315,9 +364,9 @@ div#deselectContent course-credits, div#deselectContent course-description {
     display:none;
 }
 
-/* Styles for courses on the schedule */
-/* "div#scheduleTable ul li" needed for CSS precedence rules */
-div#scheduleTable ul li.course { 
+/* Styles for courses on the schedule 
+ "div#scheduleTable ul li" needed for CSS precedence rules */
+div#scheduleTable ul li.course {
     border-bottom:none;
     padding: 0px 4px 0px 4px;
     overflow:hidden;
@@ -402,7 +451,7 @@ article#about table {
     border:1px black solid;
 }
 article#about table tr {
-    
+
 }
 article#about table tr td {
     width:200px;
