@@ -71,8 +71,13 @@ Yacs.views.courses = function (data) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var selected = c.classList.contains('selected');
       c.getElementsByTagName('section').each(function (s) {
-        if (selected) s.classList.remove('selected');
-        else s.classList.add('selected')
+        if (selected) {
+          s.classList.remove('selected');
+          Yacs.user.removeSelection(s.dataset.id);
+        } else {
+          s.classList.add('selected');
+          Yacs.user.addSelection(s.dataset.id);
+        }
       })
       if (selected) c.classList.remove('selected');
       else c.classList.add('selected')
