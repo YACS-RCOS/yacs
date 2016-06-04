@@ -6,7 +6,7 @@ window.Schedule = function (scheduleContainer, options) {
   var BACKGROUND_COLORS = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
   var BORDER_COLORS     = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
   var SELECTED_COLORS   = ['#ff3575', '#19b5f2', '#ffcf56', '#59dc68', '#d57fdd', '#ac8f71', '#ff9c46'];
-  //                         PINK       BLUE       YELLOW ,   GREEN      PURPLE     BROWN      ORANGE
+  /*                         PINK       BLUE       YELLOW     GREEN      PURPLE     BROWN      ORANGE */
   
   options = options || {};
   options.timeBegin = options.timeBegin || 8 * 60;
