@@ -244,6 +244,8 @@ Yacs.views.header = function () {
       }
     }
   });
+  Yacs.on('click', document.body, function () { searchbar.focus() });
+  searchbar.focus();
 };
 
 /* ======================================================================== *
