@@ -244,7 +244,8 @@ Yacs.views.header = function () {
       }
     }
   });
-  Yacs.on('click', document.body, function () { searchbar.focus() });
+  // Yacs.on('click', document.body, function () { searchbar.focus() });
+  // TODO lol previous line was a bit of an oversight, must emulate caret
   searchbar.focus();
 };
 
