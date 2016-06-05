@@ -78,7 +78,7 @@ Yacs = new function () {
     /**
      * Makes request to YACS API
      * @param  {Object} params - query params as hash
-     * @param  {Function} callback - callback
+     * @param  {Function} callback - callback with data and success parameters
      * @return {undefined}
      * @memberOf Yacs.Model
      */

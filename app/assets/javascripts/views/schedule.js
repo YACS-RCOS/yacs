@@ -5,7 +5,7 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedule = function (data) {
-  // this function will be deprecated when backend is updated to use minutes-to-midnight format
+  // this function will be deprecated when backend is updated to use minutes-since-midnight format
   var toMinutes = function (timeString) {
     var int = parseInt(timeString);
     return Math.floor(int / 100) * 60 + int % 100;
@@ -33,4 +33,4 @@ Yacs.views.schedule = function (data) {
   var schedule = new Schedule(scheduleContainer);
   var events = prepareData(data.schedules[0]);
   events.forEach (function (e) { schedule.addEvent(e); });
-}
+};
