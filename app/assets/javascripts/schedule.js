@@ -8,10 +8,10 @@ window.Schedule = function (scheduleContainer, options) {
   // var SELECTED_COLORS   = ['#ff3575', '#19b5f2', '#ffcf56', '#59dc68', '#d57fdd', '#ac8f71', '#ff9c46'];
   // /*                         PINK       BLUE       YELLOW     GREEN      PURPLE     BROWN      ORANGE */
   
-  var NUM_COLORS = 6;
-  var TEXT_COLORS = ['#720', '#722', '#661', '#227', '#166', '#616'];
+  var NUM_COLORS        = 6;
+  var TEXT_COLORS       = ['#720', '#722', '#661', '#227', '#166', '#616'];
   var BACKGROUND_COLORS = ['#fdc', '#edd', '#eed', '#dde', '#dee', '#ede'];
-  var BORDER_COLORS = ['#b62', '#b44', '#994', '#448', '#499', '#949'];
+  var BORDER_COLORS     = ['#b62', '#b44', '#994', '#448', '#499', '#949'];
 
   options = options || {};
   options.timeBegin = options.timeBegin || 8 * 60;
