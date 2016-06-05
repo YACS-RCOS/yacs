@@ -1,13 +1,18 @@
 window.Schedule = function (scheduleContainer, options) {
   var self = this;
   
-  var NUM_COLORS        = 7;
-  var TEXT_COLORS       = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
-  var BACKGROUND_COLORS = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
-  var BORDER_COLORS     = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
-  var SELECTED_COLORS   = ['#ff3575', '#19b5f2', '#ffcf56', '#59dc68', '#d57fdd', '#ac8f71', '#ff9c46'];
-  /*                         PINK       BLUE       YELLOW     GREEN      PURPLE     BROWN      ORANGE */
+  // var NUM_COLORS        = 7;
+  // var TEXT_COLORS       = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
+  // var BACKGROUND_COLORS = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
+  // var BORDER_COLORS     = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
+  // var SELECTED_COLORS   = ['#ff3575', '#19b5f2', '#ffcf56', '#59dc68', '#d57fdd', '#ac8f71', '#ff9c46'];
+  // /*                         PINK       BLUE       YELLOW     GREEN      PURPLE     BROWN      ORANGE */
   
+  var NUM_COLORS = 6;
+  var TEXT_COLORS = ['#720', '#722', '#661', '#227', '#166', '#616'];
+  var BACKGROUND_COLORS = ['#fdc', '#edd', '#eed', '#dde', '#dee', '#ede'];
+  var BORDER_COLORS = ['#b62', '#b44', '#994', '#448', '#499', '#949'];
+
   options = options || {};
   options.timeBegin = options.timeBegin || 8 * 60;
   options.timeSpan  = options.timeSpan  || 12 * 60;
