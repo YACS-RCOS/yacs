@@ -1,13 +1,13 @@
 window.Schedule = function (scheduleContainer, options) {
   var self = this;
-  
+
   // var NUM_COLORS        = 7;
   // var TEXT_COLORS       = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
   // var BACKGROUND_COLORS = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
   // var BORDER_COLORS     = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
   // var SELECTED_COLORS   = ['#ff3575', '#19b5f2', '#ffcf56', '#59dc68', '#d57fdd', '#ac8f71', '#ff9c46'];
   // /*                         PINK       BLUE       YELLOW     GREEN      PURPLE     BROWN      ORANGE */
-  
+
   var NUM_COLORS        = 6;
   var TEXT_COLORS       = ['#720', '#722', '#661', '#227', '#166', '#616'];
   var BACKGROUND_COLORS = ['#fdc', '#edd', '#eed', '#dde', '#dee', '#ede'];
@@ -19,7 +19,7 @@ window.Schedule = function (scheduleContainer, options) {
   options.dayBegin  = options.dayBegin  || 1;
   options.daySpan   = options.daySpan   || 5;
   options.gridSize  = options.gridSize  || 60;
-  
+
   var scheduleElement = document.createElement('schedule-view');
   var legendElement   = document.createElement('schedule-legend');
   var gridElement     = document.createElement('schedule-grid');
@@ -27,7 +27,7 @@ window.Schedule = function (scheduleContainer, options) {
   scheduleElement.appendChild(legendElement);
   scheduleElement.appendChild(gridElement);
   scheduleContainer.appendChild(scheduleElement);
-  
+
   var daySize = function (n) {
     return n * (100 / options.daySpan) + '%';
   };
@@ -35,14 +35,14 @@ window.Schedule = function (scheduleContainer, options) {
   var timeSize = function (n) {
     return n * (100 / options.timeSpan) + '%';
   };
-  
+
   self.addEvent = function (event) {
     var eventText       = document.createElement('event-text');
     var eventElement    = document.createElement('schedule-event');
     var eventBackground = document.createElement('event-background');
-    var colorIndex      = Math.floor(event.type % NUM_COLORS);
-    
-    eventText.textContent                 = event.name;
+    var colorIndex      = event.colornum % NUM_COLORS;
+
+    eventText.textContent                 = event.title;
     eventText.style.color                 = TEXT_COLORS[colorIndex];
     eventElement.style.top                = timeSize(event.start - options.timeBegin);
     eventElement.style.left               = daySize(event.day - options.dayBegin);
@@ -61,7 +61,7 @@ window.Schedule = function (scheduleContainer, options) {
     for (var e = 0; e < events.length; ++e)
       events[e].remove();
   }
-  
+
   var drawLegend = function () {
     for (var r = 1; r < options.timeSpan / options.gridSize; ++r) {
       var hourElement = document.createElement('legend-hour');
@@ -92,7 +92,7 @@ window.Schedule = function (scheduleContainer, options) {
       gridElement.appendChild(dayElement);
     }
   };
-  
+
   drawLegend();
   drawGrid();
 };
