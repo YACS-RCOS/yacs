@@ -5,7 +5,13 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedule = function (data) {
+  if(data.schedules.length == 0) {
+    // TODO: this will happen if there are no available schedules
+    return;
+  }
+  console.log(data);
   // this function will be deprecated when backend is updated to use minutes-since-midnight format
+  // see issue #102
   var toMinutes = function (timeString) {
     var int = parseInt(timeString);
     return Math.floor(int / 100) * 60 + int % 100;
@@ -14,14 +20,29 @@ Yacs.views.schedule = function (data) {
 // NONE OF THIS IS DONE!
   var prepareData = function (schedule) {
     var events = [];
-    schedule.sections.forEach(function (s) {
-      s.periods.forEach(function (p) {
+
+    // "map" of course numbers to color numbers (which are their indices)
+    var courseNums = [];
+
+    // perhaps these forEach loops should be converted to normal for loops
+    // to increase performance
+    schedule.sections.forEach(function (section) {
+
+      // if the course number exists in courseNums, use the index there;
+      // else push it on and use the index given to it
+      var color = courseNums.indexOf(section.course_number);
+      if(color === -1) {
+        courseNums.push(section.course_number);
+        color = courseNums.length-1;
+      }
+
+      section.periods.forEach(function (period) {
         events.push({
-          start: toMinutes(p.start),
-          end: toMinutes(p.end),
-          day: p.day,
-          type: s.course_number % 7, // TODO: do this correctly
-          name: s.department_code + ' ' + s.course_number + ' - ' + s.name
+          start: toMinutes(period.start),
+          end: toMinutes(period.end),
+          day: period.day,
+          colornum: color,
+          title: section.department_code + ' ' + section.course_number + ' - ' + section.name
         });
       });
     });
