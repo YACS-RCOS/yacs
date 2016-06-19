@@ -5,11 +5,11 @@ Handlebars.registerHelper('department_code', function (id) {
 Handlebars.registerHelper('course_credits', function (c) {
   var outString = '';
   // render "credit(s)" properly
-  if (c.min_credits < c.max_credits) {
+  if (c.min_credits != c.max_credits) {
     outString = c.min_credits + '-' + c.max_credits + ' credits';
   }
   else {
-    outString = c.max_credits + ' credit' + (c.max_credits === 1 ? 's' : '');
+    outString = c.max_credits + ' credit' + (c.max_credits == 1 ? '' : 's');
   }
   return new Handlebars.SafeString(outString);
 });
