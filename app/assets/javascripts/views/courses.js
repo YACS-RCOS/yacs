@@ -65,6 +65,7 @@ Yacs.views.courses = function (data) {
       var course = section.closest('course');
       course.classList[isCourseSelected(course) ? 'add' : 'remove']('selected');
     });
+    if (Yacs.user.hasSelection(s.dataset.id)) s.classList.add('selected');
   });
 
   /* This does not actually add or remove sections from the selected list.
@@ -73,7 +74,6 @@ Yacs.views.courses = function (data) {
   document.getElementsByTagName('course').forEach(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var isSelected = isCourseSelected(c);
-      console.log('course selected: ' + isSelected);
       c.getElementsByTagName('section').forEach(function (s) {
         if (isSelected) {
           s.classList.remove('selected');
@@ -85,5 +85,8 @@ Yacs.views.courses = function (data) {
       });
       c.classList[isSelected ? 'remove' : 'add']('selected');
     });
-  })
+    if (isCourseSelected(c)) c.classList.add('selected');
+  });
+
+
 };
