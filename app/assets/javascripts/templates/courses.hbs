@@ -11,9 +11,10 @@
       <sections>
         {{#sections}}
           <section data-id="{{id}}">
-            <section-name>Section {{name}}</section-name>
+            <section-name>{{name}}</section-name>
             <section-instructors>{{join instructors}}</section-instructors>
             <section-seats-available>{{course_seats this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
+            <section-crn>{{crn}}</section-crn>
           </section>
         {{/sections}}
       </sections>

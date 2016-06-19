@@ -7,9 +7,10 @@
 Yacs.views.schedule = function (data) {
   Yacs.setContents(HandlebarsTemplates.schedule(data));
   var scheduleElement = document.querySelector('#scheduleContainer');
-  var leftSwitch = document.querySelector('#leftSwitch');
-  var rightSwitch = document.querySelector('#rightSwitch');
-  var scheduleNum = document.querySelector('#scheduleNum')
+  var leftSwitchElement = document.querySelector('#leftSwitch');
+  var rightSwitchElement = document.querySelector('#rightSwitch');
+  var scheduleNumElement = document.querySelector('#scheduleNum');
+  var crnListElement = document.querySelector('#crnList');
   var schedule = new Schedule(scheduleContainer);
   var scheduleIndex = 0;
 
@@ -21,7 +22,7 @@ Yacs.views.schedule = function (data) {
     return Math.floor(int / 100) * 60 + int % 100;
   }
 
-  var getEvents = function (schedule) {
+  var transformSchedule = function (schedule) {
     var events = [];
     var crns = [];
 
@@ -42,13 +43,14 @@ Yacs.views.schedule = function (data) {
         });
       });
     });
-    return events;
+    return { events: events, crns: crns };
   };
 
   var showSchedule = function (index) {
-    var events = getEvents(data.schedules[index]);
-    schedule.setEvents(events)
-    scheduleNum.textContent = index + 1;
+    var scheduleData = transformSchedule(data.schedules[index]);
+    schedule.setEvents(scheduleData.events)
+    scheduleNumElement.textContent = index + 1;
+    crnListElement.textContent = 'CRNs: ' + scheduleData.crns.join(', ');
   }
 
   if(data.schedules.length == 0) {
@@ -56,11 +58,11 @@ Yacs.views.schedule = function (data) {
     return;
   }
 
-  Yacs.on('click', leftSwitch, function () {
+  Yacs.on('click', leftSwitchElement, function () {
     scheduleIndex = (--scheduleIndex < 0 ? data.schedules.length - 1 : scheduleIndex);
     showSchedule(scheduleIndex);
   });
-  Yacs.on('click', rightSwitch, function () {
+  Yacs.on('click', rightSwitchElement, function () {
     scheduleIndex = (++scheduleIndex < data.schedules.length ? scheduleIndex : 0);
     showSchedule(scheduleIndex);
   });
