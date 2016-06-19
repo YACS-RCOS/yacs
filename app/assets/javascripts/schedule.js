@@ -70,9 +70,9 @@ window.Schedule = function (scheduleContainer, options) {
   };
 
   var drawLegend = function () {
-    for (var r = 1; r < options.timeSpan / options.gridSize; ++r) {
+    for (var r = 1; r < options.timeSpan / 60; ++r) {
       var hourElement = document.createElement('legend-hour');
-      var hour = options.timeBegin / options.gridSize + r;
+      var hour = options.timeBegin / 60 + r;
 
       if      (hour == 0)  hour = '12 AM';
       else if (hour == 12) hour = 'Noon';
@@ -80,7 +80,7 @@ window.Schedule = function (scheduleContainer, options) {
       else                 hour = hour - 12 + ' PM';
 
       hourElement.textContent = hour;
-      hourElement.style.top = 'calc(' + timeSize(options.gridSize * r) + ' - 0.75em)';
+      hourElement.style.top = 'calc(' + timeSize(60 * r) + ' - 0.75em)';
       legendElement.appendChild(hourElement);
     }
   };
