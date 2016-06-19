@@ -40,7 +40,7 @@ window.Schedule = function (scheduleContainer, options) {
     var eventText       = document.createElement('event-text');
     var eventElement    = document.createElement('schedule-event');
     var eventBackground = document.createElement('event-background');
-    var colorIndex      = event.colornum % NUM_COLORS;
+    var colorIndex      = event.colorNum % NUM_COLORS;
 
     eventText.textContent                 = event.title;
     eventText.style.color                 = TEXT_COLORS[colorIndex];
@@ -60,7 +60,14 @@ window.Schedule = function (scheduleContainer, options) {
     var events = scheduleElement.querySelectorAll('schedule-event');
     for (var e = 0; e < events.length; ++e)
       events[e].remove();
-  }
+  };
+
+  self.setEvents = function (events) {
+    self.clearEvents();
+    events.forEach(function (event) {
+      self.addEvent(event);
+    });
+  };
 
   var drawLegend = function () {
     for (var r = 1; r < options.timeSpan / options.gridSize; ++r) {

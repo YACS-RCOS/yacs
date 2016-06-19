@@ -5,11 +5,15 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedule = function (data) {
-  if(data.schedules.length == 0) {
-    // TODO: this will happen if there are no available schedules
-    return;
-  }
-  console.log(data);
+  Yacs.setContents(HandlebarsTemplates.schedule(data));
+  var scheduleElement = document.querySelector('#scheduleContainer');
+  var leftSwitch = document.querySelector('#leftSwitch');
+  var rightSwitch = document.querySelector('#rightSwitch');
+  var scheduleNum = document.querySelector('#scheduleNum')
+  var schedule = new Schedule(scheduleContainer);
+  var scheduleIndex = 0;
+
+
   // this function will be deprecated when backend is updated to use minutes-since-midnight format
   // see issue #102
   var toMinutes = function (timeString) {
@@ -17,23 +21,15 @@ Yacs.views.schedule = function (data) {
     return Math.floor(int / 100) * 60 + int % 100;
   }
 
-// NONE OF THIS IS DONE!
-  var prepareData = function (schedule) {
+  var getEvents = function (schedule) {
     var events = [];
+    var crns = [];
 
-    // "map" of course numbers to color numbers (which are their indices)
-    var courseNums = [];
-
-    // perhaps these forEach loops should be converted to normal for loops
-    // to increase performance
     schedule.sections.forEach(function (section) {
-
-      // if the course number exists in courseNums, use the index there;
-      // else push it on and use the index given to it
-      var color = courseNums.indexOf(section.course_number);
-      if(color === -1) {
-        courseNums.push(section.course_number);
-        color = courseNums.length-1;
+      var color = crns.indexOf(section.crn);
+      if (color === -1) {
+        crns.push(section.crn);
+        color = crns.length - 1;
       }
 
       section.periods.forEach(function (period) {
@@ -41,7 +37,7 @@ Yacs.views.schedule = function (data) {
           start: toMinutes(period.start),
           end: toMinutes(period.end),
           day: period.day,
-          colornum: color,
+          colorNum: color,
           title: section.department_code + ' ' + section.course_number + ' - ' + section.name
         });
       });
@@ -49,9 +45,25 @@ Yacs.views.schedule = function (data) {
     return events;
   };
 
-  Yacs.setContents(HandlebarsTemplates.schedule());
-  var scheduleContainer = document.querySelector('#scheduleContainer');
-  var schedule = new Schedule(scheduleContainer);
-  var events = prepareData(data.schedules[0]);
-  events.forEach (function (e) { schedule.addEvent(e); });
+  var showSchedule = function (index) {
+    var events = getEvents(data.schedules[index]);
+    schedule.setEvents(events)
+    scheduleNum.textContent = index + 1;
+  }
+
+  if(data.schedules.length == 0) {
+    // TODO: this will happen if there are no available schedules
+    return;
+  }
+
+  Yacs.on('click', leftSwitch, function () {
+    scheduleIndex = (--scheduleIndex < 0 ? data.schedules.length - 1 : scheduleIndex);
+    showSchedule(scheduleIndex);
+  });
+  Yacs.on('click', rightSwitch, function () {
+    scheduleIndex = (++scheduleIndex < data.schedules.length ? scheduleIndex : 0);
+    showSchedule(scheduleIndex);
+  });
+
+  showSchedule(scheduleIndex);
 };
