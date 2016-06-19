@@ -104,6 +104,20 @@ window.Yacs.user = new function () {
   };
 
   /**
+   * Determine whether the user has already selected a given set section IDs
+   * @param  {String[]} sids - the section ids
+   * @return {Boolean} true if all of the sections are selected, false if any one is not
+   * @memberOf Yacs.user
+   */
+  self.hasAllSelections = function (sids) {
+    var selections = self.getSelections();
+    sids.forEach(function (sid) {
+      if (selections.indexOf(sid == -1)) return false;
+    });
+    return true;
+  };
+
+  /**
    * Remove all selections from cookie
    * @return {undefined}
    * @memberOf Yacs.user

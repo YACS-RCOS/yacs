@@ -148,8 +148,8 @@ Yacs = new function () {
    */
   self.views = { };
 
-  NodeList.prototype.each = Array.prototype.forEach;
-  HTMLCollection.prototype.each = Array.prototype.forEach;
+  NodeList.prototype.forEach = Array.prototype.forEach;
+  HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
  // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
   var matches = function (elm, selector) {
