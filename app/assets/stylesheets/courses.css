@@ -1,0 +1,79 @@
+course {
+    display:block;
+    margin: 0px 20px;
+    padding:15px;
+    /*border-radius: 15px;*/
+    border-bottom: 1px #bbb solid;
+    cursor:pointer;
+}
+/*course:hover {
+    background-color:#e7e7e7;
+}*/
+
+course:not(.selected) course-info:hover ~ sections section:not(.selected) {
+    background-color: #966;
+}
+course.selected course-info:hover ~ sections section {
+    color: #efefef;
+    background-color: #966;
+}
+course-name {
+    font-size: 130%;
+    font-weight: 400;
+}
+/*course-number, course department-code, course-credits {
+    font-size:110%;
+}*/
+course department-code {
+    margin-left:1em;
+}
+course-credits {
+    margin-left:0.7em;
+}
+course-description {
+    display:block;
+    font-size:87%;
+}
+section {
+    display:block;
+    margin:0px 0px 0px 5px;
+    padding:4px 4px 4px 8px;
+    overflow:auto;
+    /* border-radius: 8px; */
+}
+sections section:not(.selected):hover {
+    background-color: #966;
+}
+sections section.selected:hover {
+    color: #efefef;
+    background-color: #966;
+}
+sections section.selected {
+    color: #efefef;
+    background-color: #955;
+}
+
+section.closed {
+    color: #888;
+}
+
+section-seats {
+    font-size: 80%;
+}
+
+periods {
+    font-size:80%;
+    display:inline-block;
+    margin-left:0em;
+    float:right;
+    padding:0.15em 0;
+}
+periods.noperiods {
+    font-weight: bold;
+}
+period {
+    margin-left:1em;
+}
+period-day {
+    font-weight:bold;
+}

@@ -7,6 +7,5 @@ class Api::V5::SchedulesController < Api::V5::ApiController
       sections = []
     end
     @schedules = Scheduler.all_schedules sections
-    # binding.pry
   end
 end

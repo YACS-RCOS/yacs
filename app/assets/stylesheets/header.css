@@ -1,0 +1,73 @@
+a {
+    text-decoration:none;
+    color:#933;
+    font-weight:400;
+}
+
+nav#headerbar {
+    width:100%;
+    height:50px;
+    position:fixed;
+    z-index: 1;
+    color: white;
+    background-color: #955;
+}
+
+table#navtable {
+    width:100%;
+    height:100%;
+    border-collapse:collapse;
+}
+table#navtable td {
+    text-align:center;
+    vertical-align:middle;
+}
+table#navtable td.sidelink {
+    width:160px;
+    cursor:pointer;
+}
+#page-title {
+    font-size:35px;
+    font-weight:300;
+}
+#page-title span.sub {
+    font-size:16px;
+}
+#search {
+    margin:auto;
+}
+
+#searchbar::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fafafa;
+}
+#searchbar::-moz-placeholder { /* Firefox 19+ */
+  color: #fafafa;
+}
+#searchbar:-ms-input-placeholder { /* IE 10+ */
+  color: #fafafa;
+}
+
+#searchcontainer {
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-weight:400;
+}
+#searchbar {
+    /* font needs to be specified again for some reason, I think it's
+       something to do with the input tag? */
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    max-width: 16em;
+    width: 100%;
+    padding: 3px 4px;
+    border: none;
+    color: white;
+    background-color: #944;
+    outline: white;
+    box-shadow: 0 2px 2px rgba(255, 255, 255, 0.1), 0 2px 2px rgba(0, 0, 0, 0.15) inset;
+    border-radius: 1px;
+}
+#schedule-btn {
+    font-size:22px;
+}
