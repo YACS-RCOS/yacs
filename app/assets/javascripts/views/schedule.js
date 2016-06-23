@@ -9,7 +9,7 @@ Yacs.views.schedule = function (data) {
   var scheduleElement = document.querySelector('#scheduleContainer');
   var leftSwitchElement = document.querySelector('#leftSwitch');
   var rightSwitchElement = document.querySelector('#rightSwitch');
-  var clearSwitchElement = document.querySelector('#clearSwitch');
+  var clearSwitchElement = document.querySelector('#clearButton');
   var scheduleNumElement = document.querySelector('#scheduleNum');
   var crnListElement = document.querySelector('#crnList');
   var schedule = new Schedule(scheduleContainer);
@@ -68,8 +68,9 @@ Yacs.views.schedule = function (data) {
     showSchedule(scheduleIndex);
   });
   Yacs.on('click', clearSwitchElement, function () {
-    scheduleIndex = 0;
-    schedule.clearEvents();
+      schedule.clearEvents();
+      scheduleNumElement.textContent = 0;
+      crnListElement.textContent = "";
   });
 
   showSchedule(scheduleIndex);
