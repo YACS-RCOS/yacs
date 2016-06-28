@@ -1,0 +1,27 @@
+<!-- Template for a single schedule, containing the grid and overlaid events. -->
+<schedule-view>
+  <!-- Want to change schedule-legend to hour-column and legend-hour to hour-marker. -->
+  <schedule-legend>
+    {{#timeLoop earliestStartHour latestEndHour}}
+      <legend-hour style="top: calc( {{ offsetPercentage }}% - 0.75em)">
+        {{ hourString }}
+      </legend-hour>
+    {{/timeLoop}}
+  </schedule-legend>
+  <schedule-grid>
+    {{#repeat numDays}}
+      <grid-day style="width: {{ dayWidthPercentage }}%">
+        {{#timeLoop earliestStartHour latestEndHour}}
+          <grid-hour style="height:{{ heightPercentage }}%"></grid-hour>
+        {{/timeLoop}}
+      </grid-day>
+    {{/repeat}}
+  </schedule-grid>
+    {{#eventsLoop this}}
+      <schedule-event class="course{{ colorNumber }}" style="top:{{ topOffset }}%; left:{{ leftOffset }}%; width:calc({{ dayWidthPercentage }}% - 5px); height:{{ eventHeightPercentage }}%;">
+        <event-text>
+          {{ event.title }}
+        </event-text>
+      </schedule-event>
+    {{/eventsLoop}}
+</schedule-view>
