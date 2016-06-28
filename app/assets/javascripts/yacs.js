@@ -226,6 +226,7 @@ Yacs.views.header = function () {
   });
   Yacs.on('click', clearButton, function () {
     Yacs.user.clearSelections();
+	  
   });
   Yacs.on('keydown', document, function (elem, event) {
     var key = event.keyCode;
