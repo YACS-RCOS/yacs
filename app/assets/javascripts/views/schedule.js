@@ -68,9 +68,12 @@ Yacs.views.schedule = function (data) {
     showSchedule(scheduleIndex);
   });
   Yacs.on('click', clearSwitchElement, function () {
-	  schedule.clearEvents();
-	  scheduleNumElement.textContent = 0;
-	  crnListElement.textContent = "";
+	  // schedule.clearEvents();
+	  // scheduleNumElement.textContent = 0;
+	  // crnListElement.textContent = "";
+	  var event = document.createEvent('Event');
+	  event.initEvent('click',true,true);
+	  document.querySelector("#schedule-btn").dispatchEvent(event);
   });
 
   showSchedule(scheduleIndex);
