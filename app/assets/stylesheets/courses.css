@@ -11,11 +11,11 @@ course {
 }*/
 
 course:not(.selected) course-info:hover ~ sections section:not(.selected) {
-    background-color: #966;
+    background-color: #d57f7f;
 }
 course.selected course-info:hover ~ sections section {
     color: #efefef;
-    background-color: #966;
+    background-color: #d57f7f;
 }
 course-name {
     font-size: 130%;
@@ -42,15 +42,15 @@ section {
     /* border-radius: 8px; */
 }
 sections section:not(.selected):hover {
-    background-color: #966;
+    background-color: #d57f7f;
 }
 sections section.selected:hover {
     color: #efefef;
-    background-color: #966;
+    background-color: #d57f7f;
 }
 sections section.selected {
     color: #efefef;
-    background-color: #955;
+    background-color: #c65353;
 }
 
 section.closed {
