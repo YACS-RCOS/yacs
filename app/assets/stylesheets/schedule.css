@@ -38,3 +38,14 @@
     margin-right: 15px;
     margin-top: 10px;
 }
+
+/* TODO move this to where most appropriate */
+.clearbutton {
+    border: solid;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: #c65353;
+    background-color: #ffffff;
+    color: #863838;
+    padding: 0px 3px 0px 3px;
+}
