@@ -42,7 +42,7 @@
 /* TODO move this to where most appropriate */
 .clearbutton {
     border: solid;
-    border-radius: 8px;
+    border-radius: 1px;
     border-width: 2px;
     border-color: #c65353;
     background-color: #ffffff;
