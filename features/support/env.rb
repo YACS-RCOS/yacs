@@ -56,8 +56,8 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
-require "Capybara"
-require "Capybara/cucumber"
+require "capybara"
+require "capybara/cucumber"
 require "rspec-rails"
 require 'capybara/poltergeist'
  
