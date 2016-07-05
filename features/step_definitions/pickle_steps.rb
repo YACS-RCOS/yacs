@@ -24,7 +24,7 @@ Given(/^the sections as such:?$/) do |table|
     opts.each{ |key,value|
       opts[key] = value.include?(',') ? value.split(','):value
     }
-    Section.create(opts)
+    FactoryGirl.create_list(:section_with_periods,1,opts)
   } 
 end
 
