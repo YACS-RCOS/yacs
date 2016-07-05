@@ -13,6 +13,7 @@ end
 
 # create models from a table
 Given(/^the following #{capture_plural_factory} exists?:?$/) do |plural_factory, table|
+        puts plural_factory, table
   create_models_from_table(plural_factory, table)
 end
 
@@ -24,7 +25,7 @@ Given(/^the sections as such:?$/) do |table|
     opts.each{ |key,value|
       opts[key] = value.include?(',') ? value.split(','):value
     }
-    FactoryGirl.create_list(:section_with_periods,1,opts)
+    FactoryGirl.create(:section_with_periods,opts)
   } 
 end
 

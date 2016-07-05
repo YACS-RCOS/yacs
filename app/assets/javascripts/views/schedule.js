@@ -56,6 +56,17 @@ Yacs.views.schedule = function (data) {
     crnListElement.textContent = 'CRNs: ' + scheduleData.crns.join(', ');
   }
 
+  /* binds event if user has any section selected. Needed when clear btn on schedule page */
+  if(Yacs.user.getSelections().length != 0){
+    Yacs.on('click', clearSwitchElement, function () {
+      /* TODO comment the line if using header button */
+      console.log("clearing selections...");
+      Yacs.user.clearSelections();
+      var event = document.createEvent('Event');
+      event.initEvent('click',true,true);
+      document.querySelector("#schedule-btn").dispatchEvent(event);
+    });
+  }
   if(data.schedules.length == 0) {
     // TODO: this will happen if there are no available schedules
     return;
@@ -68,13 +79,6 @@ Yacs.views.schedule = function (data) {
   Yacs.on('click', rightSwitchElement, function () {
     scheduleIndex = (++scheduleIndex < data.schedules.length ? scheduleIndex : 0);
     showSchedule(scheduleIndex);
-  });
-  Yacs.on('click', clearSwitchElement, function () {
-    /* TODO comment the line if using header button */
-    Yacs.user.clearSelections();
-	  var event = document.createEvent('Event');
-	  event.initEvent('click',true,true);
-	  document.querySelector("#schedule-btn").dispatchEvent(event);
   });
 
   showSchedule(scheduleIndex);
