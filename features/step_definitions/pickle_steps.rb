@@ -17,13 +17,17 @@ Given(/^the following #{capture_plural_factory} exists?:?$/) do |plural_factory,
   create_models_from_table(plural_factory, table)
 end
 
+Given(/^a section as such:?$/) do |table|
+  step "the sections as such:", table
+end
+
 Given(/^the sections as such:?$/) do |table|
   header = table.raw[0]
   data = table.raw[1..-1]
   data.each{ |row|
     opts = header.zip(row).to_h
     opts.each{ |key,value|
-      opts[key] = value.include?(',') ? value.split(','):value
+      opts[key] = value.include?(']') ? value.split(/[\]\[,]/)[1..-1]:value
     }
     FactoryGirl.create(:section_with_periods,opts)
   } 
