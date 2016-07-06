@@ -54,15 +54,23 @@ Yacs.views.schedule = function (data) {
     crnListElement.textContent = 'CRNs: ' + scheduleData.crns.join(', ');
   }
 
-  /* binds event if user has any section selected. Needed when clear btn on schedule page */
-  if(Yacs.user.getSelections().length != 0){
-    Yacs.on('click', clearButtonElement, function () {
-      Yacs.user.clearSelections();
-      var event = document.createEvent('Event');
-      event.initEvent('click',true,true);
-      document.querySelector("#schedule-btn").dispatchEvent(event);
+  /* this is before `if(data.schedules.length==0)` because clear selection should */
+  /* still work even if courses conflict and there are zero possible schedules    */
+  Yacs.on('click', clearButtonElement, function () {
+    /* clear if the user has any selections */  
+      if(Yacs.user.getSelections().length != 0){
+        Yacs.user.clearSelections();
+        /* copied from yacs.js schedule button handler */
+        Yacs.models.schedules.query({ section_ids: Yacs.user.getSelectionsRaw(),
+                                      show_periods: true },
+           function(data, success) {
+             if(success)
+               Yacs.views.schedule(data);
+             }
+         );
+      }
     });
-  }
+
   if(data.schedules.length == 0) {
     // TODO: this will happen if there are no available schedules
     return;
