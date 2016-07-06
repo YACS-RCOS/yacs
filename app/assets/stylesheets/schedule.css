@@ -46,5 +46,11 @@
     border-color: #c65353;
     background-color: #ffffff;
     color: #863838;
-    padding: 0px 3px 0px 3px;
+    padding: 2px 4px 0px 4px;
+    font-size: 18px;
+}
+
+.clearbutton:focus {
+    outline-color: #602020;
+    background-color: #e6e6e6;
 }
