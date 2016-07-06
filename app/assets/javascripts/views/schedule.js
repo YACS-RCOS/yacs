@@ -9,9 +9,7 @@ Yacs.views.schedule = function (data) {
   var scheduleElement = document.querySelector('#scheduleContainer');
   var leftSwitchElement = document.querySelector('#leftSwitch');
   var rightSwitchElement = document.querySelector('#rightSwitch');
-  /* TODO uncomment the line below if using header btn */
-  //var clearSwitchElement = document.querySelector('#clearButton');
-  var clearSwitchElement = document.querySelector('#clearBtn');
+  var clearButtonElement = document.querySelector('#clearBtn');
   var scheduleNumElement = document.querySelector('#scheduleNum');
   var crnListElement = document.querySelector('#crnList');
   var schedule = new Schedule(scheduleContainer);
@@ -58,9 +56,7 @@ Yacs.views.schedule = function (data) {
 
   /* binds event if user has any section selected. Needed when clear btn on schedule page */
   if(Yacs.user.getSelections().length != 0){
-    Yacs.on('click', clearSwitchElement, function () {
-      /* TODO comment the line if using header button */
-      console.log("clearing selections...");
+    Yacs.on('click', clearButtonElement, function () {
       Yacs.user.clearSelections();
       var event = document.createEvent('Event');
       event.initEvent('click',true,true);

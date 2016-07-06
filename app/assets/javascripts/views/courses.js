@@ -87,11 +87,4 @@ Yacs.views.courses = function (data) {
     });
     if (isCourseSelected(c)) c.classList.add('selected');
   });
-
-  /* TODO uncomment this to make button unselect courses */
-  // Yacs.on('click', document.querySelector("#clearButton"), function(){
-  //   document.querySelectorAll(".selected").forEach(function(s) {
-  //     s.classList.remove('selected');
-  //   });
-  // });
 };
