@@ -1,4 +1,4 @@
-And(/^I should see (.*) schedule events$/) do |num|
+And(/^I should see (.*) schedule events?$/) do |num|
   expect(page).to have_css("schedule-event",count:num)
 end
 

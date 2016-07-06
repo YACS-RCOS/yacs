@@ -25,10 +25,10 @@ Scenario: clear courses no course conflict
   When I click the course "CSCI 1200"
   Then I should see the course with id 12 is selected
     And I should see the section with id 18 is selected
-  When I click the td "Schedule"
-    Then I should see a #clearBtn with text "Clear"
+  When I click "Schedule" in the header bar
+    Then I should see a button with text "Clear"
   And I should see 3 schedule events
-  When I click the span "Clear"
+  When I click the button "Clear"
   Then I should see 0 schedule events
   When I click the tr "Schedule"
   Then I should see 0 schedule events
@@ -50,13 +50,14 @@ Scenario: clear courses with course conflict
   When I click the course "CSCI 2200"
   Then I should see the course with id 13 is selected
     And I should see the section with id 19 is selected
-  When I click the td "Schedule"
-    Then I should see a #clearBtn with text "Clear"
+  When I click "Schedule" in the header bar
+    Then I should see a button with text "Clear"
     And I should see 0 schedule events
-  When I click the span "Clear"
+  When I click the button "Clear"
     And I go to the home page
     And I click the department "CSCI"
   Then I should see the course with id 12 is not selected
     And I should see the section with id 18 is not selected
     And I should see the course with id 13 is not selected
     And I should see the section with id 19 is not selected
+  Then I break
