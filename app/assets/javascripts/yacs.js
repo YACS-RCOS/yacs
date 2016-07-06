@@ -213,8 +213,6 @@ Yacs.views.header = function () {
   var homeButton = document.getElementById('page-title');
   var searchbar = document.getElementById('searchbar');
   var scheduleButton = document.getElementById("schedule-btn");
-  /* TODO add this if clear button is in header */
-  // var clearButton = document.getElementById("clearButton");  
   Yacs.on('click', homeButton, function () { Yacs.views.departments(); });
   Yacs.on('click', scheduleButton, function () {
     Yacs.models.schedules.query({ section_ids: Yacs.user.getSelectionsRaw(),
@@ -225,10 +223,6 @@ Yacs.views.header = function () {
         }
     );
   });
-  /* TODO add this if clear button is in header */
-  // Yacs.on('click', clearButton, function () {
-  //   Yacs.user.clearSelections();
-  // });
   Yacs.on('keydown', document, function (elem, event) {
     var key = event.keyCode;
     if (!(event.ctrlKey || event.metaKey)) {
