@@ -26,7 +26,8 @@ Given(/^the sections as such:?$/) do |table|
   data.each do |row|
     opts = header.zip(row).to_h
     opts.each do |key,value|
-      opts[key] = value.include?(']') ? value.split(/[\]\[,]/)[1..-1]:value
+      innerValue = value[/(?<=\[)[\w\'\"]+(,[\w\'\"]+)*(?=\])/]
+      opts[key] = innerValue ? innerValue.split(',') : value
     end
     FactoryGirl.create(:section_with_periods,opts)
   end 
