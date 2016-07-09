@@ -19,11 +19,6 @@ def json_validate_courses(courses=@courses, sections=false, periods=false)
 end
 
 describe 'Courses API' do
-  context 'when there is a department' do
-    before do
-      @depts = FactoryGirl.create_list(:department, 3)
-    end
-
   context "there are departments with courses with sections" do
     before do
       courses = FactoryGirl.create_list(:course, 5)
