@@ -6,13 +6,13 @@
  */
 Yacs.views.schedule = function (data) {
   Yacs.setContents(HandlebarsTemplates.schedule(data));
-  var scheduleElement = document.querySelector('#scheduleContainer');
-  var leftSwitchElement = document.querySelector('#leftSwitch');
-  var rightSwitchElement = document.querySelector('#rightSwitch');
-  var clearButtonElement = document.querySelector('#clearBtn');
-  var scheduleNumElement = document.querySelector('#scheduleNum');
-  var crnListElement = document.querySelector('#crnList');
-  var schedule = new Schedule(scheduleContainer);
+  var scheduleElement = document.querySelector('#schedule-container');
+  var leftSwitchElement = document.querySelector('#left-switch');
+  var rightSwitchElement = document.querySelector('#right-switch');
+  var clearButtonElement = document.querySelector('#clear-btn');
+  var scheduleNumElement = document.querySelector('#schedule-num');
+  var crnListElement = document.querySelector('#crn-list');
+  var schedule = new Schedule(scheduleElement);
   var scheduleIndex = 0;
 
 
