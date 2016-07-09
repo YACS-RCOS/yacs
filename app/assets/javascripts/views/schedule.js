@@ -58,16 +58,9 @@ Yacs.views.schedule = function (data) {
   /* still work even if courses conflict and there are zero possible schedules    */
   Yacs.on('click', clearButtonElement, function () {
     /* clear if the user has any selections */  
-    if(Yacs.user.getSelections().length != 0){
+    if (Yacs.user.getSelections().length != 0) {
       Yacs.user.clearSelections();
-      /* copied from yacs.js schedule button handler */
-      Yacs.models.schedules.query({ section_ids: Yacs.user.getSelectionsRaw(),
-                                    show_periods: true },
-         function(data, success) {
-           if(success)
-             Yacs.views.schedule(data);
-         }
-      );
+      Yacs.views.schedule([]);
     }
     clearButtonElement.blur();
   });
