@@ -6,22 +6,7 @@ describe "Schedules API" do
       @sections = @courses.map { |course| course.sections }.flatten
     end
 
-    it "[xml] schedules have one section of each course" do
-      get '/api/v5/schedules.xml', { section_ids: @sections.map { |s| s.id }.join(',') }
-      expect(response) .to be_success
-      xml.schedules.schedule.each do |x_schedule|
-        courses = []
-        sections = []
-        x_schedule.sections.section.each do |x_section|
-          sections << Section.find(x_section.search('section-id').text)
-          courses << sections.last.course
-        end
-        expect(courses) .to eq @courses
-        expect(Scheduler.schedule_valid?(sections)) .to be true
-      end
-    end
-
-    it "[json] schedules have one section of each course" do
+    it "schedules have one section of each course" do
       get '/api/v5/schedules.json', { section_ids: @sections.map { |s| s.id }.join(',') }
       expect(response) .to be_success
       schedules = []
@@ -47,7 +32,7 @@ describe "Schedules API" do
       @sections = @courses.map { |course| course.sections }.flatten
     end
 
-    it "[json] finds no schedules" do
+    it "finds no schedules" do
       get '/api/v5/schedules.json', { section_ids: @sections.map { |s| s.id }.join(',') }
       expect(response) .to be_success
       expect(json['schedules']) .to be_empty
@@ -55,7 +40,7 @@ describe "Schedules API" do
   end
 
   context "no courses are chosen" do
-    it "[json] finds no schedules" do
+    it "finds no schedules" do
       get '/api/v5/schedules.json'
       expect(response) .to be_success
       expect(json['schedules']) .to be_empty

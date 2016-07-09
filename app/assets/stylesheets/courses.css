@@ -61,19 +61,19 @@ section-seats {
     font-size: 80%;
 }
 
-periods {
+section-periods {
     font-size:80%;
     display:inline-block;
     margin-left:0em;
     float:right;
     padding:0.15em 0;
 }
-periods.noperiods {
+section-periods.noperiods {
     font-weight: bold;
 }
-period {
+section-period {
     margin-left:1em;
 }
 period-day {
-    font-weight:bold;
+    font-weight: 400;
 }
