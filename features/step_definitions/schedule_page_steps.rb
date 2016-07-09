@@ -1,5 +1,5 @@
 And(/^I should see (.*) schedule events?$/) do |num|
-  expect(page).to have_css("schedule-event",count:num)
+  expect(page).to have_css("schedule-event", count:num)
 end
 
 And(/^I should see a (.*) with text "(.*)"$/) do |elem, text|
