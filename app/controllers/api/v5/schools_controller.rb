@@ -6,5 +6,6 @@ class Api::V5::SchoolsController < Api::V5::ApiController
       query.includes! :departments
       query.includes! departments: [:courses] if @show_courses
     end
+    query.order! :id
   end
 end
