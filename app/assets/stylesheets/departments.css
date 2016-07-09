@@ -40,7 +40,7 @@ department:hover {
 }
 department department-code {
     font-family:"Andale Mono","Courier New",monospace;
-    margin-right:0.2em;
+    margin-right:0.4em;
     font-size:120%;
 }
 noscript {
