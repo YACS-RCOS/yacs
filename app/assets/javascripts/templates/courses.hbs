@@ -15,6 +15,14 @@
             <section-instructors>{{join instructors}}</section-instructors>
             <section-seats-available>{{course_seats this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
             <section-crn>{{crn}}</section-crn>
+            <section-periods>
+              {{#periods}}
+                <section-period>
+                  <period-day>{{day_name day}}</period-day>
+                  <period-time>{{time_range start end}}</period-time>
+                </section-period>
+              {{/periods}}
+            </section-periods>
           </section>
         {{/sections}}
       </sections>

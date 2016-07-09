@@ -232,9 +232,12 @@ Yacs.views.header = function () {
         searchbar.focus();
       } else if (key == 13) {
         if (searchbar.value) {
-          Yacs.models.courses.query({ search: searchbar.value }, function (data, success) {
-            if (success)
-              Yacs.views.courses(data);
+          Yacs.models.courses.query({ search: searchbar.value,
+                                      show_sections: true,
+                                      show_periods: true },
+            function (data, success) {
+              if (success)
+                Yacs.views.courses(data);
           });
         } else {
           Yacs.views.departments();
