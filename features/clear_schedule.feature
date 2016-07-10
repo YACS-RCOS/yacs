@@ -60,4 +60,3 @@ Scenario: clear courses with course conflict
     And I should see the section with id 18 is not selected
     And I should see the course with id 13 is not selected
     And I should see the section with id 19 is not selected
-  Then I break
