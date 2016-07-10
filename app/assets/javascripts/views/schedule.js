@@ -60,7 +60,7 @@ Yacs.views.schedule = function (data) {
     /* clear if the user has any selections */  
     if (Yacs.user.getSelections().length != 0) {
       Yacs.user.clearSelections();
-      Yacs.views.schedule([]);
+      Yacs.views.schedule({schedules:[]});
     }
     clearButtonElement.blur();
   });
