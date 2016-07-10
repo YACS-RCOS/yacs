@@ -102,6 +102,4 @@ Yacs.views.courses = function (data) {
     });
     if (isCourseSelected(c)) c.classList.add('selected');
   });
-
-
 };
