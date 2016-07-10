@@ -29,3 +29,6 @@
 # Ignore caches pages
 /public/index.html
 /public/api/*
+
+# Ignore tern files
+\.tern-port

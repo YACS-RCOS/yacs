@@ -6,12 +6,13 @@
  */
 Yacs.views.schedule = function (data) {
   Yacs.setContents(HandlebarsTemplates.schedule(data));
-  var scheduleElement = document.querySelector('#scheduleContainer');
-  var leftSwitchElement = document.querySelector('#leftSwitch');
-  var rightSwitchElement = document.querySelector('#rightSwitch');
-  var scheduleNumElement = document.querySelector('#scheduleNum');
-  var crnListElement = document.querySelector('#crnList');
-  var schedule = new Schedule(scheduleContainer);
+  var scheduleElement = document.querySelector('#schedule-container');
+  var leftSwitchElement = document.querySelector('#left-switch');
+  var rightSwitchElement = document.querySelector('#right-switch');
+  var clearButtonElement = document.querySelector('#clear-btn');
+  var scheduleNumElement = document.querySelector('#schedule-num');
+  var crnListElement = document.querySelector('#crn-list');
+  var schedule = new Schedule(scheduleElement);
   var scheduleIndex = 0;
 
 
@@ -52,6 +53,17 @@ Yacs.views.schedule = function (data) {
     scheduleNumElement.textContent = index + 1;
     crnListElement.textContent = 'CRNs: ' + scheduleData.crns.join(', ');
   }
+
+  /* this is before `if(data.schedules.length==0)` because clear selection should */
+  /* still work even if courses conflict and there are zero possible schedules    */
+  Yacs.on('click', clearButtonElement, function () {
+    /* clear if the user has any selections */  
+    if (Yacs.user.getSelections().length != 0) {
+      Yacs.user.clearSelections();
+      Yacs.views.schedule({schedules:[]});
+    }
+    clearButtonElement.blur();
+  });
 
   if(data.schedules.length == 0) {
     // TODO: this will happen if there are no available schedules
