@@ -32,3 +32,5 @@
 
 # Ignore tern files
 \.tern-port
+
+/coverage
