@@ -18,7 +18,6 @@ Background:
   | 18 | 01   | 12        | 3           | [1,3,4]     |
 
 @javascript
-@delay
 Scenario: clear courses no course conflict
   Given I go to the home page
   And I click the department "CSCI"
@@ -34,7 +33,6 @@ Scenario: clear courses no course conflict
   Then I should see 0 schedule events
 
 @javascript
-@delay
 Scenario: clear courses with course conflict
   Given the following courses exists:
   | id | number | name                            | department_id |
