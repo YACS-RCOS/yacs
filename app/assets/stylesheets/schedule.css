@@ -38,3 +38,8 @@
     margin-right: 15px;
     margin-top: 10px;
 }
+
+#scheduleContent {
+    max-width: 950px;
+    margin: 0 auto;
+}
