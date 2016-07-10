@@ -1,15 +1,17 @@
 schools {
-    display:block;
-    columns: 4 500px;
-    -moz-columns: 4 500px;
-    -webkit-columns: 4 500px;
-    column-gap:10px;
-    -moz-column-gap: 10px;
-    -webkit-column-gap: 10px;
+    display: block;
+    columns: 2 450px;
+    -moz-columns: 2 450px;
+    -webkit-columns: 2 450px;
+    column-gap: 20px;
+    -moz-column-gap: 20px;
+    -webkit-column-gap: 20px;
+    max-width: 950px;
+    margin: 0 auto;
 }
 school {
     display:inline-block;
-    width:600px;
+    width: 475px;
     padding: 0px 1px;
 }
 school-name {
@@ -30,7 +32,7 @@ department {
     display:block;
     cursor:pointer;
     padding:2px 5px;
-    width:500px;
+    /*width:5;*/
 }
 department:hover {
 /*    color: #fff;

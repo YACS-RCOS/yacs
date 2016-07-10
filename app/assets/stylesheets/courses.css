@@ -1,10 +1,12 @@
 course {
-    display:block;
+    display: block;
     margin: 0px 20px;
     padding:15px;
     /*border-radius: 15px;*/
     border-bottom: 1px #bbb solid;
-    cursor:pointer;
+    cursor: pointer;
+    max-width: 950px;
+    margin: 0 auto;
 }
 /*course:hover {
     background-color:#e7e7e7;
