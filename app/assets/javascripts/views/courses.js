@@ -49,9 +49,10 @@ Handlebars.registerHelper('time_range', function (start, end) {
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.courses = function (data) {
+Yacs.views.courses = function (data, target) {
   var html = HandlebarsTemplates.courses(data);
-  Yacs.setContents(html);
+  if (target) target.innerHTML = html;
+  else Yacs.setContents(html);
 
   var isCourseSelected = function (course) {
     var isSelected = true;
@@ -83,9 +84,6 @@ Yacs.views.courses = function (data) {
     if (Yacs.user.hasSelection(s.dataset.id)) s.classList.add('selected');
   });
 
-  /* This does not actually add or remove sections from the selected list.
-     TODO: implement this
-  */
   document.getElementsByTagName('course').forEach(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var isSelected = isCourseSelected(c);
@@ -102,6 +100,4 @@ Yacs.views.courses = function (data) {
     });
     if (isCourseSelected(c)) c.classList.add('selected');
   });
-
-
 };
