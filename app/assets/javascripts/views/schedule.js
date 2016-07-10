@@ -7,6 +7,7 @@
 Yacs.views.schedule = function (data) {
   Yacs.setContents(HandlebarsTemplates.schedule(data));
   var scheduleElement = document.querySelector('#scheduleContainer');
+  var selectionElement = document.querySelector('#selectionContainer')
   var leftSwitchElement = document.querySelector('#leftSwitch');
   var rightSwitchElement = document.querySelector('#rightSwitch');
   var scheduleNumElement = document.querySelector('#scheduleNum');
@@ -55,7 +56,6 @@ Yacs.views.schedule = function (data) {
 
   if(data.schedules.length == 0) {
     // TODO: this will happen if there are no available schedules
-    return;
   }
 
   Yacs.on('click', leftSwitchElement, function () {
@@ -65,6 +65,14 @@ Yacs.views.schedule = function (data) {
   Yacs.on('click', rightSwitchElement, function () {
     scheduleIndex = (++scheduleIndex < data.schedules.length ? scheduleIndex : 0);
     showSchedule(scheduleIndex);
+  });
+
+  Yacs.models.courses.query({ section_id: Yacs.user.getSelectionsRaw(),
+                              show_sections: true,
+                              show_periods: true },
+    function (data, success) {
+      if (success)
+        Yacs.views.courses(data, selectionElement);
   });
 
   showSchedule(scheduleIndex);
