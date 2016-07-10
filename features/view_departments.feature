@@ -34,4 +34,3 @@ Scenario: views departments
       Then within it I should see the text "CSCI"
       And I should also see the text "Computer Science"
     And I should also see the department with id 9
-  Then I break
