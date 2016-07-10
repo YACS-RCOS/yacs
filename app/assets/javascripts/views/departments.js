@@ -18,7 +18,8 @@ Yacs.views.departments = function (data) {
       Yacs.clearContents();
       Yacs.models.courses.query(
         { department_id: dept.dataset.id,
-          show_sections: true },
+          show_sections: true,
+          show_periods: true },
         function (data, success) {
           if (success) {
             Yacs.views.courses(data);

@@ -27,6 +27,21 @@ Handlebars.registerHelper('selected_status', function (s) {
   return new Handlebars.SafeString(Yacs.user.hasSelection(s.id) ? 'selected' : '');
 });
 
+Handlebars.registerHelper('day_name', function (n) {
+  return new Handlebars.SafeString(['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'][n]);
+});
+
+Handlebars.registerHelper('time_range', function (start, end) {
+  return new Handlebars.SafeString([start, end].map(function (time) {
+    var hour = Math.floor(time / 100);
+    var ampm = hour > 12 ? 'p' : 'a';
+    hour = hour > 12 ? hour - 12 : hour == 0 ? 12 : hour;
+    var minutes = time % 100;
+    minutes = minutes > 9 ? minutes : minutes == 0 ? '' : '0' + minutes;
+    return hour + (minutes ? ':' + minutes : '') + ampm;
+  }).join('-'));
+});
+
 /**
  * Courses view. Displays courses and their sections
  * @param {Object} data - Object containing Courses model collection
