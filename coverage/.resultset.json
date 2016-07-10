@@ -576,7 +576,7 @@
         null
       ]
     },
-    "timestamp": 1468131964
+    "timestamp": 1468175408
   },
   "Cucumber Features": {
     "coverage": {
@@ -708,7 +708,7 @@
         null,
         null,
         1,
-        1,
+        0,
         null
       ],
       "/Users/rjyoung/Dev/rcos/yacs/features/step_definitions/pickle_steps.rb": [
@@ -1033,6 +1033,6 @@
         null
       ]
     },
-    "timestamp": 1468175139
+    "timestamp": 1468176283
   }
 }

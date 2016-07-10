@@ -5,29 +5,28 @@ Feature: Schedule View
 
 Background:
   Given the following schools exist:
-  | id | name              |
-  | 1  | School of Science |
+    | id | name              |
+    | 1  | School of Science |
   And the following departments exist:
-  | id | code | name             | school_id |
-  | 6  | CSCI | Computer Science | 1         |
+    | id | code | name             | school_id |
+    | 6  | CSCI | Computer Science | 1         |
   And the following courses exist:
-  | id | number | name            | department_id |
-  | 12 | 1200   | Data Structures | 6             |
+    | id | number | name            | department_id |
+    | 12 | 1200   | Data Structures | 6             |
   And the sections as such:
-  | id | name | course_id | num_periods | periods_day |
-  | 18 | 01   | 12        | 3           | [1,3,4]     |
+    | id | name | course_id | num_periods | periods_day |
+    | 18 | 01   | 12        | 3           | [1,3,4]     |
 
 @javascript
 Scenario: clear courses no course conflict
   Given I go to the home page
-  And I click the department "CSCI"
-  And I break
+    And I click the department "CSCI"
   When I click the course-info "CSCI 1200"
   Then I should see the course with id 12 is selected
     And I should see the section with id 18 is selected
   When I click "Schedule" in the header bar
-    Then I should see a button with text "Clear"
-  And I should see 3 schedule events
+  Then I should see a button with text "Clear"
+    And I should see 3 schedule events
   When I click the button "Clear"
   Then I should see 0 schedule events
   When I click the tr "Schedule"
@@ -36,13 +35,13 @@ Scenario: clear courses no course conflict
 @javascript
 Scenario: clear courses with course conflict
   Given the following courses exists:
-  | id | number | name                            | department_id |
-  | 13 | 2200   | Foundations of Computer Science | 6             |
+    | id | number | name                            | department_id |
+    | 13 | 2200   | Foundations of Computer Science | 6             |
   And a section as such:
-  | id | name | course_id | num_periods | periods_day | periods_start | periods_end | periods_type |
-  | 19 | 02   | 13        | 1           | [1]         | [900]         | [1000]      | ['LEC']      |
+    | id | name | course_id | num_periods | periods_day | periods_start | periods_end | periods_type |
+    | 19 | 02   | 13        | 1           | [1]         | [900]         | [1000]      | ['LEC']      |
   Given I go to the home page
-  And I click the department "CSCI"
+    And I click the department "CSCI"
   When I click the course-info "CSCI 1200"
   Then I should see the course with id 12 is selected
     And I should see the section with id 18 is selected
