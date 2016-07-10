@@ -67,10 +67,6 @@ Yacs.views.schedule = function (data) {
     clearButtonElement.blur();
   });
 
-  if(data.schedules.length == 0) {
-    // TODO: this will happen if there are no available schedules
-  }
-
   Yacs.on('click', leftSwitchElement, function () {
     scheduleIndex = (--scheduleIndex < 0 ? data.schedules.length - 1 : scheduleIndex);
     showSchedule(scheduleIndex);
@@ -89,6 +85,10 @@ Yacs.views.schedule = function (data) {
         if (success)
           Yacs.views.courses(data, selectionElement);
     });
+  }
+  if (data.schedules.length > 0) {
     showSchedule(scheduleIndex);
-  }    
+  } else {
+    // TODO: Show there are no schedules available
+  }
 };
