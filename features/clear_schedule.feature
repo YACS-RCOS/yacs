@@ -21,7 +21,8 @@ Background:
 Scenario: clear courses no course conflict
   Given I go to the home page
   And I click the department "CSCI"
-  When I click the course "CSCI 1200"
+  And I break
+  When I click the course-info "CSCI 1200"
   Then I should see the course with id 12 is selected
     And I should see the section with id 18 is selected
   When I click "Schedule" in the header bar
@@ -42,10 +43,10 @@ Scenario: clear courses with course conflict
   | 19 | 02   | 13        | 1           | [1]         | [900]         | [1000]      | ['LEC']      |
   Given I go to the home page
   And I click the department "CSCI"
-  When I click the course "CSCI 1200"
+  When I click the course-info "CSCI 1200"
   Then I should see the course with id 12 is selected
     And I should see the section with id 18 is selected
-  When I click the course "CSCI 2200"
+  When I click the course-info "CSCI 2200"
   Then I should see the course with id 13 is selected
     And I should see the section with id 19 is selected
   When I click "Schedule" in the header bar
