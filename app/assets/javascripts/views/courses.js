@@ -110,7 +110,7 @@ Yacs.views.courses = function (data) {
       showButton.innerHTML = descTruncated ? 'hide' : 'show';
       event.stopPropagation();      
     });
-    Yacs.on('
+
     if (desc.scrollHeight <= desc.clientHeight) {
       desc.classList.remove("truncated");
       showButton.style.display = 'none';
