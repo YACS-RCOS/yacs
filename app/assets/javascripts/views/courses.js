@@ -101,5 +101,19 @@ Yacs.views.courses = function (data) {
       c.classList[isSelected ? 'remove' : 'add']('selected');
     });
     if (isCourseSelected(c)) c.classList.add('selected');
+
+    var desc = c.querySelector('course-description');
+    var showButton = c.querySelector('show-hide-button');
+    Yacs.on('click', showButton, function(showButton,event) {
+      var descTruncated = desc.classList.contains("truncated");
+      desc.classList[descTruncated ? 'remove' : 'add']("truncated");
+      showButton.innerHTML = descTruncated ? 'hide' : 'show';
+      event.stopPropagation();      
+    });
+    Yacs.on('
+    if (desc.scrollHeight <= desc.clientHeight) {
+      desc.classList.remove("truncated");
+      showButton.style.display = 'none';
+    } 
   });
 };

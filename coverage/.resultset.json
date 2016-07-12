@@ -557,7 +557,7 @@
         null,
         null,
         1,
-        63,
+        62,
         null,
         null,
         1,
@@ -678,7 +678,7 @@
         null,
         null,
         1,
-        1,
+        0,
         null
       ],
       "/home/ren/cs/yacs/features/step_definitions/pickle_steps.rb": [
@@ -1002,6 +1002,6 @@
         null
       ]
     },
-    "timestamp": 1468126958
+    "timestamp": 1468282205
   }
 }
