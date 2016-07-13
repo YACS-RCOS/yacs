@@ -62,9 +62,14 @@ Yacs.views.courses = function (data) {
   };
 
   var requireTruncation = function (desc, showButton) {
-    var overflowing = desc.scrollHeight <= 38;
-    desc.classList[overflowing ? 'remove' : 'add']("truncated");
-    showButton.style.display = overflowing ? 'none' : 'block';
+    var overflowed = desc.classList.contains("truncated");
+    var overflowing = desc.scrollHeight > 38;
+    if (overflowed != overflowing) {
+      console.log(overflowed, overflowing, desc.innerHTML);
+      desc.classList[overflowing ? 'add' : 'remove']("truncated");
+      showButton.innerHTML = overflowing ? 'show' : 'hide';
+      showButton.style.display = overflowing ? 'block' : 'none';
+    }
   };
 
   // Add event listeners to sections

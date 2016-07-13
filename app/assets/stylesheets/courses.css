@@ -36,6 +36,7 @@ course-description {
 }
 course-description.truncated{
     height: 38px;
+    height: calc(lineHeight);
     overflow: hidden;
 }
 show-hide-button {
