@@ -65,10 +65,8 @@ Yacs.views.courses = function (data) {
     var overflowed = desc.classList.contains("overflow");
     var overflowing = desc.scrollHeight > 38;
     if (overflowed != overflowing) {
-      console.log(overflowed, overflowing, desc.innerHTML);
-      desc.classList[overflowing ? 'add' : 'remove']("overflow");
-      desc.classList[overflowing ? 'add' : 'remove']("truncated");
-      showButton.innerHTML = overflowing ? 'show' : 'hide';
+      desc.classList[overflowing ? 'add' : 'remove']("overflow","truncated");
+      showButton.classList[overflowing ? 'remove' : 'add']("open");
       showButton.style.display = overflowing ? 'block' : 'none';
     }
   };
@@ -116,10 +114,10 @@ Yacs.views.courses = function (data) {
 
     var desc = c.querySelector('course-description');
     var showButton = c.querySelector('show-hide-button');
-    Yacs.on('click', showButton, function (showButton,event) {
+    Yacs.on('click', showButton, function (showButton, event) {
       var descTruncated = desc.classList.contains("truncated");
       desc.classList[descTruncated ? 'remove' : 'add']("truncated");
-      showButton.innerHTML = descTruncated ? 'hide' : 'show';
+      showButton.classList[descTruncated ? 'add' : 'remove']("open");
       event.stopPropagation();
     });
     requireTruncation(desc, showButton);
@@ -127,10 +125,8 @@ Yacs.views.courses = function (data) {
 
   var resizingFxn;
   window.addEventListener("resize", function () {
-    console.log("resizing");
     clearTimeout(resizingFxn);
     resizingFxn = setTimeout(function () {
-      console.log("ended resizing");
       document.querySelectorAll("course").forEach(function (c) {
         var desc = c.querySelector('course-description');
         var showButton = c.querySelector('show-hide-button');
