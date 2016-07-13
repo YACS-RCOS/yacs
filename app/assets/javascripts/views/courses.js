@@ -62,10 +62,11 @@ Yacs.views.courses = function (data) {
   };
 
   var requireTruncation = function (desc, showButton) {
-    var overflowed = desc.classList.contains("truncated");
+    var overflowed = desc.classList.contains("overflow");
     var overflowing = desc.scrollHeight > 38;
     if (overflowed != overflowing) {
       console.log(overflowed, overflowing, desc.innerHTML);
+      desc.classList[overflowing ? 'add' : 'remove']("overflow");
       desc.classList[overflowing ? 'add' : 'remove']("truncated");
       showButton.innerHTML = overflowing ? 'show' : 'hide';
       showButton.style.display = overflowing ? 'block' : 'none';
