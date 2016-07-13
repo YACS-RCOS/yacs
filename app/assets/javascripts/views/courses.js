@@ -61,9 +61,15 @@ Yacs.views.courses = function (data) {
     return isSelected;
   };
 
+  var requireTruncation = function (desc, showButton) {
+    var overflowing = desc.scrollHeight <= 38;
+    desc.classList[overflowing ? 'remove' : 'add']("truncated");
+    showButton.style.display = overflowing ? 'none' : 'block';
+  };
+
   // Add event listeners to sections
   document.getElementsByTagName('section').forEach(function (s) {
-    Yacs.on('click', s, function(section) {
+    Yacs.on('click', s, function (section) {
       /* If there happens to be a mismatch between the data and the display,
          we care about the data - e.g. if the id is in the array, we will
          always deselect it regardless of whether it was being rendered as
@@ -104,16 +110,26 @@ Yacs.views.courses = function (data) {
 
     var desc = c.querySelector('course-description');
     var showButton = c.querySelector('show-hide-button');
-    Yacs.on('click', showButton, function(showButton,event) {
+    Yacs.on('click', showButton, function (showButton,event) {
       var descTruncated = desc.classList.contains("truncated");
       desc.classList[descTruncated ? 'remove' : 'add']("truncated");
       showButton.innerHTML = descTruncated ? 'hide' : 'show';
-      event.stopPropagation();      
+      event.stopPropagation();
     });
+    requireTruncation(desc, showButton);
+  });
 
-    if (desc.scrollHeight <= desc.clientHeight) {
-      desc.classList.remove("truncated");
-      showButton.style.display = 'none';
-    } 
+  var resizingFxn;
+  window.addEventListener("resize", function () {
+    console.log("resizing");
+    clearTimeout(resizingFxn);
+    resizingFxn = setTimeout(function () {
+      console.log("ended resizing");
+      document.querySelectorAll("course").forEach(function (c) {
+        var desc = c.querySelector('course-description');
+        var showButton = c.querySelector('show-hide-button');
+        requireTruncation(desc, showButton);
+      });
+    }, 100);
   });
 };
