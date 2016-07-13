@@ -61,12 +61,12 @@ Yacs.views.courses = function (data) {
     return isSelected;
   };
 
-  var requireTruncation = function (desc, showButton) {
-    var overflowed = desc.classList.contains("overflow");
-    var overflowing = desc.scrollHeight > 38;
+  var descriptionRequireTruncation = function (description, showButton) {
+    var overflowed = description.classList.contains('overflow');
+    var overflowing = description.scrollHeight > 38;
     if (overflowed != overflowing) {
-      desc.classList[overflowing ? 'add' : 'remove']("overflow","truncated");
-      showButton.classList[overflowing ? 'remove' : 'add']("open");
+      description.classList[overflowing ? 'add' : 'remove']('overflow','truncated');
+      showButton.classList[overflowing ? 'remove' : 'add']('open');
       showButton.style.display = overflowing ? 'block' : 'none';
     }
   };
@@ -112,26 +112,28 @@ Yacs.views.courses = function (data) {
     });
     if (isCourseSelected(c)) c.classList.add('selected');
 
-    var desc = c.querySelector('course-description');
+    var description = c.querySelector('course-description');
     var showButton = c.querySelector('show-hide-button');
     Yacs.on('click', showButton, function (showButton, event) {
-      var descTruncated = desc.classList.contains("truncated");
-      desc.classList[descTruncated ? 'remove' : 'add']("truncated");
-      showButton.classList[descTruncated ? 'add' : 'remove']("open");
+      var descriptionTruncated = description.classList.contains('truncated');
+      description.classList[descriptionTruncated ? 'remove' : 'add']('truncated');
+      showButton.classList[descriptionTruncated ? 'add' : 'remove']('open');
       event.stopPropagation();
     });
-    requireTruncation(desc, showButton);
+    descriptionRequireTruncation(description, showButton);
   });
 
-  var resizingFxn;
-  window.addEventListener("resize", function () {
-    clearTimeout(resizingFxn);
-    resizingFxn = setTimeout(function () {
-      document.querySelectorAll("course").forEach(function (c) {
-        var desc = c.querySelector('course-description');
-        var showButton = c.querySelector('show-hide-button');
-        requireTruncation(desc, showButton);
-      });
-    }, 100);
+  var resizingFunction;
+  window.addEventListener('resize', function () {
+    if (document.querySelector('#content courses')){
+      clearTimeout(resizingFunction);
+      resizingFunction = setTimeout(function () {
+        document.querySelectorAll('course').forEach(function (c) {
+          var description = c.querySelector('course-description');
+          var showButton = c.querySelector('show-hide-button');
+          descriptionRequireTruncation(description, showButton);
+        });
+      }, 100);
+    }
   });
 };
