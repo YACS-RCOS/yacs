@@ -8,6 +8,7 @@ class Api::V5::CoursesController < Api::V5::ApiController
     else
       filter_model Course
       filter :section_id do |q|
+        # q.joins(:sections).where "sections.id = ANY (ARRAY[#{params[:section_id]}])"
         q.joins(:sections).where :"sections.id" => any(:section_id)
       end
       filter :department_code do |q|
@@ -17,4 +18,5 @@ class Api::V5::CoursesController < Api::V5::ApiController
       query.includes! :sections if @show_sections
     end
   end
+
 end

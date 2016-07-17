@@ -17,7 +17,7 @@ Yacs = new function () {
    * @return {undefined}
    */
   self.get = function (uri, callback) {
-    req = new XMLHttpRequest();
+    var req = new XMLHttpRequest();
     req.open('GET', uri);
     req.onreadystatechange = function () {
       if (req.readyState == 4 && callback) {
@@ -151,16 +151,6 @@ Yacs = new function () {
   NodeList.prototype.forEach = Array.prototype.forEach;
   HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
- // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
-  var matches = function (elm, selector) {
-    var matches = (elm.document || elm.ownerDocument).querySelectorAll(selector);
-    var i = matches.length;
-    while (--i >= 0 && matches.item(i) !== elm);
-    return i > -1;
-  }
-
-  var loaded = false;
-
   /**
    * Equivalent to JQuery's $(document).ready()
    * @param  {Function} func - Event handler to be called
@@ -170,7 +160,6 @@ Yacs = new function () {
   self.onload = function (func) {
     document.addEventListener("DOMContentLoaded", func, false);
   }
-  self.onload(function () { loaded = true; })
 
   /**
    * Sets the contents of the content pane
@@ -204,61 +193,10 @@ Yacs = new function () {
   };
 }();
 
-/**
- * View for header bar. Controls site navigation and search
- * @return {undefined}
- * @memberOf Yacs.views
- */
-Yacs.views.header = function () {
-  var homeButton = document.getElementById('page-title');
-  var searchbar = document.getElementById('searchbar');
-  var scheduleButton = document.getElementById("schedule-btn");
-  Yacs.on('click', homeButton, function () { Yacs.views.departments(); });
-  Yacs.on('click', scheduleButton, function () {
-    Yacs.models.schedules.query({ section_ids: Yacs.user.getSelectionsRaw(),
-                                  show_periods: true },
-      function(data, success) {
-        if(success)
-          Yacs.views.schedule(data);
-        }
-    );
-  });
-  Yacs.on('keydown', document, function (elem, event) {
-    var key = event.keyCode;
-    if (!(event.ctrlKey || event.metaKey)) {
-      if (key >= 32 && key <= 127) {
-        if (key == 127 && searchbar.value.length <= 1)
-          Yacs.views.departments();
-        searchbar.focus();
-      } else if (key == 13) {
-        if (searchbar.value) {
-          Yacs.models.courses.query({ search: searchbar.value,
-                                      show_sections: true,
-                                      show_periods: true },
-            function (data, success) {
-              if (success)
-                Yacs.views.courses(data);
-          });
-        } else {
-          Yacs.views.departments();
-        }
-      } else if ((key == 8 || key == 46) && searchbar.value.length <= 1) {
-        Yacs.views.departments();
-      }
-    }
-  });
-  // Yacs.on('click', document.body, function () { searchbar.focus() });
-  // TODO lol previous line was a bit of an oversight, must emulate caret
-  searchbar.focus();
-};
-
 /* ======================================================================== *
     Initializers
  * ======================================================================== */
 
 Yacs.onload(function () {
-  Yacs.models.schools.preload(function (data) {
-    Yacs.views.departments(data);
-  });
-  Yacs.views.header();
+  Yacs.views.index();
 });

@@ -49,10 +49,9 @@ Handlebars.registerHelper('time_range', function (start, end) {
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.courses = function (data, target) {
+Yacs.views.courses = function (target, data) {
   var html = HandlebarsTemplates.courses(data);
-  if (target) target.innerHTML = html;
-  else Yacs.setContents(html);
+  target.innerHTML = html;
 
   var isCourseSelected = function (course) {
     var isSelected = true;
@@ -63,7 +62,7 @@ Yacs.views.courses = function (data, target) {
   };
 
   // Add event listeners to sections
-  document.getElementsByTagName('section').forEach(function (s) {
+  target.getElementsByTagName('section').forEach(function (s) {
     Yacs.on('click', s, function(section) {
       /* If there happens to be a mismatch between the data and the display,
          we care about the data - e.g. if the id is in the array, we will
@@ -84,7 +83,7 @@ Yacs.views.courses = function (data, target) {
     if (Yacs.user.hasSelection(s.dataset.id)) s.classList.add('selected');
   });
 
-  document.getElementsByTagName('course').forEach(function (c) {
+  target.getElementsByTagName('course').forEach(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var isSelected = isCourseSelected(c);
       c.getElementsByTagName('section').forEach(function (s) {
