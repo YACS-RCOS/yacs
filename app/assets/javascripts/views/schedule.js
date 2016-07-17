@@ -4,19 +4,20 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.schedule = function (data) {
-  Yacs.setContents(HandlebarsTemplates.schedule(data));
+Yacs.views.schedule = function (target) {
+  target.innerHTML = HandlebarsTemplates.schedule();
 
-  var scheduleElement = document.querySelector('#schedule-container');
-  var selectionElement = document.querySelector('#selection-container')
-  var leftSwitchElement = document.querySelector('#left-switch');
-  var rightSwitchElement = document.querySelector('#right-switch');
-  var clearButtonElement = document.querySelector('#clear-btn');
-  var scheduleNumElement = document.querySelector('#schedule-num');
-  var crnListElement = document.querySelector('#crn-list');
+  var scheduleElement = target.querySelector('#schedule-container');
+  var selectionElement = target.querySelector('#selection-container')
+  var leftSwitchElement = target.querySelector('#left-switch');
+  var rightSwitchElement = target.querySelector('#right-switch');
+  var clearButtonElement = target.querySelector('#clear-btn');
+  var scheduleNumElement = target.querySelector('#schedule-num');
+  var scheduleCountElement = target.querySelector('#schedule-count');
+  var crnListElement = target.querySelector('#crn-list');
   var schedule = new Schedule(scheduleElement);
+  var scheduleData = [];
   var scheduleIndex = 0;
-
 
   // this function will be deprecated when backend is updated to use minutes-since-midnight format
   // see issue #102
@@ -25,70 +26,89 @@ Yacs.views.schedule = function (data) {
     return Math.floor(int / 100) * 60 + int % 100;
   }
 
-  var transformSchedule = function (schedule) {
-    var events = [];
-    var crns = [];
-
-    schedule.sections.forEach(function (section) {
-      var color = crns.indexOf(section.crn);
-      if (color === -1) {
-        crns.push(section.crn);
-        color = crns.length - 1;
-      }
-
-      section.periods.forEach(function (period) {
-        events.push({
-          start: toMinutes(period.start),
-          end: toMinutes(period.end),
-          day: period.day,
-          colorNum: color,
-          title: section.department_code + ' ' + section.course_number + ' - ' + section.name
+  var processSchedules = function (schedules) {
+    return schedules.map(function (schedule) {
+      var courseIds = [];
+      var events = [];
+      var crns = [];
+      schedule.sections.forEach(function (section) {
+        var color = courseIds.indexOf(section.course_id);
+        if (color == -1) {
+          courseIds.push(section.course_id);
+          color = courseIds.length - 1;
+        }
+        crns.push(section.crn)
+        section.periods.forEach(function (period) {
+          events.push({
+            start: toMinutes(period.start),
+            end: toMinutes(period.end),
+            day: period.day,
+            colorNum: color,
+            title: section.department_code + ' ' + section.course_number + ' - ' + section.name
+          });
         });
       });
+      return { events: events, crns: crns };
     });
-    return { events: events, crns: crns };
+  };
+
+  var setSchedules = function (schedules) {
+    schedule.clearEvents();
+    scheduleData = processSchedules(schedules);
+    scheduleCountElement.textContent = schedules.length;
+    if (scheduleData.length > 0)
+      showSchedule(0);
+  };
+
+  var updateSchedules = function () {
+    var selections = Yacs.user.getSelectionsRaw();
+    if (selections.length > 0) {
+      Yacs.models.schedules.query({ section_ids: selections,
+                                    show_periods: true },
+        function(data, success) {
+          if (success)
+            setSchedules(data.schedules);
+      });
+      clearButtonElement.disabled = false;
+    } else {
+      setSchedules([]);
+      clearButtonElement.disabled = true;
+    }
   };
 
   var showSchedule = function (index) {
-    var scheduleData = transformSchedule(data.schedules[index]);
-    schedule.setEvents(scheduleData.events)
+    schedule.setEvents(scheduleData[index].events)
     scheduleNumElement.textContent = index + 1;
-    crnListElement.textContent = 'CRNs: ' + scheduleData.crns.join(', ');
-  }
+    crnListElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
+  };
 
-  /* this is before `if(data.schedules.length==0)` because clear selection should */
-  /* still work even if courses conflict and there are zero possible schedules    */
   Yacs.on('click', clearButtonElement, function () {
-    /* clear if the user has any selections */  
-    if (Yacs.user.getSelections().length != 0) {
-      Yacs.user.clearSelections();
-      Yacs.views.schedule({ schedules: [] });
-    }
-    clearButtonElement.blur();
+    Yacs.user.clearSelections();
+    updateSchedules();
   });
 
   Yacs.on('click', leftSwitchElement, function () {
-    scheduleIndex = (--scheduleIndex < 0 ? data.schedules.length - 1 : scheduleIndex);
-    showSchedule(scheduleIndex);
-  });
-  Yacs.on('click', rightSwitchElement, function () {
-    scheduleIndex = (++scheduleIndex < data.schedules.length ? scheduleIndex : 0);
+    scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
     showSchedule(scheduleIndex);
   });
 
+  Yacs.on('click', rightSwitchElement, function () {
+    scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
+    showSchedule(scheduleIndex);
+  });
+
+  // TODO: Implement observers for selections
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
     Yacs.models.courses.query({ section_id: selections.join(','),
                                 show_sections: true,
                                 show_periods: true },
-      function (data, success) {
-        if (success)
-          Yacs.views.courses(data, selectionElement);
+      function (data2, success) {
+        if (success) {
+          Yacs.views.courses(selectionElement, data2);
+        }
     });
   }
-  if (data.schedules.length > 0) {
-    showSchedule(scheduleIndex);
-  } else {
-    // TODO: Show there are no schedules available
-  }
+
+  updateSchedules();
 };
