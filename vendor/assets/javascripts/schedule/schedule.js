@@ -59,7 +59,7 @@ window.Schedule = function (scheduleContainer, options) {
   self.clearEvents = function () {
     var events = scheduleElement.querySelectorAll('schedule-event');
     for (var e = 0; e < events.length; ++e)
-      events[e].remove();
+      events[e].parentNode.removeChild(events[e]);
   };
 
   self.setEvents = function (events) {
