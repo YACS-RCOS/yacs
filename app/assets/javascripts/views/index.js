@@ -18,7 +18,9 @@ Yacs.views.index = function () {
   Yacs.on('keydown', document, function (elem, event) {
     var key = event.keyCode;
     if (!(event.ctrlKey || event.metaKey)) {
-      if (key >= 32 && key <= 127) {
+      // event.preventDefault();
+      console.log(event.which + ' ' + event.keyCode + ' ' + event.charCode);
+      if ((key >= 48 && key <= 105) || key == 32) {
         if (key == 127 && searchbar.value.length <= 1)
           Yacs.views.departments(content);
         searchbar.focus();

@@ -57,7 +57,7 @@ Yacs.views.schedule = function (target) {
     scheduleData = processSchedules(schedules);
     scheduleCountElement.textContent = schedules.length;
     if (scheduleData.length > 0)
-      showSchedule(0);
+      show(0);
   };
 
   var updateSchedules = function () {
@@ -77,11 +77,21 @@ Yacs.views.schedule = function (target) {
     }
   };
 
-  var showSchedule = function (index) {
+  var show = function (index) {
     schedule.setEvents(scheduleData[index].events)
     scheduleNumElement.textContent = index + 1;
     crnListElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
   };
+
+  var next = function () {
+    scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
+    show(scheduleIndex);
+  }
+
+  var previous = function () {
+    scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
+    show(scheduleIndex);
+  }
 
   Yacs.on('click', clearButtonElement, function () {
     Yacs.user.clearSelections();
@@ -94,15 +104,10 @@ Yacs.views.schedule = function (target) {
     });
   });
 
-  Yacs.on('click', leftSwitchElement, function () {
-    scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
-    showSchedule(scheduleIndex);
-  });
-
-  Yacs.on('click', rightSwitchElement, function () {
-    scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
-    showSchedule(scheduleIndex);
-  });
+  Yacs.on('click', leftSwitchElement, previous);
+  Yacs.on('click', rightSwitchElement, next);
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 37) previous(); });
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 39) next(); });
 
   // TODO: Implement observers for selections
   var selections = Yacs.user.getSelections();
@@ -119,8 +124,6 @@ Yacs.views.schedule = function (target) {
         }
     });
   }
-
-  observer = updateSchedules;
 
   updateSchedules();
 };
