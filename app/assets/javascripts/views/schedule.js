@@ -44,7 +44,11 @@ Yacs.views.schedule = function (target) {
             end: toMinutes(period.end),
             day: period.day,
             colorNum: color,
-            title: section.department_code + ' ' + section.course_number + ' - ' + section.name
+            title: [
+              section.department_code + ' ' + section.course_number + ' - ' + section.name,
+              section.crn,
+              section.instructors[0] || ''
+            ]
           });
         });
       });

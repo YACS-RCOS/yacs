@@ -42,7 +42,7 @@ window.Schedule = function (scheduleContainer, options) {
     var eventBackground = document.createElement('event-background');
     var colorIndex      = event.colorNum % NUM_COLORS;
 
-    eventText.textContent                 = event.title;
+    eventText.innerHTML                   = event.title.join('<br>');
     eventText.style.color                 = TEXT_COLORS[colorIndex];
     eventElement.style.top                = timeSize(event.start - options.timeBegin);
     eventElement.style.left               = daySize(event.day - options.dayBegin);
