@@ -42,6 +42,7 @@ section {
     margin:0px 0px 0px 5px;
     padding:4px 4px 4px 8px;
     overflow:auto;
+    font-size: 90%;
     /* border-radius: 8px; */
 }
 sections section:not(.selected):hover {
@@ -58,6 +59,10 @@ sections section.selected {
 
 section.closed {
     color: #888;
+}
+
+section-name {
+    font-weight: 400;
 }
 
 section-seats {
