@@ -18,13 +18,13 @@ Handlebars.registerHelper('join', function (arr) {
   return new Handlebars.SafeString(arr.join(', '));
 });
 
-Handlebars.registerHelper('course_seats', function (c) {
-  var remaining = c.seats - c.seats_taken;
+Handlebars.registerHelper('seats_available', function (s) {
+  var remaining = s.seats - s.seats_taken;
   return new Handlebars.SafeString(remaining);
 });
 
-Handlebars.registerHelper('selected_status', function (s) {
-  return new Handlebars.SafeString(Yacs.user.hasSelection(s.id) ? 'selected' : '');
+Handlebars.registerHelper('closed_status', function (s) {
+  return new Handlebars.SafeString(s.seats > 0 && s.seats_taken >= s.seats ? 'closed' : '');
 });
 
 Handlebars.registerHelper('day_name', function (n) {
@@ -41,6 +41,7 @@ Handlebars.registerHelper('time_range', function (start, end) {
     return hour + (minutes ? ':' + minutes : '') + ampm;
   }).join('-'));
 });
+
 
 /**
  * Courses view. Displays courses and their sections
