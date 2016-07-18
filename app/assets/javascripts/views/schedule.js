@@ -61,6 +61,7 @@ Yacs.views.schedule = function (target) {
   };
 
   var updateSchedules = function () {
+    console.log('updating schedules');
     var selections = Yacs.user.getSelectionsRaw();
     if (selections.length > 0) {
       Yacs.models.schedules.query({ section_ids: selections,
@@ -85,6 +86,12 @@ Yacs.views.schedule = function (target) {
   Yacs.on('click', clearButtonElement, function () {
     Yacs.user.clearSelections();
     updateSchedules();
+    target.querySelectorAll('course-info').forEach(function (ci) {
+      ci.classList.remove('selected');
+    });
+    target.querySelectorAll('section').forEach(function (s) {
+      s.classList.remove('selected');
+    });
   });
 
   Yacs.on('click', leftSwitchElement, function () {
@@ -103,12 +110,17 @@ Yacs.views.schedule = function (target) {
     Yacs.models.courses.query({ section_id: selections.join(','),
                                 show_sections: true,
                                 show_periods: true },
-      function (data2, success) {
+      function (data, success) {
         if (success) {
-          Yacs.views.courses(selectionElement, data2);
+          Yacs.views.courses(selectionElement, data);
+          target.querySelectorAll('course').forEach(function (course) {
+            Yacs.on('click', course, updateSchedules);
+          });
         }
     });
   }
+
+  observer = updateSchedules;
 
   updateSchedules();
 };
