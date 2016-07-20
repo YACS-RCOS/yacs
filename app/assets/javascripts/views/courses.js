@@ -61,9 +61,10 @@ Yacs.views.courses = function (data) {
     return isSelected;
   };
 
+  var maxDescriptionHeight = document.querySelector("course-description").clientHeight;
   var truncateOverflowingDescription = function (description, showHideButton) {
     var overflowed = description.classList.contains('overflow');
-    var overflowing = description.scrollHeight > 38;
+    var overflowing = description.scrollHeight > maxDescriptionHeight;
     if (overflowed != overflowing) {
       description.classList[overflowing ? 'add' : 'remove']('overflow', 'truncated');
       showHideButton.classList[overflowing ? 'remove' : 'add']('open');
