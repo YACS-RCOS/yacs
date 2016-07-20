@@ -185,10 +185,12 @@
             var cachedWidth, cachedHeight; //useful to not query offsetWidth twice
 
             var onScroll = function() {
-              if ((cachedWidth = element.offsetWidth) != lastWidth || (cachedHeight = element.offsetHeight) != lastHeight) {
+              cachedWidth = element.offsetWidth;
+              cachedHeight = element.offsetHeight;
+              if (cachedWidth != lastWidth || cachedHeight != lastHeight) {
                   dirty = true;
-                  sizeDeltas['deltaX'] = cachedWidth - lastWidth || 0;
-                  sizeDeltas['deltaY'] = cachedHeight - lastHeight || 0;
+                  sizeDeltas['x'] = cachedWidth - lastWidth || 0;
+                  sizeDeltas['y'] = cachedHeight - lastHeight || 0;
 
                   lastWidth = cachedWidth;
                   lastHeight = cachedHeight;
