@@ -123,17 +123,14 @@ Yacs.views.courses = function (data) {
     descriptionRequireTruncation(description, showButton);
   });
 
-  var resizingFunction;
-  window.addEventListener('resize', function () {
-    if (document.querySelector('#content courses')){
-      clearTimeout(resizingFunction);
-      resizingFunction = setTimeout(function () {
-        document.querySelectorAll('course').forEach(function (c) {
-          var description = c.querySelector('course-description');
-          var showButton = c.querySelector('show-hide-button');
-          descriptionRequireTruncation(description, showButton);
-        });
-      }, 100);
+  var coursesElement = document.querySelector("courses");
+  new ResizeSensor(coursesElement, function (courses, deltas) {
+    if (deltas['x'] != 0) {
+      courses.querySelectorAll('course').forEach(function (c) {
+        var description = c.querySelector('course-description');
+        var showButton = c.querySelector('show-hide-button');
+        descriptionRequireTruncation(description, showButton);
+      });
     }
   });
 };
