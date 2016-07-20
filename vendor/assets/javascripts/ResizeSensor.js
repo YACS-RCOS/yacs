@@ -83,9 +83,9 @@
             };
 
             var i, j;
-            this.call = function() {
+            this.call = function(context, sizeDeltas) {
                 for (i = 0, j = q.length; i < j; i++) {
-                    q[i].call();
+                    q[i].call(context, element, sizeDeltas);
                 }
             };
 
@@ -167,12 +167,13 @@
 
             reset();
             var dirty = false;
+            var sizeDeltas = {};
 
             var dirtyChecking = function() {
                 if (!element.resizedAttached) return;
 
                 if (dirty) {
-                    element.resizedAttached.call();
+                    element.resizedAttached.call(undefined, sizeDeltas);
                     dirty = false;
                 }
 
@@ -186,6 +187,8 @@
             var onScroll = function() {
               if ((cachedWidth = element.offsetWidth) != lastWidth || (cachedHeight = element.offsetHeight) != lastHeight) {
                   dirty = true;
+                  sizeDeltas['deltaX'] = cachedWidth - lastWidth || 0;
+                  sizeDeltas['deltaY'] = cachedHeight - lastHeight || 0;
 
                   lastWidth = cachedWidth;
                   lastHeight = cachedHeight;
