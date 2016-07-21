@@ -47,15 +47,14 @@
 .clear-button {
     border: solid;
     border-radius: 1px;
-    border-width: 2px;
+    border-width: 1px;
     border-color: #c65353;
-    background-color: #ffffff;
-    color: #863838;
-    padding: 2px 4px 0px 4px;
+    color: #ffffff;
+    background-color: #d57f7f;
     font-size: 18px;
+    outline: none;
 }
 
 .clear-button:focus {
-    outline-color: #602020;
-    background-color: #e6e6e6;
+    background-color: #c65353;
 }
