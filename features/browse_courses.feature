@@ -14,10 +14,19 @@ Background:
     | id | number | name             | department_id |
     | 12 | 1200   | Data Structures  | 6             |
 
+# @javascript
+# @delay
+# Scenario: view courses
+#   Given I go to the home page
+#   When I click the department "CSCI"
+#   Then I should see the course with id 12
+#   And within it I should see the text "Data Structures"
+
 @javascript
-@delay
-Scenario: view courses
+Scenario: truncate course description
+  Given a course with a description of length 122:
+  | id | number | name     | department_id |
+  | 18 |   1400 | Alphabet |             6 |
   Given I go to the home page
   When I click the department "CSCI"
-  Then I should see the course with id 12
-  And within it I should see the text "Data Structures"
+  Then I break

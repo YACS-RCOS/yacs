@@ -25,12 +25,19 @@ Given(/^the sections as such:?$/) do |table|
   data = table.raw[1..-1]
   data.each do |row|
     opts = header.zip(row).to_h
-    opts.each do |key,value|
+    opts.each do |key, value|
       innerValue = value[/(?<=\[)[\w\'\"]+(,[\w\'\"]+)*(?=\])/]
       opts[key] = innerValue ? innerValue.split(',') : value
     end
-    FactoryGirl.create(:section_with_periods,opts)
+    FactoryGirl.create(:section_with_periods, opts)
   end 
+end
+
+Given(/^a course with a description of length (\d+):?$/) do |length, table|
+	opts = table.transpose.raw.to_h
+	opts['description'] = 'a ' * length.to_i
+	puts opts
+	FactoryGirl.create(:course, opts)
 end
 
 # find a model
