@@ -67,8 +67,9 @@ Yacs.views.courses = function (data) {
     var overflowing = description.scrollHeight > maxDescriptionHeight;
     if (overflowed != overflowing) {
       description.classList[overflowing ? 'add' : 'remove']('overflow', 'truncated');
-      showHideButton.classList[overflowing ? 'remove' : 'add']('open');
       showHideButton.style.display = overflowing ? 'block' : 'none';
+      showHideButton.classList.remove('open');
+      showHideButton.innerHTML = 'show';
     }
   };
 
@@ -119,6 +120,7 @@ Yacs.views.courses = function (data) {
       var isDescriptionTruncated = description.classList.contains('truncated');
       description.classList[isDescriptionTruncated ? 'remove' : 'add']('truncated');
       showHideButton.classList[isDescriptionTruncated ? 'add' : 'remove']('open');
+      showHideButton.innerHTML = isDescriptionTruncated ? 'hide' : 'show';
       event.stopPropagation();
     });
     truncateOverflowingDescription(description, showHideButton);

@@ -41,7 +41,7 @@ course-description.truncated{
     height: 3em; 
     overflow: hidden;
 }
-show-hide-button:after {
+show-hide-button {
     position: relative;
     top: -1.6em;
     float: right;
@@ -54,7 +54,7 @@ show-hide-button:after {
     background: -webkit-linear-gradient(left,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.76) 25%,rgba(255,255,255,1) 33%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0.76) 25%,rgba(255,255,255,1) 33%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
-show-hide-button.open:after {
+show-hide-button.open {
     top: 0px;
     margin-bottom: 0px;
     margin-left: 100%;
@@ -62,7 +62,7 @@ show-hide-button.open:after {
     background: rgba(0, 0, 0, 0);
     content: 'hide';
 }
-show-hide-button:hover:after{
+show-hide-button:hover{
     font-weight: bold;
 }
 section {
