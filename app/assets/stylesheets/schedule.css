@@ -1,7 +1,7 @@
 #schedule-bar {
     margin-left: auto;
     margin-right: auto;
-    font-size: 130%;
+    /*font-size: 130%;*/
     font-weight: 500;
     margin: 5px;
     margin-right: 20px;
@@ -32,6 +32,22 @@
     color: #999;
     cursor: default;
 }
+#schedule-status {
+    margin: 0 auto;
+}
+
+#schedule-bar>.side {
+    width: 25%;
+    float: left;
+    height: 1em;
+}
+
+#schedule-bar>.middle {
+    width: 50%;
+    float: left;
+    text-align: center;
+    height: 1em;
+}
 
 #schedule-container {
     height: 600px;
@@ -51,7 +67,7 @@
     border-color: #c65353;
     color: #ffffff;
     background-color: #d57f7f;
-    font-size: 18px;
+    font-size: 14px;
     outline: none;
 }
 
