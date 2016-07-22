@@ -4,7 +4,6 @@ AfterStep('@pause') do
 end
 
 AfterStep('@delay') do
-  sleep(1)
   puts 'sleeping'
 end
 
