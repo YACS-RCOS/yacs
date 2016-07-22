@@ -557,8 +557,7 @@
         null,
         null,
         1,
-        133,
-        133,
+        104,
         null,
         null,
         1,
@@ -651,7 +650,7 @@
         null,
         null,
         1,
-        6,
+        3,
         null,
         null,
         1,
@@ -659,19 +658,19 @@
         null,
         null,
         1,
-        5,
+        0,
         null,
         null,
         1,
-        13,
+        6,
         null,
         null,
         1,
-        2,
+        1,
         null,
         null,
         1,
-        2,
+        1,
         null,
         null,
         1,
@@ -715,7 +714,7 @@
         null,
         null,
         1,
-        8,
+        2,
         null,
         null,
         1,
@@ -874,7 +873,7 @@
       ],
       "/home/ren/cs/yacs/features/step_definitions/web_steps.rb": [
         1,
-        19,
+        17,
         null,
         null,
         1,
@@ -1049,6 +1048,6 @@
         null
       ]
     },
-    "timestamp": 1469167776
+    "timestamp": 1469212988
   }
 }

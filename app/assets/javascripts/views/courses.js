@@ -115,7 +115,7 @@ Yacs.views.courses = function (data) {
     if (isCourseSelected(c)) c.classList.add('selected');
 
     var description = c.querySelector('course-description');
-    var showHideButton = c.querySelector('show-hide-button');
+    var showHideButton = c.querySelector('.show-hide-button');
     Yacs.on('click', showHideButton, function (showHideButton, event) {
       var isDescriptionTruncated = description.classList.contains('truncated');
       description.classList[isDescriptionTruncated ? 'remove' : 'add']('truncated');
@@ -131,7 +131,7 @@ Yacs.views.courses = function (data) {
     if (deltas['x'] != 0) {
       courses.querySelectorAll('course').forEach(function (c) {
         var description = c.querySelector('course-description');
-        var showHideButton = c.querySelector('show-hide-button');
+        var showHideButton = c.querySelector('.show-hide-button');
         truncateOverflowingDescription(description, showHideButton);
       });
     }
