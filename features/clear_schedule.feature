@@ -5,17 +5,17 @@ Feature: Schedule View
 
 Background:
   Given the following schools exist:
-  | id | name              |
-  | 1  | School of Science |
+    | id | name              |
+    | 1  | School of Science |
   And the following departments exist:
-  | id | code | name             | school_id |
-  | 6  | CSCI | Computer Science | 1         |
+    | id | code | name             | school_id |
+    | 6  | CSCI | Computer Science | 1         |
   And the following courses exist:
-  | id | number | name            | department_id |
-  | 12 | 1200   | Data Structures | 6             |
+    | id | number | name            | department_id |
+    | 12 | 1200   | Data Structures | 6             |
   And the sections as such:
-  | id | name | course_id | num_periods | periods_day |
-  | 18 | 01   | 12        | 3           | [1,3,4]     |
+    | id | name | course_id | num_periods | periods_day |
+    | 18 | 01   | 12        | 3           | [1,3,4]     |
 
 @javascript
 @delay
@@ -37,11 +37,11 @@ Scenario: clear courses no course conflict
 @delay
 Scenario: clear courses with course conflict
   Given the following courses exists:
-  | id | number | name                            | department_id |
-  | 13 | 2200   | Foundations of Computer Science | 6             |
+    | id | number | name                            | department_id |
+    | 13 | 2200   | Foundations of Computer Science | 6             |
   And a section as such:
-  | id | name | course_id | num_periods | periods_day | periods_start | periods_end | periods_type |
-  | 19 | 02   | 13        | 1           | [1]         | [900]         | [1000]      | ['LEC']      |
+    | id | name | course_id | num_periods | periods_day | periods_start | periods_end | periods_type |
+    | 19 | 02   | 13        | 1           | [1]         | [900]         | [1000]      | ['LEC']      |
   Given I go to the home page
   And I click the department "CSCI"
   When I click the course "CSCI 1200"

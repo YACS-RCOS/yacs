@@ -5,6 +5,7 @@ end
 
 AfterStep('@delay') do
   sleep(1)
+  puts 'sleeping'
 end
 
 Before('@javascript') do

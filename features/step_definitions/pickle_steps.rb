@@ -33,11 +33,14 @@ Given(/^the sections as such:?$/) do |table|
   end 
 end
 
-Given(/^a course with a description of length (\d+):?$/) do |length, table|
-	opts = table.transpose.raw.to_h
-	opts['description'] = 'a ' * length.to_i
-	puts opts
-	FactoryGirl.create(:course, opts)
+Given(/^the following courses? with description:$/) do |table|
+  data = table.hashes
+  data.each do |row|
+    length = row[:description_length].to_i
+    opts = row.reject { |k| k == 'description_length' }
+    opts['description'] = 'a ' * length
+    FactoryGirl.create(:course, opts)
+  end
 end
 
 # find a model

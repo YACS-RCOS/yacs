@@ -32,6 +32,10 @@ And(/^(?:within it )?I should also see the text "(.*)"$/) do |text|
   expect(page.find(css)).to have_content text
 end
 
+And(/^I should see a (.*) with text "(.*)"$/) do |elem, text|
+  expect(page.find(elem)).to have_content text
+end
+
 And(/I break$/) do
   binding.pry
 end
