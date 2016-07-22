@@ -4,7 +4,7 @@ AfterStep('@pause') do
 end
 
 AfterStep('@delay') do
-  puts 'sleeping'
+  sleep(1)
 end
 
 Before('@javascript') do

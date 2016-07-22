@@ -88,15 +88,15 @@ Scenario: user toggles course description truncation using show-hide-button
     | id | number | name                   | department_id | description_length |
     | 18 | 1400   | overflowingDescription | 6             | 123                |
   Then the show hide button of course with id 18 should be visible
-    And I should see a show-hide-button with text "show"
+    And I should see a button with text "show"
     And the description of course with id 18 should be truncated
-  When I click the show-hide-button "show"
+  When I click the button "show"
   Then the show hide button of course with id 18 should be visible
-    And I should see a show-hide-button with text "hide"
+    And I should see a button with text "hide"
     And the description of course with id 18 should NOT be truncated
-  When I click the show-hide-button "hide"
+  When I click the button "hide"
   Then the show hide button of course with id 18 should be visible
-    And I should see a show-hide-button with text "show"
+    And I should see a button with text "show"
     And the description of course with id 18 should be truncated
 
 @javascript
@@ -105,12 +105,12 @@ Scenario: description should remain open unless it no longer overflows
   Given setup course descriptions as such and go to courses page:
     | id | number | name                   | department_id | description_length |
     | 18 | 1400   | overflowingDescription | 6             | 300                |
-  When I click the show-hide-button "show"
-  Then I should see a show-hide-button with text "hide"
+  When I click the button "show"
+  Then I should see a button with text "hide"
     And the description of course with id 18 should NOT be truncated
   When I shrink the browser horizontally
-  Then I should see a show-hide-button with text "hide"
+  Then I should see a button with text "hide"
     And the description of course with id 18 should NOT be truncated
   When I expand the browser horizontally
-  Then I should see a show-hide-button with text "hide"
+  Then I should see a button with text "hide"
     And the description of course with id 18 should NOT be truncated

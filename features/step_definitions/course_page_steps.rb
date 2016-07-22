@@ -5,11 +5,11 @@ Given(/^setup course descriptions as such and go to courses page:$/) do |table|
 end
 
 Then(/^the show hide button of course with id (\d+) should be visible$/) do |id|
-  expect(page).to have_css("course[data-id='#{id}'] show-hide-button")
+  expect(page).to have_css("course[data-id='#{id}'] .show-hide-button")
 end
 
 Then(/^the show hide button of course with id (\d+) should be hidden$/) do |id|
-  expect(page).to have_no_css("course[data-id='#{id}'] show-hide-button")
+  expect(page).to have_no_css("course[data-id='#{id}'] .show-hide-button")
 end
 
 Then(/^the description of course with id (\d+) should be truncated$/) do |id|
