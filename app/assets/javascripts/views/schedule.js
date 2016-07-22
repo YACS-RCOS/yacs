@@ -14,6 +14,7 @@ Yacs.views.schedule = function (target) {
   var clearButtonElement = target.querySelector('#clear-btn');
   var scheduleNumElement = target.querySelector('#schedule-num');
   var scheduleCountElement = target.querySelector('#schedule-count');
+  var scheduleStatusElement = target.querySelector('#schedule-status');
   var crnListElement = target.querySelector('#crn-list');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
@@ -60,8 +61,17 @@ Yacs.views.schedule = function (target) {
     schedule.clearEvents();
     scheduleData = processSchedules(schedules);
     scheduleCountElement.textContent = schedules.length;
-    if (scheduleData.length > 0)
+    if (scheduleData.length > 0) {
       show(0);
+      scheduleStatusElement.textContent = " ";
+    } else {
+      show(-1);
+      if (Yacs.user.getSelections().length > 0) {
+        scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
+      } else {
+        scheduleStatusElement.textContent = "Nothing to see here :) Try adding some courses";
+      }
+    }
   };
 
   var updateSchedules = function () {
@@ -82,9 +92,14 @@ Yacs.views.schedule = function (target) {
   };
 
   var show = function (index) {
-    schedule.setEvents(scheduleData[index].events)
-    scheduleNumElement.textContent = index + 1;
-    crnListElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
+    if (index == -1) {
+      crnListElement.textContent = "";
+      scheduleNumElement.textContent = 0;
+    } else {
+      schedule.setEvents(scheduleData[index].events)
+      scheduleNumElement.textContent = index + 1;
+      crnListElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
+    }
   };
 
   var next = function () {
