@@ -61,7 +61,7 @@ Yacs.views.courses = function (data) {
     return isSelected;
   };
 
-  var maxDescriptionHeight = document.querySelector("course-description").clientHeight;
+  var maxDescriptionHeight = document.querySelector('course-description').clientHeight;
   var truncateOverflowingDescription = function (description, showHideButton) {
     var overflowed = description.classList.contains('overflow');
     var overflowing = description.scrollHeight > maxDescriptionHeight;
@@ -126,7 +126,7 @@ Yacs.views.courses = function (data) {
     truncateOverflowingDescription(description, showHideButton);
   });
 
-  var coursesElement = document.querySelector("courses");
+  var coursesElement = document.querySelector('courses');
   new ResizeSensor(coursesElement, function (courses, deltas) {
     if (deltas['x'] != 0) {
       courses.querySelectorAll('course').forEach(function (c) {

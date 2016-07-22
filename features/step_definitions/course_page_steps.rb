@@ -1,6 +1,6 @@
 Given(/^setup course descriptions as such and go to courses page:$/) do |table|
-  step "the following courses with description:", table
-  step "I go to the home page"
+  step 'the following courses with description:', table
+  step 'I go to the home page'
   step 'I click the department "CSCI"'
 end
 

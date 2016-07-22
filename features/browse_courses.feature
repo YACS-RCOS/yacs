@@ -12,7 +12,7 @@ Background:
     | 6  | CSCI   | Computer Science | 1         |
   And the following courses exist:
     | id | number | name            | department_id |
-    | 12 |   1200 | Data Structures |             6 |
+    | 12 | 1200   | Data Structures | 6             |
 
 @javascript
 @delay
