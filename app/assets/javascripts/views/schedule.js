@@ -28,7 +28,9 @@ Yacs.views.schedule = function (target) {
   }
 
   var processSchedules = function (schedules) {
-    return schedules.map(function (schedule) {
+    var start = 480;
+    var end = 1200;
+    var processedSchedules = schedules.map(function (schedule) {
       var courseIds = [];
       var events = [];
       var crns = [];
@@ -40,6 +42,8 @@ Yacs.views.schedule = function (target) {
         }
         crns.push(section.crn)
         section.periods.forEach(function (period) {
+          start = Math.min(start, toMinutes(period.start));
+          end = Math.max(end, toMinutes(period.end));
           events.push({
             start: toMinutes(period.start),
             end: toMinutes(period.end),
@@ -55,12 +59,16 @@ Yacs.views.schedule = function (target) {
       });
       return { events: events, crns: crns };
     });
+    return { schedules: processedSchedules, start: start, end: end };
   };
 
   var setSchedules = function (schedules) {
-    schedule.clearEvents();
-    scheduleData = processSchedules(schedules);
-    scheduleCountElement.textContent = schedules.length;
+    var data = processSchedules(schedules);
+    scheduleData = data.schedules;
+    schedule.destroy();
+    schedule = new Schedule(scheduleElement, 
+      { timeBegin: Math.ceil((data.start) / 60) * 60, timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
+    scheduleCountElement.textContent = scheduleData.length;
     if (scheduleData.length > 0) {
       show(0);
       scheduleStatusElement.textContent = " ";
