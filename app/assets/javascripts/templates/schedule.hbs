@@ -1,12 +1,20 @@
-<div id="schedule-content">
+<div id="schedule-content" tabindex="0">
   <div id="schedule-bar">
-    <div id="switch">
-      <span id="left-switch" class="schedule-switch">&#9664;</span>
-      <span id="schedule-num">0</span> / {{schedules.length}}
-      <span id="right-switch" class="schedule-switch">&#9654;</span>
+    <div id="left">
+      <div id="switch">
+        <span id="left-switch" class="schedule-switch">&#9664;</span>
+        <span id="schedule-num">0</span> / <span id="schedule-count">0</span>
+        <span id="right-switch" class="schedule-switch">&#9654;</span>
+      </div>
+      <button type="button" id="clear-btn" class="clear-button">Clear</button>
     </div>
-    <button type="button" id="clear-btn" class="clear-button">Clear</button>
-    <div id="crn-list"> </div>
+    <div id="middle">
+      <div id="schedule-status"></div>
+    </div>
+    <div id="right">
+      <div id="crn-list"></div>
+    </div>
   </div>
-  <div id="schedule-container" />
+  <div id="schedule-container"></div>
 </div>
+<div id="selection-container"></div>

@@ -1,10 +1,12 @@
 course {
-    display:block;
+    display: block;
     margin: 0px 20px;
     padding:15px;
     /*border-radius: 15px;*/
     border-bottom: 1px #bbb solid;
-    cursor:pointer;
+    cursor: pointer;
+    max-width: 950px;
+    margin: 0 auto;
 }
 /*course:hover {
     background-color:#e7e7e7;
@@ -33,12 +35,14 @@ course-credits {
 course-description {
     display:block;
     font-size:87%;
+    text-align: justify;
 }
 section {
     display:block;
     margin:0px 0px 0px 5px;
     padding:4px 4px 4px 8px;
     overflow:auto;
+    font-size: 90%;
     /* border-radius: 8px; */
 }
 sections section:not(.selected):hover {
@@ -55,6 +59,10 @@ sections section.selected {
 
 section.closed {
     color: #888;
+}
+
+section-name {
+    font-weight: 400;
 }
 
 section-seats {

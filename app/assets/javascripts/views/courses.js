@@ -18,13 +18,13 @@ Handlebars.registerHelper('join', function (arr) {
   return new Handlebars.SafeString(arr.join(', '));
 });
 
-Handlebars.registerHelper('course_seats', function (c) {
-  var remaining = c.seats - c.seats_taken;
+Handlebars.registerHelper('seats_available', function (s) {
+  var remaining = s.seats - s.seats_taken;
   return new Handlebars.SafeString(remaining);
 });
 
-Handlebars.registerHelper('selected_status', function (s) {
-  return new Handlebars.SafeString(Yacs.user.hasSelection(s.id) ? 'selected' : '');
+Handlebars.registerHelper('closed_status', function (s) {
+  return new Handlebars.SafeString(s.seats > 0 && s.seats_taken >= s.seats ? 'closed' : '');
 });
 
 Handlebars.registerHelper('day_name', function (n) {
@@ -42,6 +42,7 @@ Handlebars.registerHelper('time_range', function (start, end) {
   }).join('-'));
 });
 
+
 /**
  * Courses view. Displays courses and their sections
  * @param {Object} data - Object containing Courses model collection
@@ -49,9 +50,9 @@ Handlebars.registerHelper('time_range', function (start, end) {
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.courses = function (data) {
+Yacs.views.courses = function (target, data) {
   var html = HandlebarsTemplates.courses(data);
-  Yacs.setContents(html);
+  target.innerHTML = html;
 
   var isCourseSelected = function (course) {
     var isSelected = true;
@@ -62,7 +63,7 @@ Yacs.views.courses = function (data) {
   };
 
   // Add event listeners to sections
-  document.getElementsByTagName('section').forEach(function (s) {
+  target.getElementsByTagName('section').forEach(function (s) {
     Yacs.on('click', s, function(section) {
       /* If there happens to be a mismatch between the data and the display,
          we care about the data - e.g. if the id is in the array, we will
@@ -83,10 +84,7 @@ Yacs.views.courses = function (data) {
     if (Yacs.user.hasSelection(s.dataset.id)) s.classList.add('selected');
   });
 
-  /* This does not actually add or remove sections from the selected list.
-     TODO: implement this
-  */
-  document.getElementsByTagName('course').forEach(function (c) {
+  target.getElementsByTagName('course').forEach(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var isSelected = isCourseSelected(c);
       c.getElementsByTagName('section').forEach(function (s) {

@@ -9,7 +9,6 @@ Scenario: visits the home page
   Then I should see the text "YACS beta"
 
 @javascript
-@delay
 Scenario: views departments
   Given the following schools exist:
     | id | name                  |

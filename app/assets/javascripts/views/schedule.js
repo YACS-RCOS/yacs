@@ -4,17 +4,21 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.schedule = function (data) {
-  Yacs.setContents(HandlebarsTemplates.schedule(data));
-  var scheduleElement = document.querySelector('#schedule-container');
-  var leftSwitchElement = document.querySelector('#left-switch');
-  var rightSwitchElement = document.querySelector('#right-switch');
-  var clearButtonElement = document.querySelector('#clear-btn');
-  var scheduleNumElement = document.querySelector('#schedule-num');
-  var crnListElement = document.querySelector('#crn-list');
-  var schedule = new Schedule(scheduleElement);
-  var scheduleIndex = 0;
+Yacs.views.schedule = function (target) {
+  target.innerHTML = HandlebarsTemplates.schedule();
 
+  var scheduleElement = target.querySelector('#schedule-container');
+  var selectionElement = target.querySelector('#selection-container')
+  var leftSwitchElement = target.querySelector('#left-switch');
+  var rightSwitchElement = target.querySelector('#right-switch');
+  var clearButtonElement = target.querySelector('#clear-btn');
+  var scheduleNumElement = target.querySelector('#schedule-num');
+  var scheduleCountElement = target.querySelector('#schedule-count');
+  var scheduleStatusElement = target.querySelector('#schedule-status');
+  var crnListElement = target.querySelector('#crn-list');
+  var schedule = new Schedule(scheduleElement);
+  var scheduleData = [];
+  var scheduleIndex = 0;
 
   // this function will be deprecated when backend is updated to use minutes-since-midnight format
   // see issue #102
@@ -23,61 +27,130 @@ Yacs.views.schedule = function (data) {
     return Math.floor(int / 100) * 60 + int % 100;
   }
 
-  var transformSchedule = function (schedule) {
-    var events = [];
-    var crns = [];
-
-    schedule.sections.forEach(function (section) {
-      var color = crns.indexOf(section.crn);
-      if (color === -1) {
-        crns.push(section.crn);
-        color = crns.length - 1;
-      }
-
-      section.periods.forEach(function (period) {
-        events.push({
-          start: toMinutes(period.start),
-          end: toMinutes(period.end),
-          day: period.day,
-          colorNum: color,
-          title: section.department_code + ' ' + section.course_number + ' - ' + section.name
+  var processSchedules = function (schedules) {
+    var start = 480;
+    var end = 1200;
+    var processedSchedules = schedules.map(function (schedule) {
+      var courseIds = [];
+      var events = [];
+      var crns = [];
+      schedule.sections.forEach(function (section) {
+        var color = courseIds.indexOf(section.course_id);
+        if (color == -1) {
+          courseIds.push(section.course_id);
+          color = courseIds.length - 1;
+        }
+        crns.push(section.crn)
+        section.periods.forEach(function (period) {
+          start = Math.min(start, toMinutes(period.start));
+          end = Math.max(end, toMinutes(period.end));
+          events.push({
+            start: toMinutes(period.start),
+            end: toMinutes(period.end),
+            day: period.day,
+            colorNum: color,
+            title: [
+              section.department_code + ' ' + section.course_number + ' - ' + section.name,
+              section.crn,
+              section.instructors[0] || ''
+            ]
+          });
         });
       });
+      return { events: events, crns: crns };
     });
-    return { events: events, crns: crns };
+    return { schedules: processedSchedules, start: start, end: end };
   };
 
-  var showSchedule = function (index) {
-    var scheduleData = transformSchedule(data.schedules[index]);
-    schedule.setEvents(scheduleData.events)
-    scheduleNumElement.textContent = index + 1;
-    crnListElement.textContent = 'CRNs: ' + scheduleData.crns.join(', ');
-  }
-
-  /* this is before `if(data.schedules.length==0)` because clear selection should */
-  /* still work even if courses conflict and there are zero possible schedules    */
-  Yacs.on('click', clearButtonElement, function () {
-    /* clear if the user has any selections */  
-    if (Yacs.user.getSelections().length != 0) {
-      Yacs.user.clearSelections();
-      Yacs.views.schedule({schedules:[]});
+  var setSchedules = function (schedules) {
+    var data = processSchedules(schedules);
+    scheduleData = data.schedules;
+    schedule.destroy();
+    schedule = new Schedule(scheduleElement, 
+      { timeBegin: Math.ceil((data.start) / 60) * 60, timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
+    scheduleCountElement.textContent = scheduleData.length;
+    if (scheduleData.length > 0) {
+      show(0);
+      scheduleStatusElement.textContent = " ";
+    } else {
+      show(-1);
+      if (Yacs.user.getSelections().length > 0) {
+        scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
+      } else {
+        scheduleStatusElement.textContent = "Nothing to see here :) Try adding some courses";
+      }
     }
-    clearButtonElement.blur();
-  });
+  };
 
-  if(data.schedules.length == 0) {
-    // TODO: this will happen if there are no available schedules
-    return;
+  var updateSchedules = function () {
+    console.log('updating schedules');
+    var selections = Yacs.user.getSelectionsRaw();
+    if (selections.length > 0) {
+      Yacs.models.schedules.query({ section_ids: selections,
+                                    show_periods: true },
+        function(data, success) {
+          if (success)
+            setSchedules(data.schedules);
+      });
+      clearButtonElement.disabled = false;
+    } else {
+      setSchedules([]);
+      clearButtonElement.disabled = true;
+    }
+  };
+
+  var show = function (index) {
+    if (index == -1) {
+      crnListElement.textContent = "";
+      scheduleNumElement.textContent = 0;
+    } else {
+      schedule.setEvents(scheduleData[index].events)
+      scheduleNumElement.textContent = index + 1;
+      crnListElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
+    }
+  };
+
+  var next = function () {
+    scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
+    show(scheduleIndex);
   }
 
-  Yacs.on('click', leftSwitchElement, function () {
-    scheduleIndex = (--scheduleIndex < 0 ? data.schedules.length - 1 : scheduleIndex);
-    showSchedule(scheduleIndex);
-  });
-  Yacs.on('click', rightSwitchElement, function () {
-    scheduleIndex = (++scheduleIndex < data.schedules.length ? scheduleIndex : 0);
-    showSchedule(scheduleIndex);
+  var previous = function () {
+    scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
+    show(scheduleIndex);
+  }
+
+  Yacs.on('click', clearButtonElement, function () {
+    Yacs.user.clearSelections();
+    updateSchedules();
+    target.querySelectorAll('course-info').forEach(function (ci) {
+      ci.classList.remove('selected');
+    });
+    target.querySelectorAll('section').forEach(function (s) {
+      s.classList.remove('selected');
+    });
   });
 
-  showSchedule(scheduleIndex);
+  Yacs.on('click', leftSwitchElement, previous);
+  Yacs.on('click', rightSwitchElement, next);
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 37) previous(); });
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 39) next(); });
+
+  // TODO: Implement observers for selections
+  var selections = Yacs.user.getSelections();
+  if (selections.length > 0) {
+    Yacs.models.courses.query({ section_id: selections.join(','),
+                                show_sections: true,
+                                show_periods: true },
+      function (data, success) {
+        if (success) {
+          Yacs.views.courses(selectionElement, data);
+          target.querySelectorAll('course').forEach(function (course) {
+            Yacs.on('click', course, updateSchedules);
+          });
+        }
+    });
+  }
+
+  updateSchedules();
 };

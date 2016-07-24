@@ -1,7 +1,7 @@
 #schedule-bar {
     margin-left: auto;
     margin-right: auto;
-    font-size: 130%;
+    /*font-size: 130%;*/
     font-weight: 500;
     margin: 5px;
     margin-right: 20px;
@@ -32,6 +32,23 @@
     color: #999;
     cursor: default;
 }
+#schedule-status {
+    margin: 0 auto;
+}
+#schedule-bar>#left {
+    width: 25%;
+    float: left;
+}
+#schedule-bar>#middle {
+    width: 50%;
+    float: left;
+    text-align: center;
+    height: 1em;
+}
+#schedule-bar>#right {
+    float: right;
+    height: 1em;
+}
 
 #schedule-container {
     height: 600px;
@@ -39,18 +56,22 @@
     margin-top: 10px;
 }
 
+#schedule-content {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
 .clear-button {
     border: solid;
     border-radius: 1px;
-    border-width: 2px;
+    border-width: 1px;
     border-color: #c65353;
-    background-color: #ffffff;
-    color: #863838;
-    padding: 2px 4px 0px 4px;
-    font-size: 18px;
+    color: #ffffff;
+    background-color: #d57f7f;
+    font-size: 14px;
+    outline: none;
 }
 
 .clear-button:focus {
-    outline-color: #602020;
-    background-color: #e6e6e6;
+    background-color: #c65353;
 }
