@@ -14,11 +14,11 @@ window.Schedule = function (scheduleContainer, options) {
   // var BORDER_COLORS     = ['#b62', '#b44', '#994', '#448', '#499', '#949'];
 
   options = options || {};
-  options.timeBegin = options.timeBegin || 8 * 60;
-  options.timeSpan  = options.timeSpan  || 12 * 60;
-  options.dayBegin  = options.dayBegin  || 1;
   options.daySpan   = options.daySpan   || 5;
+  options.dayBegin  = options.dayBegin  || 1;
   options.gridSize  = options.gridSize  || 60;
+  options.timeSpan  = Math.ceil((options.timeSpan  || 720) / 60) * 60;
+  options.timeBegin = Math.ceil((options.timeBegin || 480) / 60) * 60;
 
   var scheduleElement = document.createElement('schedule-view');
   var legendElement   = document.createElement('schedule-legend');
@@ -67,6 +67,10 @@ window.Schedule = function (scheduleContainer, options) {
     events.forEach(function (event) {
       self.addEvent(event);
     });
+  };
+
+  self.destroy = function () {
+    scheduleContainer.removeChild(scheduleElement);
   };
 
   var drawLegend = function () {

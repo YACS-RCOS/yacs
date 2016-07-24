@@ -35,17 +35,18 @@
 #schedule-status {
     margin: 0 auto;
 }
-
-#schedule-bar>.side {
+#schedule-bar>#left {
     width: 25%;
     float: left;
-    height: 1em;
 }
-
-#schedule-bar>.middle {
+#schedule-bar>#middle {
     width: 50%;
     float: left;
     text-align: center;
+    height: 1em;
+}
+#schedule-bar>#right {
+    float: right;
     height: 1em;
 }
 
