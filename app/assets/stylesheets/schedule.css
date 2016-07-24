@@ -39,12 +39,6 @@
     width: 25%;
     float: left;
 }
-#schedule-bar>#middle {
-    width: 50%;
-    float: left;
-    text-align: center;
-    height: 1em;
-}
 #schedule-bar>#right {
     float: right;
     height: 1em;

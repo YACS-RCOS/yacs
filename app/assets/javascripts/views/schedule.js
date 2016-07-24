@@ -71,7 +71,6 @@ Yacs.views.schedule = function (target) {
     scheduleCountElement.textContent = scheduleData.length;
     if (scheduleData.length > 0) {
       show(0);
-      scheduleStatusElement.textContent = " ";
     } else {
       show(-1);
       if (Yacs.user.getSelections().length > 0) {
@@ -83,7 +82,6 @@ Yacs.views.schedule = function (target) {
   };
 
   var updateSchedules = function () {
-    console.log('updating schedules');
     var selections = Yacs.user.getSelectionsRaw();
     if (selections.length > 0) {
       Yacs.models.schedules.query({ section_ids: selections,
@@ -101,12 +99,12 @@ Yacs.views.schedule = function (target) {
 
   var show = function (index) {
     if (index == -1) {
-      crnListElement.textContent = "";
+      scheduleStatusElement.textContent = "";
       scheduleNumElement.textContent = 0;
     } else {
       schedule.setEvents(scheduleData[index].events)
       scheduleNumElement.textContent = index + 1;
-      crnListElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
+      scheduleStatusElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
     }
   };
 
