@@ -3,7 +3,7 @@ Yacs::Application.load_tasks
 
 class UpdateSeats
   def perform
-    Rake::Task['catalog:update_seats'].invoke
+    Catalog::RpiAdapter.new.update_section_seats
   end
 end
 

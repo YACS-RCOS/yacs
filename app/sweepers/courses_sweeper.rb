@@ -4,6 +4,6 @@ class CoursesSweeper < BaseSweeper
   def expire_data record
     super record
     course = record.is_a?(Course) ? record : record.course
-    expire_fragment "api/v5/courses/index.xml?department_id=#{course.department_id}"
+    expire_fragment "/api/v5/courses.json?department_id=#{course.department_id}"
   end
 end
