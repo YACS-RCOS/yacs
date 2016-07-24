@@ -1,0 +1,56 @@
+#schedule-bar {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 130%;
+    font-weight: 500;
+    margin: 5px;
+    margin-right: 20px;
+    /* note to maintainers: if the general user-select is standard by now,
+       please remove the vendor ones and replace with "user-select:none;" */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+}
+#schedule-bar:after { 
+   content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+#crn-list {
+    font-size: 90%;
+    float: right;
+}
+#switch {
+    float: left;
+}
+.schedule-switch {
+    padding:5px;
+    cursor:pointer;
+}
+.schedule-switch.disabled {
+    color: #999;
+    cursor: default;
+}
+
+#schedule-container {
+    height: 600px;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.clear-button {
+    border: solid;
+    border-radius: 1px;
+    border-width: 2px;
+    border-color: #c65353;
+    background-color: #ffffff;
+    color: #863838;
+    padding: 2px 4px 0px 4px;
+    font-size: 18px;
+}
+
+.clear-button:focus {
+    outline-color: #602020;
+    background-color: #e6e6e6;
+}

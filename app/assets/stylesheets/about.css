@@ -1,0 +1,36 @@
+article#about {
+    text-align:center;
+    width: 60%;
+    min-width:400px;
+    margin: 0 auto;
+}
+article#about h1 {
+    padding:15px 0;
+    font-size:35px;
+}
+article#about p {
+    text-align:left;
+    margin: 0 auto 20px;
+}
+article#about h2 {
+    font-size: 25px;
+    padding:10px 0;
+    margin-bottom:8px;
+}
+article#about h2.bottomrule {
+    border-bottom:1px #b0b0b0 solid;
+}
+article#about h3 {
+    text-align:left;
+    font-size:20px;
+}
+article#about table {
+    margin: 8 auto;
+    border:1px black solid;
+}
+article#about table tr {
+
+}
+article#about table tr td {
+    width:200px;
+}
