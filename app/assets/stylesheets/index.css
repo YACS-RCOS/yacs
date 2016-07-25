@@ -23,11 +23,19 @@ img#loading {
 
 footer {
     margin: 0px auto;
-    width: 100%;
+    max-width: 950px;
 }
 
 footer .footer-column {
     float: left;
     width: 50%;
     color: #afafaf;
+}
+
+footer .footer-column:last-child {
+    text-align: right;
+}
+
+footer a {
+    color: #d57f7f;
 }

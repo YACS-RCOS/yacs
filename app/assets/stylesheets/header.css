@@ -11,6 +11,7 @@ nav#headerbar {
     z-index: 1;
     color: white;
     background-color: #c65353;
+    white-space: nowrap;
 }
 
 table#navtable {
@@ -50,23 +51,29 @@ table#navtable td.sidelink {
 #searchcontainer {
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 18px;
-    font-weight:400;
+    color: white;
+    background-color: #d57f7f;
+    border-radius: 2px;
+    width: 100%;
+    padding: 3px 4px;
 }
 #searchbar {
     /* font needs to be specified again for some reason, I think it's
        something to do with the input tag? */
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: inherit;
     font-size: 18px;
+    max-width: 20em;
     font-weight: 300;
-    max-width: 16em;
-    width: 100%;
-    padding: 3px 4px;
     border: none;
-    color: white;
-    background-color: #944;
-    outline: white;
-    box-shadow: 0 2px 2px rgba(255, 255, 255, 0.1), 0 2px 2px rgba(0, 0, 0, 0.15) inset;
-    border-radius: 1px;
+    width: 100%;
+    background-color: inherit;
+    color: inherit;
+    outline: none;
+}
+#searchglyph {
+    height: 1em;
+    vertical-align: sub;
+    padding: 0.1em;
 }
 #schedule-btn {
     font-size:22px;

@@ -2,31 +2,30 @@ courses {
     display: block;
 }
 course {
-    display:block;
+    display: block;
     margin: 0px 20px;
     padding:15px;
-    /*border-radius: 15px;*/
     border-bottom: 1px #bbb solid;
-    cursor:pointer;
+    cursor: pointer;
+    max-width: 950px;
+    margin: 0 auto;
 }
-/*course:hover {
-    background-color:#e7e7e7;
-}*/
+course:last-child {
+    border: none;
+}
 
-course:not(.selected) course-info:hover ~ sections section:not(.selected) {
+course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.closed) {
     background-color: #d57f7f;
 }
-course.selected course-info:hover ~ sections section {
+course.selected>course-info:hover ~ sections section.selected {
     color: #efefef;
     background-color: #d57f7f;
 }
+
 course-name {
     font-size: 130%;
     font-weight: 400;
 }
-/*course-number, course department-code, course-credits {
-    font-size:110%;
-}*/
 course department-code {
     margin-left:1em;
 }
@@ -36,6 +35,7 @@ course-credits {
 course-description {
     display:block;
     font-size:87%;
+    text-align: justify;
 }
 course-description.truncated{
     height: 3em; 
@@ -70,28 +70,29 @@ section {
     margin:0px 0px 0px 5px;
     padding:4px 4px 4px 8px;
     overflow:auto;
-    /* border-radius: 8px; */
+    font-size: 90%;
 }
-sections section:not(.selected):hover {
+sections>section:not(.selected):hover {
     background-color: #d57f7f;
 }
-sections section.selected:hover {
+sections>section.selected:hover {
     color: #efefef;
     background-color: #d57f7f;
 }
-sections section.selected {
+sections>section.selected {
     color: #efefef;
     background-color: #c65353;
 }
-
-section.closed {
+sections>section.closed, sections>section.closed:hover {
     color: #888;
 }
 
+section-name {
+    font-weight: 400;
+}
 section-seats {
     font-size: 80%;
 }
-
 section-periods {
     font-size:80%;
     display:inline-block;

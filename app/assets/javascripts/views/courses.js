@@ -18,13 +18,13 @@ Handlebars.registerHelper('join', function (arr) {
   return new Handlebars.SafeString(arr.join(', '));
 });
 
-Handlebars.registerHelper('course_seats', function (c) {
-  var remaining = c.seats - c.seats_taken;
+Handlebars.registerHelper('seats_available', function (s) {
+  var remaining = s.seats - s.seats_taken;
   return new Handlebars.SafeString(remaining);
 });
 
-Handlebars.registerHelper('selected_status', function (s) {
-  return new Handlebars.SafeString(Yacs.user.hasSelection(s.id) ? 'selected' : '');
+Handlebars.registerHelper('closed_status', function (s) {
+  return new Handlebars.SafeString(s.seats > 0 && s.seats_taken >= s.seats ? 'closed' : '');
 });
 
 Handlebars.registerHelper('day_name', function (n) {
@@ -42,6 +42,7 @@ Handlebars.registerHelper('time_range', function (start, end) {
   }).join('-'));
 });
 
+
 /**
  * Courses view. Displays courses and their sections
  * @param {Object} data - Object containing Courses model collection
@@ -49,19 +50,23 @@ Handlebars.registerHelper('time_range', function (start, end) {
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.courses = function (data) {
+Yacs.views.courses = function (target, data) {
   var html = HandlebarsTemplates.courses(data);
-  Yacs.setContents(html);
+  target.innerHTML = html;
 
+  /**
+   * Helper function to check if all open sections of a course are selected.
+   * Used for toggling selection of an entire course.
+   */
   var isCourseSelected = function (course) {
     var isSelected = true;
-    course.querySelectorAll('section').forEach(function (s) {
+    course.querySelectorAll('section:not(.closed)').forEach(function (s) {
       if (!Yacs.user.hasSelection(s.dataset.id)) isSelected = false;
     });
     return isSelected;
   };
 
-  var maxDescriptionHeight = document.querySelector('course-description').clientHeight;
+  var maxDescriptionHeight = target.querySelector('course-description').clientHeight;
   var truncateOverflowingDescription = function (description, showHideButton) {
     var overflowed = description.classList.contains('overflow');
     var overflowing = description.scrollHeight > maxDescriptionHeight;
@@ -73,14 +78,12 @@ Yacs.views.courses = function (data) {
     }
   };
 
-  // Add event listeners to sections
-  document.getElementsByTagName('section').forEach(function (s) {
-    Yacs.on('click', s, function (section) {
-      /* If there happens to be a mismatch between the data and the display,
-         we care about the data - e.g. if the id is in the array, we will
-         always deselect it regardless of whether it was being rendered as
-         selected or not.
-      */
+  /**
+   * When a section is clicked, check the cookie to see if it is selected.
+   * If it is selected, unselect it. If it is not selected, select it.
+   */
+  target.getElementsByTagName('section').forEach(function (s) {
+    Yacs.on('click', s, function(section) {
       var sid = section.dataset.id;
       if (Yacs.user.removeSelection(sid)) {
         section.classList.remove('selected');
@@ -95,17 +98,18 @@ Yacs.views.courses = function (data) {
     if (Yacs.user.hasSelection(s.dataset.id)) s.classList.add('selected');
   });
 
-  /* This does not actually add or remove sections from the selected list.
-     TODO: implement this
-  */
-  document.getElementsByTagName('course').forEach(function (c) {
+  /**
+   * When a course is clicked, select all of its open sections if they are not
+   * selected. If all open sections are selected, unselect them all. 
+   */
+  target.getElementsByTagName('course').forEach(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var isSelected = isCourseSelected(c);
       c.getElementsByTagName('section').forEach(function (s) {
         if (isSelected) {
           s.classList.remove('selected');
           Yacs.user.removeSelection(s.dataset.id);
-        } else {
+        } else if (!s.classList.contains('closed')) {
           s.classList.add('selected');
           Yacs.user.addSelection(s.dataset.id);
         }
@@ -126,7 +130,7 @@ Yacs.views.courses = function (data) {
     truncateOverflowingDescription(description, showHideButton);
   });
 
-  var coursesElement = document.querySelector('courses');
+  var coursesElement = target.querySelector('courses');
   new ResizeSensor(coursesElement, function (courses, deltas) {
     if (deltas['x'] != 0) {
       courses.querySelectorAll('course').forEach(function (c) {

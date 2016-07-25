@@ -7,6 +7,6 @@ AfterStep('@delay') do
   sleep(1)
 end
 
-Before('@javascript') do
-  page.driver.browser.manage.window.resize_to(768, 1024)
-end
+# Before('@javascript') do
+#   page.driver.browser.manage.window.resize_to(768, 1024)
+# end
