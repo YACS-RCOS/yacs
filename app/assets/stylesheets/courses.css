@@ -14,7 +14,7 @@ course:last-child {
 course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.closed) {
     background-color: #d57f7f;
 }
-course.selected>course-info:hover ~ sections section:not(.closed) {
+course.selected>course-info:hover ~ sections section.selected {
     color: #efefef;
     background-color: #d57f7f;
 }
