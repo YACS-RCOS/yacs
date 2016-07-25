@@ -22,12 +22,11 @@ Scenario: view courses
   And within it I should see the text "Data Structures"
 
 @javascript
-@delay
 Scenario: no viewport size change with zero, short, and overflowing descriptions
   Given setup course descriptions as such and go to courses page:
   | id | number | name                 | department_id | description_length |
-  | 18 | 1400   | twoLineDescription   | 6             | 122                |
-  | 19 | 1500   | threeLineDescription | 6             | 123                |
+  | 18 | 1400   | twoLineDescription   | 6             | 108                |
+  | 19 | 1500   | threeLineDescription | 6             | 109                |
   Then the show hide button of course with id 12 should be hidden
    And the show hide button of course with id 18 should be hidden
    And the show hide button of course with id 19 should be visible
@@ -36,12 +35,11 @@ Scenario: no viewport size change with zero, short, and overflowing descriptions
    And the description of course with id 19 should be truncated
 
 @javascript
-@delay
 Scenario: viewport shrinks with zero, short, and overflowing descriptions
   Given setup course descriptions as such and go to courses page:
     | id | number | name             | department_id | description_length |
-    | 18 | 1400   | shortDescription | 6             | 122                |
-    | 19 | 1500   | longDescription  | 6             | 123                |
+    | 18 | 1400   | shortDescription | 6             | 108                |
+    | 19 | 1500   | longDescription  | 6             | 109                |
   When I shrink the browser horizontally
   Then the show hide button of course with id 12 should be hidden
    And the show hide button of course with id 18 should be visible
@@ -51,12 +49,11 @@ Scenario: viewport shrinks with zero, short, and overflowing descriptions
    And the description of course with id 19 should be truncated
 
 @javascript
-@delay
 Scenario: viewport expands with zero, short, and overflowing descriptions
   Given setup course descriptions as such and go to courses page:
     | id | number | name             | department_id | description_length |
-    | 18 | 1400   | shortDescription | 6             | 122                |
-    | 19 | 1500   | longDescription  | 6             | 123                |
+    | 18 | 1400   | shortDescription | 6             | 108                |
+    | 19 | 1500   | longDescription  | 6             | 109                |
   When I expand the browser horizontally
   Then the show hide button of course with id 12 should be hidden
    And the show hide button of course with id 18 should be hidden
@@ -66,12 +63,11 @@ Scenario: viewport expands with zero, short, and overflowing descriptions
    And the description of course with id 19 should NOT be truncated
 
 @javascript
-@delay
 Scenario: viewport maximizes with zero, short, and overflowing descriptions
   Given setup course descriptions as such and go to courses page:
     | id | number | name             | department_id | description_length |
-    | 18 | 1400   | shortDescription | 6             | 122                |
-    | 19 | 1500   | longDescription  | 6             | 123                |
+    | 18 | 1400   | shortDescription | 6             | 108                |
+    | 19 | 1500   | longDescription  | 6             | 109                |
   When I maximize the browser
   Then the show hide button of course with id 12 should be hidden
    And the show hide button of course with id 18 should be hidden
@@ -81,11 +77,10 @@ Scenario: viewport maximizes with zero, short, and overflowing descriptions
    And the description of course with id 19 should NOT be truncated
 
 @javascript
-@delay
 Scenario: user toggles course description truncation using show-hide-button
   Given setup course descriptions as such and go to courses page:
     | id | number | name                   | department_id | description_length |
-    | 18 | 1400   | overflowingDescription | 6             | 123                |
+    | 18 | 1400   | overflowingDescription | 6             | 109                |
   Then the show hide button of course with id 18 should be visible
     And I should see a button with text "show"
     And the description of course with id 18 should be truncated
@@ -99,7 +94,6 @@ Scenario: user toggles course description truncation using show-hide-button
     And the description of course with id 18 should be truncated
 
 @javascript
-@delay
 Scenario: description should remain open unless it no longer overflows
   Given setup course descriptions as such and go to courses page:
     | id | number | name                   | department_id | description_length |
