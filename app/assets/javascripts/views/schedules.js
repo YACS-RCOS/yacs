@@ -33,6 +33,8 @@ Yacs.views.schedule = function (target) {
    * Translate schedules returned by the API into a displayable form.
    * For each schedule, convert period times ro minutes-since-midnight form,
    * and collect the CRNs from each section.
+   * Additionally, determine the min star time and the max end time
+   * of all of the schedules.
    */
   var processSchedules = function (schedules) {
     var start = 480;
