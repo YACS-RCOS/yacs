@@ -15,7 +15,7 @@ course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.c
     background-color: #d57f7f;
 }
 course.selected>course-info:hover ~ sections section:not(.closed) {
-    color: #ffffff;
+    color: #efefef;
     background-color: #d57f7f;
 }
 

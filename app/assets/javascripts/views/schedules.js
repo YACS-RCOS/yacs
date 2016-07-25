@@ -107,8 +107,12 @@ Yacs.views.schedule = function (target) {
       Yacs.models.schedules.query({ section_ids: selections,
                                     show_periods: true },
         function(data, success) {
-          if (success)
+          if (success) {
             setSchedules(data.schedules);
+          } else {
+            Yacs.user.clearSelections();
+            setSchedules([]);
+          }
       });
       clearButtonElement.disabled = false;
     } else {
