@@ -1,5 +1,5 @@
 /**
- * Schedule view. Displays periods of selected courses in a week grid.
+ * Schedules view. Displays periods of selected courses in a week grid.
  * @param {Object} data - Object containing schedule data as returned from the API
  * @return {undefined}
  * @memberOf Yacs.views
@@ -20,13 +20,20 @@ Yacs.views.schedule = function (target) {
   var scheduleData = [];
   var scheduleIndex = 0;
 
-  // this function will be deprecated when backend is updated to use minutes-since-midnight format
-  // see issue #102
+  /**
+   * Convert military time string to minutes-since-midnight integer form.
+   * This function should be deprecated in issue #102
+   */
   var toMinutes = function (timeString) {
     var int = parseInt(timeString);
     return Math.floor(int / 100) * 60 + int % 100;
   }
 
+  /**
+   * Translate schedules returned by the API into a displayable form.
+   * For each schedule, convert period times ro minutes-since-midnight form,
+   * and collect the CRNs from each section.
+   */
   var processSchedules = function (schedules) {
     var start = 480;
     var end = 1200;
@@ -62,12 +69,18 @@ Yacs.views.schedule = function (target) {
     return { schedules: processedSchedules, start: start, end: end };
   };
 
+  /**
+   * Process schedules returned by the API, and update view accordingly,
+   * setting the time range of the schedule view to accomodate all schedules.
+   * If no schedules are available, show the appropriate status text.
+   */
   var setSchedules = function (schedules) {
     var data = processSchedules(schedules);
     scheduleData = data.schedules;
     schedule.destroy();
     schedule = new Schedule(scheduleElement, 
-      { timeBegin: Math.ceil((data.start) / 60) * 60, timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
+      { timeBegin: Math.ceil((data.start) / 60) * 60,
+        timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
     scheduleCountElement.textContent = scheduleData.length;
     if (scheduleData.length > 0) {
       show(0);
@@ -81,6 +94,11 @@ Yacs.views.schedule = function (target) {
     }
   };
 
+  /**
+   * Query the server for schedules based on the stored selections,
+   * and update the view to show the new schedules.
+   * If no sections are selected, skip the call and show nil schedules.
+   */
   var updateSchedules = function () {
     var selections = Yacs.user.getSelectionsRaw();
     if (selections.length > 0) {
@@ -97,6 +115,10 @@ Yacs.views.schedule = function (target) {
     }
   };
 
+  /**
+   * Show schdule at given index, and display corresponding CRNs.
+   * If index is -1, show nil schedule.
+   */
   var show = function (index) {
     if (index == -1) {
       scheduleStatusElement.textContent = "";
@@ -108,16 +130,35 @@ Yacs.views.schedule = function (target) {
     }
   };
 
+  /**
+   * Switch to schedule [[n + 1] % n] in the sequence
+   */
   var next = function () {
     scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
     show(scheduleIndex);
   }
 
+  /**
+   * Switch to schedule [[n - 1] % n] in the sequence
+   */
   var previous = function () {
     scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
     show(scheduleIndex);
   }
 
+  /**
+   * Show next schedule if right is clicked or pressed,
+   * show previous schedule if left is clicked or pressed
+   */
+  Yacs.on('click', leftSwitchElement, previous);
+  Yacs.on('click', rightSwitchElement, next);
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 37) previous(); });
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 39) next(); });
+
+  /**
+   * Clear selections in cookie when clear button is pressed, and update
+   * schedule and selctions views accordingly.
+   */
   Yacs.on('click', clearButtonElement, function () {
     Yacs.user.clearSelections();
     updateSchedules();
@@ -129,12 +170,11 @@ Yacs.views.schedule = function (target) {
     });
   });
 
-  Yacs.on('click', leftSwitchElement, previous);
-  Yacs.on('click', rightSwitchElement, next);
-  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 37) previous(); });
-  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 39) next(); });
-
-  // TODO: Implement observers for selections
+  /**
+   * Show selected courses / sections on the schedule page.
+   * Update schedules view when a course is clicked.
+   * TODO: Use native event handling to update views when selection changes
+   */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
     Yacs.models.courses.query({ section_id: selections.join(','),
