@@ -54,6 +54,10 @@ Yacs.views.courses = function (target, data) {
   var html = HandlebarsTemplates.courses(data);
   target.innerHTML = html;
 
+  /**
+   * Helper function to check if all open sections of a course are selected.
+   * Used for toggling selection of an entire course.
+   */
   var isCourseSelected = function (course) {
     var isSelected = true;
     course.querySelectorAll('section:not(.closed)').forEach(function (s) {
@@ -62,14 +66,12 @@ Yacs.views.courses = function (target, data) {
     return isSelected;
   };
 
-  // Add event listeners to sections
+  /**
+   * When a section is clicked, check the cookie to see if it is selected.
+   * If it is selected, unselect it. If it is not selected, select it.
+   */
   target.getElementsByTagName('section').forEach(function (s) {
     Yacs.on('click', s, function(section) {
-      /* If there happens to be a mismatch between the data and the display,
-         we care about the data - e.g. if the id is in the array, we will
-         always deselect it regardless of whether it was being rendered as
-         selected or not.
-      */
       var sid = section.dataset.id;
       if (Yacs.user.removeSelection(sid)) {
         section.classList.remove('selected');
@@ -84,6 +86,10 @@ Yacs.views.courses = function (target, data) {
     if (Yacs.user.hasSelection(s.dataset.id)) s.classList.add('selected');
   });
 
+  /**
+   * When a course is clicked, select all of its open sections if they are not
+   * selected. If all open sections are selected, unselect them all. 
+   */
   target.getElementsByTagName('course').forEach(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
       var isSelected = isCourseSelected(c);

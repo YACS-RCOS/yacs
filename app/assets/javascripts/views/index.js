@@ -12,14 +12,18 @@ Yacs.views.index = function () {
   var content = document.getElementById('content');
 
   Yacs.on('click', homeButton, function () { Yacs.views.departments(content); });
-
   Yacs.on('click', scheduleButton, function () { Yacs.views.schedule(content); });
 
+  /**
+   * Handle input destined for search bar. Assume all text input is intended
+   * for for the search bar, and focus the search bar accordingly.
+   * If the search bar is cleared, show the departments (home) view.
+   * When a query is submitted by pressing enter, show the courses
+   * matching the given search query.
+   */
   Yacs.on('keydown', document, function (elem, event) {
     var key = event.keyCode;
     if (!(event.ctrlKey || event.metaKey)) {
-      // event.preventDefault();
-      console.log(event.which + ' ' + event.keyCode + ' ' + event.charCode);
       if ((key >= 48 && key <= 105) || key == 32) {
         if (key == 127 && searchbar.value.length <= 1)
           Yacs.views.departments(content);

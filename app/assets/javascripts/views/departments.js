@@ -10,9 +10,12 @@ Yacs.views.departments = function (target, data) {
   data = data || { schools: Yacs.models.schools.store.all };
   target.innerHTML = HandlebarsTemplates.departments(data);
 
-  // add event listener to departments
+  /**
+   * When a department is clicked, navigate to the courses view, filtering
+   * the courses shown by the id of the chosen department.
+   */
   target.getElementsByTagName('department').forEach(function (department) {
-    Yacs.on('click', department, function(d) {
+    Yacs.on('click', department, function (d) {
       Yacs.models.courses.query(
         { department_id: d.dataset.id,
           show_sections: true,
