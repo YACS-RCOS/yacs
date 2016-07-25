@@ -33,6 +33,8 @@ Yacs.views.schedule = function (target) {
    * Translate schedules returned by the API into a displayable form.
    * For each schedule, convert period times ro minutes-since-midnight form,
    * and collect the CRNs from each section.
+   * Additionally, determine the min star time and the max end time
+   * of all of the schedules.
    */
   var processSchedules = function (schedules) {
     var start = 480;
@@ -105,8 +107,12 @@ Yacs.views.schedule = function (target) {
       Yacs.models.schedules.query({ section_ids: selections,
                                     show_periods: true },
         function(data, success) {
-          if (success)
+          if (success) {
             setSchedules(data.schedules);
+          } else {
+            Yacs.user.clearSelections();
+            setSchedules([]);
+          }
       });
       clearButtonElement.disabled = false;
     } else {
@@ -134,16 +140,20 @@ Yacs.views.schedule = function (target) {
    * Switch to schedule [[n + 1] % n] in the sequence
    */
   var next = function () {
-    scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
-    show(scheduleIndex);
+    if (scheduleData.length > 0) {
+      scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
+      show(scheduleIndex);
+    }
   }
 
   /**
    * Switch to schedule [[n - 1] % n] in the sequence
    */
   var previous = function () {
-    scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
-    show(scheduleIndex);
+    if (scheduleData.length > 0) {
+      scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
+      show(scheduleIndex);
+    }
   }
 
   /**
