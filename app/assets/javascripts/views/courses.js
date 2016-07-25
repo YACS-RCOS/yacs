@@ -56,7 +56,7 @@ Yacs.views.courses = function (target, data) {
 
   var isCourseSelected = function (course) {
     var isSelected = true;
-    course.querySelectorAll('section').forEach(function (s) {
+    course.querySelectorAll('section:not(.closed)').forEach(function (s) {
       if (!Yacs.user.hasSelection(s.dataset.id)) isSelected = false;
     });
     return isSelected;
@@ -91,7 +91,7 @@ Yacs.views.courses = function (target, data) {
         if (isSelected) {
           s.classList.remove('selected');
           Yacs.user.removeSelection(s.dataset.id);
-        } else {
+        } else if (!s.classList.contains('closed')) {
           s.classList.add('selected');
           Yacs.user.addSelection(s.dataset.id);
         }

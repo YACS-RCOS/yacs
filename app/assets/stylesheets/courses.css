@@ -12,10 +12,10 @@ course {
     background-color:#e7e7e7;
 }*/
 
-course:not(.selected) course-info:hover ~ sections section:not(.selected) {
+course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.closed) {
     background-color: #d57f7f;
 }
-course.selected course-info:hover ~ sections section {
+course.selected>course-info:hover ~ sections section:not(.closed) {
     color: #efefef;
     background-color: #d57f7f;
 }
@@ -45,20 +45,20 @@ section {
     font-size: 90%;
     /* border-radius: 8px; */
 }
-sections section:not(.selected):hover {
+sections>section:not(.selected):hover {
     background-color: #d57f7f;
 }
-sections section.selected:hover {
+sections>section.selected:hover {
     color: #efefef;
     background-color: #d57f7f;
 }
-sections section.selected {
+sections>section.selected {
     color: #efefef;
     background-color: #c65353;
 }
-
-section.closed {
+sections>section.closed, sections>section.closed:hover {
     color: #888;
+    /*background-color: #c65353;*/
 }
 
 section-name {
