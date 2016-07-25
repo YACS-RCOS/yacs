@@ -31,4 +31,3 @@ end
 When(/^I maximize the browser$/) do
   page.driver.browser.manage.window.maximize()
 end
-
