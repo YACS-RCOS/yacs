@@ -23,7 +23,6 @@ img#loading {
 
 footer {
     margin: 0px auto;
-    margin-top: 20px;
     max-width: 950px;
 }
 
@@ -35,4 +34,8 @@ footer .footer-column {
 
 footer .footer-column:last-child {
     text-align: right;
+}
+
+footer a {
+    color: #d57f7f;
 }
