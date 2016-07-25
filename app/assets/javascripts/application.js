@@ -12,6 +12,4 @@
 //
 //= require_tree ../../../vendor/assets/javascripts
 //= require yacs
-//= require user
-//= require_tree ./views
-//= require_tree ./templates
+//= require_tree .

@@ -15,7 +15,6 @@ Background:
     | 12 | 1200   | Data Structures  | 6             |
 
 @javascript
-@delay
 Scenario: view courses
   Given I go to the home page
   When I click the department "CSCI"
