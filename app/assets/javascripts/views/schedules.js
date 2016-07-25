@@ -136,16 +136,20 @@ Yacs.views.schedule = function (target) {
    * Switch to schedule [[n + 1] % n] in the sequence
    */
   var next = function () {
-    scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
-    show(scheduleIndex);
+    if (scheduleData.length > 0) {
+      scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
+      show(scheduleIndex);
+    }
   }
 
   /**
    * Switch to schedule [[n - 1] % n] in the sequence
    */
   var previous = function () {
-    scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
-    show(scheduleIndex);
+    if (scheduleData.length > 0) {
+      scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
+      show(scheduleIndex);
+    }
   }
 
   /**
