@@ -3,14 +3,20 @@ Given(/^setup course descriptions as such and go to courses page:$/) do |table|
   step 'set window to default size'
   step 'I go to the home page'
   step 'I click the department "CSCI"'
+  step 'sleep for 10'
+  page.save_screenshot("~/Desktop/screenshots/foo.png")
 end
 
 Given(/^set window to default size$/) do
   page.driver.resize_window(768, 1024)
 end
 
+Then(/^sleep for (\d+)$/) do |s|
+  sleep s.to_i
+end
+
 Then(/^the show hide button of course with id (\d+) should be visible$/) do |id|
-  expect(page.find("course[data-id='#{id}'] .show-hide-button")).to be_visible
+  expect(page).to have_selector("course[data-id='#{id}'] .show-hide-button")
 end
 
 Then(/^the show hide button of course with id (\d+) should be hidden$/) do |id|
@@ -27,6 +33,8 @@ end
 
 When(/^I shrink the browser horizontally$/) do
   page.driver.resize(400, 1024)
+  step 'sleep for 10'
+  page.save_screenshot("~/Desktop/screenshots/bar.png")
 end
 
 When(/^I expand the browser horizontally$/) do

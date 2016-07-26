@@ -131,7 +131,9 @@ Yacs.views.courses = function (target, data) {
   });
 
   var coursesElement = target.querySelector('courses');
+  var resizeCount = 0;
   new ResizeSensor(coursesElement, function (courses, deltas) {
+    document.querySelector("course-number").innerHTML = "resized: "+resizeCount;
     if (deltas['x'] != 0) {
       courses.querySelectorAll('course').forEach(function (c) {
         var description = c.querySelector('course-description');
