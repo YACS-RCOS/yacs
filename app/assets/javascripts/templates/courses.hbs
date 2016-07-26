@@ -6,15 +6,15 @@
         <department-code>{{department_code department_id}}</department-code>
         <course-number>{{number}}</course-number>
         <course-credits>{{course_credits this}}</course-credits>
-        <course-description>{{description}}</course-description>
+        <course-description class="truncated overflow">{{description}}</course-description>
       </course-info>
+      <button class="show-hide-button">show</button>
       <sections>
         {{#sections}}
-          <section data-id="{{id}}">
-            <section-name>{{name}}</section-name>
+          <section data-id="{{id}}" class="{{closed_status this}}">
+            <section-name>{{name}}</section-name> <section-crn>{{crn}}</section-crn>
             <section-instructors>{{join instructors}}</section-instructors>
-            <section-seats-available>{{course_seats this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
-            <section-crn>{{crn}}</section-crn>
+            <section-seats-available>{{seats_available this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
             <section-periods>
               {{#periods}}
                 <section-period>

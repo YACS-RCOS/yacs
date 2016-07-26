@@ -7,7 +7,7 @@
 require 'cucumber/rails'
 
 require 'coveralls'
-Coveralls.wear!
+Coveralls.wear_merged!
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
@@ -63,17 +63,19 @@ require "capybara"
 require "capybara/cucumber"
 require "rspec-rails"
 require 'capybara/poltergeist'
- 
-Capybara.default_driver = :poltergeist
-Capybara.register_driver :poltergeist do |app|
+
+unless ENV['USE_SELENIUM']
+  Capybara.default_driver = :poltergeist
+  Capybara.register_driver :poltergeist do |app|
     options = {
-        :js_errors => true,
-        :timeout => 120,
-        :debug => false,
-        :phantomjs_options => ['--load-images=no', '--disk-cache=false'],
-        :inspector => true,
+      :js_errors => true,
+      :timeout => 120,
+      :debug => false,
+      :phantomjs_options => ['--load-images=no', '--disk-cache=false'],
+      :inspector => true,
     }
     Capybara::Poltergeist::Driver.new(app, options)
+  end
+  Capybara.current_driver = :poltergeist
+  Capybara.javascript_driver = :poltergeist
 end
-# Capybara.current_driver = :poltergeist
-# Capybara.javascript_driver = :poltergeist

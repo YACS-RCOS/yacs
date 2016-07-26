@@ -1,5 +1,6 @@
 body {
     /*background-color:#efefef;*/
+    background-color: white;
     color: #000;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 300;
@@ -23,11 +24,19 @@ img#loading {
 
 footer {
     margin: 0px auto;
-    width: 100%;
+    max-width: 950px;
 }
 
 footer .footer-column {
     float: left;
     width: 50%;
     color: #afafaf;
+}
+
+footer .footer-column:last-child {
+    text-align: right;
+}
+
+footer a {
+    color: #d57f7f;
 }

@@ -32,6 +32,8 @@ gem 'crono'
 
 gem 'newrelic_rpm'
 
+gem 'coveralls'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-remote'
@@ -50,7 +52,6 @@ group :test do
   gem "cucumber-rails", require: false
   gem "poltergeist"
   gem "selenium-webdriver"
-  gem 'coveralls', require: false
 end
 
 group :development do
