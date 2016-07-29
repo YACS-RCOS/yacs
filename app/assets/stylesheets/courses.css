@@ -1,0 +1,80 @@
+course {
+    display: block;
+    margin: 0px 20px;
+    padding:15px;
+    border-bottom: 1px #bbb solid;
+    cursor: pointer;
+    max-width: 950px;
+    margin: 0 auto;
+}
+course:last-child {
+    border: none;
+}
+
+course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.closed) {
+    background-color: #d57f7f;
+}
+course.selected>course-info:hover ~ sections section.selected {
+    color: #efefef;
+    background-color: #d57f7f;
+}
+
+course-name {
+    font-size: 130%;
+    font-weight: 400;
+}
+course department-code {
+    margin-left:1em;
+}
+course-credits {
+    margin-left:0.7em;
+}
+course-description {
+    display:block;
+    font-size:87%;
+    text-align: justify;
+}
+section {
+    display:block;
+    margin:0px 0px 0px 5px;
+    padding:4px 4px 4px 8px;
+    overflow:auto;
+    font-size: 90%;
+}
+sections>section:not(.selected):hover {
+    background-color: #d57f7f;
+}
+sections>section.selected:hover {
+    color: #efefef;
+    background-color: #d57f7f;
+}
+sections>section.selected {
+    color: #efefef;
+    background-color: #c65353;
+}
+sections>section.closed, sections>section.closed:hover {
+    color: #888;
+}
+
+section-name {
+    font-weight: 400;
+}
+section-seats {
+    font-size: 80%;
+}
+section-periods {
+    font-size:80%;
+    display:inline-block;
+    margin-left:0em;
+    float:right;
+    padding:0.15em 0;
+}
+section-periods.noperiods {
+    font-weight: bold;
+}
+section-period {
+    margin-left:1em;
+}
+period-day {
+    font-weight: 400;
+}

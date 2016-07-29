@@ -1,0 +1,57 @@
+schools {
+    display: block;
+    columns: 2 450px;
+    -moz-columns: 2 450px;
+    -webkit-columns: 2 450px;
+    column-gap: 20px;
+    -moz-column-gap: 20px;
+    -webkit-column-gap: 20px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+school {
+    display:inline-block;
+    width: 475px;
+    padding: 0px 1px;
+}
+school-name {
+    display:block;
+    /*width:600px;*/
+    margin-right:10px;
+    font-size:21px;
+    font-style:italic;
+    padding: 0px 1px;
+    border-bottom: 1px black solid;
+}
+departments {
+    display:block;
+    margin-bottom: 15px;
+    font-size:17px;
+}
+department {
+    display:block;
+    cursor:pointer;
+    padding:2px 5px;
+    /*width:5;*/
+}
+department:hover {
+/*    color: #fff;
+    background-color: #933;*/
+    color: white;
+    background-color: #c65353;
+}
+department department-code {
+    font-family:"Andale Mono","Courier New",monospace;
+    margin-right:0.4em;
+    font-size:120%;
+}
+noscript {
+    color:#933;
+    font-weight:bold;
+    font-size:150%;
+}
+div#bottomtext {
+    display:block;
+    color:#afafaf;
+    margin-bottom:8px;
+}

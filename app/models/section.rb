@@ -1,5 +1,7 @@
 class Section < ActiveRecord::Base
-  belongs_to  :course
+  belongs_to :course
+  validates  :name, presence: true, uniqueness: { scope: :course_id }
+  validates  :crn, presence: true, uniqueness: true
   default_scope { order(name: :asc) }
 
   def conflicts_with(section)

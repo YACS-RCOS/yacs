@@ -1,0 +1,30 @@
+<courses>
+  {{#courses}}
+    <course data-id="{{id}}">
+      <course-info>
+        <course-name>{{name}}</course-name>
+        <department-code>{{department_code department_id}}</department-code>
+        <course-number>{{number}}</course-number>
+        <course-credits>{{course_credits this}}</course-credits>
+        <course-description>{{description}}</course-description>
+      </course-info>
+      <sections>
+        {{#sections}}
+          <section data-id="{{id}}" class="{{closed_status this}}">
+            <section-name>{{name}}</section-name> <section-crn>{{crn}}</section-crn>
+            <section-instructors>{{join instructors}}</section-instructors>
+            <section-seats-available>{{seats_available this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
+            <section-periods>
+              {{#periods}}
+                <section-period>
+                  <period-day>{{day_name day}}</period-day>
+                  <period-time>{{time_range start end}}</period-time>
+                </section-period>
+              {{/periods}}
+            </section-periods>
+          </section>
+        {{/sections}}
+      </sections>
+    </course>
+  {{/courses}}
+</courses>
