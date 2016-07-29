@@ -1,23 +1,21 @@
 class Api::V5::CoursesController < Api::V5::ApiController
-  caches_action :index, if: Proc.new { |c| c.request.format.xml? && c.params[:department_id].present? },
-    cache_path: Proc.new { |c| "api/v5/courses/index.xml?department_id=#{c.params[:department_id]}" }
+  caches_action :index, if: Proc.new { |c| c.params[:department_id].present? && @show_sections && @show_periods },
+    cache_path: Proc.new { |c| "/api/v5/courses.json?department_id=#{c.params[:department_id]}" } # TODO: rework caching scheme
 
   def index
-    if params[:department_id].present?
-      @courses = Course.where department_id: params[:department_id].split(',')
-    elsif params[:id].present?
-      @courses = Course.find params[:id].split(',')
-    elsif params[:section_id].present?
-      ids = params[:section_id]
-      @courses = Course.distinct.joins(:sections).where "sections.id = ANY (ARRAY[#{ids}])"
-    elsif params[:search].present?
-      @courses = Course.search params[:search].gsub(/[^0-9a-z\s]/i, '').split
+    if params[:search].present?
+      @query = Course.search params[:search].gsub(/[^0-9a-z\s]/i, '').split
     else
-      @courses = Course.all
-    end
-    respond_to do |format|
-      format.xml { render xml: @courses }
-      format.json { render }
+      filter_model Course
+      filter :section_id do |q|
+        q.joins(:sections).where :"sections.id" => any(:section_id)
+      end
+      filter :department_code do |q|
+        q.joins(:department).where :"departments.code" => any(:department_code)
+      end
+      filter_any :id, :department_id, :name, :number, :min_credits, :max_credits
+      query.includes! :sections if @show_sections
     end
   end
+
 end

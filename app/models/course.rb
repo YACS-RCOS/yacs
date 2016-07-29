@@ -1,10 +1,14 @@
 class Course < ActiveRecord::Base
-  belongs_to  :department
-  has_many    :sections, dependent: :destroy
-  validates   :number, uniqueness: { scope: :department_id }
+  belongs_to :department
+  has_many   :sections, dependent: :destroy
+  validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
 
-  def self.search(params)
+  def self.get code, number
+    joins(:department).where("departments.code = ? AND number = ?", code, number).first
+  end
+
+  def self.search params
     search_params = params.join(' & ')
     query = <<-SQL
       SELECT * FROM (
@@ -24,7 +28,9 @@ class Course < ActiveRecord::Base
       ORDER BY ts_rank(c_search.document, to_tsquery('#{search_params}')) DESC
       LIMIT 25;
     SQL
-    find_by_sql(query).uniq
+    courses = find_by_sql(query).uniq
+    ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
+    courses
   end
 
   def credits

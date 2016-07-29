@@ -1,0 +1,41 @@
+body {
+    /*background-color:#efefef;*/
+    color: #000;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    margin: 0;
+}
+
+div#content {
+    padding: 60px 15px 0px 15px;
+}
+
+img#loading {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    /* browsers handle fractional pixel values differently, but the worst that
+       can happen is that it's 1/2 pixel off center. So it's best to use the
+       real values (half of the image width and height) here. */
+    margin-top: -4.5px;
+    margin-left: -62.5px;
+}
+
+footer {
+    margin: 0px auto;
+    max-width: 950px;
+}
+
+footer .footer-column {
+    float: left;
+    width: 50%;
+    color: #afafaf;
+}
+
+footer .footer-column:last-child {
+    text-align: right;
+}
+
+footer a {
+    color: #d57f7f;
+}

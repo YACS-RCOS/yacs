@@ -1,14 +1,16 @@
 def json_validate_schools(schools=@schools, departments=false)
   schools.each_with_index do |school, n|
-    ['id', 'name'].each do |field|
-      expect(json['schools'][n][field]) .to eq school.attributes[field]
+    matching_schools = json['schools'].select { |s| s['id'] == school.id }
+    expect(matching_schools.length) .to eq 1
+    ['name'].each do |field|
+      expect(matching_schools[0][field]) .to eq school.attributes[field]
     end
     if departments
       school.departments.each_with_index do |department, m|
-        expect(json['schools'][n]['departments'][m]['id']) .to eq department.id
+        expect(matching_schools[0]['departments'][m]['id']) .to eq department.id
       end
     else
-      expect(json['schools'][n]['departments']) .to be_nil
+      expect(matching_schools[0]['departments']) .to be_nil
     end
   end
 end

@@ -1,1 +1,1 @@
-json.partial! '/api/v5/sections/sections', sections: @sections
+json.partial! '/api/v5/sections/sections', sections: @query
