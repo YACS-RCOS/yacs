@@ -8,13 +8,10 @@ preload_app!
 
 rackup      DefaultRackup
 port        ENV['PORT']     || 3000
-environment ENV['RACK_ENV'] || 'development'
+environment ENV['RAILS_ENV'] || 'development'
 
-if ENV['DSTATEDIR']
-  pidfile "#{ENV['DSTATEDIR']}puma.pid"
-  state_path "#{ENV['DSTATEDIR']}puma.state"
-  daemonize true
-end
+pidfile "tmp/pids/puma/pid"
+state_path "tmp/pids/puma/state"
 
 on_worker_boot do
   # Worker specific setup for Rails 4.1+
