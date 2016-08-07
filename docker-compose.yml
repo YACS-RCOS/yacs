@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:9.5
+    # ports:
+    #   - "5432:5432"
+    # volumes:
+    #   - /Users/rjyoung/data/:/var/lib/postgresql/data/:rw
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    # volumes:
+    #   - ./data/redis/:/var/lib/redis/data/
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    links:
+      - web
+    volumes:
+      - ./:/usr/share/nginx/html
+
+  crono:
+    build: .
+    command: bundle exec crono
+    volumes:
+      - ./:/usr/src/app
+    links:
+      - postgres
+      - redis
+
+  web:
+    build: .
+    command: bundle exec puma -C config/puma.rb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+    links:
+      - postgres
+      - redis
