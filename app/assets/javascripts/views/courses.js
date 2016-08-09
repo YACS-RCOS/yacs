@@ -51,59 +51,54 @@ Handlebars.registerHelper('time_range', function (start, end) {
  * @memberOf Yacs.views
  */
 Yacs.views.courses = function (target, data) {
-  var html = HandlebarsTemplates.courses(data);
-  target.innerHTML = html;
+  target.innerHTML = HandlebarsTemplates.courses(data);
+
+  var coursesElement = document.querySelector('courses');
 
   /**
-   * Helper function to check if all open sections of a course are selected.
-   * Used for toggling selection of an entire course.
+   * Update selected status (class) of sections and courses. If all open
+   * sections of a course are selected, the course is considered selected.
    */
-  var isCourseSelected = function (course) {
-    var isSelected = true;
-    course.querySelectorAll('section:not(.closed)').forEach(function (s) {
-      if (!Yacs.user.hasSelection(s.dataset.id)) isSelected = false;
+  var updateSelected = function () {
+    var selected = Yacs.user.getSelections();
+    each(target.querySelectorAll('course'), function (course) {
+      var courseSelected = true;
+      each(course.querySelectorAll('section'), function (section) {
+        var sectionSelected = selected.indexOf(section.dataset.id) !== -1;
+        section.classList[sectionSelected ? 'add' : 'remove']('selected');
+        if (!sectionSelected && !section.classList.contains('closed'))
+          courseSelected = false;
+      });
+      course.classList[courseSelected ? 'add' : 'remove']('selected');
     });
-    return isSelected;
   };
 
   /**
-   * When a section is clicked, check the cookie to see if it is selected.
-   * If it is selected, unselect it. If it is not selected, select it.
+   * When a section is clicked, set it as selected
    */
-  target.getElementsByTagName('section').forEach(function (s) {
-    Yacs.on('click', s, function(section) {
-      var sid = section.dataset.id;
-      if (Yacs.user.removeSelection(sid)) {
-        section.classList.remove('selected');
-      }
-      else {
-        Yacs.user.addSelection(sid);
-        section.classList.add('selected');
-      }
-      var course = section.closest('course');
-      course.classList[isCourseSelected(course) ? 'add' : 'remove']('selected');
-    });
-    if (Yacs.user.hasSelection(s.dataset.id)) s.classList.add('selected');
+  Yacs.on('click', 'section', function (section) {
+    if (section.classList.contains('selected'))
+      Yacs.user.removeSelection(section.dataset.id);
+    else
+      Yacs.user.addSelection(section.dataset.id);
   });
 
   /**
-   * When a course is clicked, select all of its open sections if they are not
-   * selected. If all open sections are selected, unselect them all. 
+   * When a course is clicked, toggle its sections as selected
    */
-  target.getElementsByTagName('course').forEach(function (c) {
-    Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
-      var isSelected = isCourseSelected(c);
-      c.getElementsByTagName('section').forEach(function (s) {
-        if (isSelected) {
-          s.classList.remove('selected');
-          Yacs.user.removeSelection(s.dataset.id);
-        } else if (!s.classList.contains('closed')) {
-          s.classList.add('selected');
-          Yacs.user.addSelection(s.dataset.id);
-        }
-      });
-      c.classList[isSelected ? 'remove' : 'add']('selected');
+  Yacs.on('click', 'course-info', function (courseInfo) {
+    var sections = courseInfo.parentElement.querySelectorAll('section');
+    var section_ids = [];
+    sections = sections.forEach(function (section) {
+      section_ids.push(section.dataset.id);
     });
-    if (isCourseSelected(c)) c.classList.add('selected');
+    if (courseInfo.parentElement.classList.contains('selected'))
+      Yacs.user.removeSelections(section_ids);
+    else
+      Yacs.user.addSelections(section_ids);
   });
+
+  Yacs.observe('selection', coursesElement, updateSelected);
+
+  updateSelected();
 };
