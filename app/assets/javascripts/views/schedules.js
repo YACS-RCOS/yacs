@@ -172,12 +172,6 @@ Yacs.views.schedule = function (target) {
   Yacs.on('click', clearButtonElement, function () {
     Yacs.user.clearSelections();
     updateSchedules();
-    target.querySelectorAll('course-info').forEach(function (ci) {
-      ci.classList.remove('selected');
-    });
-    target.querySelectorAll('section').forEach(function (s) {
-      s.classList.remove('selected');
-    });
   });
 
   /**
@@ -187,18 +181,19 @@ Yacs.views.schedule = function (target) {
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
-    Yacs.models.courses.query({ section_id: selections.join(','),
-                                show_sections: true,
-                                show_periods: true },
+    Yacs.models.courses.query({
+      section_id: selections.join(','),
+      show_sections: true,
+      show_periods: true },
       function (data, success) {
         if (success) {
           Yacs.views.courses(selectionElement, data);
-          target.querySelectorAll('course').forEach(function (course) {
-            Yacs.on('click', course, updateSchedules);
-          });
         }
-    });
+      }
+    );
   }
+
+  Yacs.observe('selection', scheduleElement, updateSchedules);
 
   updateSchedules();
 };

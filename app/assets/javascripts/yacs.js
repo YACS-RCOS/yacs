@@ -1,3 +1,18 @@
+window.each = function (arr, func) {
+  if (typeof arr == 'string')
+    arr = document.querySelectorAll(arr);
+  for (var i = 0; i < arr.length; ++i)
+    func(arr[i]);
+};
+
+window.map = function (arr, func) {
+  var mapped = [];
+  each(arr, function (itm) {
+    mapped.push(itm);
+  });
+  return mapped;
+};
+
 /**
  * @namespace
  * @description
@@ -187,8 +202,12 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   self.on = function (eventType, elem, callback) {
-    elem.addEventListener(eventType, function (event) {
-      callback(elem, event);
+    if (typeof elem == 'string') elem = document.querySelectorAll(elem);
+    else if (elem.forEach === undefined) elem = [elem];
+    elem.forEach(function (e) {
+      e.addEventListener(eventType, function (event) {
+        callback(e, event);
+      });
     });
   };
 }();
@@ -200,3 +219,22 @@ Yacs = new function () {
 Yacs.onload(function () {
   Yacs.views.index();
 });
+
+
+Yacs.observe = function (name, target, callback) {
+  var self = this;
+  target.classList.add('listen-to-' + name);
+  target.addEventListener(name, callback);
+};
+
+Yacs.Observable = function (name) {
+  var self = this;
+  self.notify = function (data) {
+    var event = document.createEvent('Event');
+    event.initEvent(name, false, true);
+    event.data = data;
+    document.querySelectorAll('.listen-to-' + name).forEach(function (listener) {
+      listener.dispatchEvent(event);
+    });
+  }
+};
