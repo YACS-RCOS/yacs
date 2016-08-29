@@ -5,7 +5,7 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.index = function () {
+Yacs.views.root = function () {
   var homeButton = document.getElementById('page-title');
   var searchbar = document.getElementById('searchbar');
   var scheduleButton = document.getElementById('schedule-btn');
