@@ -11,6 +11,16 @@ Yacs.views.root = function () {
   var scheduleButton = document.getElementById('schedule-btn');
   var content = document.getElementById('content');
 
+  Yacs.router.define('/', function () {
+    Yacs.views.departments(content);
+  });
+  Yacs.router.define('/courses', function () {
+    Yacs.views.courses(content);
+  });
+  Yacs.router.define('/schedules', function () {
+    Yacs.views.schedules(content);
+  });
+
   Yacs.on('click', homeButton, function () { Yacs.views.departments(content); });
   Yacs.on('click', scheduleButton, function () { Yacs.views.schedule(content); });
 
