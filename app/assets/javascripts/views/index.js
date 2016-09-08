@@ -25,10 +25,10 @@ Yacs.views.index = function () {
     var key = event.keyCode;
     if (!(event.ctrlKey || event.metaKey)) {
       if ((key >= 48 && key <= 105) || key == 32) {
-        if (key == 127 && searchbar.value.length <= 1)
-          Yacs.views.departments(content);
+        // normal keys focus the searchbar
         searchbar.focus();
       } else if (key == 13) {
+        // enter searches
         if (searchbar.value) {
           Yacs.models.courses.query({ search: searchbar.value,
                                       show_sections: true,
@@ -37,11 +37,7 @@ Yacs.views.index = function () {
               if (success)
                 Yacs.views.courses(content, data);
           });
-        } else {
-          Yacs.views.departments(content);
         }
-      } else if ((key == 8 || key == 46) && searchbar.value.length <= 1) {
-        Yacs.views.departments(content);
       }
     }
   });
