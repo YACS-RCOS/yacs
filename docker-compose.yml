@@ -3,8 +3,8 @@ version: '2'
 services:
   postgres:
     image: postgres:9.5
-    # ports:
-    #   - "5432:5432"
+    ports:
+      - "5432:5432"
     # volumes:
     #   - /Users/rjyoung/data/:/var/lib/postgresql/data/:rw
 
@@ -27,9 +27,7 @@ services:
   crono:
     build: .
     command: bundle exec crono
-    volumes:
-      - ./:/usr/src/app
-    links:
+    depends_on:
       - postgres
       - redis
 
@@ -38,8 +36,6 @@ services:
     command: bundle exec puma -C config/puma.rb
     ports:
       - "3000:3000"
-    volumes:
-      - ./:/usr/src/app
-    links:
+    depends_on:
       - postgres
       - redis
