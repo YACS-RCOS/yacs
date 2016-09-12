@@ -6,23 +6,18 @@
  * @memberOf Yacs.views
  */
 Yacs.views.root = function () {
-  var homeButton = document.getElementById('page-title');
-  var searchbar = document.getElementById('searchbar');
-  var scheduleButton = document.getElementById('schedule-btn');
   var content = document.getElementById('content');
+  var searchbar = document.getElementById('searchbar');
 
-  Yacs.router.define('/', function () {
-    Yacs.views.departments(content);
+  Yacs.router.define('/', function (params) {
+    Yacs.views.departments(content, params);
   });
-  Yacs.router.define('/courses', function () {
-    Yacs.views.courses(content);
+  Yacs.router.define('/courses', function (params) {
+    Yacs.views.courses(content, params);
   });
-  Yacs.router.define('/schedules', function () {
-    Yacs.views.schedules(content);
+  Yacs.router.define('/schedules', function (params) {
+    Yacs.views.schedules(content, params);
   });
-
-  Yacs.on('click', homeButton, function () { Yacs.views.departments(content); });
-  Yacs.on('click', scheduleButton, function () { Yacs.views.schedule(content); });
 
   /**
    * Handle input destined for search bar. Assume all text input is intended
@@ -40,18 +35,12 @@ Yacs.views.root = function () {
         searchbar.focus();
       } else if (key == 13) {
         if (searchbar.value) {
-          Yacs.models.courses.query({ search: searchbar.value,
-                                      show_sections: true,
-                                      show_periods: true },
-            function (data, success) {
-              if (success)
-                Yacs.views.courses(content, data);
-          });
+          Yacs.router.visit('/courses?search=' + searchbar.value);
         } else {
-          Yacs.views.departments(content);
+          Yacs.router.visit('/');
         }
       } else if ((key == 8 || key == 46) && searchbar.value.length <= 1) {
-        Yacs.views.departments(content);
+        Yacs.router.visit('/');
       }
     }
   });
@@ -62,6 +51,8 @@ Yacs.views.root = function () {
   searchbar.focus();
 
   Yacs.models.schools.preload(function () {
-    Yacs.views.departments(content);
+    Yacs.router.visit('/');
   });
 };
+
+Yacs.onload(Yacs.views.root);

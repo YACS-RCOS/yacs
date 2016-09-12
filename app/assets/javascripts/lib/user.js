@@ -89,9 +89,9 @@ window.Yacs.user = new function () {
    */
   self.addSelections = function (sids) {
     var arr = self.getSelections();
-    var added = true;
+    var added = false;
     sids.forEach(function (sid) {
-      if (arr.indexOf(sid) !== -1) added = false;
+      if (arr.indexOf(sid) === -1) added = true;
       arr.push(sid);
     });
     setCookie('selections', arr.join(','));
@@ -123,10 +123,10 @@ window.Yacs.user = new function () {
    */
   self.removeSelections = function (sids) {
     var arr = self.getSelections();
-    var removed = true;
+    var removed = false;
     sids.forEach(function (sid) {
       i = arr.indexOf(sid);
-      if (i === -1) removed = false;
+      if (i !== -1) removed = true;
       arr.splice(i, 1);
     });
     observable.notify();

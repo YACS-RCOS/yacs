@@ -4,7 +4,7 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.schedule = function (target) {
+Yacs.views.schedule = function (target, params) {
   target.innerHTML = HandlebarsTemplates.schedules();
 
   var scheduleElement = target.querySelector('#schedule-container');
@@ -176,21 +176,20 @@ Yacs.views.schedule = function (target) {
 
   /**
    * Show selected courses / sections on the schedule page.
-   * Update schedules view when a course is clicked.
-   * TODO: Use native event handling to update views when selection changes
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
-    Yacs.models.courses.query({
-      section_id: selections.join(','),
-      show_sections: true,
-      show_periods: true },
-      function (data, success) {
-        if (success) {
-          Yacs.views.courses(selectionElement, data);
-        }
-      }
-    );
+    Yacs.views.courses(selectionElement, { section_id: selections })
+    // Yacs.models.courses.query({
+    //   section_id: selections.join(','),
+    //   show_sections: true,
+    //   show_periods: true },
+    //   function (data, success) {
+    //     if (success) {
+    //       Yacs.views.courses(selectionElement, data);
+    //     }
+    //   }
+    // );
   }
 
   Yacs.observe('selection', scheduleElement, updateSchedules);

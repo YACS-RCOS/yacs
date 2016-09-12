@@ -4,10 +4,12 @@
       <school-name>{{name}}</school-name>
       <departments>
         {{#departments}}
-          <department data-id="{{id}}">
-            <department-code>{{code}}</department-code>
-            <department-name>{{name}}</department-name>
-          </department>
+          <a href="#/courses?department_id={{id}}">
+            <department>
+              <department-code>{{code}}</department-code>
+              <department-name>{{name}}</department-name>
+            </department>
+          </a>
         {{/departments}}
       </departments>
     </school>

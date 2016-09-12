@@ -17,8 +17,8 @@ Yacs.router = new function () {
     routes[path] = callback;
   };
 
-  self.visit = function (path, params) {
-    routes[path](params);
+  self.visit = function (path) {
+    window.location.hash = path;
   };
 
   window.addEventListener('hashchange', function () {
