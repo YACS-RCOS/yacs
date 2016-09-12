@@ -20,6 +20,10 @@ Our iOS app repository can be found at https://github.com/JGrippo/YACSiOS
 
 YACS provides a public JSON API. Documentation can be found on the [wiki page](https://github.com/YACS-RCOS/yacs/wiki/API).
 
+# Setup
+
+See the wiki for instructions to [run the app locally](https://github.com/YACS-RCOS/yacs/wiki/Local-Setup) and [deploy to a server](https://github.com/YACS-RCOS/yacs/wiki/Deployment).
+
 # Contributing
 
 We encourage you to [create issues](https://github.com/YACS-RCOS/yacs/issues/new) and contribute to YACS! To contribute [fork the repo](https://github.com/YACS-RCOS/yacs/fork), comment on an issue, and submit a pull request to the [staging](https://github.com/YACS-RCOS/yacs/tree/staging) branch. Please make sure the build is passing before submitting a PR.
