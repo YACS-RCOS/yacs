@@ -298,8 +298,5 @@ DEPENDENCIES
   web-console (~> 2.0)
   webrat
 
-RUBY VERSION
-   ruby 2.2.3p173
-
 BUNDLED WITH
    1.12.5
