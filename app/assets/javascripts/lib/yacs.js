@@ -216,11 +216,6 @@ Yacs = new function () {
     Initializers
  * ======================================================================== */
 
-Yacs.onload(function () {
-  Yacs.views.index();
-});
-
-
 Yacs.observe = function (name, target, callback) {
   var self = this;
   target.classList.add('listen-to-' + name);
