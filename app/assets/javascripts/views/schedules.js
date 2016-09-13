@@ -43,7 +43,9 @@ Yacs.views.schedule = function (target) {
       var courseIds = [];
       var events = [];
       var crns = [];
+      var totalCredits = 0;
       schedule.sections.forEach(function (section) {
+         console.log(section);
         var color = courseIds.indexOf(section.course_id);
         if (color == -1) {
           courseIds.push(section.course_id);
@@ -80,14 +82,14 @@ Yacs.views.schedule = function (target) {
     var data = processSchedules(schedules);
     scheduleData = data.schedules;
     schedule.destroy();
-    schedule = new Schedule(scheduleElement, 
+    schedule = new Schedule(scheduleElement,
       { timeBegin: Math.ceil((data.start) / 60) * 60,
         timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
     scheduleCountElement.textContent = scheduleData.length;
     if (scheduleData.length > 0) {
-      show(0);
+      showSchedule(0);
     } else {
-      show(-1);
+      showSchedule(-1);
       if (Yacs.user.getSelections().length > 0) {
         scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
       } else {
@@ -125,14 +127,16 @@ Yacs.views.schedule = function (target) {
    * Show schdule at given index, and display corresponding CRNs.
    * If index is -1, show nil schedule.
    */
-  var show = function (index) {
+  var showSchedule = function (index) {
     if (index == -1) {
       scheduleStatusElement.textContent = "";
       scheduleNumElement.textContent = 0;
     } else {
       schedule.setEvents(scheduleData[index].events)
       scheduleNumElement.textContent = index + 1;
-      scheduleStatusElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
+      scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ')
+      scheduleStatusStr += ' Total Credits: ' + scheduleData[index].totalCredits;
+      scheduleStatusElement.textContent = scheduleStatusStr;
     }
   };
 
@@ -142,7 +146,7 @@ Yacs.views.schedule = function (target) {
   var next = function () {
     if (scheduleData.length > 0) {
       scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
-      show(scheduleIndex);
+      showSchedule(scheduleIndex);
     }
   }
 
@@ -152,7 +156,7 @@ Yacs.views.schedule = function (target) {
   var previous = function () {
     if (scheduleData.length > 0) {
       scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
-      show(scheduleIndex);
+      showSchedule(scheduleIndex);
     }
   }
 
