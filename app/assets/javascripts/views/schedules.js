@@ -43,7 +43,6 @@ Yacs.views.schedule = function (target) {
       var courseIds = [];
       var events = [];
       var crns = [];
-      var totalCredits = 0;
       schedule.sections.forEach(function (section) {
          console.log(section);
         var color = courseIds.indexOf(section.course_id);
@@ -135,7 +134,6 @@ Yacs.views.schedule = function (target) {
       schedule.setEvents(scheduleData[index].events)
       scheduleNumElement.textContent = index + 1;
       scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ')
-      scheduleStatusStr += ' Total Credits: ' + scheduleData[index].totalCredits;
       scheduleStatusElement.textContent = scheduleStatusStr;
     }
   };
