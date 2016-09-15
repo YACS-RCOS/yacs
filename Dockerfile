@@ -13,4 +13,6 @@ RUN bundle install
 
 COPY . $INSTALL_PATH
 
+mkdir -p $INSTALL_PATH/tmp/pids/puma
+
 RUN RAILS_ENV=production bundle exec rake assets:precompile
