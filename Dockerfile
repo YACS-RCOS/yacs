@@ -13,6 +13,4 @@ RUN bundle install
 
 COPY . $INSTALL_PATH
 
-VOLUME "./:$INSTALL_PATH"
-
-RUN bundle exec rake assets:precompile
+RUN RAILS_ENV=production bundle exec rake assets:precompile
