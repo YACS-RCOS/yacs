@@ -6,6 +6,9 @@ services:
 env:
   - RAILS_ENV=test
 
+install:
+  - docker-compose build
+
 before_script:
   - docker-compose run web rake db:create db:migrate
 
