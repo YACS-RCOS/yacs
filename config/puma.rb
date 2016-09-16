@@ -10,8 +10,8 @@ rackup      DefaultRackup
 port        ENV['PORT']     || 3000
 environment ENV['RAILS_ENV'] || 'development'
 
-pidfile "tmp/pids/puma/pid"
-state_path "tmp/pids/puma/state"
+pidfile "/var/run/puma/puma.pid"
+state_path "/var/run/puma/puma.state"
 
 on_worker_boot do
   # Worker specific setup for Rails 4.1+
