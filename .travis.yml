@@ -1,6 +1,9 @@
 sudo: required
 
-language: ruby
+# language: ruby
+
+# rvm:
+#   - 2.2.3
 
 services:
   - docker
@@ -9,7 +12,7 @@ services:
 env:
   - RAILS_ENV=test
 
-before_install:
+install:
   - docker-compose build
 
 script:
