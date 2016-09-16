@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -qq -y build-essential nodejs --fix-missin
 
 ENV INSTALL_PATH /usr/src/app/
 RUN mkdir -p $INSTALL_PATH
+RUN mkdir -p /var/run/puma
 WORKDIR $INSTALL_PATH
 
 COPY Gemfile Gemfile.lock $INSTALL_PATH
@@ -15,4 +16,3 @@ COPY . $INSTALL_PATH
 
 RUN RAILS_ENV=production bundle exec rake assets:precompile
 
-RUN mkdir -p $INSTALL_PATH/tmp/pids/puma
