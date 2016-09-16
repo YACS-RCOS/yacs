@@ -1,5 +1,18 @@
+sudo: required
+
 language: ruby
+
 rvm:
   - 2.2.3
+
+services:
+  - docker
+
+env:
+  - RAILS_ENV=test
+
 before_script:
-  - psql -c 'create database "yacs-test";' -U postgres
+  - docker-compose run web rake db:create db:migrate
+
+script:
+  - docker-compose run web rake

@@ -27,7 +27,7 @@ services:
   crono:
     build: .
     environment:
-      - RAILS_ENV=production
+      - RAILS_ENV=$RAILS_ENV
     command: bundle exec crono
     depends_on:
       - postgres
@@ -38,7 +38,7 @@ services:
   web:
     build: .
     environment:
-      - RAILS_ENV=production
+      - RAILS_ENV=$RAILS_ENV
     command: bundle exec puma -C config/puma.rb
     expose:
       - "3000"
