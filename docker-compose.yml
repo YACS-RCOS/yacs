@@ -21,8 +21,8 @@ services:
       - "80:80"
     links:
       - web
-    volumes_from:
-      - web
+    volumes:
+      - .:/usr/src/app/
 
   crono:
     build: .
@@ -32,6 +32,8 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - .:/usr/src/app/
 
   web:
     build: .
@@ -43,3 +45,5 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - .:/usr/src/app/
