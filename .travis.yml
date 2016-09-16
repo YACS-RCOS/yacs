@@ -1,16 +1,17 @@
 sudo: required
 
+language: ruby
+
 services:
   - docker
+  - postgresql
 
 env:
   - RAILS_ENV=test
 
-install:
+before_install:
   - docker-compose build
 
-before_script:
-  - docker-compose run web rake db:create db:migrate
-
 script:
+  - docker-compose run web rake db:create db:migrate
   - docker-compose run web rake
