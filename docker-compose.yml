@@ -21,8 +21,8 @@ services:
       - "80:80"
     links:
       - web
-    volumes:
-      - .:/usr/share/nginx/html
+    volumes_from:
+      - web
 
   crono:
     build: .
