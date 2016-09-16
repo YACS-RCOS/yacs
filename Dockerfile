@@ -13,7 +13,3 @@ COPY Gemfile Gemfile.lock $INSTALL_PATH
 RUN bundle install
 
 COPY . $INSTALL_PATH
-
-VOLUME ".:$INSTALL_PATH"
-
-RUN RAILS_ENV=production bundle exec rake assets:precompile
