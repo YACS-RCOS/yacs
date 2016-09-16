@@ -43,5 +43,3 @@ services:
     depends_on:
       - postgres
       - redis
-    volumes:
-      - .:/usr/src/app
