@@ -31,6 +31,9 @@ services:
     extends:
       file: docker-compose.common.yml
       service: rails
+    depends_on:
+      - postgres
+      - redis
     command: bundle exec puma -C config/puma.rb
     expose:
       - "3000"
@@ -39,4 +42,7 @@ services:
     extends:
       file: docker-compose.common.yml
       service: rails
+    depends_on:
+      - postgres
+      - redis
     command: bundle exec crono

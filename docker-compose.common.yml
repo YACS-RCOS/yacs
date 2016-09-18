@@ -1,12 +1,8 @@
-services:
-  rails:
-    build: .
-    environment:
-      - RAILS_ENV=$RAILS_ENV
-      - SECRET_KEY_BASE=$SECRET_KEY_BASE
-      - SECRET_TOKEN=$SECRET_TOKEN
-    depends_on:
-      - postgres
-      - redis
-    volumes:
-      - .:/usr/src/app/
+rails:
+  build: .
+  environment:
+    - RAILS_ENV=$RAILS_ENV
+    - SECRET_KEY_BASE=$SECRET_KEY_BASE
+    - SECRET_TOKEN=$SECRET_TOKEN
+  volumes:
+    - .:/usr/src/app/
