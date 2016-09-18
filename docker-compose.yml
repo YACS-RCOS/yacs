@@ -1,5 +1,8 @@
 version: '2'
 
+rails_base:
+
+
 services:
   postgres:
     image: postgres:9.5
@@ -12,8 +15,8 @@ services:
     image: redis
     expose:
       - "6379"
-    # volumes:
-    #   - ./data/redis/:/var/lib/redis/data/
+    volumes:
+      - ./data/redis/:/var/lib/redis/data/
 
   nginx:
     build: nginx
@@ -24,26 +27,16 @@ services:
     volumes:
       - .:/usr/src/app/
 
-  crono:
-    build: .
-    environment:
-      - RAILS_ENV=$RAILS_ENV
-    command: bundle exec crono
-    depends_on:
-      - postgres
-      - redis
-    volumes:
-      - .:/usr/src/app/
-
   web:
-    build: .
-    environment:
-      - RAILS_ENV=$RAILS_ENV
+    extends:
+      file: docker-compose.common.yml
+      service: rails
     command: bundle exec puma -C config/puma.rb
     expose:
       - "3000"
-    depends_on:
-      - postgres
-      - redis
-    volumes:
-      - .:/usr/src/app/
+
+  crono:
+    extends:
+      file: docker-compose.common.yml
+      service: rails
+    command: bundle exec crono
