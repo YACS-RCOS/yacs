@@ -1,8 +1,5 @@
 version: '2'
 
-rails_base:
-
-
 services:
   postgres:
     image: postgres:9.5
