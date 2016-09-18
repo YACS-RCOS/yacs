@@ -25,9 +25,13 @@ services:
       - .:/usr/src/app/
 
   web:
-    extends:
-      file: docker-compose.common.yml
-      service: rails
+    build: .
+    environment:
+      - RAILS_ENV=$RAILS_ENV
+      - SECRET_KEY_BASE=$SECRET_KEY_BASE
+      - SECRET_TOKEN=$SECRET_TOKEN
+    volumes:
+      - .:/usr/src/app/
     depends_on:
       - postgres
       - redis
@@ -35,10 +39,12 @@ services:
     expose:
       - "3000"
 
-  crono:
-    extends:
-      file: docker-compose.common.yml
-      service: rails
+  worker:
+    build: .
+    environment:
+      - RAILS_ENV=$RAILS_ENV
+    volumes:
+      - .:/usr/src/app/
     depends_on:
       - postgres
       - redis
