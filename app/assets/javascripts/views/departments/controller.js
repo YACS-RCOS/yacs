@@ -1,8 +1,7 @@
 /**
  * Home page view. Displays departments by school.
  * If no arguments are given, the view will use the preloaded Schools
- * @param {Object} [data] - Object containing Schools model collection
- * @param {Model[]} data.schools - Schools model collection
+ * @param {HTMLElement} target- The element in which this view should be rendered
  * @return {undefined}
  * @memberOf Yacs.views
  */
