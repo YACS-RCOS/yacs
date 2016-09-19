@@ -2,21 +2,21 @@
 
 /**
  * Root view of YACS. Controls site navigation and search
+ * @param {HTMLElement} target- The element in which this view should be rendered
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.root = function () {
-  var content = document.getElementById('content');
+Yacs.views.root = function (target) {
   var searchbar = document.getElementById('searchbar');
 
   Yacs.router.define('/', function (params) {
-    Yacs.views.departments(content, params);
+    Yacs.views.departments(target, params);
   });
   Yacs.router.define('/courses', function (params) {
-    Yacs.views.courses(content, params);
+    Yacs.views.courses(target, params);
   });
   Yacs.router.define('/schedules', function (params) {
-    Yacs.views.schedules(content, params);
+    Yacs.views.schedules(target, params);
   });
 
   /**
@@ -31,7 +31,7 @@ Yacs.views.root = function () {
     if (!(event.ctrlKey || event.metaKey)) {
       if ((key >= 48 && key <= 105) || key == 32) {
         if (key == 127 && searchbar.value.length <= 1)
-          Yacs.views.departments(content);
+          Yacs.views.departments(target);
         searchbar.focus();
       } else if (key == 13) {
         if (searchbar.value) {
@@ -54,5 +54,3 @@ Yacs.views.root = function () {
     Yacs.router.visit('/');
   });
 };
-
-Yacs.onload(Yacs.views.root);

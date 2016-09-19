@@ -1,6 +1,6 @@
 window.each = function (arr, func) {
-  if (typeof arr == 'string')
-    arr = document.querySelectorAll(arr);
+  if (arr.length === undefined)
+    arr = [arr];
   for (var i = 0; i < arr.length; ++i)
     func(arr[i]);
 };
@@ -145,10 +145,9 @@ Yacs = new function () {
     return self.models[name] = new Model(name, options);
   }
 
-  addModel('schools',     { has_many: 'departments' });
-  addModel('departments', { has_many: 'courses'     });
-  addModel('courses',     { has_many: 'sections'    });
-  addModel('sections' );
+  addModel('schools', { has_many: 'departments' });
+  addModel('departments');
+  addModel('courses');
   addModel('schedules');
 
 /* ======================================================================== *
@@ -162,9 +161,6 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   self.views = { };
-
-  NodeList.prototype.forEach = Array.prototype.forEach;
-  HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
   /**
    * Equivalent to JQuery's $(document).ready()
@@ -202,9 +198,7 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   self.on = function (eventType, elem, callback) {
-    if (typeof elem == 'string') elem = document.querySelectorAll(elem);
-    else if (elem.forEach === undefined) elem = [elem];
-    elem.forEach(function (e) {
+    each(elem, function (e) {
       e.addEventListener(eventType, function (event) {
         callback(e, event);
       });
@@ -216,20 +210,6 @@ Yacs = new function () {
     Initializers
  * ======================================================================== */
 
-Yacs.observe = function (name, target, callback) {
-  var self = this;
-  target.classList.add('listen-to-' + name);
-  target.addEventListener(name, callback);
-};
-
-Yacs.Observable = function (name) {
-  var self = this;
-  self.notify = function (data) {
-    var event = document.createEvent('Event');
-    event.initEvent(name, false, true);
-    event.data = data;
-    document.querySelectorAll('.listen-to-' + name).forEach(function (listener) {
-      listener.dispatchEvent(event);
-    });
-  }
-};
+Yacs.onload(function () {
+  Yacs.views.root();
+});
