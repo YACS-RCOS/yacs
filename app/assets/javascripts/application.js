@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require_tree ../../../vendor/assets/javascripts
-//= require lib/yacs
-//= require_tree lib
+//= require ./lib/yacs
+//= require_tree ./lib
+//= require_tree ./templates
 //= require_tree .
