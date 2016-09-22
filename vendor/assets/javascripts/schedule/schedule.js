@@ -51,6 +51,10 @@ window.Schedule = function (scheduleContainer, options) {
     eventElement.style.borderColor        = BORDER_COLORS[colorIndex];
     eventBackground.style.backgroundColor = BACKGROUND_COLORS[colorIndex];
 
+    if("tooltip" in event) {
+      eventElement.title = event.tooltip;
+    }
+
     eventElement.appendChild(eventBackground);
     eventElement.appendChild(eventText);
     scheduleElement.appendChild(eventElement);
