@@ -11,13 +11,13 @@ course:last-child {
     border: none;
 }
 
-course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.closed) {
-    background-color: #d57f7f;
-}
-course.selected>course-info:hover ~ sections section.selected {
-    color: #efefef;
-    background-color: #d57f7f;
-}
+/* course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.closed) { */
+/*     background-color: #d57f7f; */
+/* } */
+/* course.selected>course-info:hover ~ sections section.selected { */
+/*     color: #efefef; */
+/*     background-color: #d57f7f; */
+/* } */
 
 course-name {
     font-size: 130%;
@@ -29,17 +29,42 @@ course department-code {
 course-credits {
     margin-left:0.7em;
 }
+div.description-container {
+   display:block;
+   max-width:100%;
+}
 course-description {
     display:block;
     font-size:87%;
-    text-align: justify;
+    text-align:justify;
     white-space:nowrap;
     overflow-x:hidden;
     text-overflow:ellipsis;
+    /* float:left; */
+    /* max-width:200px; */
+}
+course-description:not(.expanded):hover {
+   color: #993333;
 }
 course-description.expanded {
    white-space: normal;
    overflow-x: visible;
+   text-align: justify;
+}
+button.expand-course-description {
+   background-color: transparent;
+   background-repeat: no-repeat;
+   border: 1px #afafaf solid;
+   border-radius: 5px;
+   color: #afafaf;
+   /* margin: 1px 0; */
+   /* float:right; */
+   /* margin-left:auto; */
+   /* margin-right:0; */
+   /* overflow: hidden; */
+   outline: none;
+   cursor:pointer;
+   display:inline-block;
 }
 section {
     display:block;
