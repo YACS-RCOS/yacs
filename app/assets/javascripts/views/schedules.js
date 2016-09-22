@@ -44,7 +44,6 @@ Yacs.views.schedule = function (target) {
       var events = [];
       var crns = [];
       schedule.sections.forEach(function (section) {
-         console.log(section);
         var color = courseIds.indexOf(section.course_id);
         if (color == -1) {
           courseIds.push(section.course_id);
