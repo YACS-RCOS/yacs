@@ -29,10 +29,10 @@ course department-code {
 course-credits {
     margin-left:0.7em;
 }
-div.description-container {
-   display:block;
-   max-width:100%;
-}
+/* div.description-container { */
+/*    display:block; */
+/*    max-width:100%; */
+/* } */
 course-description {
     display:block;
     font-size:87%;
@@ -51,21 +51,21 @@ course-description.expanded {
    overflow-x: visible;
    text-align: justify;
 }
-button.expand-course-description {
-   background-color: transparent;
-   background-repeat: no-repeat;
-   border: 1px #afafaf solid;
-   border-radius: 5px;
-   color: #afafaf;
-   /* margin: 1px 0; */
-   /* float:right; */
-   /* margin-left:auto; */
-   /* margin-right:0; */
-   /* overflow: hidden; */
-   outline: none;
-   cursor:pointer;
-   display:inline-block;
-}
+/* button.expand-course-description { */
+/*    background-color: transparent; */
+/*    background-repeat: no-repeat; */
+/*    border: 1px #afafaf solid; */
+/*    border-radius: 5px; */
+/*    color: #afafaf; */
+/*    margin: 1px 0; */
+/*    float:right; */
+/*    margin-left:auto; */
+/*    margin-right:0; */
+/*    overflow: hidden; */
+/*    outline: none; */
+/*    cursor:pointer; */
+/*    display:inline-block; */
+/* } */
 section {
     display:block;
     margin:0px 0px 0px 5px;
