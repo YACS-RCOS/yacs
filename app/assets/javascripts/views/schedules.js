@@ -85,9 +85,9 @@ Yacs.views.schedule = function (target) {
         timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
     scheduleCountElement.textContent = scheduleData.length;
     if (scheduleData.length > 0) {
-      showSchedule(0);
+      show(0);
     } else {
-      showSchedule(-1);
+      show(-1);
       if (Yacs.user.getSelections().length > 0) {
         scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
       } else {
@@ -125,7 +125,7 @@ Yacs.views.schedule = function (target) {
    * Show schdule at given index, and display corresponding CRNs.
    * If index is -1, show nil schedule.
    */
-  var showSchedule = function (index) {
+  var show = function (index) {
     if (index == -1) {
       scheduleStatusElement.textContent = "";
       scheduleNumElement.textContent = 0;
@@ -143,7 +143,7 @@ Yacs.views.schedule = function (target) {
   var next = function () {
     if (scheduleData.length > 0) {
       scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
-      showSchedule(scheduleIndex);
+      show(scheduleIndex);
     }
   }
 
@@ -153,7 +153,7 @@ Yacs.views.schedule = function (target) {
   var previous = function () {
     if (scheduleData.length > 0) {
       scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
-      showSchedule(scheduleIndex);
+      show(scheduleIndex);
     }
   }
 
