@@ -62,7 +62,8 @@ Yacs.views.schedule = function (target) {
               section.department_code + ' ' + section.course_number + ' - ' + section.name,
               section.crn,
               section.instructors[0] || ''
-            ]
+            ],
+            tooltip: section.course_name,
           });
         });
       });
@@ -130,9 +131,9 @@ Yacs.views.schedule = function (target) {
       scheduleStatusElement.textContent = "";
       scheduleNumElement.textContent = 0;
     } else {
-      schedule.setEvents(scheduleData[index].events)
+      schedule.setEvents(scheduleData[index].events);
       scheduleNumElement.textContent = index + 1;
-      scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ')
+      scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ');
       scheduleStatusElement.textContent = scheduleStatusStr;
     }
   };
