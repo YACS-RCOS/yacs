@@ -197,5 +197,5 @@ Yacs = new function () {
  * ======================================================================== */
 
 Yacs.onload(function () {
-  Yacs.views.root();
+  Yacs.views.root(document.getElementById('content'));
 });

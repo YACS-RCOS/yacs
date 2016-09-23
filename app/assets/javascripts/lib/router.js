@@ -25,6 +25,6 @@ Yacs.router = new function () {
     var resource = window.location.hash.slice(1).split('?');
     var path = resource[0].length ? resource[0] : '/';
     var params = resource[1] || '';
-    if (routes[path]) routes[path](queryToHash(query));
+    if (routes[path]) routes[path](queryToHash(params));
   }, false);
 };
