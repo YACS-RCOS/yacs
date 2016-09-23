@@ -28,7 +28,7 @@ Handlebars.registerHelper('closed_status', function (s) {
 });
 
 Handlebars.registerHelper('day_name', function (n) {
-  return new Handlebars.SafeString(['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'][n]);
+  return new Handlebars.SafeString(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][n]);
 });
 
 Handlebars.registerHelper('time_range', function (start, end) {
@@ -42,6 +42,12 @@ Handlebars.registerHelper('time_range', function (start, end) {
   }).join('-'));
 });
 
+Handlebars.registerHelper('description_exists', function(description, options) {
+   if(description.length > 0)
+      return options.fn(this);
+   else
+      return options.inverse(this);
+});
 
 /**
  * Courses view. Displays courses and their sections
@@ -88,7 +94,7 @@ Yacs.views.courses = function (target, data) {
 
   /**
    * When a course is clicked, select all of its open sections if they are not
-   * selected. If all open sections are selected, unselect them all. 
+   * selected. If all open sections are selected, unselect them all.
    */
   target.getElementsByTagName('course').forEach(function (c) {
     Yacs.on('click', c.getElementsByTagName('course-info')[0], function (ci) {
@@ -105,5 +111,15 @@ Yacs.views.courses = function (target, data) {
       c.classList[isSelected ? 'remove' : 'add']('selected');
     });
     if (isCourseSelected(c)) c.classList.add('selected');
+  });
+
+  /**
+   * Expand course descriptions when clicked.
+   */
+  target.getElementsByTagName('course-description').forEach(function(cd) {
+    Yacs.on('click', cd, function(cd_, event_) {
+      cd_.classList.add('expanded');
+      event_.stopPropagation();
+    });
   });
 };
