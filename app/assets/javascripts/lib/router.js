@@ -1,4 +1,4 @@
-Yacs.router = function () {
+Yacs.router = new function () {
   var self = this;
 
   var routes = {};
@@ -21,7 +21,7 @@ Yacs.router = function () {
     window.location.hash = path;
   };
 
-  self.init = function () {
+  self.listen = function () {
     var onChange = function () {
       var resource = window.location.hash.slice(1).split('?');
       var path = resource[0].length ? resource[0] : '/';
