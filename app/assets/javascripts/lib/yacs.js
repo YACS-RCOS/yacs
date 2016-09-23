@@ -173,24 +173,6 @@ Yacs = new function () {
   }
 
   /**
-   * Sets the contents of the content pane
-   * @param {String} html - HTML to fill the content pane
-   * @return {undefined}
-   * @memberOf Yacs
-   */
-  self.setContents = function (html) {
-    document.getElementById('content').innerHTML = html;
-  }
-  /**
-   * Clears the contents of the content pane
-   * @return {undefined}
-   * @memberOf Yacs
-   */
-  self.clearContents = function () {
-    Yacs.setContents('');
-  }
-
-  /**
    * @param  {String} eventType - name of event
    * @param  {HTMLElement} elem - DOM element
    * @param  {Function} callback - callback
@@ -203,6 +185,10 @@ Yacs = new function () {
         callback(e, event);
       });
     });
+  };
+
+  self.render = function (target, template, data) {
+    target.innerHTML = HandlebarsTemplates[template + '/template'](data);
   };
 }();
 

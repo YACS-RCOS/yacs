@@ -6,7 +6,7 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedule = function (target, params) {
-  target.innerHTML = HandlebarsTemplates.schedules();
+  Yacs.render(target, 'schedules');
 
   var scheduleElement = target.querySelector('#schedule-container');
   var selectionElement = target.querySelector('#selection-container')
