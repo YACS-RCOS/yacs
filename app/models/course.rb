@@ -8,7 +8,9 @@ class Course < ActiveRecord::Base
     joins(:department).where("departments.code = ? AND number = ?", code, number).first
   end
 
-  def self.search params
+  #Returns the result of a string search using SQL Query
+  #params: a list of string search terms (split by whitespace from user search text)
+  def self.search params 
     search_params = params.join(' & ')
     query = <<-SQL
       SELECT * FROM (

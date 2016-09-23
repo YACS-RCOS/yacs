@@ -59,4 +59,6 @@ group :development do
   gem 'spring'
 end
 
-gem 'tzinfo-data'
+gem 'tzinfo-data' #timezone gem for hosting on windows
+gem 'sunspot_rails' #sunspot for better search results via apache solr
+gem 'sunspot_solr' 
