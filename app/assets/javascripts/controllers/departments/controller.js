@@ -7,5 +7,5 @@
  */
 Yacs.views.departments = function (target) {
   var data = { schools: Yacs.models.schools.store.all };
-  target.innerHTML = HandlebarsTemplates.departments(data);
+  Yacs.render(target, 'departments', data);
 };
