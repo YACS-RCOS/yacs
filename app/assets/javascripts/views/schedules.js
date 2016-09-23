@@ -80,7 +80,7 @@ Yacs.views.schedule = function (target) {
     var data = processSchedules(schedules);
     scheduleData = data.schedules;
     schedule.destroy();
-    schedule = new Schedule(scheduleElement, 
+    schedule = new Schedule(scheduleElement,
       { timeBegin: Math.ceil((data.start) / 60) * 60,
         timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
     scheduleCountElement.textContent = scheduleData.length;
@@ -132,7 +132,8 @@ Yacs.views.schedule = function (target) {
     } else {
       schedule.setEvents(scheduleData[index].events)
       scheduleNumElement.textContent = index + 1;
-      scheduleStatusElement.textContent = 'CRNs: ' + scheduleData[index].crns.join(', ');
+      scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ')
+      scheduleStatusElement.textContent = scheduleStatusStr;
     }
   };
 
