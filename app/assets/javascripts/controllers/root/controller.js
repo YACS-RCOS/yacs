@@ -51,6 +51,6 @@ Yacs.views.root = function (target) {
   searchbar.focus();
 
   Yacs.models.schools.preload(function () {
-    Yacs.router.visit('/');
+    Yacs.router.init();
   });
 };

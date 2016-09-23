@@ -5,7 +5,7 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.schedule = function (target, params) {
+Yacs.views.schedules = function (target, params) {
   Yacs.render(target, 'schedules');
 
   var scheduleElement = target.querySelector('#schedule-container');

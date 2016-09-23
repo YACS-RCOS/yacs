@@ -1,4 +1,4 @@
-Yacs.router = new function () {
+Yacs.router = function () {
   var self = this;
 
   var routes = {};
@@ -21,10 +21,14 @@ Yacs.router = new function () {
     window.location.hash = path;
   };
 
-  window.addEventListener('hashchange', function () {
-    var resource = window.location.hash.slice(1).split('?');
-    var path = resource[0].length ? resource[0] : '/';
-    var params = resource[1] || '';
-    if (routes[path]) routes[path](queryToHash(params));
-  }, false);
+  self.init = function () {
+    var onChange = function () {
+      var resource = window.location.hash.slice(1).split('?');
+      var path = resource[0].length ? resource[0] : '/';
+      var params = resource[1] || '';
+      if (routes[path]) routes[path](queryToHash(params));
+    };
+    window.addEventListener('hashchange', onChange, false);
+    onChange();
+  };
 };
