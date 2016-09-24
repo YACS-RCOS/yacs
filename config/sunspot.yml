@@ -6,6 +6,7 @@ production:
     path: /solr/production
     # read_timeout: 2
     # open_timeout: 0.5
+    solr_home: solr
 
 development:
   solr:
@@ -13,6 +14,7 @@ development:
     port: 8982
     log_level: INFO
     path: /solr/development
+    solr_home: solr
 
 test:
   solr:
@@ -20,4 +22,4 @@ test:
     port: 8981
     log_level: WARNING
     path: /solr/test
-    
+    solr_home: solr
