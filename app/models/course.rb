@@ -4,10 +4,11 @@ class Course < ActiveRecord::Base
   validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
   
+  attr_accessible :department_id, :number
+  
   searchable do #searchable block required by sunspot
-    text :department_id
-	integer :number
-    end
+    text :department_id, :number
+  end
 
   def self.get code, number
     joins(:department).where("departments.code = ? AND number = ?", code, number).first
