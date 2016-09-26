@@ -16,10 +16,10 @@ class Course < ActiveRecord::Base
   #Returns the result of a string search using SQL Query
   #params: a list of string search terms (split by whitespace from user search text)
   def self.search params
-  courses = solr_search do
-    keywords params 
+  courses = Sunspot.search(Course) do
+    fulltext params
   end.results
-  
+
 =begin
 search_params = params.join(' & ')
     search_params = params.join(' & ')
