@@ -61,5 +61,5 @@ end
 
 gem 'tzinfo-data' #timezone gem for hosting on windows
 
-gem 'sunspot_rails', github: "betam4x/sunspot" # , '2.1.1' #sunspot for better search results via apache solr
-gem 'sunspot_solr', github: "betam4x/sunspot" # '2.1.1'
+gem 'sunspot_rails'
+gem 'sunspot_solr'

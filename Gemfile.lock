@@ -1,16 +1,3 @@
-GIT
-  remote: git://github.com/betam4x/sunspot.git
-  revision: c24835f07179c9b04c35ff36e5c18966ea8e8619
-  specs:
-    sunspot (2.1.1)
-      pr_geohash (~> 1.0)
-      rsolr (~> 1.0.7)
-    sunspot_rails (2.1.1)
-      nokogiri
-      rails (>= 3)
-      sunspot (= 2.1.1)
-    sunspot_solr (2.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -207,7 +194,7 @@ GEM
     ref (2.0.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
-    rsolr (1.0.13)
+    rsolr (1.1.2)
       builder (>= 2.1.2)
     rspec-core (3.5.3)
       rspec-support (~> 3.5.0)
@@ -252,6 +239,14 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sunspot (2.2.6)
+      pr_geohash (~> 1.0)
+      rsolr (~> 1.1.1)
+    sunspot_rails (2.2.6)
+      nokogiri
+      rails (>= 3)
+      sunspot (= 2.2.6)
+    sunspot_solr (2.2.6)
     term-ansicolor (1.3.2)
       tins (~> 1.0)
     therubyracer (0.12.2)
@@ -317,8 +312,8 @@ DEPENDENCIES
   selenium-webdriver
   spring
   sprockets-rails
-  sunspot_rails!
-  sunspot_solr!
+  sunspot_rails
+  sunspot_solr
   therubyracer
   tzinfo-data
   uglifier (>= 1.3.0)
