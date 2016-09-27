@@ -4,10 +4,8 @@ class Course < ActiveRecord::Base
   validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
   
-  attr_accessible :department_id, :number
-  
   searchable do #searchable block required by sunspot
-    text :department_id, :number
+    text :number, :name, :description
   end
 
   def self.get code, number
@@ -17,6 +15,8 @@ class Course < ActiveRecord::Base
   #Returns the result of a string search using SQL Query
   #params: a list of string search terms (split by whitespace from user search text)
   def self.search params
+
+  params.map! {|p| p+"*"}
   courses = Sunspot.search(Course) do
     fulltext params
   end.results
