@@ -7,15 +7,15 @@
 Yacs.views.schedule = function (target) {
   target.innerHTML = HandlebarsTemplates.schedules();
 
-  var scheduleElement = document.getElementById('#schedule-container');
-  var selectionElement = document.getElementById('#selection-container');
-  var leftSwitchElement = document.getElementById('#left-switch');
-  var rightSwitchElement = document.getElementById('#right-switch');
-  var clearButtonElement = document.getElementById('#clear-btn');
-  var scheduleNumElement = document.getElementById('#schedule-num');
-  var scheduleCountElement = document.getElementById('#schedule-count');
-  var scheduleStatusElement = document.getElementById('#schedule-status');
-  var crnListElement = document.getElementById('#crn-list');
+  var scheduleElement = target.querySelector('#schedule-container');
+  var selectionElement = target.querySelector('#selection-container');
+  var leftSwitchElement = target.querySelector('#left-switch');
+  var rightSwitchElement = target.querySelector('#right-switch');
+  var clearButtonElement = target.querySelector('#clear-btn');
+  var scheduleNumElement = target.querySelector('#schedule-num');
+  var scheduleCountElement = target.querySelector('#schedule-count');
+  var scheduleStatusElement = target.querySelector('#schedule-status');
+  var crnListElement = target.querySelector('#crn-list');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
   var scheduleIndex = 0;
