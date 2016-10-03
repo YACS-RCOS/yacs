@@ -35,4 +35,4 @@
 
 /coverage/
 /solr/*
-!/solr/configsets/* #solr schema.xml and possibly other files from this dir are customized
+!/solr/configsets/* #solr schema.xml must be customized, as well as potentially other files in this dir

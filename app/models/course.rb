@@ -20,31 +20,9 @@ class Course < ActiveRecord::Base
 	    fields(:description, :number => 10, :name => 5.0) #weight results most strongly by number, then name, and finally description
 	    phrase_fields :name => 3.0 #weight titles that contain a phrase of search terms more strongly
 	  end
-	  paginate :page => 1, :per_page => 25 #place a maximum of 25 results on each page
-    end.results #store search results in courses in one step
-
-=begin
-    search_params = params.join(' & ')
-    query = <<-SQL
-      SELECT * FROM (
-        SELECT DISTINCT
-          courses.*,
-          to_tsvector(departments.name) ||
-          to_tsvector(departments.code) ||
-          to_tsvector(to_char(courses.number, '9999')) ||
-          to_tsvector(courses.name) ||
-          to_tsvector(coalesce((string_agg(array_to_string(sections.instructors, ' '), ' ')), ''))
-        AS document FROM courses
-        JOIN sections on sections.course_id = courses.id
-        JOIN departments on courses.department_id = departments.id
-        GROUP BY courses.id, sections.id, departments.id
-      ) c_search
-      WHERE c_search.document @@ to_tsquery('#{search_params}')
-      ORDER BY ts_rank(c_search.document, to_tsquery('#{search_params}')) DESC
-      LIMIT 25;
-    SQL
-    courses = find_by_sql(query).uniq
-=end
+	  paginate :page => 1, :per_page => 25 #place a maximum of 25 results on each page (for now we just display page 1)
+    end.results.uniq #store unique search results in courses in one step
+	
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
     courses
   end
