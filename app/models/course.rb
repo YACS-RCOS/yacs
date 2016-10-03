@@ -18,7 +18,10 @@ class Course < ActiveRecord::Base
 
   params.map! {|p| p+"*"}
   courses = Sunspot.search(Course) do
-    fulltext params
+    fulltext params do
+	  fields(:description, :number => 10, :name => 5.0) #weight results most strongly by number, then name, and finally description
+	end
+	paginate :page => 1, :per_page => 25
   end.results
 
 =begin
