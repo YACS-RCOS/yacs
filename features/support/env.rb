@@ -9,16 +9,10 @@ require 'cucumber/rails'
 require 'coveralls'
 Coveralls.wear_merged!
 
-require 'sunspot/rails/spec_helper'
+Sunspot::Rails::Server.new.start
 
-RSpec.configure do |config|
-  config.before(:each) do
-    ::Sunspot.session = ::Sunspot::Rails::StubSessionProxy.new(::Sunspot.session)
-  end
-
-  config.after(:each) do
-    ::Sunspot.session = ::Sunspot.session.original_session
-  end
+at_exit do
+  Sunspot::Rails::Server.new.stop
 end
 
 # Capybara defaults to CSS3 selectors rather than XPath.
