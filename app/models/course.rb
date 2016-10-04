@@ -21,7 +21,7 @@ class Course < ActiveRecord::Base
 	    phrase_fields :name => 3.0 #weight titles that contain a phrase of search terms more strongly
 	  end
 	  paginate :page => 1, :per_page => 25 #place a maximum of 25 results on each page (for now we just display page 1)
-    end.results.uniq #store unique search results in courses in one step
+    end.results #store results of search in courses
 	
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
     courses
