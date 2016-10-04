@@ -14,12 +14,9 @@ development:
     log_level: INFO
     path: /solr/development
 
-test: &TEST
+test:
   solr:
     hostname: localhost
     port: 8981
     log_level: WARNING
     path: /solr/test
-
-cucumber:
-  <<: *TEST
