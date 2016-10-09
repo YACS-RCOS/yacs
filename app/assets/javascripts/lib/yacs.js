@@ -8,7 +8,7 @@ window.each = function (arr, func) {
 window.map = function (arr, func) {
   var mapped = [];
   each(arr, function (itm) {
-    mapped.push(itm);
+    mapped.push(func(itm));
   });
   return mapped;
 };
