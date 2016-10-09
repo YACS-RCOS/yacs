@@ -21,14 +21,18 @@ Yacs.views.courses = function (target, params) {
     });
 
     Yacs.on('click', target.querySelectorAll('course-info'), function (courseInfo) {
-      var sections = courseInfo.parentElement.querySelectorAll('section');
-      var section_ids = map(sections, function (section) {
-        return section.dataset.id;
-      });
-      if (courseInfo.parentElement.classList.contains('selected'))
-        Yacs.user.removeSelections(section_ids);
-      else
-        Yacs.user.addSelections(section_ids);
+      var courseSelected = courseInfo.parentElement.classList.contains('selected');
+      if (courseSelected) {
+        var sections = courseInfo.parentElement.querySelectorAll('section');
+        Yacs.user.removeSelections(map(sections, function (section) {
+          return section.dataset.id;
+        }));
+      } else {
+        var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed)');
+        Yacs.user.addSelections(map(sections, function (section) {
+          return section.dataset.id;
+        }));
+      }
     });
   };
 
