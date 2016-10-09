@@ -31,4 +31,4 @@ Yacs.router = new function () {
     window.addEventListener('hashchange', onChange, false);
     onChange();
   };
-};
+}();
