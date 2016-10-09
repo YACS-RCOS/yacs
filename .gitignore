@@ -34,3 +34,6 @@
 \.tern-port
 
 /coverage/
+/solr/*
+#solr schema.xml must be customized, as well as potentially other files in this dir
+!/solr/configsets/*

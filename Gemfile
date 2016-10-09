@@ -58,3 +58,8 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
+
+gem 'tzinfo-data' #timezone gem for hosting on windows
+
+gem 'sunspot_rails'
+gem 'sunspot_solr'
