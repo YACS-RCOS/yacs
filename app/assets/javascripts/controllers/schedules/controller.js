@@ -8,6 +8,42 @@
 Yacs.views.schedules = function (target, params) {
   Yacs.render(target, 'schedules');
 
+  var schedule_ids = [];
+
+  // check for query parameters
+  var query = window.location.hash.split('?')[1]
+  if(typeof query !== 'string' || query.length < 1) {
+    /* If there are no query parameters, make the current
+     * selected section ids into a query parameter and
+     * re-navigate the page to that.
+     * This is so someone who clicks on the Schedule button
+     * after selecting courses will get the copiable link in
+     * their address bar.
+     */
+    Yacs.router.visit('/schedules?section_ids='+ Yacs.user.getSelectionsRaw());
+  }
+  else {
+    // if there are query parameters,
+    // use them and ignore current selections
+    var parameterStrings = query.split('&');
+    var pslen = parameterStrings.length;
+    for(var i=0; i<pslen; ++i) {
+      var parameter = parameterStrings[i].split('=');
+      // TODO: allow linking to a specific schedule with another parameter
+
+      if(parameter[0] == 'section_ids') {
+        var section_ids = parameter[1].split(',');
+        var sidlen = section_ids.length;
+        for(var j=0; j<sidlen; ++j) {
+          var sid = parseInt(section_ids[j]);
+          if(!isNaN(sid)) {
+            schedule_ids.push(sid);
+          }
+        }
+      }
+    }
+  }
+
   var scheduleElement = target.querySelector('#schedule-container');
   var selectionElement = target.querySelector('#selection-container');
   var leftSwitchElement = target.querySelector('#left-switch');
@@ -103,8 +139,10 @@ Yacs.views.schedules = function (target, params) {
    * and update the view to show the new schedules.
    * If no sections are selected, skip the call and show nil schedules.
    */
-  var updateSchedules = function () {
-    var selections = Yacs.user.getSelectionsRaw();
+  var updateSchedules = function (selections) {
+    if(typeof selections == 'undefined') {
+      selections = Yacs.user.getSelectionsRaw();
+    }
     if (selections.length > 0) {
       Yacs.models.schedules.query({ section_ids: selections,
                                     show_periods: true },
@@ -179,7 +217,7 @@ Yacs.views.schedules = function (target, params) {
   /**
    * Show selected courses / sections on the schedule page. The courses shown
    * are explicitly the courses that had one or more sections selected at the
-   * time the view was rendered. 
+   * time the view was rendered.
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
@@ -187,5 +225,6 @@ Yacs.views.schedules = function (target, params) {
   }
 
   Yacs.observe('selection', scheduleElement, updateSchedules);
-  updateSchedules();
+  // use section ids extracted from URL parameters at top
+  updateSchedules(schedule_ids);
 };
