@@ -16,7 +16,7 @@ Yacs.views.schedules = function (target, params) {
   var scheduleNumElement = target.querySelector('#schedule-num');
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
-  var createICSElement = target.querySelector('#ics-btn');
+  var downloadICSElement = target.querySelector('#ics-btn');
   var crnListElement = target.querySelector('#crn-list');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
@@ -124,12 +124,25 @@ Yacs.views.schedules = function (target, params) {
     }
   };
 
+  /**
+   * Format the current schedule as a vCalendar (ICS file format),
+   * and prompt the user to download it as a file.
+   */
   var getICSDownload = function() {
     if(scheduleData.length < 1) {
       return;
     }
     periods = scheduleData[scheduleIndex].events;
-    createICS(periods);
+
+    vCalendarData = createVCalendar(periods);
+
+    // create a temporary <a> with the data and download file and simulate a click on it
+    var elt = document.createElement('a');
+    elt.setAttribute('href', 'data:text/calendar;charset=utf8,' + encodeURIComponent(vCalendarData));
+    elt.setAttribute('download', 'yacs-schedule.ics');
+    document.body.appendChild(elt);
+    elt.click();
+    document.body.removeChild(elt);
   };
 
   /**
@@ -187,7 +200,7 @@ Yacs.views.schedules = function (target, params) {
 
   /* Prompt the creation and download of the schedule ICS when the button is clicked.
    */
-  Yacs.on('click', createICSElement, createICS);
+  Yacs.on('click', downloadICSElement, getICSDownload);
 
   /**
    * Show selected courses / sections on the schedule page. The courses shown
