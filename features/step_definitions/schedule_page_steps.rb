@@ -2,8 +2,12 @@ And(/^I should see (.*) schedule events?$/) do |num|
   expect(page).to have_css("schedule-event", count:num)
 end
 
+And(/^I should see (\d+) (.*) with text "(.*)"$/) do |amt, elem, text|
+  expect(page.all(elem, text: text).size).to eq(amt)
+end
+
 And(/^I should see a (.*) with text "(.*)"$/) do |elem, text|
-  expect(!page.all(elem, :text => text ).empty?)
+  expect(page.all(elem, text: text)).not_to be_empty
 end
 
 Then(/^I should see the (.*) with id (\d+) is selected$/) do |type, id|
