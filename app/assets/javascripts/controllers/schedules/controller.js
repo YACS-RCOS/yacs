@@ -42,6 +42,8 @@ Yacs.views.schedules = function (target, params) {
         }
       }
     }
+    // TODO: if there are no selected sections, set the selections
+    // to the list of query parameters
   }
 
   var scheduleElement = target.querySelector('#schedule-container');
