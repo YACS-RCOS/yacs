@@ -132,17 +132,10 @@ Yacs.views.schedules = function (target, params) {
     if(scheduleData.length < 1) {
       return;
     }
+    // current periods being displayed only
     periods = scheduleData[scheduleIndex].events;
-
-    vCalendarData = createVCalendar(periods);
-
-    // create a temporary <a> with the data and download file and simulate a click on it
-    var elt = document.createElement('a');
-    elt.setAttribute('href', 'data:text/calendar;charset=utf8,' + encodeURIComponent(vCalendarData));
-    elt.setAttribute('download', 'yacs-schedule.ics');
-    document.body.appendChild(elt);
-    elt.click();
-    document.body.removeChild(elt);
+    vCalendarData = Yacs.vCalendar.createVCalendar(periods);
+    Yacs.vCalendar.download(vCalendarData);
   };
 
   /**
