@@ -1,3 +1,18 @@
+window.each = function (arr, func) {
+  if (arr.length === undefined)
+    arr = [arr];
+  for (var i = 0; i < arr.length; ++i)
+    func(arr[i]);
+};
+
+window.map = function (arr, func) {
+  var mapped = [];
+  each(arr, function (itm) {
+    mapped.push(func(itm));
+  });
+  return mapped;
+};
+
 /**
  * @namespace
  * @description
@@ -130,10 +145,9 @@ Yacs = new function () {
     return self.models[name] = new Model(name, options);
   }
 
-  addModel('schools',     { has_many: 'departments' });
-  addModel('departments', { has_many: 'courses'     });
-  addModel('courses',     { has_many: 'sections'    });
-  addModel('sections' );
+  addModel('schools', { has_many: 'departments' });
+  addModel('departments');
+  addModel('courses');
   addModel('schedules');
 
 /* ======================================================================== *
@@ -148,9 +162,6 @@ Yacs = new function () {
    */
   self.views = { };
 
-  NodeList.prototype.forEach = Array.prototype.forEach;
-  HTMLCollection.prototype.forEach = Array.prototype.forEach;
-
   /**
    * Equivalent to JQuery's $(document).ready()
    * @param  {Function} func - Event handler to be called
@@ -162,24 +173,6 @@ Yacs = new function () {
   }
 
   /**
-   * Sets the contents of the content pane
-   * @param {String} html - HTML to fill the content pane
-   * @return {undefined}
-   * @memberOf Yacs
-   */
-  self.setContents = function (html) {
-    document.getElementById('content').innerHTML = html;
-  }
-  /**
-   * Clears the contents of the content pane
-   * @return {undefined}
-   * @memberOf Yacs
-   */
-  self.clearContents = function () {
-    Yacs.setContents('');
-  }
-
-  /**
    * @param  {String} eventType - name of event
    * @param  {HTMLElement} elem - DOM element
    * @param  {Function} callback - callback
@@ -187,9 +180,15 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   self.on = function (eventType, elem, callback) {
-    elem.addEventListener(eventType, function (event) {
-      callback(elem, event);
+    each(elem, function (e) {
+      e.addEventListener(eventType, function (event) {
+        callback(e, event);
+      });
     });
+  };
+
+  self.render = function (target, template, data) {
+    target.innerHTML = HandlebarsTemplates[template + '/template'](data);
   };
 }();
 
@@ -198,5 +197,5 @@ Yacs = new function () {
  * ======================================================================== */
 
 Yacs.onload(function () {
-  Yacs.views.index();
+  Yacs.views.root(document.getElementById('content'));
 });

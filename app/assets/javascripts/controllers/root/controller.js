@@ -1,18 +1,24 @@
 // TODO: Move index.html to hbs template
+// TODO: emulate text input and caret
 
 /**
  * Root view of YACS. Controls site navigation and search
+ * @param {HTMLElement} target- The element in which this view should be rendered
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.index = function () {
-  var homeButton = document.getElementById('page-title');
+Yacs.views.root = function (target) {
   var searchbar = document.getElementById('searchbar');
-  var scheduleButton = document.getElementById('schedule-btn');
-  var content = document.getElementById('content');
 
-  Yacs.on('click', homeButton, function () { Yacs.views.departments(content); });
-  Yacs.on('click', scheduleButton, function () { Yacs.views.schedule(content); });
+  Yacs.router.define('/', function (params) {
+    Yacs.views.departments(target, params);
+  });
+  Yacs.router.define('/courses', function (params) {
+    Yacs.views.courses(target, params);
+  });
+  Yacs.router.define('/schedules', function (params) {
+    Yacs.views.schedules(target, params);
+  });
 
   /**
    * Handle input destined for search bar. Assume all text input is intended
@@ -30,24 +36,15 @@ Yacs.views.index = function () {
       } else if (key == 13) {
         // enter searches
         if (searchbar.value) {
-          Yacs.models.courses.query({ search: searchbar.value,
-                                      show_sections: true,
-                                      show_periods: true },
-            function (data, success) {
-              if (success)
-                Yacs.views.courses(content, data);
-          });
+          Yacs.router.visit('/courses?search=' + searchbar.value);
         }
       }
     }
   });
 
-  // Yacs.on('click', document.body, function () { searchbar.focus() });
-  // TODO lol previous line was a bit of an oversight, must emulate caret
-
   searchbar.focus();
 
   Yacs.models.schools.preload(function () {
-    Yacs.views.departments(content);
+    Yacs.router.listen();
   });
 };
