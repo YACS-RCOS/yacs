@@ -44,6 +44,8 @@ window.Yacs.user = new function () {
     Selections
  * ======================================================================== */
 
+  var observable = new Yacs.Observable('selection');
+
   /**
    * @description
    * Gets the value of the selection cookie
@@ -71,11 +73,30 @@ window.Yacs.user = new function () {
    * @memberOf Yacs.user
    */
   self.addSelection = function (sid) {
-    arr = self.getSelections();
-    if (arr.indexOf(sid) != -1) return false;
+    var arr = self.getSelections();
+    if (arr.indexOf(sid) !== -1) return false;
     arr.push(sid);
     setCookie('selections', arr.join(','));
+    observable.notify();
     return true;
+  };
+
+  /**
+   * Add a selection to those already selected. Return the success value.
+   * @param {String} sid - the section id
+   * @return {Boolean} true if the selection was added, false if it was already present
+   * @memberOf Yacs.user
+   */
+  self.addSelections = function (sids) {
+    var arr = self.getSelections();
+    var added = false;
+    sids.forEach(function (sid) {
+      if (arr.indexOf(sid) === -1) added = true;
+      arr.push(sid);
+    });
+    setCookie('selections', arr.join(','));
+    observable.notify();
+    return added;
   };
 
   /**
@@ -85,12 +106,32 @@ window.Yacs.user = new function () {
    * @memberOf Yacs.user
    */
   self.removeSelection = function (sid) {
-    arr = self.getSelections();
+    var arr = self.getSelections();
     i = arr.indexOf(sid);
     if (i === -1) return false;
     arr.splice(i, 1);
     setCookie('selections', arr.join(','));
+    observable.notify();
     return true;
+  };
+
+  /**
+   * Remove selections from the cookie. Return the success value.
+   * @param  {String[]} sids - the section id
+   * @return {Boolean} true if all selections was removed, false if one or more was not present
+   * @memberOf Yacs.user
+   */
+  self.removeSelections = function (sids) {
+    var arr = self.getSelections();
+    var removed = false;
+    sids.forEach(function (sid) {
+      i = arr.indexOf(sid);
+      if (i !== -1) removed = true;
+      arr.splice(i, 1);
+    });
+    setCookie('selections', arr.join(','));
+    observable.notify();
+    return removed;
   };
 
   /**
@@ -100,7 +141,7 @@ window.Yacs.user = new function () {
    * @memberOf Yacs.user
    */
   self.hasSelection = function (sid) {
-    return self.getSelections().indexOf(sid) != -1;
+    return self.getSelections().indexOf(sid) !== -1;
   };
 
   /**
@@ -112,7 +153,7 @@ window.Yacs.user = new function () {
   self.hasAllSelections = function (sids) {
     var selections = self.getSelections();
     sids.forEach(function (sid) {
-      if (selections.indexOf(sid == -1)) return false;
+      if (selections.indexOf(sid === -1)) return false;
     });
     return true;
   };
@@ -124,5 +165,6 @@ window.Yacs.user = new function () {
    */
   self.clearSelections = function () {
     setCookie('selections', '');
+    observable.notify();
   };
 }();

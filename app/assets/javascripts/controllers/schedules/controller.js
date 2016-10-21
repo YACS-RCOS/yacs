@@ -1,11 +1,12 @@
 /**
  * Schedules view. Displays periods of selected courses in a week grid.
- * @param {Object} data - Object containing schedule data as returned from the API
+ * @param {HTMLElement} target- The element in which this view should be rendered
+ * @param {Object} params - API params for this view
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.schedule = function (target) {
-  target.innerHTML = HandlebarsTemplates.schedules();
+Yacs.views.schedules = function (target, params) {
+  Yacs.render(target, 'schedules');
 
   var scheduleElement = target.querySelector('#schedule-container');
   var selectionElement = target.querySelector('#selection-container');
@@ -173,34 +174,18 @@ Yacs.views.schedule = function (target) {
    */
   Yacs.on('click', clearButtonElement, function () {
     Yacs.user.clearSelections();
-    updateSchedules();
-    target.querySelectorAll('course-info').forEach(function (ci) {
-      ci.classList.remove('selected');
-    });
-    target.querySelectorAll('section').forEach(function (s) {
-      s.classList.remove('selected');
-    });
   });
 
   /**
-   * Show selected courses / sections on the schedule page.
-   * Update schedules view when a course is clicked.
-   * TODO: Use native event handling to update views when selection changes
+   * Show selected courses / sections on the schedule page. The courses shown
+   * are explicitly the courses that had one or more sections selected at the
+   * time the view was rendered. 
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
-    Yacs.models.courses.query({ section_id: selections.join(','),
-                                show_sections: true,
-                                show_periods: true },
-      function (data, success) {
-        if (success) {
-          Yacs.views.courses(selectionElement, data);
-          target.querySelectorAll('course').forEach(function (course) {
-            Yacs.on('click', course, updateSchedules);
-          });
-        }
-    });
+    Yacs.views.courses(selectionElement, { section_id: selections })
   }
 
+  Yacs.observe('selection', scheduleElement, updateSchedules);
   updateSchedules();
 };
