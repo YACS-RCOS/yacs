@@ -6,8 +6,6 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedules = function (target, params) {
-  Yacs.render(target, 'schedules');
-
   console.log('sdfsdf');
   // before doing anything, determine how to use the route
   // parameters to choose the section ids to be passed to the
@@ -46,6 +44,8 @@ Yacs.views.schedules = function (target, params) {
     // to populate the schedule_ids list
     schedule_ids = Yacs.user.getSelections();
   }
+
+  Yacs.render(target, 'schedules');
 
   var scheduleElement = target.querySelector('#schedule-container');
   var selectionElement = target.querySelector('#selection-container');
