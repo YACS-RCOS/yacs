@@ -17,7 +17,6 @@ Yacs.views.schedules = function (target, params) {
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
   var downloadICSElement = target.querySelector('#ics-btn');
-  var crnListElement = target.querySelector('#crn-list');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
   var scheduleIndex = 0;
