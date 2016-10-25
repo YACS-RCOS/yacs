@@ -8,6 +8,10 @@
 Yacs.views.schedules = function (target, params) {
   Yacs.render(target, 'schedules');
 
+  console.log('sdfsdf');
+  // before doing anything, determine how to use the route
+  // parameters to choose the section ids to be passed to the
+  // API
   var schedule_ids = [];
 
   // check for query parameters
@@ -23,20 +27,24 @@ Yacs.views.schedules = function (target, params) {
         schedule_ids.push(sid);
       }
     }
+
+    // If the cookie doesn't have any selections,
+    // write them into it, and reroute to a route without section_ids in the query.
+    if(Yacs.user.getSelections().length < 1) {
+      Yacs.user.addSelections(schedule_ids);
+      Yacs.router.visit('/schedules');
+    }
+    console.log('HI!!!!', schedule_ids);
     // TODO: look for a param that defines which schedule to go to
     // initially
     // TODO: if there are no selected sections, set the selections
     // to the list of query parameters
   }
   else {
-    /* If there are no query parameters, make the current
-     * selected section ids into a query parameter and
-     * re-navigate the page to that.
-     * This is so someone who clicks on the Schedule button
-     * after selecting courses will get the copiable link in
-     * their address bar.
-     */
-    Yacs.router.visit('/schedules?section_ids='+ Yacs.user.getSelectionsRaw());
+    console.log('sdfsdfsdf');
+    // if section_ids is not specified in params, use the cookie
+    // to populate the schedule_ids list
+    schedule_ids = Yacs.user.getSelections();
   }
 
   var scheduleElement = target.querySelector('#schedule-container');
