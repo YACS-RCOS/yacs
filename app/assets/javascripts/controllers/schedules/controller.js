@@ -11,8 +11,24 @@ Yacs.views.schedules = function (target, params) {
   var schedule_ids = [];
 
   // check for query parameters
-  var query = window.location.hash.split('?')[1]
-  if(typeof query !== 'string' || query.length < 1) {
+  if('section_ids' in params) {
+    // if there are query parameters,
+    // use them and ignore current selections
+    var section_ids = params['section_ids'].split(',');
+    // eliminate all non-integer section ids
+    var sidlen = section_ids.length;
+    for(var i=0; i<sidlen; ++i) {
+      var sid = parseInt(section_ids[i]);
+      if(!isNaN(sid)) {
+        schedule_ids.push(sid);
+      }
+    }
+    // TODO: look for a param that defines which schedule to go to
+    // initially
+    // TODO: if there are no selected sections, set the selections
+    // to the list of query parameters
+  }
+  else {
     /* If there are no query parameters, make the current
      * selected section ids into a query parameter and
      * re-navigate the page to that.
@@ -21,29 +37,6 @@ Yacs.views.schedules = function (target, params) {
      * their address bar.
      */
     Yacs.router.visit('/schedules?section_ids='+ Yacs.user.getSelectionsRaw());
-  }
-  else {
-    // if there are query parameters,
-    // use them and ignore current selections
-    var parameterStrings = query.split('&');
-    var pslen = parameterStrings.length;
-    for(var i=0; i<pslen; ++i) {
-      var parameter = parameterStrings[i].split('=');
-      // TODO: allow linking to a specific schedule with another parameter
-
-      if(parameter[0] == 'section_ids') {
-        var section_ids = parameter[1].split(',');
-        var sidlen = section_ids.length;
-        for(var j=0; j<sidlen; ++j) {
-          var sid = parseInt(section_ids[j]);
-          if(!isNaN(sid)) {
-            schedule_ids.push(sid);
-          }
-        }
-      }
-    }
-    // TODO: if there are no selected sections, set the selections
-    // to the list of query parameters
   }
 
   var scheduleElement = target.querySelector('#schedule-container');
