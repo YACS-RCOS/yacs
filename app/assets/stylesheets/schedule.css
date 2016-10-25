@@ -11,14 +11,13 @@
     -webkit-user-select: none;
     -ms-user-select:none;
 }
-#schedule-bar:after { 
+#schedule-bar:after {
    content: " ";
-   display: block; 
-   height: 0; 
+   display: block;
+   height: 0;
    clear: both;
 }
 #crn-list {
-    font-size: 90%;
     float: right;
 }
 #switch {
@@ -34,6 +33,10 @@
 }
 #schedule-status {
     margin: 0 auto;
+    font-size: 90%;
+    -moz-user-select:text;
+    -webkit-user-select:text;
+    -ms-user-select:text;
 }
 #schedule-bar>#left {
     float: left;
