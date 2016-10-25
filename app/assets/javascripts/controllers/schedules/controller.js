@@ -6,7 +6,6 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedules = function (target, params) {
-  console.log('sdfsdf');
   // before doing anything, determine how to use the route
   // parameters to choose the section ids to be passed to the
   // API
@@ -32,14 +31,10 @@ Yacs.views.schedules = function (target, params) {
       Yacs.user.addSelections(schedule_ids);
       Yacs.router.visit('/schedules');
     }
-    console.log('HI!!!!', schedule_ids);
     // TODO: look for a param that defines which schedule to go to
     // initially
-    // TODO: if there are no selected sections, set the selections
-    // to the list of query parameters
   }
   else {
-    console.log('sdfsdfsdf');
     // if section_ids is not specified in params, use the cookie
     // to populate the schedule_ids list
     schedule_ids = Yacs.user.getSelections();
