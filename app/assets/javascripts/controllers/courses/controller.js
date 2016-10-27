@@ -37,6 +37,31 @@ Yacs.views.courses = function (target, params) {
   };
 
   /**
+   * Given the data returned from the API, populate the conflicts cache with
+   * the data for conflicts.
+   */
+  var populateConflictsCache = function(data) {
+    var courselen = data.courses.length;
+    for(var i=0; i<courselen; ++i) {
+      var sectlen = data.courses[i].sections.length;
+      for(var j=0; j<sectlen; ++j) {
+        var id = data.courses[i].sections[j].id;
+        // TODO some method of cache expiration
+        if(! (id in Yacs.cache.conflicts)) {
+          Yacs.cache.conflicts[id] = data.courses[i].sections[j].conflicts;
+        }
+      }
+    }
+  }
+
+  /** Given a section ID, the current selections, (and data in the conflicts cache),
+   * return a boolean of whether this section has any conflicts with current selections.
+   */
+  var doesConflict = function(selections, sectid) {
+
+  };
+
+  /**
    * Update selected status (class) of sections and courses. If all open
    * sections of a course are selected, the course is considered selected.
    */
@@ -49,6 +74,7 @@ Yacs.views.courses = function (target, params) {
         courseSelected = true;
         each(sections, function (section) {
           var sectionSelected = selected.indexOf(section.dataset.id) !== -1;
+          var hasConflict = doesConflict(section.dataset.id, selected);
           section.classList.toggle('selected', sectionSelected);
           if (!sectionSelected && !section.classList.contains('closed'))
             courseSelected = false;
@@ -61,6 +87,7 @@ Yacs.views.courses = function (target, params) {
   Yacs.models.courses.query(params, function (data, success) {
     if (success) {
       Yacs.render(target, 'courses', data);
+      populateConflictsCache(data);
       // rendering will use tmp cache 'selections' field, clear this
       delete Yacs.cache.tmp.selections;
       Yacs.observe('selection', document.querySelector('courses'), updateSelected);
