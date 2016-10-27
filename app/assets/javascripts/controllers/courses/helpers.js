@@ -27,6 +27,25 @@ Handlebars.registerHelper('closed_status', function (s) {
   return new Handlebars.SafeString(s.seats > 0 && s.seats_taken >= s.seats ? 'closed' : '');
 });
 
+/* Determine whether a section's conflicts list contains any section ids in common with
+ * currently selections. Set some variables on this (the current section object)
+ * for subsequent Handlebars calls to use.
+ * The advantage of this method is that the expensive comparison of section
+ * conflicts and selected section ids is only performed once per section.
+ */
+Handlebars.registerHelper('evaluateConflict', function(block) {
+  hasConflict = true; //TODO actually involve section.conflicts
+  if(hasConflict) {
+    this.conflictClass = 'conflicts';
+    this.hasConflict = true;
+  }
+  else {
+    this.conflictClass = '';
+    this.hasConflict = false;
+  }
+  return block.fn(this);
+});
+
 Handlebars.registerHelper('day_name', function (n) {
   return new Handlebars.SafeString(['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'][n]);
 });
