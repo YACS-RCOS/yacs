@@ -66,6 +66,16 @@ window.Yacs.user = new function () {
     return selections ? selections.split(',') : [];
   };
 
+  /** Gets the selections from the cookie as an array of ints
+   * @return {Int[]} array of section ids
+   * @memberOf Yacs.user
+   */
+  self.getSelectionsAsInts = function() {
+    return self.getSelections().map(function(elt) {
+      return parseInt(elt);
+    });
+  }
+
   /**
    * Add a selection to those already selected. Return the success value.
    * This does an insertion sort into the selections list in order to maintain
