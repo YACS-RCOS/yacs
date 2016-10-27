@@ -34,7 +34,14 @@ Handlebars.registerHelper('closed_status', function (s) {
  * conflicts and selected section ids is only performed once per section.
  */
 Handlebars.registerHelper('evaluateConflict', function(block) {
-  hasConflict = true; //TODO actually involve section.conflicts
+  // Populate the conflicts cache here, with whatever data is available
+  // If something already exists in the conflicts cache, don't update - it most likely is unchanged
+  if(! (this.id in Yacs.cache.conflicts)) {
+    Yacs.cache.conflicts[this.id] = this.conflicts;
+  }
+
+  hasConflict = false; //TODO actually involve this.conflicts
+
   if(hasConflict) {
     this.conflictClass = 'conflicts';
     this.hasConflict = true;
