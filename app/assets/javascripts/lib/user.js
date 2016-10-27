@@ -68,16 +68,43 @@ window.Yacs.user = new function () {
 
   /**
    * Add a selection to those already selected. Return the success value.
+   * This does an insertion sort into the selections list in order to maintain
+   * its sorted order.
    * @param {String} sid - the section id
+   * @param {Boolean} doNotify - whether to notify the observer
    * @return {Boolean} true if the selection was added, false if it was already present
    * @memberOf Yacs.user
    */
-  self.addSelection = function (sid) {
+  self.addSelection = function (sid, doNotify) {
+    var getSpliceIndex = function(array, val) {
+      // assumes array size is > 0, array is sorted
+      // return -1 if val exists in array already
+      var start = 0, end = array.length;
+      while(start < end) {
+        var avg = (start+end) >>> 1;
+        if(array[avg] == val) {
+          return -1;
+        }
+        else if(array[avg] < val) {
+          start = avg+1;
+        }
+        else {
+          end = avg;
+        }
+      }
+      return start;
+    };
+
     var arr = self.getSelections();
-    if (arr.indexOf(sid) !== -1) return false;
-    arr.push(sid);
+    var spliceIndex = getSpliceIndex(arr, sid);
+    if(spliceIndex == -1) {
+      return false;
+    }
+    arr.splice(spliceIndex, 0, sid);
     setCookie('selections', arr.join(','));
-    observable.notify();
+    if(doNotify) {
+      observable.notify();
+    }
     return true;
   };
 
@@ -88,14 +115,15 @@ window.Yacs.user = new function () {
    * @memberOf Yacs.user
    */
   self.addSelections = function (sids) {
-    var arr = self.getSelections();
     var added = false;
     sids.forEach(function (sid) {
-      if (arr.indexOf(sid) === -1) added = true;
-      arr.push(sid);
+      if(self.addSelection(sid,false)) {
+        added = true;
+      }
     });
-    setCookie('selections', arr.join(','));
-    observable.notify();
+    if(added) {
+      observable.notify();
+    }
     return added;
   };
 
