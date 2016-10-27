@@ -60,7 +60,7 @@ Yacs.views.courses = function (target, params) {
 
   Yacs.models.courses.query(params, function (data, success) {
     if (success) {
-      Yacs.render(target, 'courses', data)
+      Yacs.render(target, 'courses', data);
       Yacs.observe('selection', document.querySelector('courses'), updateSelected);
       bindListeners();
       updateSelected();
