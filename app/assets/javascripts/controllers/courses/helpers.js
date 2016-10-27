@@ -39,8 +39,41 @@ Handlebars.registerHelper('evaluateConflict', function(block) {
   if(! (this.id in Yacs.cache.conflicts)) {
     Yacs.cache.conflicts[this.id] = this.conflicts;
   }
+  var cachedConflicts = Yacs.cache.conflicts[this.id];
 
-  hasConflict = false; //TODO actually involve this.conflicts
+  // Don't want to call getSelections once for every section, use
+  // the tmp cache for this
+  if(! ('selections' in Yacs.cache.tmp)) {
+    // Selections MUST be taken as ints. Otherwise it will try
+    // a string comparison and fail on things like "7" > "600"
+    Yacs.cache.tmp.selections = Yacs.user.getSelectionsAsInts();
+  }
+  var selectionsAsInts = Yacs.cache.tmp.selections;
+
+  // Iterate over the selections list and the conflicts list
+  // to determine whether there is a section id in common
+  // and therefore a conflict.
+  // ASSUMES: the selections list and conflicts list
+  // are both sorted in ascending order
+  var hasConflict = false;
+  var i=0, j=0;
+
+  while(i<cachedConflicts.length && j < selectionsAsInts.length) {
+    if(cachedConflicts[i] < selectionsAsInts[j]) {
+      ++i;
+    }
+    else if(cachedConflicts[i] > selectionsAsInts[j]) {
+      ++j;
+    }
+    else if(cachedConflicts[i] == selectionsAsInts[j]) { // ==
+      hasConflict = true;
+      break;
+    }
+    else {
+      // something is NaN or whatever went wrong
+      break;
+    }
+  }
 
   if(hasConflict) {
     this.conflictClass = 'conflicts';

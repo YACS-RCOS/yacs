@@ -61,6 +61,8 @@ Yacs.views.courses = function (target, params) {
   Yacs.models.courses.query(params, function (data, success) {
     if (success) {
       Yacs.render(target, 'courses', data);
+      // rendering will use tmp cache 'selections' field, clear this
+      delete Yacs.cache.tmp.selections;
       Yacs.observe('selection', document.querySelector('courses'), updateSelected);
       bindListeners();
       updateSelected();
