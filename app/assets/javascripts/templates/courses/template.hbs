@@ -10,19 +10,29 @@
       </course-info>
       <sections>
         {{#sections}}
-          <section data-id="{{id}}" class="{{closed_status this}}">
-            <section-name>{{name}}</section-name> <section-crn>{{crn}}</section-crn>
-            <section-instructors>{{join instructors}}</section-instructors>
-            <section-seats-available>{{seats_available this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
-            <section-periods>
-              {{#periods}}
-                <section-period>
-                  <period-day>{{day_name day}}</period-day>
-                  <period-time>{{time_range start end}}</period-time>
-                </section-period>
-              {{/periods}}
-            </section-periods>
-          </section>
+          {{#evaluateConflict}}
+          <section data-id="{{id}}" class="{{closed_status this}}{{conflictClass}}">
+              <section-information>
+                <section-name>{{name}}</section-name>
+                <section-crn>{{crn}}</section-crn>
+                <section-instructors>{{join instructors}}</section-instructors>
+                <section-seats-available>{{seats_available this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
+              </section-information>
+              {{#if hasConflict}}
+                <div class="conflict-note">
+                  wkrAAAA
+                </div>
+              {{/if}}
+              <section-periods>
+                {{#periods}}
+                  <section-period>
+                    <period-day>{{day_name day}}</period-day>
+                    <period-time>{{time_range start end}}</period-time>
+                  </section-period>
+                {{/periods}}
+              </section-periods>
+            </section>
+          {{/evaluateConflict}}
         {{/sections}}
       </sections>
     </course>
