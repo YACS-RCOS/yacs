@@ -18,15 +18,15 @@ window.Yacs.cache = new function() {
    * ================================================================================== */
 
   // General cache for less solid data.
-  self.cache = {};
+  self.tmp = {};
 
   /**
    * Add a new field to the cache.
    * Optionally clear previous contents if the field already exists.
    */
   self.addField = function(name, value, overwrite) {
-    if(overwrite || !(name in self.cache)) {
-      self.cache[name] = value;
+    if(overwrite || !(name in self.tmp)) {
+      self.tmp[name] = value;
     }
   };
 
@@ -34,6 +34,6 @@ window.Yacs.cache = new function() {
    * Return a reference to a cache field so it can be set later.
    */
   self.getField = function(name) {
-    return self.cache[name];
+    return self.tmp[name];
   };
 };
