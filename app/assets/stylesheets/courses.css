@@ -56,6 +56,12 @@ sections>section.closed, sections>section.closed:hover {
     color: #888;
 }
 
+sections>section.conflicts, sections>section.conflicts:hover {
+    color: #888;
+}
+section.conflicts>section-information {
+    text-decoration: line-through;
+}
 section-name {
     font-weight: 400;
 }
@@ -77,4 +83,7 @@ section-period {
 }
 period-day {
     font-weight: 400;
+}
+div.conflict-note {
+    display:inline;
 }
