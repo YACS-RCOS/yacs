@@ -25,7 +25,7 @@ window.Yacs.user = new function () {
   /**
    * Gets the value of a cookie by name
    * http://www.w3schools.com/js/js_cookies.asp
-   * @param  {String} name - name of cookie
+   * @param {String} name - name of cookie
    * @return {String} value of cookie
    * @memberOf Yacs.user
    */
@@ -47,45 +47,63 @@ window.Yacs.user = new function () {
   var observable = new Yacs.Observable('selection');
 
   /**
-   * @description
-   * Gets the value of the selection cookie
-   * @return {String} section ids as comma separated values
-   * @memberOf Yacs.user
-   */
-  self.getSelectionsRaw = function () {
-    return getCookie('selections');
-  };
-
-  /**
-   * Gets the selections from the cookie as an array of strings
-   * @return {String[]} array of section ids
+   * Gets the selections from the cookie as an object
+   * @return {Object} map of course ids to arrays of selected section ids
    * @memberOf Yacs.user
    */
   self.getSelections = function () {
     var selections = getCookie('selections');
-    return selections ? selections.split(',') : [];
+    return selections ? JSON.parse(selections) : {};
   };
 
-  /** Gets the selections from the cookie as an array of ints
+  /**
+   * Gets the selections and flattens the object into an array of ints.
    * @return {Int[]} array of section ids
    * @memberOf Yacs.user
    */
-  self.getSelectionsAsInts = function() {
-    return self.getSelections().map(function(elt) {
-      return parseInt(elt);
-    });
-  }
+  self.getSelectionsAsArray = function() {
+    var selections = self.getSelections();
+    output = [];
+    for(var courseId in selections) {
+      output = output.concat(selections[courseId]);
+    }
+    return output;
+  };
+
+  /**
+   * Gets the number of currently selected sections.
+   * @return {Int} number of selected sections
+   * @memberOf Yacs.user
+   */
+  self.getTotalSelections = function() {
+    var selections = self.getSelections();
+    var total = 0;
+    for(var courseId in selections) {
+      total += selections[courseId].length;
+    }
+    return total;
+  };
+
+  /**
+   * Set the cookie with the selections object.
+   * @param {Object} selections - map of course ids to arrays of selected section ids
+   * @return {void}
+   */
+  self.setSelections = function(selections) {
+    setCookie('selections', JSON.stringify(selections));
+  };
 
   /**
    * Add a selection to those already selected. Return the success value.
    * This does an insertion sort into the selections list in order to maintain
    * its sorted order.
-   * @param {String} sid - the section id
+   * @param {String/Int} sid - the section id
+   * @param {String} cid - the course id of the parent course
    * @param {Boolean} doNotify - whether to notify the observer
    * @return {Boolean} true if the selection was added, false if it was already present
    * @memberOf Yacs.user
    */
-  self.addSelection = function (sid, doNotify) {
+  self.addSelection = function (sid, cid, doNotify) {
     var getSpliceIndex = function(array, val) {
       // assumes array size is > 0, array is sorted
       // return -1 if val exists in array already
@@ -105,104 +123,92 @@ window.Yacs.user = new function () {
       return start;
     };
 
-    var arr = self.getSelections();
-    var spliceIndex = getSpliceIndex(arr, sid);
+    var selections = self.getSelections();
+    if(! (cid in selections)) {
+      selections[cid] = [];
+    }
+    var spliceIndex = getSpliceIndex(selections[cid], parseInt(sid));
     if(spliceIndex == -1) {
       return false;
     }
-    arr.splice(spliceIndex, 0, sid);
-    setCookie('selections', arr.join(','));
+    selections[cid].splice(spliceIndex, 0, sid);
+    self.setSelections(selections);
     if(doNotify) {
       observable.notify();
     }
     return true;
   };
 
-  /**
-   * Add a selection to those already selected. Return the success value.
-   * @param {String} sid - the section id
-   * @return {Boolean} true if the selection was added, false if it was already present
-   * @memberOf Yacs.user
+  /** Add multiple selections to a single course in the cookie.
+   * @param {String[]/Int[]} sids - List of section ids
+   * @param {String} cid - the course id
+   * @return {Boolean} true if any selections were inserted, false otherwise
    */
-  self.addSelections = function (sids) {
-    var added = false;
-    sids.forEach(function (sid) {
-      if(self.addSelection(sid,false)) {
-        added = true;
-      }
-    });
-    if(added) {
-      observable.notify();
+  self.addMultipleSelections = function(sids, cid) {
+    var sidlen = sids.length;
+    var inserted = false;
+    for(var i=0; i<sidlen; ++i) {
+      inserted = self.addSelection(sids[i], cid, false) || inserted;
     }
-    return added;
+    observable.notify();
   };
 
   /**
    * Remove a selection from the cookie. Return the success value.
-   * @param  {String} sid - the section id
+   * @param {String/Int} sid - the section id
+   * @param {String} cid - the course id of the parent course
    * @return {Boolean} true if the selection was removed, false if it was not present
    * @memberOf Yacs.user
    */
-  self.removeSelection = function (sid) {
-    var arr = self.getSelections();
-    i = arr.indexOf(sid);
+  self.removeSelection = function (sid, cid) {
+    var selections = self.getSelections();
+    if(! (cid in selections)) {
+      return false;
+    }
+    i = selections[cid].indexOf(parseInt(sid));
     if (i === -1) return false;
-    arr.splice(i, 1);
-    setCookie('selections', arr.join(','));
+    selections[cid].splice(i, 1);
+
+    self.setSelections(selections);
     observable.notify();
     return true;
   };
 
-  /**
-   * Remove selections from the cookie. Return the success value.
-   * @param  {String[]} sids - the section id
-   * @return {Boolean} true if all selections was removed, false if one or more was not present
+  /** Remove one course and all its selections from the cookie.
+   * @param {String} cid - the course id
+   * @return {Boolean} true if the course id existed and was removed, false if not
    * @memberOf Yacs.user
    */
-  self.removeSelections = function (sids) {
-    var arr = self.getSelections();
-    var removed = false;
-    sids.forEach(function (sid) {
-      i = arr.indexOf(sid);
-      if (i !== -1) removed = true;
-      arr.splice(i, 1);
-    });
-    setCookie('selections', arr.join(','));
+  self.removeCourse = function(cid) {
+    var selections = self.getSelections();
+    if(! (cid in selections)) {
+      return false;
+    }
+    delete selections[cid];
+    self.setSelections(selections);
     observable.notify();
-    return removed;
-  };
+    return true;
+  }
 
   /**
    * Determine whether the user has already selected a given section ID
    * @param  {String} sid - the section id
+   * @param {String} cid - the course id of the parent course
    * @return {Boolean} true if the section is selected, false if it is not
    * @memberOf Yacs.user
    */
-  self.hasSelection = function (sid) {
-    return self.getSelections().indexOf(sid) !== -1;
-  };
-
-  /**
-   * Determine whether the user has already selected a given set section IDs
-   * @param  {String[]} sids - the section ids
-   * @return {Boolean} true if all of the sections are selected, false if any one is not
-   * @memberOf Yacs.user
-   */
-  self.hasAllSelections = function (sids) {
-    var selections = self.getSelections();
-    sids.forEach(function (sid) {
-      if (selections.indexOf(sid === -1)) return false;
-    });
-    return true;
+  self.hasSelection = function (sid, cid) {
+    return self.getSelections()[cid].indexOf(sid) !== -1;
   };
 
   /**
    * Remove all selections from cookie
-   * @return {undefined}
+   * @return {void}
    * @memberOf Yacs.user
    */
   self.clearSelections = function () {
     setCookie('selections', '');
     observable.notify();
   };
+
 }();
