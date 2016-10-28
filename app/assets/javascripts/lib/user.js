@@ -88,6 +88,7 @@ window.Yacs.user = new function () {
    * Set the cookie with the selections object.
    * @param {Object} selections - map of course ids to arrays of selected section ids
    * @return {void}
+   * @memberOf Yacs.user
    */
   self.setSelections = function(selections) {
     setCookie('selections', JSON.stringify(selections));
@@ -143,6 +144,7 @@ window.Yacs.user = new function () {
    * @param {String[]/Int[]} sids - List of section ids
    * @param {String} cid - the course id
    * @return {Boolean} true if any selections were inserted, false otherwise
+   * @memberOf Yacs.user
    */
   self.addMultipleSelections = function(sids, cid) {
     var sidlen = sids.length;
@@ -168,6 +170,9 @@ window.Yacs.user = new function () {
     i = selections[cid].indexOf(parseInt(sid));
     if (i === -1) return false;
     selections[cid].splice(i, 1);
+    if(selections[cid].length < 1) {
+      delete selections[cid];
+    }
 
     self.setSelections(selections);
     observable.notify();
@@ -188,7 +193,7 @@ window.Yacs.user = new function () {
     self.setSelections(selections);
     observable.notify();
     return true;
-  }
+  };
 
   /**
    * Determine whether the user has already selected a given section ID
@@ -198,7 +203,25 @@ window.Yacs.user = new function () {
    * @memberOf Yacs.user
    */
   self.hasSelection = function (sid, cid) {
-    return self.getSelections()[cid].indexOf(sid) !== -1;
+    var selections = self.getSelections();
+    if(! (cid in selections)) {
+      return false;
+    }
+    return selections[cid].indexOf(sid) !== -1;
+  };
+
+  /**
+   * Determine whether a course has any selected sections and is thus considered "selected".
+   * @param {String} cid - course id
+   * @return {Boolean} whether a course has selected sections
+   * @memberOf Yacs.user
+   */
+  self.courseIsSelected = function(cid) {
+    var selections = self.getSelections();
+    if(! (cid in selections)) {
+      return false;
+    }
+    return selections[cid].length >= 1;
   };
 
   /**
