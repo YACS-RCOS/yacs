@@ -99,12 +99,26 @@ window.Yacs.user = new function () {
    * This does an insertion sort into the selections list in order to maintain
    * its sorted order.
    * @param {String/Int} sid - the section id
-   * @param {String} cid - the course id of the parent course
-   * @param {Boolean} doNotify - whether to notify the observer
+   * @param {String/Int} cid - the course id of the parent course
+   * @param {Boolean, optional} doNotify - whether to notify the observer
    * @return {Boolean} true if the selection was added, false if it was already present
    * @memberOf Yacs.user
    */
   self.addSelection = function (sid, cid, doNotify) {
+    if(typeof doNotify == "undefined") {
+      doNotify = true;
+    }
+
+    sid = parseInt(sid);
+    if(isNaN(sid)) {
+      // bad section id string, should NOT be added
+      return false;
+    }
+    cid = parseInt(cid);
+    if(isNaN(cid)) {
+      return false;
+    }
+
     var getSpliceIndex = function(array, val) {
       // assumes array size is > 0, array is sorted
       // return -1 if val exists in array already
@@ -128,7 +142,7 @@ window.Yacs.user = new function () {
     if(! (cid in selections)) {
       selections[cid] = [];
     }
-    var spliceIndex = getSpliceIndex(selections[cid], parseInt(sid));
+    var spliceIndex = getSpliceIndex(selections[cid], sid);
     if(spliceIndex == -1) {
       return false;
     }
@@ -207,7 +221,7 @@ window.Yacs.user = new function () {
     if(! (cid in selections)) {
       return false;
     }
-    return selections[cid].indexOf(sid) !== -1;
+    return selections[cid].indexOf(parseInt(sid)) !== -1;
   };
 
   /**
