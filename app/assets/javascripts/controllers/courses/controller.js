@@ -9,9 +9,9 @@ Yacs.views.courses = function (target, params) {
   params.show_sections = params.show_periods = true;
 
   /**
-   * When a section is clicked, toggle whether it is selected.
+   * When a section is clicked, toggle its individual selection status.
    * When a course is clicked, toggle its sections as selected.
-   * Uses Yacs.user for POT of selections
+   * Uses Yacs.user as the point of truth for selections
    */
   var bindListeners = function () {
     Yacs.on('click', target.querySelectorAll('section'), function (section) {
@@ -25,8 +25,7 @@ Yacs.views.courses = function (target, params) {
 
     Yacs.on('click', target.querySelectorAll('course-info'), function (courseInfo) {
       var cid = courseInfo.parentElement.dataset.id;
-      var courseSelected = Yacs.user.courseIsSelected(cid);
-      if (courseSelected) {
+      if (Yacs.user.courseIsSelected(cid)) {
         Yacs.user.removeCourse(cid);
       } else {
         var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed)');
