@@ -17,9 +17,9 @@ Yacs.views.courses = function (target, params) {
     Yacs.on('click', target.querySelectorAll('section'), function (section) {
       var sid = section.dataset.id;
       var cid = section.dataset.courseId;
-      if(! Yacs.user.removeSelection(section.dataset.id)) {
+      if(! Yacs.user.removeSelection(sid, cid)) {
         // remove failed so add instead
-        Yacs.user.addSelection(section.dataset.id,true);
+        Yacs.user.addSelection(sid, cid, true);
       }
     });
 
@@ -29,9 +29,10 @@ Yacs.views.courses = function (target, params) {
         Yacs.user.removeCourse(cid);
       } else {
         var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed)');
-        Yacs.user.addSelections(map(sections, function (section) {
+        // TODO: optimize
+        Yacs.user.addMultipleSelections(map(sections, function (section) {
           return section.dataset.id;
-        }));
+        }), cid);
       }
     });
   };
@@ -95,7 +96,7 @@ Yacs.views.courses = function (target, params) {
    * return a boolean of whether this section has any conflicts with current selections.
    */
   var doesConflict = function(sectId, courseId, selectionsFlat, courseSelectionCounts) {
-    if(! (courseId in Yacs.cache.conflicts)) {
+    if(! (sectId in Yacs.cache.conflicts)) {
       // can't do anything, not going to ask the API for information
       return false;
     }
