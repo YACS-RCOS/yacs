@@ -10,23 +10,24 @@ Yacs.views.courses = function (target, params) {
 
   /**
    * When a section is clicked, toggle whether it is selected.
-   * Uses Yacs.user for POT of selections
    * When a course is clicked, toggle its sections as selected.
-   * Uses CSS for POT of selections
+   * Uses Yacs.user for POT of selections
    */
   var bindListeners = function () {
     Yacs.on('click', target.querySelectorAll('section'), function (section) {
-      Yacs.user.removeSelection(section.dataset.id) ||
+      var sid = section.dataset.id;
+      var cid = section.dataset.courseId;
+      if(! Yacs.user.removeSelection(section.dataset.id)) {
+        // remove failed so add instead
         Yacs.user.addSelection(section.dataset.id,true);
+      }
     });
 
     Yacs.on('click', target.querySelectorAll('course-info'), function (courseInfo) {
-      var courseSelected = courseInfo.parentElement.classList.contains('selected');
+      var cid = courseInfo.parentElement.dataset.id;
+      var courseSelected = Yacs.user.courseIsSelected(cid);
       if (courseSelected) {
-        var sections = courseInfo.parentElement.querySelectorAll('section');
-        Yacs.user.removeSelections(map(sections, function (section) {
-          return section.dataset.id;
-        }));
+        Yacs.user.removeCourse(cid);
       } else {
         var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed)');
         Yacs.user.addSelections(map(sections, function (section) {
@@ -66,6 +67,9 @@ Yacs.views.courses = function (target, params) {
    * sections of a course are selected, the course is considered selected.
    */
   var updateSelected = function () {
+    // It would be a good idea for conflicts to optimize by checking only the course that
+    // actually updated. Actually, why doesn't this already do that?
+    /*
     var selected = Yacs.user.getSelections();
     each(target.querySelectorAll('course'), function (course) {
       var courseSelected = false;
@@ -82,14 +86,13 @@ Yacs.views.courses = function (target, params) {
       }
       course.classList.toggle('selected', courseSelected);
     });
+    */
   };
 
   Yacs.models.courses.query(params, function (data, success) {
     if (success) {
       Yacs.render(target, 'courses', data);
       populateConflictsCache(data);
-      // rendering will use tmp cache 'selections' field, clear this
-      delete Yacs.cache.tmp.selections;
       Yacs.observe('selection', document.querySelector('courses'), updateSelected);
       bindListeners();
       updateSelected();
