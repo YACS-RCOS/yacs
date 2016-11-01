@@ -2,8 +2,7 @@ class Section < ActiveRecord::Base
   belongs_to :course
   validates  :name, presence: true, uniqueness: { scope: :course_id }
   validates  :crn, presence: true, uniqueness: true
-  default_scope { order(name: :asc) }
-  before_save :type_cast_periods_start_end 
+  default_scope { order(name: :asc) } 
   after_save :update_conflicts
 
   def conflicts_with(section)
@@ -28,10 +27,6 @@ class Section < ActiveRecord::Base
   end
   
   private
-  def type_cast_periods_start_end
-    periods_start.map! { |e| e = e.to_i }
-    periods_end.map!   { |e| e = e.to_i }
-  end
 
   def update_conflicts
     Section.where.not(course_id: course_id).each do |section|
