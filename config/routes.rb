@@ -9,7 +9,6 @@ Rails.application.routes.draw do
       resources :courses,     only: [:index]
       resources :sections,    only: [:index]
       resources :schedules,   only: [:index]
-	  resources :conflicts,   only: [:index]
     end
   end
 
