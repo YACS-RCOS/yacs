@@ -15,15 +15,7 @@ Yacs.views.schedules = function (target, params) {
   if('section_ids' in params) {
     // if there are query parameters,
     // use them and ignore current selections
-    var section_ids = params['section_ids'].split(',');
-    // eliminate all non-integer section ids
-    var sidlen = section_ids.length;
-    for(var i=0; i<sidlen; ++i) {
-      var sid = parseInt(section_ids[i]);
-      if(!isNaN(sid)) {
-        schedule_ids.push(sid);
-      }
-    }
+    schedule_ids = params['section_ids'].split(',');
 
     // If the cookie doesn't have any selections,
     // write them into it, and reroute to a route without section_ids in the query.
