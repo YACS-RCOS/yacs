@@ -26,3 +26,8 @@ COPY Gemfile Gemfile.lock $INSTALL_PATH
 RUN bundle install
 
 COPY . $INSTALL_PATH
+
+RUN mkdir -p /etc/nginx/ssl
+
+COPY nginx/yacs.cer /etc/nginx/ssl/yacs.cer
+COPY nginx/yacs.key /etc/nginx/ssl/yacs.key

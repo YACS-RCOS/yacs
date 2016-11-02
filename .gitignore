@@ -33,5 +33,9 @@
 # Ignore tern files
 \.tern-port
 
+# Ignore ssl files
+*.key
+*.cer
+*.pem
 /coverage/
 /data/**/
