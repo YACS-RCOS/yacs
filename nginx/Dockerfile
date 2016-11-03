@@ -1,5 +1,6 @@
 FROM nginx
 
-MAINTAINER Mark Robinson <robinm8@keybase.io>
+MAINTAINER Mark Robinson <robinm8@rpi.edu>
 
-COPY ./ /etc/nginx/
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY ssl/ /etc/nginx/ssl/
