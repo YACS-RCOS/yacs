@@ -29,5 +29,4 @@ COPY . $INSTALL_PATH
 
 RUN mkdir -p /etc/nginx/ssl
 
-COPY nginx/yacs.cer /etc/nginx/ssl/yacs.cer
-COPY nginx/yacs.key /etc/nginx/ssl/yacs.key
+COPY nginx/ssl/ /etc/nginx/ssl/

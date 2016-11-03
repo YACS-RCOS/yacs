@@ -7,7 +7,6 @@ threads threads_count, threads_count
 preload_app!
 
 rackup      DefaultRackup
-port        ENV['PORT']     || 3000
 environment ENV['RAILS_ENV'] || 'development'
 
 ssl_bind '0.0.0.0', '3001', {
