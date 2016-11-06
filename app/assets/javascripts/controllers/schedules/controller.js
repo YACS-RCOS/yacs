@@ -16,7 +16,7 @@ Yacs.views.schedules = function (target, params) {
   var scheduleNumElement = target.querySelector('#schedule-num');
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
-  var crnListElement = target.querySelector('#crn-list');
+  var downloadICSElement = target.querySelector('#ics-btn');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
   var scheduleIndex = 0;
@@ -124,6 +124,20 @@ Yacs.views.schedules = function (target, params) {
   };
 
   /**
+   * Format the current schedule as a vCalendar (ICS file format),
+   * and prompt the user to download it as a file.
+   */
+  var getICSDownload = function() {
+    if(scheduleData.length < 1) {
+      return;
+    }
+    // current periods being displayed only
+    periods = scheduleData[scheduleIndex].events;
+    vCalendarData = Yacs.vCalendar.createVCalendar(periods);
+    Yacs.vCalendar.download(vCalendarData);
+  };
+
+  /**
    * Show schedule at given index, and display corresponding CRNs.
    * If index is -1, show nil schedule.
    */
@@ -176,10 +190,14 @@ Yacs.views.schedules = function (target, params) {
     Yacs.user.clearSelections();
   });
 
+  /* Prompt the creation and download of the schedule ICS when the button is clicked.
+   */
+  Yacs.on('click', downloadICSElement, getICSDownload);
+
   /**
    * Show selected courses / sections on the schedule page. The courses shown
    * are explicitly the courses that had one or more sections selected at the
-   * time the view was rendered. 
+   * time the view was rendered.
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
