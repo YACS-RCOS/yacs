@@ -18,6 +18,8 @@ Visit [our blog](https://yacsblog.wordpress.com/) for more updates and informati
 
 Our iOS app repository can be found at https://github.com/JGrippo/YACSiOS
 
+Our Android app repository can be found at https://github.com/YACS-RCOS/YACSAndroid
+
 YACS provides a public JSON API. Documentation can be found on the [wiki page](https://github.com/YACS-RCOS/yacs/wiki/API).
 
 # Setup
