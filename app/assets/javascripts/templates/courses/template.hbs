@@ -10,10 +10,20 @@
       </course-info>
       <sections>
         {{#sections}}
-          <section data-id="{{id}}" class="{{closed_status this}}">
-            <section-name>{{name}}</section-name> <section-crn>{{crn}}</section-crn>
-            <section-instructors>{{join instructors}}</section-instructors>
-            <section-seats-available>{{seats_available this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
+          <section data-id="{{id}}" data-course-id="{{../id}}" class="{{closed_status this}}">
+            <section-information>
+              <section-name>{{name}}</section-name>
+              <section-crn>{{crn}}</section-crn>
+              <section-instructors>{{join instructors}}</section-instructors>
+              <section-seats-available>{{seats_available this}}</section-seats-available><section-seats>/{{seats}} seats</section-seats>
+            </section-information>
+            <div class="conflict-note">
+              <span class="conflict-img-center"></span>
+              <img class="conflict-img" src="red_exclamation.svg" />
+              <span class="conflict-text">
+                Conflicts with selected sections
+              </span>
+            </div>
             <section-periods>
               {{#periods}}
                 <section-period>

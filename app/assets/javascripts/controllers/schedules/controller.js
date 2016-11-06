@@ -16,6 +16,7 @@ Yacs.views.schedules = function (target, params) {
   var scheduleNumElement = target.querySelector('#schedule-num');
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
+  var downloadICSElement = target.querySelector('#ics-btn');
   var crnListElement = target.querySelector('#crn-list');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
@@ -90,7 +91,7 @@ Yacs.views.schedules = function (target, params) {
       showSchedule(0);
     } else {
       showSchedule(-1);
-      if (Yacs.user.getSelections().length > 0) {
+      if (Yacs.user.getTotalSelections() > 0) {
         scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
       } else {
         scheduleStatusElement.textContent = "Nothing to see here :) Try adding some courses";
@@ -104,7 +105,7 @@ Yacs.views.schedules = function (target, params) {
    * If no sections are selected, skip the call and show nil schedules.
    */
   var updateSchedules = function () {
-    var selections = Yacs.user.getSelectionsRaw();
+    var selections = Yacs.user.getSelectionsAsArray().join(',');
     if (selections.length > 0) {
       Yacs.models.schedules.query({ section_ids: selections,
                                     show_periods: true },
@@ -121,6 +122,20 @@ Yacs.views.schedules = function (target, params) {
       setSchedules([]);
       clearButtonElement.disabled = true;
     }
+  };
+
+  /**
+   * Format the current schedule as a vCalendar (ICS file format),
+   * and prompt the user to download it as a file.
+   */
+  var getICSDownload = function() {
+    if(scheduleData.length < 1) {
+      return;
+    }
+    // current periods being displayed only
+    periods = scheduleData[scheduleIndex].events;
+    vCalendarData = Yacs.vCalendar.createVCalendar(periods);
+    Yacs.vCalendar.download(vCalendarData);
   };
 
   /**
@@ -176,12 +191,16 @@ Yacs.views.schedules = function (target, params) {
     Yacs.user.clearSelections();
   });
 
+  /* Prompt the creation and download of the schedule ICS when the button is clicked.
+   */
+  Yacs.on('click', downloadICSElement, getICSDownload);
+
   /**
    * Show selected courses / sections on the schedule page. The courses shown
    * are explicitly the courses that had one or more sections selected at the
-   * time the view was rendered. 
+   * time the view was rendered.
    */
-  var selections = Yacs.user.getSelections();
+  var selections = Yacs.user.getSelectionsAsArray();
   if (selections.length > 0) {
     Yacs.views.courses(selectionElement, { section_id: selections })
   }
