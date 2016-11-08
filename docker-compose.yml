@@ -18,6 +18,8 @@ services:
   nginx:
     build: ./nginx
     image: nginx:mainline
+    environment:
+      - SSL_PATH=$SSL_PATH
     ports:
       - "80:80"
       - "443:443"
@@ -34,10 +36,9 @@ services:
       - SECRET_TOKEN=$SECRET_TOKEN
       - WEB_CONCURRENCY=$WEB_CONCURRENCY
       - MAX_THREADS=$MAX_THREADS
+      - SSL_PATH=$SSL_PATH
     volumes:
       - .:/usr/src/app/
-    ports:
-    - '3001:3001'
     depends_on:
       - postgres
       - redis

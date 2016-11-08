@@ -27,6 +27,6 @@ RUN bundle install
 
 COPY . $INSTALL_PATH
 
-RUN mkdir -p /etc/nginx/ssl
+RUN mkdir -p /etc/puma/ssl
 
-COPY nginx/ssl/ /etc/nginx/ssl/
+COPY $SSL_PATH /etc/puma/ssl/
