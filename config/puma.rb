@@ -10,8 +10,8 @@ rackup      DefaultRackup
 environment ENV['RAILS_ENV'] || 'development'
 
 ssl_bind '0.0.0.0', '3001', {
-  key: "/etc/nginx/ssl/yacs.key",
-  cert: "/etc/nginx/ssl/yacs.cer"
+  key: "/etc/puma/ssl/yacs.key",
+  cert: "/etc/puma/ssl/yacs.cer"
 }
 
 pidfile "/var/run/puma/puma.pid"

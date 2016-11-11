@@ -18,8 +18,6 @@ services:
   nginx:
     build: ./nginx
     image: nginx:mainline
-    environment:
-      - SSL_PATH=$SSL_PATH
     ports:
       - "80:80"
       - "443:443"
@@ -30,13 +28,17 @@ services:
 
   web:
     build: .
+    build:
+      context: .
+      args:
+        - INSTALL_PATH=${INSTALL_PATH}
+        - PHANTOMJS_VERSION=${PHANTOMJS_VERSION}
     environment:
-      - RAILS_ENV=$RAILS_ENV
-      - SECRET_KEY_BASE=$SECRET_KEY_BASE
-      - SECRET_TOKEN=$SECRET_TOKEN
-      - WEB_CONCURRENCY=$WEB_CONCURRENCY
-      - MAX_THREADS=$MAX_THREADS
-      - SSL_PATH=$SSL_PATH
+      - RAILS_ENV=${RAILS_ENV}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY}
+      - MAX_THREADS=${MAX_THREADS}
     volumes:
       - .:/usr/src/app/
     depends_on:
@@ -48,8 +50,13 @@ services:
 
   worker:
     build: .
+    build:
+      context: .
+      args:
+        - INSTALL_PATH=${INSTALL_PATH}
+        - PHANTOMJS_VERSION=${PHANTOMJS_VERSION}
     environment:
-      - RAILS_ENV=$RAILS_ENV
+      - RAILS_ENV=${RAILS_ENV}
     volumes:
       - .:/usr/src/app/
     depends_on:
