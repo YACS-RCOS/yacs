@@ -28,11 +28,6 @@ services:
 
   web:
     build: .
-    build:
-      context: .
-      args:
-        - INSTALL_PATH=${INSTALL_PATH}
-        - PHANTOMJS_VERSION=${PHANTOMJS_VERSION}
     environment:
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
@@ -50,11 +45,6 @@ services:
 
   worker:
     build: .
-    build:
-      context: .
-      args:
-        - INSTALL_PATH=${INSTALL_PATH}
-        - PHANTOMJS_VERSION=${PHANTOMJS_VERSION}
     environment:
       - RAILS_ENV=${RAILS_ENV}
     volumes:

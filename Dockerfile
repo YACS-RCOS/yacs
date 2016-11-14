@@ -2,11 +2,9 @@ FROM ruby:2.2.3
 
 MAINTAINER Richie Young <richiejoeyoung@gmail.com>
 
-ARG INSTALL_PATH
-ARG PHANTOMJS_VERSION
-
 RUN apt-get update && apt-get install -qq -y build-essential nodejs --fix-missing --no-install-recommends
 
+ENV PHANTOMJS_VERSION 1.9.7
 RUN \
   apt-get install -y vim git wget libfreetype6 libfontconfig bzip2 && \
   mkdir -p /srv/var && \
@@ -19,6 +17,7 @@ RUN \
   ln -s /srv/var/casperjs/bin/casperjs /usr/bin/casperjs && \
   apt-get autoremove -y
 
+ENV INSTALL_PATH /usr/src/app/
 RUN mkdir -p $INSTALL_PATH
 RUN mkdir -p /var/run/puma
 WORKDIR $INSTALL_PATH
