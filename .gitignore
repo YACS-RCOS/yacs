@@ -35,3 +35,5 @@
 
 /coverage/
 /data/**/
+
+Gemfile.lock

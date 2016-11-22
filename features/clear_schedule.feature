@@ -14,8 +14,8 @@ Background:
     | id | number | name            | department_id |
     | 12 | 1200   | Data Structures | 6             |
   And the sections as such:
-    | id | name | course_id | num_periods | periods_day |
-    | 18 | 01   | 12        | 3           | [1,3,4]     |
+    | id | name | course_id | num_periods | periods_day | seats | seats_taken |
+    | 18 | 01   | 12        | 3           | [1,3,4]     | 20    | 5           |
 
 @javascript
 Scenario: clear courses no course conflict
