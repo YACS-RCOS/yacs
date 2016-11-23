@@ -7,19 +7,16 @@ Handlebars.registerHelper('course_credits', function (c) {
   // render "credit(s)" properly
   if (c.min_credits != c.max_credits) {
     outString = c.min_credits + '-' + c.max_credits + ' credits';
-  }
-  else {
+  } else {
     outString = c.max_credits + ' credit' + (c.max_credits == 1 ? '' : 's');
   }
   return new Handlebars.SafeString(outString);
 });
 
 Handlebars.registerHelper('formatted_description', function (description) {
-  var outString;
+  var outString = description;
   if(description === ''){
     outString = 'description not available...';
-  }else{
-    outString = description;
   }
   return new Handlebars.SafeString(outString);
 });
