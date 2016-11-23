@@ -14,11 +14,10 @@ Handlebars.registerHelper('course_credits', function (c) {
 });
 
 Handlebars.registerHelper('formatted_description', function (description) {
-  var outString = description;
-  if(description === ''){
-    outString = 'description not available...';
+  if (description === '') {
+    description = 'description not available...';
   }
-  return new Handlebars.SafeString(outString);
+  return new Handlebars.SafeString(description);
 });
 
 Handlebars.registerHelper('join', function (arr) {
