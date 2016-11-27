@@ -1,9 +1,5 @@
+<<<<<<< HEAD
 sudo: required
-
-# language: ruby
-
-# rvm:
-#   - 2.2.3
 
 services:
   - docker
