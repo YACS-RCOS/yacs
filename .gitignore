@@ -36,9 +36,6 @@
 /coverage/
 /data/**/
 
-<<<<<<< HEAD
-Gemfile.lock
-
 # Ignore ssl files
 *.key
 *.cer
