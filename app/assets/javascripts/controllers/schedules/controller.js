@@ -6,6 +6,32 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedules = function (target, params) {
+  // before doing anything, determine how to use the route
+  // parameters to choose the section ids to be passed to the
+  // API
+  var schedule_ids = [];
+
+  // check for query parameters
+  if('section_ids' in params) {
+    // if there are query parameters,
+    // use them and ignore current selections
+    schedule_ids = params['section_ids'].split(',');
+
+    // If the cookie doesn't have any selections,
+    // write them into it, and reroute to a route without section_ids in the query.
+    if(Yacs.user.getSelections().length < 1) {
+      Yacs.user.addSelections(schedule_ids);
+      Yacs.router.visit('/schedules');
+    }
+    // TODO: look for a param that defines which schedule to go to
+    // initially
+  }
+  else {
+    // if section_ids is not specified in params, use the cookie
+    // to populate the schedule_ids list
+    schedule_ids = Yacs.user.getSelections();
+  }
+
   Yacs.render(target, 'schedules');
 
   var scheduleElement = target.querySelector('#schedule-container');
@@ -104,8 +130,10 @@ Yacs.views.schedules = function (target, params) {
    * and update the view to show the new schedules.
    * If no sections are selected, skip the call and show nil schedules.
    */
-  var updateSchedules = function () {
-    var selections = Yacs.user.getSelectionsRaw();
+  var updateSchedules = function (selections) {
+    if(typeof selections == 'undefined') {
+      selections = Yacs.user.getSelectionsRaw();
+    }
     if (selections.length > 0) {
       Yacs.models.schedules.query({ section_ids: selections,
                                     show_periods: true },
@@ -220,5 +248,6 @@ Yacs.views.schedules = function (target, params) {
   }
 
   Yacs.observe('selection', scheduleElement, updateSchedules);
-  updateSchedules();
+  // use section ids extracted from URL parameters at top
+  updateSchedules(schedule_ids);
 };
