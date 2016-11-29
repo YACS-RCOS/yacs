@@ -17,6 +17,7 @@ Yacs.views.schedules = function (target, params) {
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
   var downloadICSElement = target.querySelector('#ics-btn');
+  var copyLinkElement = target.querySelector('#link-btn');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
   var scheduleIndex = 0;
@@ -138,6 +139,14 @@ Yacs.views.schedules = function (target, params) {
   };
 
   /**
+   * Generate a link to this set of schedules from current selections
+   * and copy it to the user's clipboard.
+   */
+  var copyScheduleLink = function() {
+
+  };
+
+  /**
    * Show schedule at given index, and display corresponding CRNs.
    * If index is -1, show nil schedule.
    */
@@ -190,9 +199,15 @@ Yacs.views.schedules = function (target, params) {
     Yacs.user.clearSelections();
   });
 
-  /* Prompt the creation and download of the schedule ICS when the button is clicked.
+  /**
+   * Prompt the creation and download of the schedule ICS when the button is clicked.
    */
   Yacs.on('click', downloadICSElement, getICSDownload);
+
+  /**
+   * Copy a link to this set of schedules to the user's clipboard.
+   */
+  Yacs.on('click', copyLinkElement, copyScheduleLink);
 
   /**
    * Show selected courses / sections on the schedule page. The courses shown
