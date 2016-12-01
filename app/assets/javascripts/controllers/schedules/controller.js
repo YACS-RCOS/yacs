@@ -171,7 +171,19 @@ Yacs.views.schedules = function (target, params) {
    * and copy it to the user's clipboard.
    */
   var copyScheduleLink = function() {
-
+    targetUrl = window.location.protocol + '//' +
+      window.location.host +
+      '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',');
+    // js hack to create and copy from a phantom element
+    var textarea = document.createElement('textarea');
+    textarea.value = targetUrl;
+    document.body.appendChild(textarea);
+    textarea.select();
+    var success = document.execCommand('copy');
+    if(!success) {
+      // maybe add some code here later to show an error message
+    }
+    document.body.removeChild(textarea);
   };
 
   /**
