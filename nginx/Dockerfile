@@ -1,4 +1,3 @@
 FROM nginx
-FROM solr:6.3
 
-COPY schema.xml /solr/configsets/sunspot/conf/schema.xml
+COPY nginx.conf /etc/nginx/nginx.conf
