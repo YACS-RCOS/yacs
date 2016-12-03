@@ -6,6 +6,37 @@
  * @memberOf Yacs.views
  */
 Yacs.views.schedules = function (target, params) {
+  // before doing anything, determine how to use the route
+  // parameters to choose the section ids to be passed to the
+  // API
+  var schedule_ids = [];
+
+  // check for query parameters
+  if('section_ids' in params) {
+    // if there are query parameters,
+    // use them and ignore current selections
+    schedule_ids = params['section_ids'].split(',');
+
+    // If the cookie doesn't have any selections,
+    // write them into it. The URL will still display the parameters as long as
+    // the route doesn't change.
+    if(Yacs.user.getSelections().length < 1) {
+      Yacs.user.addSelections(schedule_ids);
+    }
+  }
+  else {
+    // if section_ids is not specified in params, use the cookie
+    // to populate the schedule_ids list
+    schedule_ids = Yacs.user.getSelections();
+  }
+
+  //initialize scheduleIndex at 0, unless explicitly specified in the query
+  //parameters
+  var scheduleIndex = 0;
+  if('schedule_index' in params) {
+    scheduleIndex = parseInt(params['schedule_index']);
+  }
+
   Yacs.render(target, 'schedules');
 
   var scheduleElement = target.querySelector('#schedule-container');
@@ -17,9 +48,9 @@ Yacs.views.schedules = function (target, params) {
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
   var downloadICSElement = target.querySelector('#ics-btn');
+  var copyLinkElement = target.querySelector('#link-btn');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
-  var scheduleIndex = 0;
 
   /**
    * Convert military time string to minutes-since-midnight integer form.
@@ -84,10 +115,13 @@ Yacs.views.schedules = function (target, params) {
     schedule.destroy();
     schedule = new Schedule(scheduleElement,
       { timeBegin: Math.ceil((data.start) / 60) * 60,
-        timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
+        timeSpan: Math.ceil((data.end - data.start) / 60) * 60
+      }
+    );
     scheduleCountElement.textContent = scheduleData.length;
+
     if (scheduleData.length > 0) {
-      showSchedule(0);
+      showSchedule(scheduleIndex);
     } else {
       showSchedule(-1);
       if (Yacs.user.getSelections().length > 0) {
@@ -103,8 +137,10 @@ Yacs.views.schedules = function (target, params) {
    * and update the view to show the new schedules.
    * If no sections are selected, skip the call and show nil schedules.
    */
-  var updateSchedules = function () {
-    var selections = Yacs.user.getSelectionsRaw();
+  var updateSchedules = function (selections) {
+    if(typeof selections == 'undefined') {
+      selections = Yacs.user.getSelectionsRaw();
+    }
     if (selections.length > 0) {
       Yacs.models.schedules.query({ section_ids: selections,
                                     show_periods: true },
@@ -135,6 +171,27 @@ Yacs.views.schedules = function (target, params) {
     periods = scheduleData[scheduleIndex].events;
     vCalendarData = Yacs.vCalendar.createVCalendar(periods);
     Yacs.vCalendar.download(vCalendarData);
+  };
+
+  /**
+   * Generate a link to this set of schedules from current selections
+   * and copy it to the user's clipboard.
+   */
+  var copyScheduleLink = function() {
+    targetUrl = window.location.protocol + '//' +
+      window.location.host +
+      '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',') +
+      '&schedule_index=' + scheduleIndex;
+    // js hack to create and copy from a phantom element
+    var textarea = document.createElement('textarea');
+    textarea.value = targetUrl;
+    document.body.appendChild(textarea);
+    textarea.select();
+    var success = document.execCommand('copy');
+    if(!success) {
+      // maybe add some code here later to show an error message
+    }
+    document.body.removeChild(textarea);
   };
 
   /**
@@ -190,9 +247,15 @@ Yacs.views.schedules = function (target, params) {
     Yacs.user.clearSelections();
   });
 
-  /* Prompt the creation and download of the schedule ICS when the button is clicked.
+  /**
+   * Prompt the creation and download of the schedule ICS when the button is clicked.
    */
   Yacs.on('click', downloadICSElement, getICSDownload);
+
+  /**
+   * Copy a link to this set of schedules to the user's clipboard.
+   */
+  Yacs.on('click', copyLinkElement, copyScheduleLink);
 
   /**
    * Show selected courses / sections on the schedule page. The courses shown
@@ -205,5 +268,6 @@ Yacs.views.schedules = function (target, params) {
   }
 
   Yacs.observe('selection', scheduleElement, updateSchedules);
-  updateSchedules();
+  // use section ids extracted from URL parameters at top
+  updateSchedules(schedule_ids);
 };

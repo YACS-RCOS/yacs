@@ -26,7 +26,13 @@ Yacs.router = new function () {
       var resource = window.location.hash.slice(1).split('?');
       var path = resource[0].length ? resource[0] : '/';
       var params = resource[1] || '';
-      if (routes[path]) routes[path](queryToHash(params));
+      if (routes[path]) {
+        routes[path](queryToHash(params));
+      }
+      // handle case i.e. /schedules/ when only /schedules is defined
+      else if(path.slice(-1) == '/' && routes[path.slice(0,-1)]) {
+        routes[path.slice(0,-1)](queryToHash(params));
+      }
     };
     window.addEventListener('hashchange', onChange, false);
     onChange();
