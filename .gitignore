@@ -36,9 +36,4 @@
 /coverage/
 /data/**/
 
-# Ignore ssl files
-*.key
-*.cer
-*.pem
-
 Gemfile.lock
