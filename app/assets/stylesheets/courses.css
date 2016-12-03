@@ -1,9 +1,17 @@
 courses {
-
+    display: block;
+    columns: 2 500px;
+    -moz-columns: 2 500px;
+    -webkit-columns: 2 500px;
+    column-gap: 20px;
+    -moz-column-gap: 20px;
+    -webkit-column-gap: 20px;
+    max-width: 950px;
+    margin: 0 auto;
 }
 
 course {
-    display: block;
+    display: inline-block;
     margin: 0px 20px;
     padding:15px;
     border-bottom: 1px #bbb solid;
@@ -11,11 +19,9 @@ course {
     max-width: 950px;
     margin: 0 auto;
 }
-
 course:last-child {
     border: none;
 }
-
 course:not(.selected)>course-info:hover ~ sections section:not(.selected):not(.closed) {
     background-color: #d57f7f;
 }
