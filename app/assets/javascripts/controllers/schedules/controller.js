@@ -21,7 +21,6 @@ Yacs.views.schedules = function (target, params) {
     // write them into it, and reroute to a route without section_ids in the query.
     if(Yacs.user.getSelections().length < 1) {
       Yacs.user.addSelections(schedule_ids);
-      Yacs.router.visit('/schedules');
     }
     // TODO: look for a param that defines which schedule to go to
     // initially
