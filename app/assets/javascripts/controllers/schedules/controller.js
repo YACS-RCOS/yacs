@@ -180,7 +180,8 @@ Yacs.views.schedules = function (target, params) {
   var copyScheduleLink = function() {
     targetUrl = window.location.protocol + '//' +
       window.location.host +
-      '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',');
+      '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',') +
+      '&schedule_index=' + scheduleIndex;
     // js hack to create and copy from a phantom element
     var textarea = document.createElement('textarea');
     textarea.value = targetUrl;
