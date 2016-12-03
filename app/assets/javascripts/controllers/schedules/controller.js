@@ -18,17 +18,23 @@ Yacs.views.schedules = function (target, params) {
     schedule_ids = params['section_ids'].split(',');
 
     // If the cookie doesn't have any selections,
-    // write them into it, and reroute to a route without section_ids in the query.
+    // write them into it. The URL will still display the parameters as long as
+    // the route doesn't change.
     if(Yacs.user.getSelections().length < 1) {
       Yacs.user.addSelections(schedule_ids);
     }
-    // TODO: look for a param that defines which schedule to go to
-    // initially
   }
   else {
     // if section_ids is not specified in params, use the cookie
     // to populate the schedule_ids list
     schedule_ids = Yacs.user.getSelections();
+  }
+
+  //initialize scheduleIndex at 0, unless explicitly specified in the query
+  //parameters
+  var scheduleIndex = 0;
+  if('schedule_index' in params) {
+    scheduleIndex = parseInt(params['schedule_index']);
   }
 
   Yacs.render(target, 'schedules');
@@ -45,7 +51,6 @@ Yacs.views.schedules = function (target, params) {
   var copyLinkElement = target.querySelector('#link-btn');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
-  var scheduleIndex = 0;
 
   /**
    * Convert military time string to minutes-since-midnight integer form.
@@ -110,10 +115,13 @@ Yacs.views.schedules = function (target, params) {
     schedule.destroy();
     schedule = new Schedule(scheduleElement,
       { timeBegin: Math.ceil((data.start) / 60) * 60,
-        timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
+        timeSpan: Math.ceil((data.end - data.start) / 60) * 60
+      }
+    );
     scheduleCountElement.textContent = scheduleData.length;
+
     if (scheduleData.length > 0) {
-      showSchedule(0);
+      showSchedule(scheduleIndex);
     } else {
       showSchedule(-1);
       if (Yacs.user.getSelections().length > 0) {
