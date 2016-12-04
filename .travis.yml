@@ -2,15 +2,13 @@ sudo: required
 
 services:
   - docker
-  - postgresql
 
 env:
   - RAILS_ENV=test
 
 install:
-  - docker-compose build
-  - docker-compose up -d && docker ps
-
+  - script/yacs-build
+  - script/yacs-startd  && docker ps
+  - script/yacs-dbsetup
 script:
-  - docker-compose run web bundle exec rake db:create db:migrate
-  - docker-compose run web bundle exec rake
+  - script/yacs-test
