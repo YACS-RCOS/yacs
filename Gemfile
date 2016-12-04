@@ -46,7 +46,7 @@ group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'pickle'
-  gem 'webrat'
+  # gem 'webrat'
   gem 'database_cleaner'
   gem "capybara"
   gem "cucumber-rails", require: false
@@ -59,7 +59,4 @@ group :development do
   gem 'spring'
 end
 
-gem 'tzinfo-data' #timezone gem for hosting on windows
-
 gem 'sunspot_rails'
-gem 'sunspot_solr'

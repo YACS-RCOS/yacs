@@ -1,21 +1,22 @@
 /**
  * Schedules view. Displays periods of selected courses in a week grid.
- * @param {Object} data - Object containing schedule data as returned from the API
+ * @param {HTMLElement} target- The element in which this view should be rendered
+ * @param {Object} params - API params for this view
  * @return {undefined}
  * @memberOf Yacs.views
  */
-Yacs.views.schedule = function (target) {
-  target.innerHTML = HandlebarsTemplates.schedules();
+Yacs.views.schedules = function (target, params) {
+  Yacs.render(target, 'schedules');
 
   var scheduleElement = target.querySelector('#schedule-container');
-  var selectionElement = target.querySelector('#selection-container')
+  var selectionElement = target.querySelector('#selection-container');
   var leftSwitchElement = target.querySelector('#left-switch');
   var rightSwitchElement = target.querySelector('#right-switch');
   var clearButtonElement = target.querySelector('#clear-btn');
   var scheduleNumElement = target.querySelector('#schedule-num');
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
-  var crnListElement = target.querySelector('#crn-list');
+  var downloadICSElement = target.querySelector('#ics-btn');
   var schedule = new Schedule(scheduleElement);
   var scheduleData = [];
   var scheduleIndex = 0;
@@ -27,7 +28,7 @@ Yacs.views.schedule = function (target) {
   var toMinutes = function (timeString) {
     var int = parseInt(timeString);
     return Math.floor(int / 100) * 60 + int % 100;
-  }
+  };
 
   /**
    * Translate schedules returned by the API into a displayable form.
@@ -49,7 +50,7 @@ Yacs.views.schedule = function (target) {
           courseIds.push(section.course_id);
           color = courseIds.length - 1;
         }
-        crns.push(section.crn)
+        crns.push(section.crn);
         section.periods.forEach(function (period) {
           start = Math.min(start, toMinutes(period.start));
           end = Math.max(end, toMinutes(period.end));
@@ -86,9 +87,9 @@ Yacs.views.schedule = function (target) {
         timeSpan: Math.ceil((data.end - data.start) / 60) * 60 });
     scheduleCountElement.textContent = scheduleData.length;
     if (scheduleData.length > 0) {
-      show(0);
+      showSchedule(0);
     } else {
-      show(-1);
+      showSchedule(-1);
       if (Yacs.user.getSelections().length > 0) {
         scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
       } else {
@@ -123,10 +124,24 @@ Yacs.views.schedule = function (target) {
   };
 
   /**
-   * Show schdule at given index, and display corresponding CRNs.
+   * Format the current schedule as a vCalendar (ICS file format),
+   * and prompt the user to download it as a file.
+   */
+  var getICSDownload = function() {
+    if(scheduleData.length < 1) {
+      return;
+    }
+    // current periods being displayed only
+    periods = scheduleData[scheduleIndex].events;
+    vCalendarData = Yacs.vCalendar.createVCalendar(periods);
+    Yacs.vCalendar.download(vCalendarData);
+  };
+
+  /**
+   * Show schedule at given index, and display corresponding CRNs.
    * If index is -1, show nil schedule.
    */
-  var show = function (index) {
+  var showSchedule = function (index) {
     if (index == -1) {
       scheduleStatusElement.textContent = "";
       scheduleNumElement.textContent = 0;
@@ -141,31 +156,31 @@ Yacs.views.schedule = function (target) {
   /**
    * Switch to schedule [[n + 1] % n] in the sequence
    */
-  var next = function () {
+  var nextSchedule = function () {
     if (scheduleData.length > 0) {
       scheduleIndex = (++scheduleIndex < scheduleData.length ? scheduleIndex : 0);
-      show(scheduleIndex);
+      showSchedule(scheduleIndex);
     }
-  }
+  };
 
   /**
    * Switch to schedule [[n - 1] % n] in the sequence
    */
-  var previous = function () {
+  var prevSchedule = function () {
     if (scheduleData.length > 0) {
       scheduleIndex = (--scheduleIndex < 0 ? scheduleData.length - 1 : scheduleIndex);
-      show(scheduleIndex);
+      showSchedule(scheduleIndex);
     }
-  }
+  };
 
   /**
    * Show next schedule if right is clicked or pressed,
    * show previous schedule if left is clicked or pressed
    */
-  Yacs.on('click', leftSwitchElement, previous);
-  Yacs.on('click', rightSwitchElement, next);
-  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 37) previous(); });
-  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 39) next(); });
+  Yacs.on('click', leftSwitchElement, prevSchedule);
+  Yacs.on('click', rightSwitchElement, nextSchedule);
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 37) prevSchedule(); });
+  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 39) nextSchedule(); });
 
   /**
    * Clear selections in cookie when clear button is pressed, and update
@@ -173,34 +188,22 @@ Yacs.views.schedule = function (target) {
    */
   Yacs.on('click', clearButtonElement, function () {
     Yacs.user.clearSelections();
-    updateSchedules();
-    target.querySelectorAll('course-info').forEach(function (ci) {
-      ci.classList.remove('selected');
-    });
-    target.querySelectorAll('section').forEach(function (s) {
-      s.classList.remove('selected');
-    });
   });
 
+  /* Prompt the creation and download of the schedule ICS when the button is clicked.
+   */
+  Yacs.on('click', downloadICSElement, getICSDownload);
+
   /**
-   * Show selected courses / sections on the schedule page.
-   * Update schedules view when a course is clicked.
-   * TODO: Use native event handling to update views when selection changes
+   * Show selected courses / sections on the schedule page. The courses shown
+   * are explicitly the courses that had one or more sections selected at the
+   * time the view was rendered.
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
-    Yacs.models.courses.query({ section_id: selections.join(','),
-                                show_sections: true,
-                                show_periods: true },
-      function (data, success) {
-        if (success) {
-          Yacs.views.courses(selectionElement, data);
-          target.querySelectorAll('course').forEach(function (course) {
-            Yacs.on('click', course, updateSchedules);
-          });
-        }
-    });
+    Yacs.views.courses(selectionElement, { section_id: selections })
   }
 
+  Yacs.observe('selection', scheduleElement, updateSchedules);
   updateSchedules();
 };
