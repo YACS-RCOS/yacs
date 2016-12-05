@@ -58,8 +58,11 @@ Yacs.views.courses = function (target, params) {
     });
   };
 
+  /**
+   * Update selected status (class) of sections and courses. If all open
+   * sections of a course are selected, the course is considered selected.
+   */
   var sortPeriods = function ( data ) {
-
     function comparePeriods( periodA, periodB ) {
       if (periodA.day < periodB.day) {
         return -1;
@@ -71,7 +74,7 @@ Yacs.views.courses = function (target, params) {
         if (periodA.start < periodB.start) {
           return -1;
         }
-        else if (periodA.start > periodB.start) {
+        else {
           return 1;
         }
       }
