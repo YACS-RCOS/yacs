@@ -59,8 +59,23 @@ Yacs.views.courses = function (target, params) {
   };
 
   var sortPeriods = function ( data ) {
-    function comparePeriods( perA, perB ) {
-            
+
+    function comparePeriods( periodA, periodB ) {
+      if (periodA.day < periodB.day) {
+        return -1;
+      }
+      else if (periodA.day > periodB.day) {
+        return 1;
+      }
+      else {
+        if (periodA.start < periodB.start) {
+          return -1;
+        }
+        else if (periodA.start > periodB.start) {
+          return 1;
+        }
+      }
+      return 0;
     }
     data.courses.forEach( function (course) {
       course.sections.forEach( function (section) {
