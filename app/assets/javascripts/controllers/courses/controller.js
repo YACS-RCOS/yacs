@@ -74,6 +74,8 @@ Yacs.views.courses = function (target, params) {
     data.courses.forEach( function (course) {
       course.sections.forEach( function (section) {
         section.periods.sort(comparePeriods(periodA, periodB));
+        var sortedPeriods = [[],[],[],[],[],[],[]];
+        section.periods.forEach(/**/);
       });
     });
   };
