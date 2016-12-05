@@ -1,11 +1,11 @@
 courses {
     display: block;
-    columns: 2 580px;
-    -moz-columns: 2 580px;
-    -webkit-columns: 2 580px;
-    column-gap: 20px;
-    -moz-column-gap: 20px;
-    -webkit-column-gap: 20px;
+    columns: 2 560px;
+    -moz-columns: 2 560px;
+    -webkit-columns: 2 560px;
+    column-gap: 60px;
+    -moz-column-gap: 60px;
+    -webkit-column-gap: 60px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -13,11 +13,11 @@ courses {
 course {
     display: inline-block;
     margin: 0px 20px;
-    padding: 15px;
+    padding: 10px;
     border-bottom: 1px #bbb solid;
     cursor: pointer;
-    max-width: 580px;*/
-    /*width: 590px;*/
+    /*max-width: 580px;*/
+    width: 560px;
     margin: 0 auto;
 }
 course:last-child {
