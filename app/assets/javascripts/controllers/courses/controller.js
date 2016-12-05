@@ -70,14 +70,10 @@ Yacs.views.courses = function (target, params) {
         if (periodA.start < periodB.start) return -1; 
         else return 1;
       }
-      return 0;
     }
     data.courses.forEach( function (course) {
       course.sections.forEach( function (section) {
-        section.periods.forEach(function (period) {
-          //implementation here
-
-        });
+        section.periods.sort(comparePeriods(periodA, periodB));
       });
     });
   };
