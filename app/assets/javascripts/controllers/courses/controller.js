@@ -59,8 +59,8 @@ Yacs.views.courses = function (target, params) {
   };
 
   /**
-   * Update selected status (class) of sections and courses. If all open
-   * sections of a course are selected, the course is considered selected.
+   * Sorts periods array of each course section by 
+   * Day of Week and then by Start Time.
    */
   var sortPeriods = function ( data ) {
     function comparePeriods( periodA, periodB ) {
