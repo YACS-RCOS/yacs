@@ -58,8 +58,14 @@ Yacs.views.courses = function (target, params) {
     });
   };
 
-  var sortPeriods = function () {
-    
+  var sortPeriods = function ( data ) {
+    data.courses.forEach( function (course) {
+      course.sections.forEach( function (section) {
+        section.periods.forEach(function (period) {
+          //implementation here
+        });
+      });
+    });
   };
 
   Yacs.models.courses.query(params, function (data, success) {
