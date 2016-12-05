@@ -9,7 +9,6 @@ courses {
     max-width: 1200px;
     margin: 0 auto;
 }
-
 course {
     display: inline-block;
     margin: 0px 20px;
@@ -20,6 +19,7 @@ course {
     width: 560px;
     margin: 0 auto;
 }
+
 course:last-child {
     border: none;
 }
@@ -48,8 +48,8 @@ course-description {
 }
 section {
     display:block;
-    margin:0px 0px 0px 5px;
-    padding:4px 4px 4px 8px;
+    margin:0px 0px 0px 0px;
+    padding:4px 4px 4px 4px;
     overflow:auto;
     font-size: 90%;
 }
