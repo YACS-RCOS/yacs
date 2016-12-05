@@ -58,8 +58,13 @@ Yacs.views.courses = function (target, params) {
     });
   };
 
+  var sortPeriods = function () {
+    
+  };
+
   Yacs.models.courses.query(params, function (data, success) {
     if (success) {
+
       Yacs.render(target, 'courses', data)
       Yacs.observe('selection', document.querySelector('courses'), updateSelected);
       bindListeners();
