@@ -3,6 +3,7 @@ class Section < ActiveRecord::Base
   validates  :name, presence: true, uniqueness: { scope: :course_id }
   validates  :crn, presence: true, uniqueness: true
   default_scope { order(name: :asc) }
+  before_save :sort_periods
 
   def conflicts_with(section)
     i = 0
