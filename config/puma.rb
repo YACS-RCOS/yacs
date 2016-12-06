@@ -1,14 +1,18 @@
 # https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 
-workers Integer(ENV['WEB_CONCURRENCY'] || 2)
+workers Integer(ENV['WEB_CONCURRENCY'] || 4)
 threads_count = Integer(ENV['MAX_THREADS'] || 5)
 threads threads_count, threads_count
 
 preload_app!
 
 rackup      DefaultRackup
-port        ENV['PORT']     || 3000
 environment ENV['RAILS_ENV'] || 'development'
+
+ssl_bind '0.0.0.0', '3000', {
+  key: "/etc/puma/ssl/yacs.key",
+  cert: "/etc/puma/ssl/yacs.cer"
+}
 
 pidfile "/var/run/puma/puma.pid"
 state_path "/var/run/puma/puma.state"

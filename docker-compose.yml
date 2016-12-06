@@ -16,9 +16,11 @@ services:
       - ./data/redis/:/var/lib/redis/data/
 
   nginx:
-    build: nginx
+    build: ./nginx
+    image: nginx:mainline
     ports:
       - "80:80"
+      - "443:443"
     links:
       - web
     volumes:
@@ -27,11 +29,11 @@ services:
   web:
     build: .
     environment:
-      - RAILS_ENV=$RAILS_ENV
-      - SECRET_KEY_BASE=$SECRET_KEY_BASE
-      - SECRET_TOKEN=$SECRET_TOKEN
-      - WEB_CONCURRENCY=$WEB_CONCURRENCY
-      - MAX_THREADS=$MAX_THREADS
+      - RAILS_ENV=${RAILS_ENV}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY}
+      - MAX_THREADS=${MAX_THREADS}
     volumes:
       - .:/usr/src/app/
     depends_on:
@@ -44,7 +46,7 @@ services:
   worker:
     build: .
     environment:
-      - RAILS_ENV=$RAILS_ENV
+      - RAILS_ENV=${RAILS_ENV}
     volumes:
       - .:/usr/src/app/
     depends_on:
