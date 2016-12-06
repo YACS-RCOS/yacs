@@ -3,7 +3,7 @@ class Section < ActiveRecord::Base
   validates  :name, presence: true, uniqueness: { scope: :course_id }
   validates  :crn, presence: true, uniqueness: true
   default_scope { order(name: :asc) }
-  before_save :sort_periods
+  before_save :sort_periods, if: :period_info_changed?
 
   def conflicts_with(section)
     i = 0
@@ -26,5 +26,9 @@ class Section < ActiveRecord::Base
     periods_info = periods_day.zip(periods_start, periods_end, periods_type)
     periods_info = periods_info.sort!.transpose
     self.periods_day, self.periods_start, self.periods_end, self.periods_type = periods_info
+  end
+
+  def period_info_changed?
+
   end
 end
