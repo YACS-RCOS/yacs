@@ -23,8 +23,9 @@ class Section < ActiveRecord::Base
   end
 
   def sort_periods
-    self.periods_info = self.periods_day.zip(self.periods_start, self.periods_end, self.periods_type)
-    self.periods_info = self.periods_info.sort!.transpose
-    self.periods_day, self.periods_start, self.periods_end, self.periods_type = self.periods_info
+    binding.pry
+    periods_info = self.periods_day.zip(self.periods_start, self.periods_end, self.periods_type)
+    periods_info = periods_info.sort!.transpose
+    self.periods_day, self.periods_start, self.periods_end, self.periods_type = periods_info
   end
 end
