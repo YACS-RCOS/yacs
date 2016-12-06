@@ -48,7 +48,7 @@ group :test do
   gem 'pickle'
   # gem 'webrat'
   gem 'database_cleaner'
-  gem "capybara"
+  gem "capybara", '2.10.2'
   gem "cucumber-rails", require: false
   gem "poltergeist"
   gem "selenium-webdriver"
