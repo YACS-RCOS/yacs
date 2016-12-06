@@ -20,8 +20,4 @@ class Section < ActiveRecord::Base
     end
     false
   end
-
-  def sort_periods
-    
-  end
 end
