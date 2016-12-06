@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose run web rake assets:precompile && rm public/index.html
+docker-compose run web rake assets:precompile && rm -f public/index.html
