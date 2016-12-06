@@ -29,6 +29,8 @@ class Section < ActiveRecord::Base
   end
 
   def period_info_changed?
-
+    if(@Sections.changed? & [:periods_start, :periods_end, :periods_day, :periods_type]).any?
+      return true
+    end
   end
 end
