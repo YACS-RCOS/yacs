@@ -8,9 +8,9 @@ env:
 
 install:
   - script/yacs-build
-  - script/yacs-startd  && docker ps
-  - script/yacs-dbsetup
-before_script:
+  - script/yacs-startd && docker ps
   - sleep 10
+  - script/yacs-dbsetup
+
 script:
   - script/yacs-test
