@@ -10,5 +10,7 @@ install:
   - script/yacs-build
   - script/yacs-startd  && docker ps
   - script/yacs-dbsetup
+before_script:
+  - sleep 10
 script:
   - script/yacs-test
