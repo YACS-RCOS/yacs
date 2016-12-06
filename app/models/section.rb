@@ -23,6 +23,6 @@ class Section < ActiveRecord::Base
 
   def sort_periods
     periods_info = periods_day.zip(periods_start, periods_end, periods_type)
-    periods_info.sort!
+    periods_info = periods_info.sort!.transpose
   end
 end
