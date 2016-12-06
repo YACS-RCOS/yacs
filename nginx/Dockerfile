@@ -1,3 +1,5 @@
 FROM nginx
 
-COPY nginx.conf /etc/nginx/nginx.conf
+MAINTAINER Mark Robinson <robinm8@rpi.edu>
+
+COPY ./ /etc/nginx/
