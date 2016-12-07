@@ -2,6 +2,7 @@
 cd $(dirname `readlink -f "$0"`)/../
 
 bin/yacs-update
+bin/yacs-build
 bin/yacs-dbsetup
 bin/yacs-stop
 bin/yacs-assets
