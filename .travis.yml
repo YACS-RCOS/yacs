@@ -7,10 +7,10 @@ env:
   - RAILS_ENV=test
 
 install:
-  - script/yacs-build
-  - script/yacs-startd && docker ps
+  - bin/yacs-build
+  - bin/yacs-startd && docker ps
   - sleep 10
-  - script/yacs-dbsetup
+  - bin/yacs-dbsetup
 
 script:
-  - script/yacs-test
+  - bin/yacs-test
