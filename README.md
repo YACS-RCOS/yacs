@@ -28,4 +28,11 @@ See the wiki for instructions to [run the app locally](https://github.com/YACS-R
 
 # Contributing
 
-We encourage you to [create issues](https://github.com/YACS-RCOS/yacs/issues/new) and contribute to YACS! To contribute [fork the repo](https://github.com/YACS-RCOS/yacs/fork), comment on an issue, and submit a pull request to the [staging](https://github.com/YACS-RCOS/yacs/tree/staging) branch. Please make sure the build is passing before submitting a PR.
+We encourage you to [create issues](https://github.com/YACS-RCOS/yacs/issues/new) and contribute to YACS! To contribute [fork the repo](https://github.com/YACS-RCOS/yacs/fork), comment on an issue, and submit a pull request to the [staging](https://github.com/YACS-RCOS/yacs/tree/staging) branch. Build checks and code reviews are required before merging. Once chanbged are verified in the staging branch, they will be merged into master and a new release will be created.
+
+# Code of Conduct
+
+YACS is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant code of conduct](http://contributor-covenant.org/).
+
+# License
+YACS is an open source project released under the terms of the (MIT License)[https://opensource.org/licenses/MIT]
