@@ -12,11 +12,11 @@ Our iOS app repository can be found at https://github.com/JGrippo/YACSiOS
 
 Our Android app repository can be found at https://github.com/YACS-RCOS/YACSAndroid
 
-YACS provides a public JSON API. Documentation can be found on the [wiki page](https://github.com/YACS-RCOS/yacs/wiki/API).
+YACS provides a public JSON API. Documentation can be found on the [wiki page](https://github.com/YACS-RCOS/yacs/wiki/API-Docs).
 
 ## Setup
 
-See the wiki for instructions to [run the app locally](https://github.com/YACS-RCOS/yacs/wiki/Local-Setup) and [deploy to a server](https://github.com/YACS-RCOS/yacs/wiki/Deployment).
+YACS uses Docker and docker-compose to make setting up a breeze! See the wiki for instructions to run the app and its dependencies [in development](https://github.com/YACS-RCOS/yacs/wiki/Setting-Up-Your-Dev-Environment) and [deploy YACS at your own school](https://github.com/YACS-RCOS/yacs/wiki/Deploying-YACS-at-Your-School).
 
 ## Contributing
 
