@@ -35,4 +35,4 @@ We encourage you to [create issues](https://github.com/YACS-RCOS/yacs/issues/new
 YACS is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant code of conduct](http://contributor-covenant.org/).
 
 # License
-YACS is an open source project released under the terms of the (MIT License)[https://opensource.org/licenses/MIT]
+YACS is an open source project released under the terms of the [MIT License](https://opensource.org/licenses/MIT)
