@@ -15,8 +15,6 @@ class Course < ActiveRecord::Base
   #Returns the result of a string search using sunspot_solr (formerly using SQL Query)
   #params: a list of string search terms (split by whitespace from user search text)
   def self.search params, numberFilter
-    puts(params);
-	puts(caller.first);
     courses = Sunspot.search(Course) do
       fulltext params do
 	    fields(:description, :number => 5, :name => 10) #weight results most strongly by name, then number, and finally description
@@ -26,18 +24,8 @@ class Course < ActiveRecord::Base
     end.results #store results of search in courses
 	
 	#filter by section on the front end for the time being
-	puts(numberFilter)
-	#filterBounds = '1:2'.split(':')
 	filterBounds = numberFilter.to_s.tr('["]', '').split(':')
-	puts(filterBounds[0])
-	puts("and")
-	puts(filterBounds[1])
-	#puts("printing filterBounds")
-	#filterBounds.each do |value|
-	#	value.delete! ":"
-	#	puts value
-	#end
-	#filterBounds.map!{|e| e.gsub(':', '')}
+	#ensure that there are two bounds and both are valid numbers before comparing against them
 	if (filterBounds.length == 2 && filterBounds[0].to_i.to_s == filterBounds[0] && filterBounds[1].to_i.to_s == filterBounds[1])
 		courses.delete_if { |x| (x.number < filterBounds[0].to_i || x.number > filterBounds[1].to_i) }
 	end
