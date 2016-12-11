@@ -8,6 +8,7 @@ Yacs.router = new function () {
     queryString = queryString.replace(/^(\?|\&)+|\&+$/g, '');
     queryString.split('&').forEach(function (entry) {
       entry = entry.split('=');
+	  console.log("param: " + entry);
       if (entry[0].length) paramsHash[entry[0]] = entry[1];
     });
     return paramsHash;

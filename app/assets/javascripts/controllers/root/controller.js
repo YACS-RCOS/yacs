@@ -39,8 +39,7 @@ Yacs.views.root = function (target) {
       } else if (key == 13) {
         // enter searches
         if (searchbar.value) {
-		  console.log("number filter" + numberFilter.value);
-          Yacs.router.visit('/courses?search=' + searchbar.value);
+          Yacs.router.visit('/courses?numberFilter=' + numberFilter.value + '&search=' + searchbar.value);
         }
       }
     }

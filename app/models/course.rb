@@ -14,7 +14,9 @@ class Course < ActiveRecord::Base
 
   #Returns the result of a string search using sunspot_solr (formerly using SQL Query)
   #params: a list of string search terms (split by whitespace from user search text)
-  def self.search params
+  def self.search params, numberFilter
+    puts(params);
+	puts(caller.first);
     courses = Sunspot.search(Course) do
       fulltext params do
 	    fields(:description, :number => 5, :name => 10) #weight results most strongly by name, then number, and finally description
