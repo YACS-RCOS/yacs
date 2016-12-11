@@ -9,6 +9,7 @@
  */
 Yacs.views.root = function (target) {
   var searchbar = document.getElementById('searchbar');
+  var numberFilter = document.getElementById('numberFilter');
 
   Yacs.router.define('/', function (params) {
     Yacs.views.departments(target, params);
@@ -36,6 +37,7 @@ Yacs.views.root = function (target) {
       } else if (key == 13) {
         // enter searches
         if (searchbar.value) {
+		  console.log("number filter" + numberFilter.value);
           Yacs.router.visit('/courses?search=' + searchbar.value);
         }
       }
