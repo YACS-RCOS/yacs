@@ -26,8 +26,11 @@ class Course < ActiveRecord::Base
 	#filter by section on the front end for the time being
 	filterBounds = numberFilter.to_s.tr('["]', '').split(':')
 	#ensure that there are two bounds and both are valid numbers before comparing against them
-	if (filterBounds.length == 2 && filterBounds[0].to_i.to_s == filterBounds[0] && filterBounds[1].to_i.to_s == filterBounds[1])
+	if (filterBounds.length == 2 && filterBounds[0].to_s.length && filterBounds[1].to_s.length && filterBounds[0].to_i.to_s == filterBounds[0] && filterBounds[1].to_i.to_s == filterBounds[1])
 		courses.delete_if { |x| (x.number < filterBounds[0].to_i || x.number > filterBounds[1].to_i) }
+	elsif (filterBounds.length == 1 && filterBounds[0].to_s.length && filterBounds[0].to_i.to_s == filterBounds[0])
+		#courses.each { |x| puts(x.number.div(10 ** filterBounds[0].length / 10))}
+		courses.delete_if { |x| (x.number.div(10 ** filterBounds[0].length / 10) != filterBounds[0].to_s[0].to_i) }
 	end
 	
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
