@@ -17,14 +17,15 @@ class Course < ActiveRecord::Base
   def self.search params
     courses = Sunspot.search(Course) do
       fulltext params do
-	    fields(:description, :number => 10, :name => 5.0) #weight results most strongly by number, then name, and finally description
+	    fields(:description, :number => 5, :name => 10) #weight results most strongly by name, then number, and finally description
 	    phrase_fields :name => 3.0 #weight titles that contain a phrase of search terms more strongly
 	  end
 	  paginate :page => 1, :per_page => 25 #place a maximum of 25 results on each page (for now we just display page 1)
     end.results #store results of search in courses
 	
 	#section filtering test
-	courses.delete_if { |x| x.number.div(1000) != 4 }
+	#puts params
+	#courses.delete_if { |x| x.number.div(1000) != 4 }
 	
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
     courses
