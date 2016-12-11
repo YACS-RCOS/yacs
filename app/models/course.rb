@@ -25,9 +25,22 @@ class Course < ActiveRecord::Base
 	  paginate :page => 1, :per_page => 25 #place a maximum of 25 results on each page (for now we just display page 1)
     end.results #store results of search in courses
 	
-	#section filtering test
-	#puts params
-	#courses.delete_if { |x| x.number.div(1000) != 4 }
+	#filter by section on the front end for the time being
+	puts(numberFilter)
+	#filterBounds = '1:2'.split(':')
+	filterBounds = numberFilter.to_s.tr('["]', '').split(':')
+	puts(filterBounds[0])
+	puts("and")
+	puts(filterBounds[1])
+	#puts("printing filterBounds")
+	#filterBounds.each do |value|
+	#	value.delete! ":"
+	#	puts value
+	#end
+	#filterBounds.map!{|e| e.gsub(':', '')}
+	if (filterBounds.length == 2 && filterBounds[0].to_i.to_s == filterBounds[0] && filterBounds[1].to_i.to_s == filterBounds[1])
+		courses.delete_if { |x| (x.number < filterBounds[0].to_i || x.number > filterBounds[1].to_i) }
+	end
 	
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
     courses
