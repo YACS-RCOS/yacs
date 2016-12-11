@@ -1,18 +1,16 @@
-# YACS
+# YACS - Yet Another Course Scheduler
 
 Simple, Sane Course Scheduling.
 YACS is a web-based course scheduler with an emphasis on usability.
 YACS is 100% RPI home-grown and hosted. To use it, visit https://yacs.cs.rpi.edu
 
-The old version of YACS (yacs.me) by Jeff Hui still exists but will not be updated. For the latest information and fastest experience use the [RPI site](https://yacs.cs.rpi.edu)!
-
 Visit [our blog](https://yacsblog.wordpress.com/) for more updates and information.
 
-Our iOS app repository can be found at https://github.com/JGrippo/YACSiOS
+iOS and Android apps are in development. They can be found at Our iOS app repository can be found at https://github.com/YACS-RCOS/YACSiOS and https://github.com/YACS-RCOS/YACSAndroid respectively.
 
-Our Android app repository can be found at https://github.com/YACS-RCOS/YACSAndroid
+## API
 
-YACS provides a public JSON API. Documentation can be found on the [wiki page](https://github.com/YACS-RCOS/yacs/wiki/API-Docs).
+YACS includes a JSON API that is public by default. This can very useful for providing a standardized way of programatically accessing the data in your school's course catalog and/or student information system if no such resource exists or is publicly accessible. The API includes course searching and filtering, as well as the scheduling feature. Documentation can be found in [the wiki](https://github.com/YACS-RCOS/yacs/wiki/API-Docs).
 
 ## Setup
 
