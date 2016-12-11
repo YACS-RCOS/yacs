@@ -23,6 +23,9 @@ class Course < ActiveRecord::Base
 	  paginate :page => 1, :per_page => 25 #place a maximum of 25 results on each page (for now we just display page 1)
     end.results #store results of search in courses
 	
+	#section filtering test
+	courses.delete_if { |x| x.number.div(1000) != 4 }
+	
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
     courses
   end
