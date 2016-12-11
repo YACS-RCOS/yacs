@@ -24,13 +24,16 @@ class Course < ActiveRecord::Base
     end.results #store results of search in courses
 	
 	#filter by section on the front end for the time being
-	filterBounds = numberFilter.to_s.tr('["]', '').split(':')
-	#ensure that there are two bounds and both are valid numbers before comparing against them
-	if (filterBounds.length == 2 && filterBounds[0].to_s.length && filterBounds[1].to_s.length && filterBounds[0].to_i.to_s == filterBounds[0] && filterBounds[1].to_i.to_s == filterBounds[1])
+	filterBounds = numberFilter.to_s.tr('["]', '').split(':') #convert filter arg to string, removing brackets and double quotes
+	#ensure that there are either 1 or 2 bounds and both are valid numbers before comparing against them
+	filterBounds.each { |e| (e = e.to_s)}
+	if (filterBounds.length == 2 && filterBounds[0].length && filterBounds[1].length && 
+	filterBounds[0].to_i.to_s == filterBounds[0] && filterBounds[1].to_i.to_s == filterBounds[1])
+		#there are two bounds, so treat them as a min and max (inclusive) for course number
 		courses.delete_if { |x| (x.number < filterBounds[0].to_i || x.number > filterBounds[1].to_i) }
-	elsif (filterBounds.length == 1 && filterBounds[0].to_s.length && filterBounds[0].to_i.to_s == filterBounds[0])
-		#courses.each { |x| puts(x.number.div(10 ** filterBounds[0].length / 10))}
-		courses.delete_if { |x| (x.number.div(10 ** filterBounds[0].length / 10) != filterBounds[0].to_s[0].to_i) }
+	elsif (filterBounds.length == 1 && filterBounds[0].length && filterBounds[0].to_i.to_s == filterBounds[0])
+		#there is only one bound, so treat it as a filter by most-significant digit (eg. 4000 = between 4000 and 4999)
+		courses.delete_if { |x| (x.number.div(10 ** (filterBounds[0].length-1)) != filterBounds[0][0].to_i) }
 	end
 	
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
