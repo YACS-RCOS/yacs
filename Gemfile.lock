@@ -285,6 +285,7 @@ DEPENDENCIES
   handlebars_assets
   jbuilder (~> 2.0)
   newrelic_rpm
+  nokogiri
   pg
   pickle
   poltergeist
@@ -310,5 +311,8 @@ DEPENDENCIES
   web-console (~> 2.0)
   webrat
 
+RUBY VERSION
+   ruby 2.2.3p173
+
 BUNDLED WITH
-   1.11.2
+   1.13.1

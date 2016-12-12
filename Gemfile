@@ -61,6 +61,7 @@ end
 
 #timezone gem for hosting on windows (to be removed when merging with docker)
 gem 'tzinfo-data'
+gem 'nokogiri'
 
 gem 'sunspot_rails'
 gem 'sunspot_solr'
