@@ -59,7 +59,7 @@ group :development do
   gem 'spring'
 end
 
-#timezone gem for hosting on windows
+#timezone gem for hosting on windows (to be removed when merging with docker)
 gem 'tzinfo-data'
 
 gem 'sunspot_rails'
