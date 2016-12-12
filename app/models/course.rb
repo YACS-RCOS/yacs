@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
     end.results #store results of search in courses
 	
 	#filter by section on the front end for the time being
-	filterBounds = numberFilter.to_s.tr('["]', '').split(':') #convert filter arg to string, removing brackets and double quotes
+	filterBounds = numberFilter.to_s.tr('["]', '').split(numberFilter.to_s.include?(':') ? ':' : '-') #convert filter arg to string, removing brackets and double quotes
 	#ensure that there are either 1 or 2 bounds and both are valid numbers before comparing against them
 	filterBounds.each { |e| (e = e.to_s)}
 	if (filterBounds.length == 2 && filterBounds[0].length && filterBounds[1].length && 
