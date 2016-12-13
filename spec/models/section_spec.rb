@@ -29,7 +29,7 @@ RSpec.describe Section do
           periods_end: [1400, 900, 1800, 900, 1000], 
           periods_type: ['LAB', 'LEC', 'TEST', 'LEC', 'LEC'])
         Section.set_callback(:save, :before, :sort_periods, if: :period_info_changed?)
-        @section.update(professors: ['>:-]', ':-)', ':-|', ':-(', '>:-['])
+        @section.update(instructors: ['>:-]', ':-)', ':-|', ':-(', '>:-['])
       end
 
       it 'does not sort period' do 
