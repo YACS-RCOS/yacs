@@ -21,16 +21,16 @@ RSpec.describe Section do
 
 	context 'all updates excluding period day, start time, and end time' do
 		before do
-			Section.skip_callback(:sort_periods)
+			Section.skip_callback(:save, :before, :sort_periods, if: :period_info_changed?)
 			@section = create(:section, num_periods: 5, 
 				periods_day: [3, 5, 2, 2, 4], 
 				periods_start: [1200, 800, 1600, 800, 800], 
 				periods_end: [1400, 900, 1800, 900, 1000], 
 				periods_type: ['LAB', 'LEC', 'TEST', 'LEC', 'LEC'])
-			Section.set_callback(:sort_periods)
+			Section.set_callback(:save, :before, :sort_periods, if: :period_info_changed?)
 		end
 
-		if 'does not sort period' do 
+		it 'does not sort period' do 
 			expect(@section.num_periods).to eq 5
 			expect(@section.periods_day).to eq [3, 5, 2, 2, 4]
 			expect(@section.periods_start).to eq [1200, 800, 1600, 800, 800]
