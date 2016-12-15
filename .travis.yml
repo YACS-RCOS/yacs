@@ -7,11 +7,11 @@ env:
   - RAILS_ENV=test
 
 install:
-  - script/yacs-build
-  - script/yacs-startd && docker ps
+  - bin/yacs-build
+  - bin/yacs-startd && docker ps
   - sleep 10
-  - script/yacs-dbsetup
+  - bin/yacs-dbsetup
 
 script:
   - docker-compose run web bundle exec rake db:create db:migrate
-  - script/yacs-test
+  - bin/yacs-test
