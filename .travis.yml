@@ -8,3 +8,7 @@ before_install:
   - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
 before_script:
   - psql -c 'create database "yacs-test";' -U postgres
+  
+#manually start redis during build tests
+services:
+  - redis-server
