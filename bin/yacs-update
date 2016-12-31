@@ -1,4 +1,4 @@
 #!/bin/bash
 cd $(dirname `readlink -f "$0"`)/../
 
-git pull origin master
+git pull origin
