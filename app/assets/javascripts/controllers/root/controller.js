@@ -9,6 +9,7 @@
  */
 Yacs.views.root = function (target) {
   var searchbar = document.getElementById('searchbar');
+  var numberFilter = document.getElementById('numberFilter');
 
   Yacs.router.define('/', function (params) {
     Yacs.views.departments(target, params);
@@ -31,12 +32,14 @@ Yacs.views.root = function (target) {
     var key = event.keyCode;
     if (!(event.ctrlKey || event.metaKey)) {
       if ((key >= 48 && key <= 105) || key == 32) {
-        // normal keys focus the searchbar
-        searchbar.focus();
+        // normal keys focus the searchbar, unless a filter already has focus
+	    if (document.activeElement.id != "numberFilter") {
+		  searchbar.focus();
+	    }
       } else if (key == 13) {
         // enter searches
         if (searchbar.value) {
-          Yacs.router.visit('/courses?search=' + searchbar.value);
+          Yacs.router.visit('/courses?numberFilter=' + numberFilter.value + '&search=' + searchbar.value);
         }
       }
     }

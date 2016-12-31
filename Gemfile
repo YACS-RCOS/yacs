@@ -46,7 +46,7 @@ group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'pickle'
-  # gem 'webrat'
+  gem 'webrat'
   gem 'database_cleaner'
   gem "capybara"
   gem "cucumber-rails", require: false
@@ -58,3 +58,9 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
+
+#timezone gem for hosting on windows (to be removed when merging with docker)
+gem 'tzinfo-data'
+
+gem 'sunspot_rails'
+gem 'sunspot_solr'
