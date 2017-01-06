@@ -1,10 +1,16 @@
-language: ruby
-rvm:
-  - 2.2.3
-before_install:
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
-  - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
-before_script:
-  - psql -c 'create database "yacs-test";' -U postgres
+sudo: required
+
+services:
+  - docker
+
+env:
+  - RAILS_ENV=test
+
+install:
+  - bin/yacs-build
+  - bin/yacs-startd && docker ps
+  - sleep 10
+  - bin/yacs-dbsetup
+
+script:
+  - bin/yacs-test
