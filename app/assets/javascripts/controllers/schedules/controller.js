@@ -5,35 +5,38 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
+
+'use strict';
+
 Yacs.views.schedules = function (target, params) {
   // before doing anything, determine how to use the route
   // parameters to choose the section ids to be passed to the
   // API
-  var schedule_ids = [];
+  var scheduleIDs = [];
 
   // check for query parameters
-  if('section_ids' in params) {
+  if ('section_ids' in params) {
     // if there are query parameters,
     // use them and ignore current selections
-    schedule_ids = params['section_ids'].split(',');
+    scheduleIDs = params['section_ids'].split(',');
 
     // If the cookie doesn't have any selections,
     // write them into it. The URL will still display the parameters as long as
     // the route doesn't change.
-    if(Yacs.user.getSelections().length < 1) {
-      Yacs.user.addSelections(schedule_ids);
+    if (Yacs.user.getSelections().length <= 0) {
+      Yacs.user.addSelections(scheduleIDs);
     }
   }
   else {
     // if section_ids is not specified in params, use the cookie
-    // to populate the schedule_ids list
-    schedule_ids = Yacs.user.getSelections();
+    // to populate the scheduleIDs list
+    scheduleIDs = Yacs.user.getSelections();
   }
 
-  //initialize scheduleIndex at 0, unless explicitly specified in the query
-  //parameters
+  // initialize scheduleIndex at 0, unless explicitly specified in the query
+  // parameters
   var scheduleIndex = 0;
-  if('schedule_index' in params) {
+  if ('schedule_index' in params) {
     scheduleIndex = parseInt(params['schedule_index']);
   }
 
@@ -49,7 +52,7 @@ Yacs.views.schedules = function (target, params) {
   var scheduleStatusElement = target.querySelector('#schedule-status');
   var downloadICSElement = target.querySelector('#ics-btn');
   var copyLinkElement = target.querySelector('#link-btn');
-  var schedule = new Schedule(scheduleElement);
+  var scheduleInstance = new Schedule(scheduleElement);
   var scheduleData = [];
 
   /**
@@ -77,7 +80,7 @@ Yacs.views.schedules = function (target, params) {
       var crns = [];
       schedule.sections.forEach(function (section) {
         var color = courseIds.indexOf(section.course_id);
-        if (color == -1) {
+        if (color === -1) {
           courseIds.push(section.course_id);
           color = courseIds.length - 1;
         }
@@ -93,15 +96,15 @@ Yacs.views.schedules = function (target, params) {
             title: [
               section.department_code + ' ' + section.course_number + ' - ' + section.name,
               section.crn,
-              section.instructors[0] || ''
+              section.instructors[0] || '',
             ],
             tooltip: section.course_name,
           });
         });
       });
-      return { events: events, crns: crns };
+      return { events: events, crns: crns, };
     });
-    return { schedules: processedSchedules, start: start, end: end };
+    return { schedules: processedSchedules, start: start, end: end, };
   };
 
   /**
@@ -112,8 +115,8 @@ Yacs.views.schedules = function (target, params) {
   var setSchedules = function (schedules) {
     var data = processSchedules(schedules);
     scheduleData = data.schedules;
-    schedule.destroy();
-    schedule = new Schedule(scheduleElement,
+    scheduleInstance.destroy();
+    scheduleInstance = new Schedule(scheduleElement,
       { timeBegin: Math.ceil((data.start) / 60) * 60,
         timeSpan: Math.ceil((data.end - data.start) / 60) * 60
       }
@@ -122,12 +125,14 @@ Yacs.views.schedules = function (target, params) {
 
     if (scheduleData.length > 0) {
       showSchedule(scheduleIndex);
-    } else {
+    }
+    else {
       showSchedule(-1);
       if (Yacs.user.getSelections().length > 0) {
-        scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
-      } else {
-        scheduleStatusElement.textContent = "Nothing to see here :) Try adding some courses";
+        scheduleStatusElement.textContent = 'No schedules found :( Try removing some courses';
+      }
+      else {
+        scheduleStatusElement.textContent = 'Nothing to see here :) Try adding some courses';
       }
     }
   };
@@ -138,7 +143,7 @@ Yacs.views.schedules = function (target, params) {
    * If no sections are selected, skip the call and show nil schedules.
    */
   var updateSchedules = function (selections) {
-    if(typeof selections == 'undefined') {
+    if (typeof selections === 'undefined') {
       selections = Yacs.user.getSelectionsRaw();
     }
     if (selections.length > 0) {
@@ -192,22 +197,6 @@ Yacs.views.schedules = function (target, params) {
       // maybe add some code here later to show an error message
     }
     document.body.removeChild(textarea);
-  };
-
-  /**
-   * Show schedule at given index, and display corresponding CRNs.
-   * If index is -1, show nil schedule.
-   */
-  var showSchedule = function (index) {
-    if (index == -1) {
-      scheduleStatusElement.textContent = "";
-      scheduleNumElement.textContent = 0;
-    } else {
-      schedule.setEvents(scheduleData[index].events);
-      scheduleNumElement.textContent = index + 1;
-      scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ');
-      scheduleStatusElement.textContent = scheduleStatusStr;
-    }
   };
 
   /**
@@ -269,5 +258,5 @@ Yacs.views.schedules = function (target, params) {
 
   Yacs.observe('selection', scheduleElement, updateSchedules);
   // use section ids extracted from URL parameters at top
-  updateSchedules(schedule_ids);
+  updateSchedules(scheduleIDs);
 };
