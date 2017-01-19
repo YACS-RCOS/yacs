@@ -106,7 +106,7 @@
     "no-unsafe-finally": 2,
     "no-unsafe-negation": 2,
     "no-unused-expressions": 2,
-    "no-unused-vars": [2, {"vars": "all", "args": "all"}],
+    "no-unused-vars": [1, {"vars": "all", "args": "all"}],
     "no-use-before-define": 2,
     "no-useless-call": 2,
     "no-useless-concat": 2,
@@ -171,7 +171,7 @@
     "space-in-parens": [0, "always"],
     "space-infix-ops": 2,
     "space-unary-ops": [0, { "words": true, "nonwords": false }],
-    "spaced-comment": [1, "always"],
+    "spaced-comment": [1, "always", { "markers": ["="]}],
     "spaced-line-comment": [0, "always"],
     "strict": [2, "global"],
     "use-isnan": 2,
@@ -183,7 +183,10 @@
     "yoda": [2, "never"]
   },
   "globals": {
+    "window": true,
     "Yacs": true,
-    "document": true
+    "document": true,
+    "Handlebars": true,
+    "XMLHttpRequest": true
   }
 }
