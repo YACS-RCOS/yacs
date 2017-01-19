@@ -18,7 +18,7 @@ Yacs.views.schedules = function (target, params) {
   if ('section_ids' in params) {
     // if there are query parameters,
     // use them and ignore current selections
-    scheduleIDs = params['section_ids'].split(',');
+    scheduleIDs = params.section_ids.split(',');
 
     // If the cookie doesn't have any selections,
     // write them into it. The URL will still display the parameters as long as
@@ -37,7 +37,7 @@ Yacs.views.schedules = function (target, params) {
   // parameters
   var scheduleIndex = 0;
   if ('schedule_index' in params) {
-    scheduleIndex = parseInt(params['schedule_index']);
+    scheduleIndex = parseInt(params.schedule_index);
   }
 
   Yacs.render(target, 'schedules');
@@ -61,7 +61,7 @@ Yacs.views.schedules = function (target, params) {
    */
   var toMinutes = function (timeString) {
     var int = parseInt(timeString);
-    return Math.floor(int / 100) * 60 + int % 100;
+    return (Math.floor(int / 100) * 60) + (int % 100);
   };
 
   /**
@@ -96,15 +96,22 @@ Yacs.views.schedules = function (target, params) {
             title: [
               section.department_code + ' ' + section.course_number + ' - ' + section.name,
               section.crn,
-              section.instructors[0] || '',
+              section.instructors[0] || ''
             ],
-            tooltip: section.course_name,
+            tooltip: section.course_name
           });
         });
       });
-      return { events: events, crns: crns, };
+      return {
+        events: events,
+        crns: crns
+      };
     });
-    return { schedules: processedSchedules, start: start, end: end, };
+    return {
+      schedules: processedSchedules,
+      start: start,
+      end: end
+    };
   };
 
   /**
@@ -116,8 +123,10 @@ Yacs.views.schedules = function (target, params) {
     var data = processSchedules(schedules);
     scheduleData = data.schedules;
     scheduleInstance.destroy();
-    scheduleInstance = new Schedule(scheduleElement,
-      { timeBegin: Math.ceil((data.start) / 60) * 60,
+    scheduleInstance = new Schedule(
+      scheduleElement,
+      {
+        timeBegin: Math.ceil((data.start) / 60) * 60,
         timeSpan: Math.ceil((data.end - data.start) / 60) * 60
       }
     );
@@ -143,22 +152,29 @@ Yacs.views.schedules = function (target, params) {
    * If no sections are selected, skip the call and show nil schedules.
    */
   var updateSchedules = function (selections) {
+    var currSelections = selections;
     if (typeof selections === 'undefined') {
-      selections = Yacs.user.getSelectionsRaw();
+      currSelections = Yacs.user.getSelectionsRaw();
     }
-    if (selections.length > 0) {
-      Yacs.models.schedules.query({ section_ids: selections,
-                                    show_periods: true },
+    if (currSelections.length > 0) {
+      Yacs.models.schedules.query(
+        {
+          section_ids: currSelections,
+          show_periods: true
+        },
         function(data, success) {
           if (success) {
             setSchedules(data.schedules);
-          } else {
+          }
+          else {
             Yacs.user.clearSelections();
             setSchedules([]);
           }
-      });
+        }
+      );
       clearButtonElement.disabled = false;
-    } else {
+    }
+    else {
       setSchedules([]);
       clearButtonElement.disabled = true;
     }
@@ -169,12 +185,13 @@ Yacs.views.schedules = function (target, params) {
    * and prompt the user to download it as a file.
    */
   var getICSDownload = function() {
-    if(scheduleData.length < 1) {
+    if (scheduleData.length < 1) {
       return;
     }
+
     // current periods being displayed only
-    periods = scheduleData[scheduleIndex].events;
-    vCalendarData = Yacs.vCalendar.createVCalendar(periods);
+    var periods = scheduleData[scheduleIndex].events;
+    var vCalendarData = Yacs.vCalendar.createVCalendar(periods);
     Yacs.vCalendar.download(vCalendarData);
   };
 
@@ -183,17 +200,18 @@ Yacs.views.schedules = function (target, params) {
    * and copy it to the user's clipboard.
    */
   var copyScheduleLink = function() {
-    targetUrl = window.location.protocol + '//' +
+    var targetUrl = window.location.protocol + '//' +
       window.location.host +
       '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',') +
       '&schedule_index=' + scheduleIndex;
+
     // js hack to create and copy from a phantom element
     var textarea = document.createElement('textarea');
     textarea.value = targetUrl;
     document.body.appendChild(textarea);
     textarea.select();
     var success = document.execCommand('copy');
-    if(!success) {
+    if (!success) {
       // maybe add some code here later to show an error message
     }
     document.body.removeChild(textarea);
@@ -225,8 +243,16 @@ Yacs.views.schedules = function (target, params) {
    */
   Yacs.on('click', leftSwitchElement, prevSchedule);
   Yacs.on('click', rightSwitchElement, nextSchedule);
-  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 37) prevSchedule(); });
-  Yacs.on('keydown', document, function (elem, event) { if (event.keyCode == 39) nextSchedule(); });
+  Yacs.on('keydown', document, function (elem, event) {
+    if (event.keyCode === 37) {
+      prevSchedule();
+    }
+  });
+  Yacs.on('keydown', document, function (elem, event) {
+    if (event.keyCode === 39) {
+      nextSchedule();
+    }
+  });
 
   /**
    * Clear selections in cookie when clear button is pressed, and update
@@ -253,10 +279,11 @@ Yacs.views.schedules = function (target, params) {
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
-    Yacs.views.courses(selectionElement, { section_id: selections })
+    Yacs.views.courses(selectionElement, { section_id: selections });
   }
 
   Yacs.observe('selection', scheduleElement, updateSchedules);
+
   // use section ids extracted from URL parameters at top
   updateSchedules(scheduleIDs);
 };
