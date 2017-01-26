@@ -90,7 +90,7 @@ Yacs.views.schedules = function (target, params) {
       showSchedule(0);
     } else {
       showSchedule(-1);
-      if (Yacs.user.getSelections().length > 0) {
+      if (Yacs.user.getTotalSelections() > 0) {
         scheduleStatusElement.textContent = "No schedules found :( Try removing some courses";
       } else {
         scheduleStatusElement.textContent = "Nothing to see here :) Try adding some courses";
@@ -104,7 +104,7 @@ Yacs.views.schedules = function (target, params) {
    * If no sections are selected, skip the call and show nil schedules.
    */
   var updateSchedules = function () {
-    var selections = Yacs.user.getSelectionsRaw();
+    var selections = Yacs.user.getSelectionsAsArray().join(',');
     if (selections.length > 0) {
       Yacs.models.schedules.query({ section_ids: selections,
                                     show_periods: true },
@@ -199,7 +199,7 @@ Yacs.views.schedules = function (target, params) {
    * are explicitly the courses that had one or more sections selected at the
    * time the view was rendered.
    */
-  var selections = Yacs.user.getSelections();
+  var selections = Yacs.user.getSelectionsAsArray();
   if (selections.length > 0) {
     Yacs.views.courses(selectionElement, { section_id: selections })
   }
