@@ -1,0 +1,3 @@
+[submodule "yacs"]
+	path = yacs
+	url = https://github.com/YACS-RCOS/yacs.git
