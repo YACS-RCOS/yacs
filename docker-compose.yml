@@ -18,6 +18,7 @@ services:
   nginx:
     build: ./nginx
     image: nginx:mainline
+    restart: on-failure
     ports:
       - "80:80"
       - "443:443"
