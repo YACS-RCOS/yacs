@@ -1,3 +1,7 @@
+'use strict';
+
+/* TODO: REMOVE THESE WHEN ESLINTING IS FINISHED */
+
 window.each = function (arr, func) {
   if (arr.length === undefined)
     arr = [arr];
@@ -35,10 +39,10 @@ Yacs = new function () {
     var req = new XMLHttpRequest();
     req.open('GET', uri);
     req.onreadystatechange = function () {
-      if (req.readyState == 4 && callback) {
-        callback(req.responseText, req.status == 200)
+      if (req.readyState === 4 && callback) {
+        callback(req.responseText, req.status === 200);
       }
-    }
+    };
     req.send();
   };
 
@@ -50,11 +54,13 @@ Yacs = new function () {
    * @return {undefined}
    */
   self.api = function (model, params, callback) {
-    var query = "?";
+    var query = '?';
     for (var param in params) {
       if (params.hasOwnProperty(param)) {
         var val = params[param];
-        if (Array.isArray()) val = val.join(',')
+        if (val.isArray()) {
+          val = val.join(',');
+        }
         query += param + '=' + val + '&';
       }
     }
@@ -69,6 +75,7 @@ Yacs = new function () {
  * ======================================================================== */
 
   self.models = { };
+
   /**
    * @constructor Model
    * @description
@@ -78,8 +85,8 @@ Yacs = new function () {
    * @param {String} [options.has_many] - name of one-to-many association
    * @memberOf Yacs
    */
-  var Model = function (name, options) {
-    options = options || {};
+  var Model = function (name, initOptions) {
+    var options = initOptions || {};
     var self = this;
     var childParam = 'show_' + options.has_many;
 
@@ -87,7 +94,10 @@ Yacs = new function () {
      * Stores preloaded members of the collection for synchronous access
      * @type {Object}
      */
-    self.store = { all: [], id: {} };
+    self.store = {
+      all: [],
+      id: {}
+    };
     self.preloaded = false;
 
     /**
@@ -109,8 +119,9 @@ Yacs = new function () {
      */
     self.preload = function (callback) {
       var params = {};
-      if (options.has_many)
+      if (options.has_many) {
         params[childParam] = true;
+      }
       self.query(params, function (data, success) {
         if (success) {
           var models = data[name];
@@ -127,12 +138,13 @@ Yacs = new function () {
               Yacs.models[options.has_many].store.all = children;
             }
           }
-          preloaded = true;
+          self.preloaded = true;
         }
-        if (callback)
+        if (callback) {
           callback(data, success);
+        }
       });
-    }
+    };
   };
 
   /**
@@ -142,8 +154,9 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   var addModel = function (name, options) {
-    return self.models[name] = new Model(name, options);
-  }
+    self.models[name] = new Model(name, options);
+    return self.models[name];
+  };
 
   addModel('schools', { has_many: 'departments' });
   addModel('departments');
@@ -169,8 +182,8 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   self.onload = function (func) {
-    document.addEventListener("DOMContentLoaded", func, false);
-  }
+    document.addEventListener('DOMContentLoaded', func, false);
+  };
 
   /**
    * @param  {String} eventType - name of event
@@ -193,9 +206,19 @@ Yacs = new function () {
 }();
 
 /* ======================================================================== *
-    Initializers
+    initializers
  * ======================================================================== */
 
 Yacs.onload(function () {
   Yacs.views.root(document.getElementById('content'));
 });
+
+/* ======================================================================== *
+    any other top level code
+ * ======================================================================== */
+
+/* This is a temporary fix because NodeLists do not currently support
+ * forEach()/map() iteration, except in recent versions of Firefox and Chrome.
+ * Remove these if it is supported in all browsers YACS supports. */
+NodeList.prototype.map = Array.prototype.map;
+NodeList.prototype.forEach = Array.prototype.forEach;
