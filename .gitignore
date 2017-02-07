@@ -31,7 +31,9 @@
 /public/api/*
 
 # Ignore tern files
-\.tern-port
+/.tern-port
 
 /coverage/
 /data/**/
+
+.env
