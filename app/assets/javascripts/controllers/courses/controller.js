@@ -58,8 +58,31 @@ Yacs.views.courses = function (target, params) {
     });
   };
 
+  /**
+   * Sorts periods array of each course section by 
+   * Day of Week and then by Start Time.
+   */
+  var sortPeriods = function ( data ) {
+    function comparePeriods( periodA, periodB ) {
+      if (periodA.day < periodB.day) return -1;
+      else if (periodA.day > periodB.day) return 1;
+      else {
+        if (periodA.start < periodB.start) return -1; 
+        else return 1;
+      }
+    }
+    data.courses.forEach( function (course) {
+      course.sections.forEach( function (section) {
+        section.periods.sort(comparePeriods(periodA, periodB));
+        var sortedPeriods = [[],[],[],[],[],[],[]];
+        section.periods.forEach(/**/);
+      });
+    });
+  };
+
   Yacs.models.courses.query(params, function (data, success) {
     if (success) {
+
       Yacs.render(target, 'courses', data)
       Yacs.observe('selection', document.querySelector('courses'), updateSelected);
       bindListeners();

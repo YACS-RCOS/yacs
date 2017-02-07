@@ -29,6 +29,7 @@ img#loading {
 footer {
     margin: 0px auto;
     max-width: 950px;
+    padding-top: 60px;
 }
 
 footer .footer-column {
