@@ -51,7 +51,6 @@ Yacs.views.schedules = function (target, params) {
   var scheduleCountElement = target.querySelector('#schedule-count');
   var scheduleStatusElement = target.querySelector('#schedule-status');
   var downloadICSElement = target.querySelector('#ics-btn');
-  var schedule = new Schedule(scheduleElement);
   var copyLinkElement = target.querySelector('#link-btn');
   var scheduleInstance = new Schedule(scheduleElement);
   var scheduleData = [];
@@ -155,7 +154,7 @@ Yacs.views.schedules = function (target, params) {
   var updateSchedules = function (selections) {
     var currSelections = selections;
     if (typeof selections === 'undefined') {
-      currSelections = Yacs.user.getSelectionsRaw();
+      currSelections = Yacs.user.getSelections();
     }
     if (currSelections.length > 0) {
       Yacs.models.schedules.query(
@@ -205,9 +204,9 @@ Yacs.views.schedules = function (target, params) {
       scheduleStatusElement.textContent = "";
       scheduleNumElement.textContent = 0;
     } else {
-      schedule.setEvents(scheduleData[index].events);
+      scheduleInstance.setEvents(scheduleData[index].events);
       scheduleNumElement.textContent = index + 1;
-      scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ');
+      var scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ');
       scheduleStatusElement.textContent = scheduleStatusStr;
     }
   }
@@ -293,7 +292,11 @@ Yacs.views.schedules = function (target, params) {
     Yacs.views.courses(selectionElement, { section_id: selections });
   }
 
-  Yacs.observe('selection', scheduleElement, updateSchedules);
+  // refresh schedules whenever selections in the list beneath change
+  Yacs.observe('selection', scheduleElement, function() {
+    // will use current selections by default
+    updateSchedules();
+  });
 
   // use section ids extracted from URL parameters at top
   updateSchedules(scheduleIDs);
