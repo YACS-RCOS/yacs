@@ -22,7 +22,7 @@ window.map = function (arr, func) {
  * @description
  * YACS singleton. This object is the top-level namespace for all YACS functionality.
  */
-Yacs = new function () {
+window.Yacs = new function () {
   var self = this;
 
 /* ======================================================================== *
@@ -58,7 +58,7 @@ Yacs = new function () {
     for (var param in params) {
       if (params.hasOwnProperty(param)) {
         var val = params[param];
-        if (val.isArray()) {
+        if (Array.isArray(val)) {
           val = val.join(',');
         }
         query += param + '=' + val + '&';
