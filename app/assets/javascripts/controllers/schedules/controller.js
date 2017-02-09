@@ -216,6 +216,7 @@ Yacs.views.schedules = function (target, params) {
    * and copy it to the user's clipboard.
    */
   var copyScheduleLink = function() {
+    console.log('sdfsdf');
     var targetUrl = window.location.protocol + '//' +
       window.location.host +
       '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',') +
@@ -281,6 +282,11 @@ Yacs.views.schedules = function (target, params) {
   /* Prompt the creation and download of the schedule ICS when the button is clicked.
    */
   Yacs.on('click', downloadICSElement, getICSDownload);
+
+  /**
+   * Copy a link to this set of schedules to the user's clipboard.
+   */
+  Yacs.on('click', copyLinkElement, copyScheduleLink);
 
   /**
    * Show selected courses / sections on the schedule page. The courses shown
