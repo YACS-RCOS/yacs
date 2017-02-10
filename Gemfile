@@ -40,7 +40,6 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'pry-byebug', '~> 1.3.3'
   gem 'railroady'
-  gem 'eslint-rails'
 end
 
 group :test do
