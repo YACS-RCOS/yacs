@@ -1,4 +1,6 @@
 #!/bin/bash
 cd $(dirname `readlink -f "$0"`)/../
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx/ssl/yacs.key -out nginx/ssl/yacs.cer -subj "/C=US/ST=New York/L=Troy/O=RPI/OU=RCOS/CN=yacs.cs.rpi.edu"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx/ssl/fullchain.pem -out nginx/ssl/privkey.pem #-subj "/C=US/ST=New York/L=Troy/O=RPI/OU=RCOS/CN=yacs.cs.rpi.edu"
+
+cp /nginx/ssl/fullchain.pem /nginx/ssl/chain.pem
