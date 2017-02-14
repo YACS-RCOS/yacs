@@ -216,7 +216,6 @@ Yacs.views.schedules = function (target, params) {
    * and copy it to the user's clipboard.
    */
   var copyScheduleLink = function() {
-    console.log('sdfsdf');
     var targetUrl = window.location.protocol + '//' +
       window.location.host +
       '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',') +
