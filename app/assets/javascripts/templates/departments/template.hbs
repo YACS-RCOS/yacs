@@ -1,0 +1,17 @@
+<schools>
+  {{#schools}}
+    <school data-id="{{id}}">
+      <school-name>{{name}}</school-name>
+      <departments>
+        {{#departments}}
+          <a href="#/courses?department_id={{id}}">
+            <department data-id="{{id}}">
+              <department-code>{{code}}</department-code>
+              <department-name>{{name}}</department-name>
+            </department>
+          </a>
+        {{/departments}}
+      </departments>
+    </school>
+  {{/schools}}
+</schools>

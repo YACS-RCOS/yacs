@@ -1,9 +1,28 @@
+'use strict';
+
+/* TODO: REMOVE THESE WHEN ESLINTING IS FINISHED */
+
+window.each = function (arr, func) {
+  if (arr.length === undefined)
+    arr = [arr];
+  for (var i = 0; i < arr.length; ++i)
+    func(arr[i]);
+};
+
+window.map = function (arr, func) {
+  var mapped = [];
+  each(arr, function (itm) {
+    mapped.push(func(itm));
+  });
+  return mapped;
+};
+
 /**
  * @namespace
  * @description
  * YACS singleton. This object is the top-level namespace for all YACS functionality.
  */
-Yacs = new function () {
+window.Yacs = new function () {
   var self = this;
 
 /* ======================================================================== *
@@ -20,10 +39,10 @@ Yacs = new function () {
     var req = new XMLHttpRequest();
     req.open('GET', uri);
     req.onreadystatechange = function () {
-      if (req.readyState == 4 && callback) {
-        callback(req.responseText, req.status == 200)
+      if (req.readyState === 4 && callback) {
+        callback(req.responseText, req.status === 200);
       }
-    }
+    };
     req.send();
   };
 
@@ -35,11 +54,13 @@ Yacs = new function () {
    * @return {undefined}
    */
   self.api = function (model, params, callback) {
-    var query = "?";
+    var query = '?';
     for (var param in params) {
       if (params.hasOwnProperty(param)) {
         var val = params[param];
-        if (Array.isArray()) val = val.join(',')
+        if (Array.isArray(val)) {
+          val = val.join(',');
+        }
         query += param + '=' + val + '&';
       }
     }
@@ -54,6 +75,7 @@ Yacs = new function () {
  * ======================================================================== */
 
   self.models = { };
+
   /**
    * @constructor Model
    * @description
@@ -63,8 +85,8 @@ Yacs = new function () {
    * @param {String} [options.has_many] - name of one-to-many association
    * @memberOf Yacs
    */
-  var Model = function (name, options) {
-    options = options || {};
+  var Model = function (name, initOptions) {
+    var options = initOptions || {};
     var self = this;
     var childParam = 'show_' + options.has_many;
 
@@ -72,7 +94,10 @@ Yacs = new function () {
      * Stores preloaded members of the collection for synchronous access
      * @type {Object}
      */
-    self.store = { all: [], id: {} };
+    self.store = {
+      all: [],
+      id: {}
+    };
     self.preloaded = false;
 
     /**
@@ -94,8 +119,9 @@ Yacs = new function () {
      */
     self.preload = function (callback) {
       var params = {};
-      if (options.has_many)
+      if (options.has_many) {
         params[childParam] = true;
+      }
       self.query(params, function (data, success) {
         if (success) {
           var models = data[name];
@@ -112,12 +138,13 @@ Yacs = new function () {
               Yacs.models[options.has_many].store.all = children;
             }
           }
-          preloaded = true;
+          self.preloaded = true;
         }
-        if (callback)
+        if (callback) {
           callback(data, success);
+        }
       });
-    }
+    };
   };
 
   /**
@@ -127,13 +154,13 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   var addModel = function (name, options) {
-    return self.models[name] = new Model(name, options);
-  }
+    self.models[name] = new Model(name, options);
+    return self.models[name];
+  };
 
-  addModel('schools',     { has_many: 'departments' });
-  addModel('departments', { has_many: 'courses'     });
-  addModel('courses',     { has_many: 'sections'    });
-  addModel('sections' );
+  addModel('schools', { has_many: 'departments' });
+  addModel('departments');
+  addModel('courses');
   addModel('schedules');
 
 /* ======================================================================== *
@@ -148,9 +175,6 @@ Yacs = new function () {
    */
   self.views = { };
 
-  NodeList.prototype.forEach = Array.prototype.forEach;
-  HTMLCollection.prototype.forEach = Array.prototype.forEach;
-
   /**
    * Equivalent to JQuery's $(document).ready()
    * @param  {Function} func - Event handler to be called
@@ -158,26 +182,8 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   self.onload = function (func) {
-    document.addEventListener("DOMContentLoaded", func, false);
-  }
-
-  /**
-   * Sets the contents of the content pane
-   * @param {String} html - HTML to fill the content pane
-   * @return {undefined}
-   * @memberOf Yacs
-   */
-  self.setContents = function (html) {
-    document.getElementById('content').innerHTML = html;
-  }
-  /**
-   * Clears the contents of the content pane
-   * @return {undefined}
-   * @memberOf Yacs
-   */
-  self.clearContents = function () {
-    Yacs.setContents('');
-  }
+    document.addEventListener('DOMContentLoaded', func, false);
+  };
 
   /**
    * @param  {String} eventType - name of event
@@ -187,16 +193,32 @@ Yacs = new function () {
    * @memberOf Yacs
    */
   self.on = function (eventType, elem, callback) {
-    elem.addEventListener(eventType, function (event) {
-      callback(elem, event);
+    each(elem, function (e) {
+      e.addEventListener(eventType, function (event) {
+        callback(e, event);
+      });
     });
+  };
+
+  self.render = function (target, template, data) {
+    target.innerHTML = HandlebarsTemplates[template + '/template'](data);
   };
 }();
 
 /* ======================================================================== *
-    Initializers
+    initializers
  * ======================================================================== */
 
 Yacs.onload(function () {
-  Yacs.views.index();
+  Yacs.views.root(document.getElementById('content'));
 });
+
+/* ======================================================================== *
+    any other top level code
+ * ======================================================================== */
+
+/* This is a temporary fix because NodeLists do not currently support
+ * forEach()/map() iteration, except in recent versions of Firefox and Chrome.
+ * Remove these if it is supported in all browsers YACS supports. */
+NodeList.prototype.map = Array.prototype.map;
+NodeList.prototype.forEach = Array.prototype.forEach;

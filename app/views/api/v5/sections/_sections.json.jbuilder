@@ -11,5 +11,8 @@ json.sections sections do |section|
         i += 1
       end
     end
+    json.course_name section.course.name
+    json.course_number section.course.number
+    json.department_code section.course.department.code
   end
 end
