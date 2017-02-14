@@ -1,0 +1,55 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres:9.5
+    expose:
+      - "5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis
+    expose:
+      - "6379"
+    volumes:
+      - ./data/redis/:/var/lib/redis/data/
+
+  nginx:
+    build: ./nginx
+    image: nginx:mainline
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - web
+    volumes:
+      - .:/usr/src/app/
+
+  web:
+    build: .
+    environment:
+      - RAILS_ENV=${RAILS_ENV}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - SECRET_TOKEN=${SECRET_TOKEN}
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY}
+      - MAX_THREADS=${MAX_THREADS}
+    volumes:
+      - .:/usr/src/app/
+    depends_on:
+      - postgres
+      - redis
+    command: bundle exec puma -C config/puma.rb
+    expose:
+      - "3000"
+
+  worker:
+    build: .
+    environment:
+      - RAILS_ENV=${RAILS_ENV}
+    volumes:
+      - .:/usr/src/app/
+    depends_on:
+      - postgres
+      - redis
+    command: bundle exec crono

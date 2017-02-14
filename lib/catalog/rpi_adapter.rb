@@ -46,7 +46,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
   
   private
   def sem_string
-    "201609"
+    "201701"
   end
 
   def load_courses
@@ -147,8 +147,8 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
   def load_descriptions
     base = "http://catalog.rpi.edu/"
     page_no = 1
-    while page_no <= 20 do
-      path = "content.php?catoid=14&catoid=14&navoid=336&filter%5Bitem_type%5D=3&filter%5Bonly_active%5D=1&filter%5B3%5D=1&filter%5Bcpage%5D="+page_no.to_s+"#acalog_template_course_filter"
+    while page_no <= 19 do
+      path = "content.php?catoid=15&navoid=367&filter%5Bcpage%5D=" + page_no.to_s
       page = base + path
       page = Nokogiri::HTML(open(page))
       page_no += 1
@@ -167,7 +167,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
             desc = desc_page.css('td.block_content')
             course_description = desc.text
             course_description.slice! "HELP"
-            course_description.slice! "Rensselaer Catalog 2015-2016"
+            course_description.slice! "Rensselaer Catalog 2016-2017"
             course_description.slice! "Print-Friendly Page [Add to Portfolio]"
             course_description.slice! " Back to Top | Print-Friendly Page [Add to Portfolio]"
             course_description = course_description.strip

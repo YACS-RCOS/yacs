@@ -6,10 +6,7 @@
         <department-code>{{department_code department_id}}</department-code>
         <course-number>{{number}}</course-number>
         <course-credits>{{course_credits this}}</course-credits>
-        {{#description_exists description}}
-            <course-description>{{description}}</course-description>
-            <!-- <button type="button" class="expand&#45;course&#45;description">...</button> -->
-        {{/description_exists}}
+        <course-description>{{formatted_description description}}</course-description>
       </course-info>
       <sections>
         {{#sections}}

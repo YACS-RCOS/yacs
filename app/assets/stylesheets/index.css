@@ -6,6 +6,11 @@ body {
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 div#content {
     padding: 60px 15px 0px 15px;
 }
