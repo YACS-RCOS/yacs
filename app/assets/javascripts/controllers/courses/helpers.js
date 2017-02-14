@@ -1,21 +1,25 @@
+'use strict';
+
 Handlebars.registerHelper('department_code', function (id) {
   return new Handlebars.SafeString(Yacs.models.departments.store.id[id].code);
 });
 
 Handlebars.registerHelper('course_credits', function (c) {
   var outString = '';
+
   // render "credit(s)" properly
-  if (c.min_credits != c.max_credits) {
+  if (c.min_credits === c.max_credits) {
+    outString = c.max_credits + ' credit' + (c.max_credits === 1 ? '' : 's');
+  }
+  else {
     outString = c.min_credits + '-' + c.max_credits + ' credits';
-  } else {
-    outString = c.max_credits + ' credit' + (c.max_credits == 1 ? '' : 's');
   }
   return new Handlebars.SafeString(outString);
 });
 
 Handlebars.registerHelper('formatted_description', function (description) {
   if (description === '') {
-    description = 'Description not available...';
+    return new Handlebars.SafeString('Description not available...');
   }
   return new Handlebars.SafeString(description);
 });
@@ -41,9 +45,23 @@ Handlebars.registerHelper('time_range', function (start, end) {
   return new Handlebars.SafeString([start, end].map(function (time) {
     var hour = Math.floor(time / 100);
     var ampm = hour >= 12 ? 'p' : 'a';
-    hour = hour > 12 ? hour - 12 : hour == 0 ? 12 : hour;
+
+    if (hour > 12) {
+      hour = hour - 12;
+    }
+    else if (hour === 0) {
+      hour = 12;
+    }
+
     var minutes = time % 100;
-    minutes = minutes > 9 ? minutes : minutes == 0 ? '' : '0' + minutes;
-    return hour + (minutes ? ':' + minutes : '') + ampm;
+    if (minutes === 0) {
+      // don't show minutes at all
+      return hour + ampm;
+    }
+    else if (minutes <= 9) {
+      minutes = '0' + minutes;
+    }
+
+    return hour + ':' + minutes + ampm;
   }).join('-'));
 });
