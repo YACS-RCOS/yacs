@@ -41,7 +41,18 @@ Yacs.views.courses = function (target, params) {
         Yacs.user.addSelections(sectionsToAdd);
       }
     });
+
+    /*
+     * Click on a course description to expand its full text.
+     */
+    Yacs.on('click', target.querySelectorAll('course-description'), function(description, event) {
+      // target is the clicked course-description DOM element
+      event.target.classList.add('expanded');
+      // don't bubble up, otherwise it will select/deselect the sections of this course
+      event.stopPropagation();
+    });
   };
+
 
   /**
    * Update selected status (class) of sections and courses. If all open
