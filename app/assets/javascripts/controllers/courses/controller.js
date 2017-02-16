@@ -47,9 +47,12 @@ Yacs.views.courses = function (target, params) {
      */
     Yacs.on('click', target.querySelectorAll('course-description'), function(description, event) {
       // target is the clicked course-description DOM element
-      event.target.classList.add('expanded');
-      // don't bubble up, otherwise it will select/deselect the sections of this course
-      event.stopPropagation();
+      // only add to class list and stop propagation when the description isn't already expanded
+      if(! event.target.classList.contains('expanded')) {
+        event.target.classList.add('expanded');
+        // don't bubble up, otherwise it will select/deselect the sections of this course
+        event.stopPropagation();
+      }
     });
   };
 
