@@ -3,6 +3,7 @@ version: '2'
 services:
   postgres:
     image: postgres:9.5.6
+    restart: unless-stopped
     expose:
       - "5432"
     volumes:
@@ -10,6 +11,7 @@ services:
 
   redis:
     image: redis
+    restart: unless-stopped
     expose:
       - "6379"
     volumes:
@@ -29,6 +31,7 @@ services:
 
   web:
     build: .
+    restart: unless-stopped
     environment:
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
@@ -46,6 +49,7 @@ services:
 
   worker:
     build: .
+    restart: unless-stopped
     environment:
       - RAILS_ENV=${RAILS_ENV}
     volumes:
