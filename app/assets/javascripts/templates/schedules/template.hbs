@@ -16,4 +16,15 @@
   </div>
   <div id="schedule-container"></div>
 </div>
-<div id="selection-container"></div>
+{{#unless temporary}}
+  <div id="selection-container"></div>
+{{else}}
+  <div id="temp-schedule-notice">
+    <p><strong>Selections Disabled</strong></p>
+    <p>
+    This is a temporary schedule.
+    You're viewing a set of courses that doesn't correspond to what you have selected.
+    To return to your selected schedules, click on the normal Schedule link in the top right.
+    </p>
+  </div>
+{{/unless}}
