@@ -68,3 +68,9 @@
 .clear-button:focus {
     background-color: #c65353;
 }
+
+/* Should be the same max width as #schedule-content. */
+#temp-schedule-notice {
+    max-width: 950px;
+    margin: 1.5em auto;
+}
