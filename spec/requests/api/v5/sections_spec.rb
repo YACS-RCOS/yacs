@@ -56,4 +56,11 @@ describe 'Sections API' do
       json_validate_sections(Section.all, true)
     end
   end
+  context 'There is a section to be updated' do
+    it 'updates a section' do
+      section = FactoryGirl.create(:section_with_periods, seats_taken: 0)
+      put "/api/v5/sections/#{section.id}", seats_taken: 1
+      expect(section.id).to eq 1
+    end
+  end
 end
