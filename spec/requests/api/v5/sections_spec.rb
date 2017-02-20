@@ -57,10 +57,17 @@ describe 'Sections API' do
     end
   end
   context 'There is a section to be updated' do
-    it 'updates a section' do
+    it 'updates the seats_taken for section' do
       section = FactoryGirl.create(:section_with_periods, seats_taken: 0)
-      put "/api/v5/sections/#{section.id}", seats_taken: 1
-      expect(section.id).to eq 1
+      put "/api/v5/sections/#{section.id}", seats_taken: 1 
+      section.reload
+      expect(section.seats_taken).to eq 1
+    end
+    it 'updates the seats for section' do
+      section = FactoryGirl.create(:section_with_periods, seats: 20)
+      put "/api/v5/sections/#{section.id}", seats: 21
+      section.reload
+      expect(section.seats).to eq 21    
     end
   end
 end
