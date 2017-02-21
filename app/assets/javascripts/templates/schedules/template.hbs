@@ -6,9 +6,9 @@
         <span id="schedule-num">0</span> / <span id="schedule-count">0</span>
         <span id="right-switch" class="schedule-switch">&#9654;</span>
       </div>
-      <button type="button" id="clear-btn" class="clear-button">Clear</button>
+      <button type="button" id="clear-btn" class="clear-button" {{#if temporary}} disabled {{/if}}>Clear</button>
       <button type="button" id="ics-btn" class="clear-button">Download ICS</button>
-      <button type="button" id="link-btn" class="clear-button">Copy Schedule Link</button>
+      <button type="button" id="link-btn" class="clear-button" {{#if temporary}} disabled {{/if}}>Copy Schedule Link</button>
     </div>
     <div id="right">
       <div id="schedule-status"></div>
