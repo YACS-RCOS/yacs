@@ -1,6 +1,7 @@
 #!/bin/bash
-cd $(dirname `readlink -f "$0"`)/../
+cd $(dirname `readlink -f "$0"`)/../nginx/ssl
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx/ssl/fullchain.pem -out nginx/ssl/privkey.pem #-subj "/C=US/ST=New York/L=Troy/O=RPI/OU=RCOS/CN=yacs.cs.rpi.edu"
+openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout privkey.pem -out cert.pem -subj '/CN=localhost'
 
-cp /nginx/ssl/fullchain.pem /nginx/ssl/chain.pem
+cp cert.pem chain.pem
+cp chain.pem fullchain.pem
