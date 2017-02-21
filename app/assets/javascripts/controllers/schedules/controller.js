@@ -185,11 +185,9 @@ Yacs.views.schedules = function (target, params) {
           }
         }
       );
-      clearButtonElement.disabled = false;
     }
     else {
       setSchedules([]);
-      clearButtonElement.disabled = true;
     }
   };
 
