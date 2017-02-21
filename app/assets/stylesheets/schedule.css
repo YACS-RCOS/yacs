@@ -69,6 +69,11 @@
     background-color: #c65353;
 }
 
+.clear-button:disabled {
+  border-color: #a88;
+  background-color:#daa;
+}
+
 /* Should be the same max width as #schedule-content. */
 #temp-schedule-notice {
     max-width: 950px;
