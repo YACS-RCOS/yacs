@@ -8,4 +8,5 @@ class Api::V5::SchoolsController < Api::V5::ApiController
     end
     query.order! :id
   end
+
 end
