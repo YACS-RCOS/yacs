@@ -139,8 +139,8 @@ window.Yacs.user = new function () {
       var i = arr.indexOf(sid);
       if (i !== -1) {
         removed = true;
+        arr.splice(i, 1);
       }
-      arr.splice(i, 1);
     });
     setCookie('selections', arr.join(','));
     observable.notify();
