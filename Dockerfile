@@ -1,6 +1,6 @@
 FROM ruby:2.2.3
 
-MAINTAINER Richie Young <richiejoeyoung@gmail.com> a
+MAINTAINER Richie Young <richiejoeyoung@gmail.com>
 
 RUN apt-get update && apt-get install -qq -y build-essential nodejs wget --fix-missing --no-install-recommends
 
