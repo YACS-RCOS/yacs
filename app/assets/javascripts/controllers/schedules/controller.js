@@ -24,7 +24,8 @@ Yacs.views.schedules = function (target, params) {
     // use them and ignore current selections
     scheduleIDs = params.section_ids.split(',');
 
-    // If there are no selections, write the ones from the params into it.
+    // If there are no selections, set the current selections to
+    // the ones in the params.
     // The URL will still display the parameters as long as
     // the route doesn't change.
     var nowSelections = Yacs.user.getSelections();
