@@ -66,6 +66,7 @@ Yacs.views.schedules = function (target, params) {
   var scheduleStatusElement = target.querySelector('#schedule-status');
   var downloadICSElement = target.querySelector('#ics-btn');
   var copyLinkElement = target.querySelector('#link-btn');
+  var replaceSelectionsButton = target.querySelector('#replace-selections-btn');
   var scheduleInstance = new Schedule(scheduleElement);
   var scheduleData = [];
 
@@ -264,6 +265,23 @@ Yacs.views.schedules = function (target, params) {
       showSchedule(scheduleIndex);
     }
   };
+
+  /**
+   * On a temporary schedule only, replace any current selections
+   * with the ones from the params, then refresh the view.
+   */
+  var replaceSelections = function() {
+    if(!isTemporary) {
+      return;
+    }
+    Yacs.user.clearSelections();
+    Yacs.user.addSelections(scheduleIDs);
+    Yacs.views.schedules(target, {});
+  };
+  // button may not always be rendered into the DOM, unlike the others
+  if(replaceSelectionsButton !== null) {
+    Yacs.on('click', replaceSelectionsButton, replaceSelections);
+  }
 
   /**
    * Show next schedule if right is clicked or pressed,
