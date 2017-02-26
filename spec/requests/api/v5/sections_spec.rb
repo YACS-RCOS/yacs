@@ -88,5 +88,19 @@ describe 'Sections API' do
       section.reload
       expect(section.seats).to eq 40    
     end
+
+    it 'deletes a section' do
+      section = FactoryGirl.create(:section_with_periods)
+      #put "/api/v5/sections/#{section.id}", section_params
+      delete "/api/v5/sections/#{section.id}"
+      expect(response.status).to eq 204
+    end
+
+    it 'session id does not exist' do
+      section = FactoryGirl.create(:section_with_periods)
+      #put "/api/v5/sections/#{section.id}", section_params
+      delete "/api/v5/sections/#{500000}"
+      expect(response.status).to eq 404
+    end
   end
 end
