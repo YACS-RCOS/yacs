@@ -32,12 +32,23 @@ grid-day {
   float: left;
 }
 
+day-label {
+  color: #777777;
+  display:block;
+  margin: 0 auto;
+  text-align: center;
+  /* should be the same as grid-hour */
+  border-bottom: 1px solid #e7e7e7;
+  height:16px;
+  max-height:16px;
+  font-variant: small-caps;
+}
+
 grid-hour {
   display: block;
   box-sizing: border-box;
-  opacity: 0.25;
-  border-bottom: 1px solid #999599;
-  border-right: 1px solid #999599;
+  border-bottom: 1px solid #e7e7e7;
+  border-right: 1px solid #e7e7e7;
 }
 
 grid-day:last-child grid-hour {
@@ -66,7 +77,6 @@ event-background {
   height: 100%;
   width: 100%;
   top: 0;
-  z-index: -1;
 }
 
 event-text {
