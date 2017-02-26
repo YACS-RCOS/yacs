@@ -7,5 +7,4 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
       query.includes! courses: [:sections] if @show_sections
     end
   end
-
 end
