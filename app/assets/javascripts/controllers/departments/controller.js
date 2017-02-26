@@ -5,6 +5,9 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
+
+'use strict';
+
 Yacs.views.departments = function (target) {
   var data = { schools: Yacs.models.schools.store.all };
   Yacs.render(target, 'departments', data);
