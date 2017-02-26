@@ -8,5 +8,4 @@ class Api::V5::SchedulesController < Api::V5::ApiController
     end
     @schedules = Scheduler.all_schedules sections
   end
-
 end
