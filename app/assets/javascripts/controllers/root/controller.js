@@ -50,4 +50,7 @@ Yacs.views.root = function (target) {
   Yacs.models.schools.preload(function () {
     Yacs.router.listen();
   });
+
+  Yacs.views.footer(document.getElementById('footer'));
+
 };
