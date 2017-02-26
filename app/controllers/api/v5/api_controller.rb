@@ -7,7 +7,9 @@ class Api::V5::ApiController < ActionController::Metal
   include ActionController::Instrumentation
   include ActionView::Layouts
   include ActionController::StrongParameters
-
+  include ActionController::Head
+  include ActionController::Rescue
+  
   append_view_path "#{Rails.root}/app/views"
 
   self.page_cache_directory = Rails.public_path
@@ -15,6 +17,8 @@ class Api::V5::ApiController < ActionController::Metal
   self.cache_store = :dalli_store
   
   before_filter :nested_queries, only: [:index]
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
   def nested_queries
@@ -27,6 +31,10 @@ class Api::V5::ApiController < ActionController::Metal
   protected
   def query
     @query
+  end
+
+  def record_not_found
+    head :not_found
   end
   
   def any param

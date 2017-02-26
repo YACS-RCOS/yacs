@@ -1,4 +1,5 @@
 class Api::V5::SectionsController < Api::V5::ApiController
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   def index
     filter_model Section
     filter_any :id, :course_id, :name, :crn
@@ -8,6 +9,12 @@ class Api::V5::SectionsController < Api::V5::ApiController
   	#Section.find(params[:id]).update(seats_taken: params[:seats_taken])
     Section.find(params[:id]).tap{ |section| section.update!(section_params)}
   	render :action => :index
+  end
+
+  def destroy
+    Section.find(params[:id]).destroy
+    #redirect_to :action => 'index'
+    head :no_content
   end
   private 
 
