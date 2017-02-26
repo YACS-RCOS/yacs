@@ -48,8 +48,6 @@ Yacs.views.root = function (target) {
     Yacs.router.listen();
   });
 
-  //console.log(document.getElementById('footer'));
-
   Yacs.views.footer(document.getElementById('footer'));
 
 };
