@@ -1,7 +1,5 @@
 Yacs.views.footer = function (target) {
 
-	//console.log(target);
-
 	var selectFlavorText=function(){
 		var choices = [
 			'A grass-fed, free-ranged',
@@ -48,11 +46,11 @@ Yacs.views.footer = function (target) {
 			"A dog-safe"
 		];
 
-		var index=Math.floor(Math.random()*choices.length);
+		var index = Math.floor(Math.random()*choices.length);
 		return choices[index];
 
 	};
-	var data={
+	var data = {
 		flavortext: selectFlavorText(),
 		yacsversion: '0.9'
 	};
