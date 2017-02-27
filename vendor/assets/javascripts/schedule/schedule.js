@@ -1,3 +1,16 @@
+/**
+ * Schedule function. Initializes a Schedule object and renders it inside
+ * a provided element. A Schedule represents a weekly schedule.
+ * @constructor
+ * @param {HTMLElement} scheduleContainer - The HTML element in which to render the schedule grid.
+ * @param {Object} options - An object containing any of several fields to determine the time ranges of the schedule.
+ * @param {int} options.daySpan - The number of days to display. Default is 5.
+ * @param {int} options.dayBegin - The first day of the week to show (week is Sunday to Saturday, Sunday = 0). Default is 1 (Monday).
+ * @param {int} options.gridSize - The number of minutes represented by each grid box vertically. Changing this does not change the overall size of the schedule. Default is 60.
+ * @param {int} options.timeSpan - The total nuber of minutes to display. Rounds up to the nearest hour. Default is 720 (12 hours).
+ * @param {int} options.timeBegin - The starting minute of the schedule, in minutes since midnight format. Default is 480 (8 AM).
+ */
+
 window.Schedule = function (scheduleContainer, options) {
   var self = this;
 
@@ -15,20 +28,10 @@ window.Schedule = function (scheduleContainer, options) {
   // var BORDER_COLORS     = ['#b62', '#b44', '#994', '#448', '#499', '#949'];
 
   options = options || {};
-
-  // number of days to be shown
   options.daySpan   = options.daySpan   || 5;
-
-  // first day of the week to be shown (week is Sunday to Saturday, Sunday = 0)
   options.dayBegin  = options.dayBegin  || 1;
-
-  // number of minutes per vertical grid box
   options.gridSize  = options.gridSize  || 60;
-
-  // total number of minutes to display
   options.timeSpan  = Math.ceil((options.timeSpan  || 720) / 60) * 60;
-
-  // starting minute (in minutes since midnight format; default is 480 = 8AM)
   options.timeBegin = Math.ceil((options.timeBegin || 480) / 60) * 60;
 
   var scheduleElement = document.createElement('schedule-view');
