@@ -33,14 +33,12 @@ Yacs.views.footer = function (target) {
       "Far more work than necessary went into this",
       "Report Any Issues to the Data Mouse for this",
       "An officially cursed",
-      "A Marx-rejected",
       "A caffeine-powered",
       "Better than your mother's",
       "A kid-tested, mother-approved",
       "A science-backed",
       "A somewhat broken",
       "An official dad approved",
-      "A human-haired",
       "A PHP-free",
       "A dog-safe"
     ];
