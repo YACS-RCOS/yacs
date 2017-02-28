@@ -1,3 +1,16 @@
+/**
+ * Schedule function. Initializes a Schedule object and renders it inside
+ * a provided element. A Schedule represents a weekly schedule.
+ * @constructor
+ * @param {HTMLElement} scheduleContainer - The HTML element in which to render the schedule grid.
+ * @param {Object} options - An object containing any of several fields to determine the time ranges of the schedule.
+ * @param {int} options.daySpan - The number of days to display. Default is 5.
+ * @param {int} options.dayBegin - The first day of the week to show (week is Sunday to Saturday, Sunday = 0). Default is 1 (Monday).
+ * @param {int} options.gridSize - The number of minutes represented by each grid box vertically. Changing this does not change the overall size of the schedule. Default is 60.
+ * @param {int} options.timeSpan - The total nuber of minutes to display. Rounds up to the nearest hour. Default is 720 (12 hours).
+ * @param {int} options.timeBegin - The starting minute of the schedule, in minutes since midnight format. Default is 480 (8 AM).
+ */
+
 window.Schedule = function (scheduleContainer, options) {
   var self = this;
 
@@ -7,6 +20,7 @@ window.Schedule = function (scheduleContainer, options) {
   var BORDER_COLORS     = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
   var SELECTED_COLORS   = ['#ff3575', '#19b5f2', '#ffcf56', '#59dc68', '#d57fdd', '#ac8f71', '#ff9c46'];
   // /*                         PINK       BLUE       YELLOW     GREEN      PURPLE     BROWN      ORANGE */
+  var DAY_NAMES         = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   // var NUM_COLORS        = 6;
   // var TEXT_COLORS       = ['#720', '#722', '#661', '#227', '#166', '#616'];
@@ -42,12 +56,19 @@ window.Schedule = function (scheduleContainer, options) {
     var eventBackground = document.createElement('event-background');
     var colorIndex      = event.colorNum % NUM_COLORS;
 
+    /* This uses smelly hacks to calculate the exact size needed,
+     * which depend on the associated CSS code.
+     * 16px = exact offset to account for day-label at top of column
+     * -5px = eat up 4px of schedule-element left border and 1px of grid-hour right border
+     * -1px = eat up 1px of grid-hour bottom border
+     * Anyone in the future who wants to figure out some way to not have to do these offsets, PLEASE do.
+     */
     eventText.innerHTML                   = event.title.join('<br>');
     eventText.style.color                 = TEXT_COLORS[colorIndex];
-    eventElement.style.top                = timeSize(event.start - options.timeBegin);
+    eventElement.style.top                = 'calc(' + timeSize(event.start - options.timeBegin) + ' + 16px)';
     eventElement.style.left               = daySize(event.day - options.dayBegin);
-    eventElement.style.width              = 'calc(' + daySize(1) + ' - 6px)';
-    eventElement.style.height             = 'calc(' + timeSize(event.end - event.start) + ' - 2px)';
+    eventElement.style.width              = 'calc(' + daySize(1) + ' - 5px)';
+    eventElement.style.height             = 'calc(' + timeSize(event.end - event.start) + ' - 1px)';
     eventElement.style.borderColor        = BORDER_COLORS[colorIndex];
     eventBackground.style.backgroundColor = BACKGROUND_COLORS[colorIndex];
 
@@ -97,6 +118,11 @@ window.Schedule = function (scheduleContainer, options) {
     for (var d = 0; d < options.daySpan; ++d) {
       var dayElement = document.createElement('grid-day');
       dayElement.style.width = daySize(1);
+
+      // add day label to the top of each day column
+      var dayLabel = document.createElement('day-label');
+      dayLabel.textContent = DAY_NAMES[d + options.dayBegin];
+      dayElement.appendChild(dayLabel);
 
       for (var r = 0; r < options.timeSpan / options.gridSize; ++r) {
         var hourElement = document.createElement('grid-hour');
