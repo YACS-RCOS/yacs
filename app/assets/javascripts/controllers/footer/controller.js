@@ -40,7 +40,9 @@ Yacs.views.footer = function (target) {
       "A somewhat broken",
       "An official dad approved",
       "A PHP-free",
-      "A dog-safe"
+      "A dog-friendly",
+      "A cat-approved",
+      "A dishwasher-safe"
     ];
 
     var index = Math.floor(Math.random()*choices.length);
