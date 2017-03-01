@@ -14,7 +14,7 @@ Yacs.Observable = function (name) {
     var event = document.createEvent('Event');
     event.initEvent(name, false, true);
     event.data = data;
-    each(document.querySelectorAll('.listen-to-' + name), function (listener) {
+    document.querySelectorAll('.listen-to-' + name).forEach(function (listener) {
       listener.dispatchEvent(event);
     });
   };

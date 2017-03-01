@@ -5,7 +5,7 @@
  */
 'use strict';
 
-window.Yacs.user = new function () {
+Yacs.user = new function () {
   var self = this;
 
 /* ======================================================================== *

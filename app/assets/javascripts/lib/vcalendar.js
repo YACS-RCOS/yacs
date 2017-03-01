@@ -5,7 +5,7 @@
  */
 'use strict';
 
-window.Yacs.vCalendar = new function() {
+Yacs.vCalendar = new function () {
   var self = this;
 
   /**
@@ -66,7 +66,7 @@ window.Yacs.vCalendar = new function() {
         'END:VEVENT\r\n';
     };
 
-    each(periods, function(period) {
+    periods.forEach(function(period) {
       vCalendarData += periodToVevent(period);
     });
     vCalendarData += 'END:VCALENDAR';
@@ -87,4 +87,4 @@ window.Yacs.vCalendar = new function() {
     elt.click();
     document.body.removeChild(elt);
   };
-};
+}();
