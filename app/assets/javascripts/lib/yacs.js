@@ -1,22 +1,5 @@
 'use strict';
 
-/* TODO: REMOVE THESE WHEN ESLINTING IS FINISHED */
-
-window.each = function (arr, func) {
-  if (arr.length === undefined)
-    arr = [arr];
-  for (var i = 0; i < arr.length; ++i)
-    func(arr[i]);
-};
-
-window.map = function (arr, func) {
-  var mapped = [];
-  each(arr, function (itm) {
-    mapped.push(func(itm));
-  });
-  return mapped;
-};
-
 /**
  * @namespace
  * @description
@@ -82,13 +65,13 @@ window.Yacs = new function () {
    * Represents a collection of objects obtained from the YACS API
    * @param {String} name - pluralized name of collection
    * @param {Object} [options] - extra properties of the collection
-   * @param {String} [options.has_many] - name of one-to-many association
+   * @param {String} [options.hasMany] - name of one-to-many association
    * @memberOf Yacs
    */
   var Model = function (name, initOptions) {
     var options = initOptions || {};
     var self = this;
-    var childParam = 'show_' + options.has_many;
+    var childParam = 'show_' + options.hasMany;
 
     /**
      * Stores preloaded members of the collection for synchronous access
@@ -119,7 +102,7 @@ window.Yacs = new function () {
      */
     self.preload = function (callback) {
       var params = {};
-      if (options.has_many) {
+      if (options.hasMany) {
         params[childParam] = true;
       }
       self.query(params, function (data, success) {
@@ -128,14 +111,14 @@ window.Yacs = new function () {
           for (var m in models) {
             self.store.all = models;
             self.store.id[models[m].id] = models[m];
-            if (options.has_many) {
+            if (options.hasMany) {
               var children = [];
-              for (var n in models[m][options.has_many]) {
-                var child = models[m][options.has_many][n];
-                Yacs.models[options.has_many].store.id[child.id] = child;
+              for (var n in models[m][options.hasMany]) {
+                var child = models[m][options.hasMany][n];
+                Yacs.models[options.hasMany].store.id[child.id] = child;
                 children.push(child);
               }
-              Yacs.models[options.has_many].store.all = children;
+              Yacs.models[options.hasMany].store.all = children;
             }
           }
           self.preloaded = true;
@@ -158,7 +141,7 @@ window.Yacs = new function () {
     return self.models[name];
   };
 
-  addModel('schools', { has_many: 'departments' });
+  addModel('schools', { hasMany: 'departments' });
   addModel('departments');
   addModel('courses');
   addModel('schedules');
@@ -187,13 +170,21 @@ window.Yacs = new function () {
 
   /**
    * @param  {String} eventType - name of event
-   * @param  {HTMLElement} elem - DOM element
+   * @param  {HTMLElement} elem - DOM element or NodeList
    * @param  {Function} callback - callback
    * @return {undefined}
    * @memberOf Yacs
    */
   self.on = function (eventType, elem, callback) {
-    each(elem, function (e) {
+    /* elem may be a NodeList returned by querySelector, a single
+     * element, or just document. If it does not have a defined length,
+     * convert it to a single-element array so forEach will work on it.
+     */
+    var elements = elem;
+    if (typeof elements.length === 'undefined') {
+      elements = [elements];
+    }
+    elements.forEach(function (e) {
       e.addEventListener(eventType, function (event) {
         callback(e, event);
       });

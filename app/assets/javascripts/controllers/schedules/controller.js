@@ -54,7 +54,6 @@ Yacs.views.schedules = function (target, params) {
   var copyLinkElement = target.querySelector('#link-btn');
   var scheduleInstance = new Schedule(scheduleElement);
   var scheduleData = [];
-  var scheduleIndex = 0;
 
   /**
    * Convert military time string to minutes-since-midnight integer form.
@@ -63,6 +62,23 @@ Yacs.views.schedules = function (target, params) {
   var toMinutes = function (timeString) {
     var int = parseInt(timeString);
     return (Math.floor(int / 100) * 60) + (int % 100);
+  };
+
+  /**
+   * Show schedule at given index, and display corresponding CRNs.
+   * If index is -1, show nil schedule.
+   */
+  var showSchedule = function (index) {
+    if (index === -1) {
+      scheduleStatusElement.textContent = '';
+      scheduleNumElement.textContent = 0;
+    }
+    else {
+      scheduleInstance.setEvents(scheduleData[index].events);
+      scheduleNumElement.textContent = index + 1;
+      var scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ');
+      scheduleStatusElement.textContent = scheduleStatusStr;
+    }
   };
 
   /**
@@ -159,8 +175,8 @@ Yacs.views.schedules = function (target, params) {
     if (currSelections.length > 0) {
       Yacs.models.schedules.query(
         {
-          section_ids: currSelections,
-          show_periods: true
+          'section_ids': currSelections,
+          'show_periods': true
         },
         function(data, success) {
           if (success) {
@@ -194,22 +210,6 @@ Yacs.views.schedules = function (target, params) {
     var vCalendarData = Yacs.vCalendar.createVCalendar(periods);
     Yacs.vCalendar.download(vCalendarData);
   };
-
-  /**
-   * Show schedule at given index, and display corresponding CRNs.
-   * If index is -1, show nil schedule.
-   */
-  var showSchedule = function (index) {
-    if (index == -1) {
-      scheduleStatusElement.textContent = "";
-      scheduleNumElement.textContent = 0;
-    } else {
-      scheduleInstance.setEvents(scheduleData[index].events);
-      scheduleNumElement.textContent = index + 1;
-      var scheduleStatusStr = 'CRNs: ' + scheduleData[index].crns.join(', ');
-      scheduleStatusElement.textContent = scheduleStatusStr;
-    }
-  }
 
   /*
    * Generate a link to this set of schedules from current selections
@@ -294,7 +294,7 @@ Yacs.views.schedules = function (target, params) {
    */
   var selections = Yacs.user.getSelections();
   if (selections.length > 0) {
-    Yacs.views.courses(selectionElement, { section_id: selections });
+    Yacs.views.courses(selectionElement, { 'section_id': selections });
   }
 
   // refresh schedules whenever selections in the list beneath change
