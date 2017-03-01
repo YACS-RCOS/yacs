@@ -1,3 +1,6 @@
+// YACS ESLint config file.
+// Comments are not part of the JSON standard, but ESLint doesn't appear to care about them.
+// Minify this file if you have trouble parsing it.
 {
   "ecmaFeatures": {},
   "parser": "espree",
@@ -27,7 +30,7 @@
     "no-dupe-args": 2,
     "no-else-return": 2,
     "no-empty": 2,
-    "no-empty-function": 2,
+    "no-empty-function": 1,
     "no-eq-null": 2,
     "no-eval": 2,
     "no-ex-assign": 2,
@@ -50,11 +53,12 @@
     "no-lone-blocks": 2,
     "no-lonely-if": 2,
     "no-loop-func": 2,
-    "no-magic-numbers": [1, { "ignore": [0, -1] }],
+    "no-magic-numbers": 0,
     "no-mixed-requires": [0, false],
     "no-mixed-spaces-and-tabs": [2, false],
     "no-mixed-operators": 2,
-    "no-multi-spaces": 2,
+    // allow multiple spaces when declaring variables (to let certain blocks or = be aligned)
+    "no-multi-spaces": [1, { "exceptions": { "VariableDeclarator": true } }],
     "no-multi-str": 2,
     "no-multiple-empty-lines": [0, {"max": 2}],
     "no-native-reassign": 2,
@@ -106,7 +110,7 @@
     "no-unsafe-finally": 2,
     "no-unsafe-negation": 2,
     "no-unused-expressions": 2,
-    "no-unused-vars": [1, {"vars": "all", "args": "all"}],
+    "no-unused-vars": [1, {"vars": "all", "args": "after-used"}],
     "no-use-before-define": 2,
     "no-useless-call": 2,
     "no-useless-concat": 2,
@@ -121,6 +125,7 @@
     "array-callback-return": 2,
     "block-spacing": 1,
     "block-scoped-var": 2,
+    // stroustrup: open brace on same line as if/for/whatever expression, closing brace on its own line
     "brace-style": [1, "stroustrup"],
     "camelcase": [2, { "properties": "always" }],
     "comma-dangle": [1, "never"],
@@ -131,7 +136,8 @@
     "consistent-this": [1, "self"],
     "curly": [2, "all"],
     "default-case": 2,
-    "dot-notation": [2, { "allowKeywords": true }],
+    // pattern allows for snake case things to be put in brackets, like API parameters.
+    "dot-notation": [2, { "allowPattern": "^[a-z]+(_[a-z]+)+$" }],
     "eol-last": [1, "always"],
     "eqeqeq": 2,
     "func-names": 0,
@@ -180,6 +186,7 @@
     "vars-on-top": 0,
     "wrap-iife": [2, "any", { "functionPrototypeMethods": false }],
     "wrap-regex": 0,
+    // enforce literals as RHS of comparisons
     "yoda": [2, "never"]
   },
   "globals": {
@@ -187,6 +194,10 @@
     "Yacs": true,
     "document": true,
     "Handlebars": true,
-    "XMLHttpRequest": true
+    "HandlebarsTemplates": true,
+    "XMLHttpRequest": true,
+    "Schedule": true,
+    // should be removed pending future browser support
+    "NodeList": true
   }
 }
