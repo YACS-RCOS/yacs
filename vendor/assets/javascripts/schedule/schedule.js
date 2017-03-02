@@ -12,7 +12,7 @@
  */
 'use strict';
 
-window.Schedule = function (scheduleContainer, options) {
+window.Schedule = function (scheduleContainer, givenOptions) {
   var self = this;
 
   /*                       PINK       BLUE       YELLOW     GREEN      PURPLE     BROWN      ORANGE */
