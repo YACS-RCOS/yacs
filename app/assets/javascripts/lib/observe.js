@@ -26,7 +26,6 @@ Yacs.Observable = function (name) {
  * @param {String} name - name of event to observe
  * @param {HTMLElement} target - node to which the event will be bound
  * @param {Function} callback - function to respond to the event
- * @return undefined
  */
 Yacs.observe = function (name, target, callback) {
   // var self = this;
