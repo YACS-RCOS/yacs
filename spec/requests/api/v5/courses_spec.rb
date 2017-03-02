@@ -68,4 +68,10 @@ describe 'Courses API' do
       json_validate_courses(Course.all, true, true)
     end
   end
+
+  context 'There is a course to be updated' do
+    it ' 'do
+    end
+
+  end
 end

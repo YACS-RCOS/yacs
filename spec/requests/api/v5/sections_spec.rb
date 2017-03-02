@@ -59,17 +59,9 @@ describe 'Sections API' do
   context 'There is a section to be updated' do
     it 'updates the seats_taken for section' do
       section = FactoryGirl.create(:section_with_periods, seats_taken: 0)
-      #put "/api/v5/sections/#{section.id}", seats_taken: 1 
-      #binding.pry
       section_params = {
         section: {
           seats_taken: 2
-         # name:"4"
-         # crn:"CSCI-1200"
-         # seats: 300
-         # instructors:"William Thompson"
-         # num_periods: 2
-         # course_id: 332
         }
       }
       put "/api/v5/sections/#{section.id}", section_params
@@ -91,14 +83,12 @@ describe 'Sections API' do
 
     it 'deletes a section' do
       section = FactoryGirl.create(:section_with_periods)
-      #put "/api/v5/sections/#{section.id}", section_params
       delete "/api/v5/sections/#{section.id}"
       expect(response.status).to eq 204
     end
 
-    it 'session id does not exist' do
+    it 'section id is not found for deletion' do
       section = FactoryGirl.create(:section_with_periods)
-      #put "/api/v5/sections/#{section.id}", section_params
       delete "/api/v5/sections/#{500000}"
       expect(response.status).to eq 404
     end
