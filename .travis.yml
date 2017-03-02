@@ -16,4 +16,4 @@ install:
 
 script:
   - bin/yacs-test
-  - eslint app/assets/javascripts/ vendor/assets/javascripts/schedule --config config/eslint.json
+  - eslint app/assets/javascripts/ vendor/assets/javascripts/schedule --config config/eslint.json --max-warnings 12
