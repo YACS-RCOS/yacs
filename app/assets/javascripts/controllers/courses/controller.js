@@ -23,11 +23,11 @@ Yacs.views.courses = function (target, params) {
       }
     });
 
-    Yacs.on("click", target.querySelectorAll('course-info'), function (courseInfo) {
+    Yacs.on('click', target.querySelectorAll('course-info'), function (courseInfo) {
       var courseSelected = courseInfo.parentElement.classList.contains('selected');
       var sections;
       if (courseSelected) {
-        sections = courseInfo.parentElement.querySelectorAll('section');
+        sections=courseInfo.parentElement.querySelectorAll('section');
         var sectionsToRemove = sections.map(function (section) {
           return section.dataset.id;
         });
