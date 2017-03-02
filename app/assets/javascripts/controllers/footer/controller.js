@@ -1,3 +1,9 @@
+/**
+ * Footer view. Renders some informative text in the footer at the bottom of the document.
+ * @param {HTMLElement} target - The footer element in which to render this view
+ * @memberOf Yacs.views
+ */
+
 Yacs.views.footer = function (target) {
 
   var selectFlavorText=function(){
