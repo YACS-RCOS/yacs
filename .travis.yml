@@ -12,7 +12,7 @@ install:
   - bin/yacs-startd && docker ps
   - sleep 10
   - bin/yacs-dbsetup
-  - npm install eslint
+  - npm install -g eslint
 
 script:
   - bin/yacs-test
