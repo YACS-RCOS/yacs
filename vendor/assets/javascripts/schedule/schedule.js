@@ -31,20 +31,24 @@ window.Schedule = function (scheduleContainer, givenOptions) {
   scheduleContainer.appendChild(scheduleElement);
 
   /**
-   * Returns the left offset of the given day, as a percentage.
+   * Computes the left offset of the given day, as a percentage.
+   * @param {int} n - the day to compute the offset of. This means "nth day on the schedule", not "nth day of the week".
+   * @return {String} The percentage offset of this day on the schedule.
    */
   var dayOffset = function (n) {
-    return (n * (100 / options.daySpan)) + '%';
+    return (n * 100 / options.daySpan) + '%';
   };
 
   // The width of a single day, as a percentage. This is fixed based on the number of days.
   var dayWidth = (100 / options.daySpan) + '%';
 
   /**
-   * Returns the offset of the given time, as a percentage.
+   * Computes the top offset of the given minute, as a percentage.
+   * @param {int} n - the minute to compute the offset of. This means "nth minute since the beginning of the schedule", not "nth minute since midnight".
+   * @return {String} The percentage offset of this minute on the schedule.
    */
   var timeOffset = function (n) {
-    return (n * (100 / options.timeSpan)) + '%';
+    return (n * 100 / options.timeSpan) + '%';
   };
 
   self.addEvent = function (event) {
