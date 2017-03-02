@@ -22,13 +22,13 @@ RSpec.describe Section do
 
     context 'when non-period information is updated' do
       before do
-        Section.skip_callback(:save, :before, :sort_periods, if: :period_info_changed?)
+        Section.skip_callback(:save, :before, :sort_periods, if: :periods_changed?)
         @section = create(:section, num_periods: 5, 
           periods_day: [3, 5, 2, 2, 4], 
           periods_start: [1200, 800, 1600, 800, 800], 
           periods_end: [1400, 900, 1800, 900, 1000], 
           periods_type: ['LAB', 'LEC', 'TEST', 'LEC', 'LEC'])
-        Section.set_callback(:save, :before, :sort_periods, if: :period_info_changed?)
+        Section.set_callback(:save, :before, :sort_periods, if: :periods_changed?)
         @section.update(instructors: ['>:-]', ':-)', ':-|', ':-(', '>:-['])
       end
 
