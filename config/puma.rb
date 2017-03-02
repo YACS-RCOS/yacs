@@ -1,20 +1,21 @@
 # https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server
 
-workers Integer(ENV['WEB_CONCURRENCY'] || 2)
+workers Integer(ENV['WEB_CONCURRENCY'] || 4)
 threads_count = Integer(ENV['MAX_THREADS'] || 5)
 threads threads_count, threads_count
 
 preload_app!
 
 rackup      DefaultRackup
-port        ENV['PORT']     || 3000
-environment ENV['RACK_ENV'] || 'development'
+environment ENV['RAILS_ENV'] || 'development'
 
-if ENV['DSTATEDIR']
-  pidfile "#{ENV['DSTATEDIR']}puma.pid"
-  state_path "#{ENV['DSTATEDIR']}puma.state"
-  daemonize true
-end
+ssl_bind '0.0.0.0', '3000', {
+    key: "/etc/puma/ssl/privkey.pem",
+    cert: "/etc/puma/ssl/cert.pem"
+}
+
+pidfile "/var/run/puma/puma.pid"
+state_path "/var/run/puma/puma.state"
 
 on_worker_boot do
   # Worker specific setup for Rails 4.1+
