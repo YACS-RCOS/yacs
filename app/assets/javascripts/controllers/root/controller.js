@@ -52,5 +52,4 @@ Yacs.views.root = function (target) {
   });
 
   Yacs.views.footer(document.getElementById('footer'));
-
 };
