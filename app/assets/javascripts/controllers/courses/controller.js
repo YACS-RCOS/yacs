@@ -23,7 +23,7 @@ Yacs.views.courses = function (target, params) {
       }
     });
 
-    Yacs.on('click', target.querySelectorAll('course-info'), function (courseInfo) {
+    Yacs.on("click", target.querySelectorAll('course-info'), function (courseInfo) {
       var courseSelected = courseInfo.parentElement.classList.contains('selected');
       var sections;
       if (courseSelected) {
