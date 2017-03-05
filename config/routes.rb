@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     namespace :v5 do
       resources :schools,     only: [:index]
       resources :departments, only: [:index]
-      resources :courses,     only: [:index]
-      resources :sections,    only: [:index]
+      resources :courses,     only: [:index, :update, :destroy]
+      resources :sections,    only: [:index, :update, :destroy]
       resources :schedules,   only: [:index]
     end
   end
