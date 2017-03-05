@@ -14,7 +14,7 @@ Yacs.Observable = function (name) {
     var event = document.createEvent('Event');
     event.initEvent(name, false, true);
     event.data = data;
-    each(document.querySelectorAll('.listen-to-' + name), function (listener) {
+    document.querySelectorAll('.listen-to-' + name).forEach(function (listener) {
       listener.dispatchEvent(event);
     });
   };
@@ -26,7 +26,6 @@ Yacs.Observable = function (name) {
  * @param {String} name - name of event to observe
  * @param {HTMLElement} target - node to which the event will be bound
  * @param {Function} callback - function to respond to the event
- * @return undefined
  */
 Yacs.observe = function (name, target, callback) {
   // var self = this;
