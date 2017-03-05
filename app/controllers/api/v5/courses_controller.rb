@@ -19,7 +19,18 @@ class Api::V5::CoursesController < Api::V5::ApiController
   end
 
   def update
-    
+    Course.find(params[:id]).update(course_params)
+    head :no_content
   end
+
+  def destroy
+    Course.find(params[:id]).destroy
+    head :no_content
+  end
+  private
+    def course_params
+      params.require(:course).permit(:name, :number, :min_credits, 
+        :max_credits, :description, :department_id)
+    end
 
 end
