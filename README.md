@@ -13,6 +13,8 @@ YACS is capable of aggregating academic data stored across multiple proprietary 
 
 Most importantly, YACS leverages meeting time data to provide students with an easy way to plan their semesters. Students need only select the courses and sections they would like to take, and are given a list of all valid schedule variants based on their selections. Schedules are presented in a weekly-calendar view, and are easily downloadable and shareable.
 
+All of this functionality is exposed through a public REST API, making it easy to create exciting new applications and extensions that leverage the data YACS provides.
+
 YACS is currently only in use at its alma mater, the Rensselaer Polytechnic Institute, but it is decoupled from the university by design. If you would like to get YACS set up at your school, please [contact us](mailto:yacsrpi@gmail.com). We are very eager to expand!
 
 YACS is primarily developed within [RCOS, the Rensselaer Center for Open Source](https://rcos.io), an amazing organization at RPI that aims to facilitate open source education and solve societal problems. However, other developers and universities are strongly encouraged to contribute to and influence the direction of this project.
