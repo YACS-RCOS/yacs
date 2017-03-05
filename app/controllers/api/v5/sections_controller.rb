@@ -4,7 +4,7 @@ class Api::V5::SectionsController < Api::V5::ApiController
     filter_any :id, :course_id, :name, :crn
   end
   def update
-    Section.find(params[:id]).tap{ |section| section.update!(section_params)}
+    Section.find(params[:id]).update!(section_params)
   	render :action => :index
   end
 
