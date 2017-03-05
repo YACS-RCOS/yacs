@@ -7,7 +7,7 @@ Simple, Sane Course Scheduling. To use YACS @ RPI, visit https://yacs.cs.rpi.edu
 
 # What is YACS?
 
-YACS was created with the goal of making students' lives a little easier. It allows users to avoid the often clunky UIs of proprietary Catalog Management and Student Information Systems by enabling easy browsing, searching and scheduling of courses and sections.
+YACS was created with the goal of making students' lives a little easier. It allows users to avoid the often clunky UIs of proprietary Catalog Management and Student Information Systems by enabling easy browsing and searching of courses, and adds the additional functionality of easy schedule generation.
 
 YACS is capable of aggregating academic data stored across multiple proprietary systems, including course offerings, section meeting times, and seat availability. This data then is presented to users in a searchable, browesable form.
 
