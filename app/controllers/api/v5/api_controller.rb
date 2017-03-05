@@ -9,6 +9,7 @@ class Api::V5::ApiController < ActionController::Metal
   include ActionController::StrongParameters
   include ActionController::Head
   include ActionController::Rescue
+  include ActionController::Redirecting
   
   append_view_path "#{Rails.root}/app/views"
 
