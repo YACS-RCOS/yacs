@@ -5,7 +5,7 @@ class Api::V5::SectionsController < Api::V5::ApiController
   end
   def update
     Section.find(params[:id]).update!(section_params)
-  	render :action => :index
+    head :no_content
   end
 
   def destroy
