@@ -2,6 +2,7 @@ sudo: required
 
 services:
   - docker
+  - npm
 
 env:
   - RAILS_ENV=test
@@ -11,6 +12,8 @@ install:
   - bin/yacs-startd && docker ps
   - sleep 10
   - bin/yacs-dbsetup
+  - npm install -g eslint
 
 script:
   - bin/yacs-test
+  - eslint app/assets/javascripts/ vendor/assets/javascripts/schedule --config config/eslint.json --max-warnings 12

@@ -18,7 +18,7 @@ Yacs.views.courses = function (target, params) {
    */
   var bindListeners = function () {
     Yacs.on('click', target.querySelectorAll('section'), function (section) {
-      if (! Yacs.user.removeSelection(section.dataset.id)) {
+      if (!Yacs.user.removeSelection(section.dataset.id)) {
         Yacs.user.addSelection(section.dataset.id);
       }
     });
