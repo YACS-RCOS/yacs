@@ -43,7 +43,7 @@ In early development. yacs-admin is a secure admin panel that will allow adminis
 YACS depends on PostgreSQL, Redis, nginx and Solr. The included docker-compose file specifies images and configurations to containerize and link these dependencies, so you don't need to install or configure anything. A secure and omptimized nginx config is also provided.
 
 ## Projects that integrate with YACS
-These are examples of projects that have been developed by other independant teams and either integrate with YACS or use its API. These are great examples of what can be accomplished with open, accessible academic data provided by YACS.
+These are examples of projects that have been developed by other independant teams and either integrate with YACS or use its API. These are great examples of what can be accomplished with open, accessible academic data.
 
 ### suggestr
 Suggestr is a machine learning based application that suggests courses to students based on the courses they have taken and the course paths of other students. 
