@@ -70,7 +70,16 @@ describe 'Courses API' do
   end
 
   context 'There is a course to be updated' do
-    it ' 'do
+    it 'updates the maximum number of credits for the course'do
+      course = FactoryGirl.create(:course_with_credits, max_credits: 4)
+      course_params={
+        course: {
+          max_credits: 7
+        }
+      }
+      put "/api/v5/courses/#{course.id}", course_params
+      course.reload
+      expect(course.max_credits).to eq 7
     end
 
   end
