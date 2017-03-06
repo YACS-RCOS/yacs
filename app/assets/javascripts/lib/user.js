@@ -67,8 +67,8 @@ Yacs.user = new function () {
    */
   self.getSelectionsAsArray = function() {
     var selections = self.getSelections();
-    output = [];
-    for(var courseId in selections) {
+    var output = [];
+    for (var courseId in selections) {
       output = output.concat(selections[courseId]);
     }
     return output;
@@ -82,7 +82,7 @@ Yacs.user = new function () {
   self.getTotalSelections = function() {
     var selections = self.getSelections();
     var total = 0;
-    for(var courseId in selections) {
+    for (var courseId in selections) {
       total += selections[courseId].length;
     }
     return total;
@@ -104,36 +104,41 @@ Yacs.user = new function () {
    * its sorted order.
    * @param {String/Int} sid - the section id
    * @param {String/Int} cid - the course id of the parent course
-   * @param {Boolean, optional} doNotify - whether to notify the observer
+   * @param {Boolean, optional} notify - whether to notify the observer
    * @return {Boolean} true if the selection was added, false if it was already present
    * @memberOf Yacs.user
    */
-  self.addSelection = function (sid, cid, doNotify) {
-    if(typeof doNotify == "undefined") {
+  self.addSelection = function (addSid, addCid, notify) {
+    var sid = addSid;
+    var cid = addCid;
+
+    var doNotify = notify;
+    if (typeof notify === 'undefined') {
       doNotify = true;
     }
 
     sid = parseInt(sid);
-    if(isNaN(sid)) {
+    if (isNaN(sid)) {
       // bad section id string, should NOT be added
       return false;
     }
     cid = parseInt(cid);
-    if(isNaN(cid)) {
+    if (isNaN(cid)) {
       return false;
     }
 
     var getSpliceIndex = function(array, val) {
       // assumes array size is > 0, array is sorted
       // return -1 if val exists in array already
-      var start = 0, end = array.length;
-      while(start < end) {
-        var avg = Math.floor((start+end) / 2);
-        if(array[avg] == val) {
+      var start = 0;
+      var end = array.length;
+      while (start < end) {
+        var avg = Math.floor((start + end) / 2);
+        if (array[avg] === val) {
           return -1;
         }
-        else if(array[avg] < val) {
-          start = avg+1;
+        else if (array[avg] < val) {
+          start = avg + 1;
         }
         else {
           end = avg;
@@ -143,22 +148,23 @@ Yacs.user = new function () {
     };
 
     var selections = self.getSelections();
-    if(! (cid in selections)) {
+    if (!(cid in selections)) {
       selections[cid] = [];
     }
     var spliceIndex = getSpliceIndex(selections[cid], sid);
-    if(spliceIndex == -1) {
+    if (spliceIndex === -1) {
       return false;
     }
     selections[cid].splice(spliceIndex, 0, sid);
     self.setSelections(selections);
-    if(doNotify) {
+    if (doNotify) {
       observable.notify();
     }
     return true;
   };
 
-  /** Add multiple selections to a single course in the cookie.
+  /**
+   * Add multiple selections to a single course in the cookie.
    * @param {String[]/Int[]} sids - List of section ids
    * @param {String} cid - the course id
    * @return {Boolean} true if any selections were inserted, false otherwise
@@ -167,7 +173,7 @@ Yacs.user = new function () {
   self.addMultipleSelections = function(sids, cid) {
     var sidlen = sids.length;
     var inserted = false;
-    for(var i=0; i<sidlen; ++i) {
+    for (var i = 0; i < sidlen; ++i) {
       inserted = self.addSelection(sids[i], cid, false) || inserted;
     }
     observable.notify();
@@ -182,13 +188,15 @@ Yacs.user = new function () {
    */
   self.removeSelection = function (sid, cid) {
     var selections = self.getSelections();
-    if(! (cid in selections)) {
+    if (!(cid in selections)) {
       return false;
     }
-    i = selections[cid].indexOf(parseInt(sid));
-    if (i === -1) return false;
+    var i = selections[cid].indexOf(parseInt(sid));
+    if (i === -1) {
+      return false;
+    }
     selections[cid].splice(i, 1);
-    if(selections[cid].length < 1) {
+    if (selections[cid].length < 1) {
       delete selections[cid];
     }
 
@@ -204,7 +212,7 @@ Yacs.user = new function () {
    */
   self.removeCourse = function(cid) {
     var selections = self.getSelections();
-    if(! (cid in selections)) {
+    if (!(cid in selections)) {
       return false;
     }
     delete selections[cid];
@@ -222,7 +230,7 @@ Yacs.user = new function () {
    */
   self.hasSelection = function (sid, cid) {
     var selections = self.getSelections();
-    if(! (cid in selections)) {
+    if (!(cid in selections)) {
       return false;
     }
     return selections[cid].indexOf(parseInt(sid)) !== -1;
@@ -236,7 +244,7 @@ Yacs.user = new function () {
    */
   self.courseIsSelected = function(cid) {
     var selections = self.getSelections();
-    if(! (cid in selections)) {
+    if (!(cid in selections)) {
       return false;
     }
     return selections[cid].length >= 1;
@@ -250,5 +258,4 @@ Yacs.user = new function () {
     setCookie('selections', '');
     observable.notify();
   };
-
 }();
