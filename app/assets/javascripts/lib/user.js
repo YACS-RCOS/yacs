@@ -128,7 +128,7 @@ Yacs.user = new function () {
       // return -1 if val exists in array already
       var start = 0, end = array.length;
       while(start < end) {
-        var avg = (start+end) >>> 1;
+        var avg = Math.floor((start+end) / 2);
         if(array[avg] == val) {
           return -1;
         }
