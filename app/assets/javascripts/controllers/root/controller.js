@@ -7,6 +7,8 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
+'use strict';
+
 Yacs.views.root = function (target) {
   var searchbar = document.getElementById('searchbar');
 
@@ -30,10 +32,11 @@ Yacs.views.root = function (target) {
   Yacs.on('keydown', document, function (elem, event) {
     var key = event.keyCode;
     if (!(event.ctrlKey || event.metaKey)) {
-      if ((key >= 48 && key <= 105) || key == 32) {
+      if ((key >= 48 && key <= 105) || key === 32) {
         // normal keys focus the searchbar
         searchbar.focus();
-      } else if (key == 13) {
+      }
+      else if (key === 13) {
         // enter searches
         if (searchbar.value) {
           Yacs.router.visit('/courses?search=' + searchbar.value);
@@ -47,4 +50,6 @@ Yacs.views.root = function (target) {
   Yacs.models.schools.preload(function () {
     Yacs.router.listen();
   });
+
+  Yacs.views.footer(document.getElementById('footer'));
 };
