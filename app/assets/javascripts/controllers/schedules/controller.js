@@ -23,14 +23,14 @@ Yacs.views.schedules = function (target, params) {
     // If the cookie doesn't have any selections,
     // write them into it. The URL will still display the parameters as long as
     // the route doesn't change.
-    if (Yacs.user.getSelections().length <= 0) {
+    if (Yacs.user.getTotalSelections() <= 0) {
       Yacs.user.addSelections(scheduleIDs);
     }
   }
   else {
     // if section_ids is not specified in params, use the cookie
     // to populate the scheduleIDs list
-    scheduleIDs = Yacs.user.getSelections();
+    scheduleIDs = Yacs.user.getSelectionsAsArray();
   }
 
   // initialize scheduleIndex at 0, unless explicitly specified in the query
@@ -159,7 +159,7 @@ Yacs.views.schedules = function (target, params) {
     }
     else {
       showSchedule(-1);
-      if (Yacs.user.getSelections().length > 0) {
+      if (Yacs.user.getTotalSelections() > 0) {
         scheduleStatusElement.textContent = 'No schedules found :( Try removing some courses';
       }
       else {
@@ -225,7 +225,7 @@ Yacs.views.schedules = function (target, params) {
   var copyScheduleLink = function() {
     var targetUrl = window.location.protocol + '//' +
       window.location.host +
-      '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',') +
+      '/#/schedules?section_ids=' + Yacs.user.getSelectionsAsArray().join(',') +
       '&schedule_index=' + scheduleIndex;
 
     // js hack to create and copy from a phantom element
