@@ -3,9 +3,10 @@ class Section < ActiveRecord::Base
   validates  :name, presence: true, uniqueness: { scope: :course_id }
   validates  :crn, presence: true, uniqueness: true
   default_scope { order(name: :asc) }
-  after_save :update_conflicts
+  before_save :update_conflicts
 
   def conflicts_with(section)
+    # TODO: should check the list of conflicts first
     i = 0
     while i < num_periods
       j = 0
@@ -22,21 +23,17 @@ class Section < ActiveRecord::Base
     false
   end
 
-  def conflicts
-    Redis.current.smembers id
-  end
-
   private
 
   def update_conflicts
      # reload
      Section.where.not(course_id: course_id).each do |section|
       if conflicts_with section
-        Redis.current.sadd id, section.id
-        Redis.current.sadd section.id, id
+        self.conflicts |= [section.id]
+        section.update_column :conflicts, section.conflicts | [self.id]
       else
-        Redis.current.srem id, section.id
-        Redis.current.srem section.id, id
+        self.conflicts -= [section.id]
+        section.update_column :conflicts, section.conflicts - [self.id]
       end
     end
   end
