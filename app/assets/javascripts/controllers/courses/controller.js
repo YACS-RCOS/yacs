@@ -98,10 +98,12 @@ Yacs.views.courses = function (target, params) {
 
   // Merge params 3 and 4 back into an object, compatible with selectionsFlat verbatim output.
   /** Given a section ID, the course ID of the course the section is associated with,
-   * the values returned from flattenSelections, (and data in the conflicts cache),
+   * the output of flattenSelections, (and data in the conflicts cache),
    * return a boolean of whether this section has any conflicts with current selections.
    */
-  var doesConflict = function(sectId, courseId, selectionsFlat, courseSelectionCounts) {
+  var doesConflict = function(sectId, courseId, flattenedSelections) {
+    var selectionsFlat = flattenedSelections.selectionsFlat;
+    var courseSelectionCounts = flattenedSelections.courseSelectionCounts;
     if (!(sectId in Yacs.cache.conflicts)) {
       // can't do anything, not going to ask the API for information
       return false;
@@ -202,8 +204,15 @@ Yacs.views.courses = function (target, params) {
           var sectionSelected = Yacs.user.hasSelection(section.dataset.id, course.dataset.id);
           section.classList.toggle('selected', sectionSelected);
 
-          // doesConflict modifies the data courseSelectionCounts passed into it, so do a deep copy of it
-          var hasConflict = doesConflict(section.dataset.id, selected, flatObj.selectionsFlat, copyCounts(flatObj.courseSelectionCounts));
+          /* doesConflict modifies the courseSelectionCounts passed into it, so
+           * we can't just use flatObj; instead, recreate flatObj with a deep copy
+           * of the courseSelectionCounts. */
+          var hasConflict = doesConflict(section.dataset.id, selected,
+            {
+              'selectionsFlat': flatObj.selectionsFlat,
+              'courseSelectionCounts': copyCounts(flatObj.courseSelectionCounts)
+            }
+          );
           section.classList.toggle('conflicts', hasConflict);
 
           if (!sectionSelected && !section.classList.contains('closed')) {
