@@ -3,7 +3,9 @@
  * @description Persistent storage for data relevant to the user
  * @memberOf Yacs
  */
-window.Yacs.user = new function () {
+'use strict';
+
+Yacs.user = new function () {
   var self = this;
 
 /* ======================================================================== *
@@ -15,12 +17,11 @@ window.Yacs.user = new function () {
    * http://www.w3schools.com/js/js_cookies.asp
    * @param {String} name - name of cookie
    * @param {String} value - value of cookie
-   * @return {undefined}
    * @memberOf Yacs.user
    */
   var setCookie = function (name, value) {
-    document.cookie = name + "=" + value + "; path=/";
-  }
+    document.cookie = name + '=' + value + '; path=/';
+  };
 
   /**
    * Gets the value of a cookie by name
@@ -30,15 +31,18 @@ window.Yacs.user = new function () {
    * @memberOf Yacs.user
    */
   var getCookie = function (name) {
-    name += "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
       var c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(name) === 0) return c.substring(name.length, c.length);
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(name + '=') === 0) {
+        return c.substring(name.length + 1, c.length);
+      }
     }
     return null;
-  }
+  };
 
 /* ======================================================================== *
     Selections
@@ -47,8 +51,8 @@ window.Yacs.user = new function () {
   var observable = new Yacs.Observable('selection');
 
   /**
-   * Gets the selections from the cookie as an object
-   * @return {Object} map of course ids to arrays of selected section ids
+   * Gets the raw value of the selection cookie, with no processing.
+   * @return {String} section ids as comma separated values
    * @memberOf Yacs.user
    */
   self.getSelections = function () {
@@ -240,7 +244,6 @@ window.Yacs.user = new function () {
 
   /**
    * Remove all selections from cookie
-   * @return {void}
    * @memberOf Yacs.user
    */
   self.clearSelections = function () {

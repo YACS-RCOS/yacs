@@ -5,8 +5,10 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
+'use strict';
+
 Yacs.views.courses = function (target, params) {
-  params.show_sections = params.show_periods = true;
+  params['show_sections'] = params['show_periods'] = true;
 
   /**
    * When a section is clicked, toggle its individual selection status.
@@ -180,13 +182,12 @@ Yacs.views.courses = function (target, params) {
     // actually updated. Actually, why doesn't this already do that?
     var selected = Yacs.user.getSelections();
     flatObj = flattenSelections(selected);
-
-    each(target.querySelectorAll('course'), function (course) {
+    target.querySelectorAll('course').forEach(function (course) {
       var courseSelected = false;
       var sections = course.querySelectorAll('section');
       if (sections.length > 0) {
         courseSelected = true;
-        each(sections, function (section) {
+        sections.forEach(function (section) {
           // TODO optimize this next line somehow
           var sectionSelected = Yacs.user.hasSelection(section.dataset.id, course.dataset.id);
           section.classList.toggle('selected', sectionSelected);
@@ -195,8 +196,9 @@ Yacs.views.courses = function (target, params) {
           var hasConflict = doesConflict(section.dataset.id, selected, flatObj.selectionsFlat, copyCounts(flatObj.courseSelectionCounts));
           section.classList.toggle('conflicts', hasConflict);
 
-          if (!sectionSelected && !section.classList.contains('closed'))
+          if (!sectionSelected && !section.classList.contains('closed')) {
             courseSelected = false;
+          }
         });
       }
       course.classList.toggle('selected', courseSelected);
