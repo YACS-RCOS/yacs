@@ -43,8 +43,8 @@ Yacs.views.schedules = function (target, params) {
     scheduleIndex = parseInt(params.schedule_index);
   }
 
-  var data = { 'temporary': isTemporary };
-  Yacs.render(target, 'schedules', data);
+  var templateParams = { 'temporary': isTemporary };
+  Yacs.render(target, 'schedules', templateParams);
 
   var scheduleElement = target.querySelector('#schedule-container');
   var selectionElement = target.querySelector('#selection-container');
