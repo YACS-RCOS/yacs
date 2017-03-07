@@ -5,7 +5,7 @@
  */
 'use strict';
 
-window.Yacs.user = new function () {
+Yacs.user = new function () {
   var self = this;
 
 /* ======================================================================== *
@@ -17,7 +17,6 @@ window.Yacs.user = new function () {
    * http://www.w3schools.com/js/js_cookies.asp
    * @param {String} name - name of cookie
    * @param {String} value - value of cookie
-   * @return {undefined}
    * @memberOf Yacs.user
    */
   var setCookie = function (name, value) {
@@ -52,8 +51,7 @@ window.Yacs.user = new function () {
   var observable = new Yacs.Observable('selection');
 
   /**
-   * @description
-   * Gets the value of the selection cookie
+   * Gets the raw value of the selection cookie, with no processing.
    * @return {String} section ids as comma separated values
    * @memberOf Yacs.user
    */
@@ -72,7 +70,7 @@ window.Yacs.user = new function () {
   };
 
   /**
-   * Add a selection to those already selected. Return the success value.
+   * Add a section to those already selected. Return the success value.
    * @param {String} sid - the section id
    * @return {Boolean} true if the selection was added, false if it was already present
    * @memberOf Yacs.user
@@ -89,9 +87,9 @@ window.Yacs.user = new function () {
   };
 
   /**
-   * Add a selection to those already selected. Return the success value.
-   * @param {String} sid - the section id
-   * @return {Boolean} true if the selection was added, false if it was already present
+   * Add multiple sections to those already selected. Return the success value.
+   * @param {String[]} sids - array of section ids to add
+   * @return {Boolean} true if any sections were added, false if none were
    * @memberOf Yacs.user
    */
   self.addSelections = function (sids) {
@@ -176,7 +174,6 @@ window.Yacs.user = new function () {
 
   /**
    * Remove all selections from cookie
-   * @return {undefined}
    * @memberOf Yacs.user
    */
   self.clearSelections = function () {
