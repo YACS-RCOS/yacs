@@ -24,17 +24,9 @@ Yacs.views.schedules = function (target, params) {
     // use them and ignore current selections
     scheduleIDs = params.section_ids.split(',');
 
-    // If there are no selections, set the current selections to
-    // the ones in the params.
-    // The URL will still display the parameters as long as
-    // the route doesn't change.
-    var nowSelections = Yacs.user.getSelections();
-    if (nowSelections.length <= 0) {
-      Yacs.user.addSelections(scheduleIDs);
-    }
     // check if the current selections are not equivalent to the parameter selections
     // if so, this is a temporary schedule
-    else if(! Yacs.helpers.arraysEquivalent(nowSelections.sort(), scheduleIDs.sort())) {
+    if(! Yacs.helpers.arraysEquivalent(Yacs.user.getSelections().sort(), scheduleIDs.sort())) {
       isTemporary = true;
     }
   }
