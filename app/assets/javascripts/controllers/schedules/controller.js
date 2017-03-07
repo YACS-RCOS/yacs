@@ -26,7 +26,7 @@ Yacs.views.schedules = function (target, params) {
 
     // check if the current selections are not equivalent to the parameter selections
     // if so, this is a temporary schedule
-    if(! Yacs.helpers.arraysEquivalent(Yacs.user.getSelections().sort(), scheduleIDs.sort())) {
+    if (!Yacs.helpers.arraysEquivalent(Yacs.user.getSelections().sort(), scheduleIDs.sort())) {
       isTemporary = true;
     }
   }
@@ -43,9 +43,7 @@ Yacs.views.schedules = function (target, params) {
     scheduleIndex = parseInt(params.schedule_index);
   }
 
-  var data = {
-    'temporary': isTemporary
-  };
+  var data = { 'temporary': isTemporary };
   Yacs.render(target, 'schedules', data);
 
   var scheduleElement = target.querySelector('#schedule-container');
@@ -277,15 +275,16 @@ Yacs.views.schedules = function (target, params) {
    * with the ones from the params, then refresh the view.
    */
   var replaceSelections = function() {
-    if(!isTemporary) {
+    if (!isTemporary) {
       return;
     }
     Yacs.user.clearSelections();
     Yacs.user.addSelections(scheduleIDs);
     Yacs.views.schedules(target, {});
   };
+
   // button may not always be rendered into the DOM, unlike the others
-  if(replaceSelectionsButton !== null) {
+  if (replaceSelectionsButton !== null) {
     Yacs.on('click', replaceSelectionsButton, replaceSelections);
   }
 
@@ -339,6 +338,7 @@ Yacs.views.schedules = function (target, params) {
   Yacs.observe('selection', scheduleElement, function() {
     // will use current selections by default
     updateSchedules();
+
     // This is not optimal but currently there is not a good way to
     // determine if the user merely removed a schedule or set of
     // schedules that does not include the one being displayed.

@@ -15,18 +15,18 @@ Yacs.helpers = new function () {
   */
   self.arraysEquivalent = function(array1, array2) {
     // if not arrays, return false
-    if(! (array1 instanceof Array) || !(array2 instanceof Array)) {
+    if (!(array1 instanceof Array) || !(array2 instanceof Array)) {
       return false;
     }
 
     // if lengths aren't equal, return false
     var L = array1.length;
-    if(L != array2.length) {
+    if (L !== array2.length) {
       return false;
     }
 
-    for(var i=0; i<L; ++i) {
-      if(array1[i] !== array2[i]) {
+    for (var i = 0; i < L; ++i) {
+      if (array1[i] !== array2[i]) {
         return false;
       }
     }
