@@ -27,5 +27,7 @@ module Yacs
     config.autoload_paths << Rails.root.join('lib')
 
     config.active_record.observers = %w{ CoursesSweeper DepartmentsSweeper }
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

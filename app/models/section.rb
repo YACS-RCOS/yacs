@@ -3,7 +3,7 @@ class Section < ActiveRecord::Base
   validates  :name, presence: true, uniqueness: { scope: :course_id }
   validates  :crn, presence: true, uniqueness: true
   default_scope { order(name: :asc) }
-  before_save :update_conflicts
+  after_save Proc.new { |section| UpdateConflictsJob.perform_later section.id }
 
   def conflicts_with(section)
     # TODO: should check the list of conflicts first
@@ -21,20 +21,5 @@ class Section < ActiveRecord::Base
       i += 1
     end
     false
-  end
-
-  private
-
-  def update_conflicts
-     # reload
-     Section.where.not(course_id: course_id).each do |section|
-      if conflicts_with section
-        self.conflicts |= [section.id]
-        section.update_column :conflicts, section.conflicts | [self.id]
-      else
-        self.conflicts -= [section.id]
-        section.update_column :conflicts, section.conflicts - [self.id]
-      end
-    end
   end
 end
