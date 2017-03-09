@@ -6,9 +6,9 @@
         <span id="schedule-num">0</span> / <span id="schedule-count">0</span>
         <span id="right-switch" class="schedule-switch">&#9654;</span>
       </div>
-      <button type="button" id="clear-btn" class="clear-button">Clear</button>
+      <button type="button" id="clear-btn" class="clear-button" {{#if temporary}} disabled {{/if}}>Clear</button>
       <button type="button" id="ics-btn" class="clear-button">Download ICS</button>
-      <button type="button" id="link-btn" class="clear-button">Copy Schedule Link</button>
+      <button type="button" id="link-btn" class="clear-button" {{#if temporary}} disabled {{/if}}>Copy Schedule Link</button>
     </div>
     <div id="right">
       <div id="schedule-status"></div>
@@ -16,4 +16,16 @@
   </div>
   <div id="schedule-container"></div>
 </div>
-<div id="selection-container"></div>
+{{#unless temporary}}
+  <div id="selection-container"></div>
+{{else}}
+  <div id="temp-schedule-notice">
+    <p><strong>Selections Disabled</strong></p>
+    <p>This is a temporary schedule.
+    You're viewing a set of courses that doesn't correspond to what you have selected.
+    To return to your selected schedules, click on the normal Schedule link in the top right.</p>
+    <p>Alternatively, to discard your currently selected courses and replace them with those
+    shown on this schedule, click the button below.</p>
+    <button type="button" id="replace-selections-btn" class="clear-button">Clear and Replace Selections</button>
+  </div>
+{{/unless}}
