@@ -3,6 +3,8 @@
  * @description Temporary storage for various frontend data that cannot be held elsewhere
  * @memberOf Yacs
  */
+'use strict';
+
 window.Yacs.cache = new function() {
   var self = this;
 
@@ -25,7 +27,7 @@ window.Yacs.cache = new function() {
    * Optionally clear previous contents if the field already exists.
    */
   self.addField = function(name, value, overwrite) {
-    if(overwrite || !(name in self.tmp)) {
+    if (overwrite || !(name in self.tmp)) {
       self.tmp[name] = value;
     }
   };
@@ -36,4 +38,4 @@ window.Yacs.cache = new function() {
   self.getField = function(name) {
     return self.tmp[name];
   };
-};
+}();
