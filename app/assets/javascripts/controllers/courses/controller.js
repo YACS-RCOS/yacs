@@ -44,6 +44,7 @@ Yacs.views.courses = function (target, params) {
   /**
    * Given the data returned from the API, populate the conflicts cache with
    * the data for conflicts.
+   * @param {Object} data - The verbatim JSON object returned from the courses API.
    */
   var populateConflictsCache = function(data) {
     var courselen = data.courses.length;
@@ -68,6 +69,8 @@ Yacs.views.courses = function (target, params) {
    * efficiently (in O(k + s) time) without having to refer back to the selections
    * in their normal format.
    * Return an object containing the flattened array and the course id map.
+   * @param {Object} selections - The selections object returned verbatim from Yacs.user.getSelections().
+   * @return {Object} The selection data converted into an array of 2-element arrays, each with a section id and its associated course id, and a map of each course ID to its number of selected sections.
    */
   var flattenSelections = function(selections) {
     var selectionsFlat = [];
@@ -96,9 +99,13 @@ Yacs.views.courses = function (target, params) {
     };
   };
 
-  /** Given a section ID,
-   * the output of flattenSelections, (and data in the conflicts cache),
-   * return a boolean of whether this section has any conflicts with current selections.
+  /** Given a section ID, the output of flattenSelections,
+   * (and data in the conflicts cache),
+   * return a boolean of whether this section has any conflicts with
+   * current selections.
+   * @param {int} sectId - Section ID to check for conflicts.
+   * @param {Object} flattenedSelections - An object in the same format returned by flattenSelections.
+   * @return {boolean} Whether this section conflicts with currently selected sections.
    */
   var doesConflict = function(sectId, flattenedSelections) {
     var selectionsFlat = flattenedSelections.selectionsFlat;
