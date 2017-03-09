@@ -14,17 +14,20 @@ Yacs.views.schedules = function (target, params) {
   // API
   var scheduleIDs = [];
 
+  // is this a temporary set of schedules? (i.e. accessed via a URL
+  // rather than normal use, AND there are already sections selected)
+  var isTemporary = false;
+
   // check for query parameters
   if ('section_ids' in params) {
     // if there are query parameters,
     // use them and ignore current selections
     scheduleIDs = params.section_ids.split(',');
 
-    // If the cookie doesn't have any selections,
-    // write them into it. The URL will still display the parameters as long as
-    // the route doesn't change.
-    if (Yacs.user.getTotalSelections() <= 0) {
-      Yacs.user.addSelections(scheduleIDs);
+    // check if the current selections are not equivalent to the parameter selections
+    // if so, this is a temporary schedule
+    if (!Yacs.helpers.arraysEquivalent(Yacs.user.getSelections().sort(), scheduleIDs.sort())) {
+      isTemporary = true;
     }
   }
   else {
@@ -40,7 +43,8 @@ Yacs.views.schedules = function (target, params) {
     scheduleIndex = parseInt(params.schedule_index);
   }
 
-  Yacs.render(target, 'schedules');
+  var templateParams = { 'temporary': isTemporary };
+  Yacs.render(target, 'schedules', templateParams);
 
   var scheduleElement = target.querySelector('#schedule-container');
   var selectionElement = target.querySelector('#selection-container');
@@ -52,6 +56,7 @@ Yacs.views.schedules = function (target, params) {
   var scheduleStatusElement = target.querySelector('#schedule-status');
   var downloadICSElement = target.querySelector('#ics-btn');
   var copyLinkElement = target.querySelector('#link-btn');
+  var replaceSelectionsButton = target.querySelector('#replace-selections-btn');
   var scheduleInstance = new Schedule(scheduleElement);
   var scheduleData = [];
 
@@ -169,7 +174,8 @@ Yacs.views.schedules = function (target, params) {
   };
 
   /**
-   * Query the server for schedules based on the stored selections,
+   * Query the server for schedules based on either a set of selections
+   * passed to the function, or the stored selections if none,
    * and update the view to show the new schedules.
    * If no sections are selected, skip the call and show nil schedules.
    * @param {Object} selections - An array of selected section IDs. May be undefined; if so, get currently selected sections.
@@ -195,11 +201,9 @@ Yacs.views.schedules = function (target, params) {
           }
         }
       );
-      clearButtonElement.disabled = false;
     }
     else {
       setSchedules([]);
-      clearButtonElement.disabled = true;
     }
   };
 
@@ -267,6 +271,24 @@ Yacs.views.schedules = function (target, params) {
   };
 
   /**
+   * On a temporary schedule only, replace any current selections
+   * with the ones from the params, then refresh the view.
+   */
+  var replaceSelections = function() {
+    if (!isTemporary) {
+      return;
+    }
+    Yacs.user.clearSelections();
+    Yacs.user.addSelections(scheduleIDs);
+    Yacs.views.schedules(target, {});
+  };
+
+  // button may not always be rendered into the DOM, unlike the others
+  if (replaceSelectionsButton !== null) {
+    Yacs.on('click', replaceSelectionsButton, replaceSelections);
+  }
+
+  /**
    * Show next schedule if right is clicked or pressed,
    * show previous schedule if left is clicked or pressed
    */
@@ -304,9 +326,11 @@ Yacs.views.schedules = function (target, params) {
    * Show selected courses / sections on the schedule page. The courses shown
    * are explicitly the courses that had one or more sections selected at the
    * time the view was rendered.
+   * Do not do this if the schedule is temporary; having a deselection list
+   * in that case is confusing.
    */
   var selections = Yacs.user.getSelectionsAsArray();
-  if (selections.length > 0) {
+  if (!isTemporary && selections.length > 0) {
     Yacs.views.courses(selectionElement, { 'section_id': selections });
   }
 
@@ -314,6 +338,11 @@ Yacs.views.schedules = function (target, params) {
   Yacs.observe('selection', scheduleElement, function() {
     // will use current selections by default
     updateSchedules();
+
+    // This is not optimal but currently there is not a good way to
+    // determine if the user merely removed a schedule or set of
+    // schedules that does not include the one being displayed.
+    scheduleIndex = 0;
   });
 
   // use section ids extracted from URL parameters at top
