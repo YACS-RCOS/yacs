@@ -146,7 +146,7 @@ Yacs.views.schedules = function (target, params) {
         });
 
         // in a temporary schedule, add relevant id pairs to sectionIDMap
-        if(self.isTemporary) {
+        if (self.isTemporary) {
           self.sectionIDMap[section.id] = section.course_id;
         }
       });
@@ -300,9 +300,8 @@ Yacs.views.schedules = function (target, params) {
       return;
     }
     Yacs.user.clearSelections();
-    for(var sid in self.sectionIDMap) {
+    for (var sid in self.sectionIDMap) {
       var cid = self.sectionIDMap[sid];
-      console.log(sid, cid);
       Yacs.user.addSelection(sid, cid, false);
     }
     self.sectionIDMap = {};
