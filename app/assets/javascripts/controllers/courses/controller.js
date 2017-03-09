@@ -111,7 +111,6 @@ Yacs.views.courses = function (target, params) {
       courseSelectionCounts[key] = flattenedSelections.courseSelectionCounts[key];
     }
 
-    flattenedSelections.courseSelectionCounts;
     if (!(sectId in Yacs.cache.conflicts)) {
       // can't do anything, not going to ask the API for information
       return false;
