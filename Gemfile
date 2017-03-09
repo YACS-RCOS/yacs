@@ -36,8 +36,6 @@ gem 'coveralls'
 
 gem 'redis'
 
-gem 'sidekiq'
-
 group :development, :test do
   gem 'pry'
   gem 'pry-remote'

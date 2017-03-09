@@ -4,7 +4,11 @@ class Section < ActiveRecord::Base
   validates  :crn, presence: true, uniqueness: true
   default_scope { order(name: :asc) }
   before_save :sort_periods, if: :periods_changed?
-  after_save Proc.new { |section| UpdateConflictsJob.perform_later section.id }, if: :periods_changed?
+  after_save :update_conflicts!, if: :periods_changed?
+
+  def self.compute_conflict_ids_for id
+    find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN (SELECT(unnest(conflict_ids(#{id}))))").map(&:id)
+  end
 
   def conflicts_with(section)
     # TODO: should check the list of conflicts first
@@ -22,6 +26,10 @@ class Section < ActiveRecord::Base
       i += 1
     end
     false
+  end
+
+  def update_conflicts!
+    self.update_column :conflicts, self.class.compute_conflict_ids_for(self.id)
   end
 
   def sort_periods

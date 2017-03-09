@@ -62,7 +62,6 @@ GEM
     coderay (1.1.1)
     columnize (0.9.0)
     concurrent-ruby (1.0.2)
-    connection_pool (2.2.1)
     coveralls (0.8.16)
       json (>= 1.8, < 3)
       simplecov (~> 0.12.0)
@@ -93,6 +92,11 @@ GEM
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
+    delayed_job (4.1.2)
+      activesupport (>= 3.0, < 5.1)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
+      delayed_job (>= 3.0, < 5)
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
@@ -156,8 +160,6 @@ GEM
     public_suffix (2.0.4)
     puma (2.16.0)
     rack (1.6.5)
-    rack-protection (1.5.3)
-      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     railroady (1.5.2)
@@ -221,11 +223,6 @@ GEM
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
       websocket (~> 1.0)
-    sidekiq (4.2.9)
-      concurrent-ruby (~> 1.0)
-      connection_pool (~> 2.2, >= 2.2.0)
-      rack-protection (>= 1.5.0)
-      redis (~> 3.2, >= 3.2.1)
     simplecov (0.12.0)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -278,6 +275,7 @@ DEPENDENCIES
   cucumber-rails
   dalli
   database_cleaner
+  delayed_job_active_record
   factory_girl_rails
   handlebars_assets
   jbuilder (~> 2.0)
@@ -298,7 +296,6 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver
-  sidekiq
   spring
   sprockets-rails
   therubyracer
