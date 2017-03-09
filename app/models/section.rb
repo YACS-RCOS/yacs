@@ -4,7 +4,11 @@ class Section < ActiveRecord::Base
   validates  :crn, presence: true, uniqueness: true
   default_scope { order(name: :asc) }
   before_save :sort_periods, if: :periods_changed?
-  before_save :update_conflicts, if: :periods_changed?
+  after_save :update_conflicts!, if: :periods_changed?
+
+  def self.compute_conflict_ids_for id
+    find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN (SELECT(unnest(conflict_ids(#{id}))))").map(&:id)
+  end
 
   def conflicts_with(section)
     # TODO: should check the list of conflicts first
@@ -24,6 +28,21 @@ class Section < ActiveRecord::Base
     false
   end
 
+  def update_conflicts!
+    new_conflict_ids = self.class.compute_conflict_ids_for(self.id)
+    old_conflicts = Section.where(id: self.conflicts)
+    new_conflicts = Section.where(id: new_conflict_ids)
+    Section.transaction do
+      (old_conflicts - new_conflicts).each do |old_conflict|
+        old_conflict.update_column :conflicts, old_conflict.conflicts - [self.id]
+      end
+      (new_conflicts - old_conflicts).each do |new_conflict|
+        new_conflict.update_column :conflicts, new_conflict.conflicts | [self.id]
+      end
+      self.update_column :conflicts, new_conflict_ids
+    end
+  end
+
   def sort_periods
     periods_info = periods_day.zip periods_start, periods_end, periods_type
     periods_info = periods_info.sort!.transpose
@@ -32,20 +51,5 @@ class Section < ActiveRecord::Base
 
   def periods_changed?
     (self.changed & %w(periods_start periods_end periods_day periods_type)).any?
-  end
-
-  private
-
-  def update_conflicts
-     # reload
-     Section.where.not(course_id: course_id).each do |section|
-      if conflicts_with section
-        self.conflicts |= [section.id]
-        section.update_column :conflicts, section.conflicts | [self.id]
-      else
-        self.conflicts -= [section.id]
-        section.update_column :conflicts, section.conflicts - [self.id]
-      end
-    end
   end
 end
