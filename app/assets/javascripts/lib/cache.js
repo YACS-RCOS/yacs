@@ -23,19 +23,24 @@ window.Yacs.cache = new function() {
   self.tmp = {};
 
   /**
-   * Add a new field to the cache.
+   * Add a new key-value pair to the cache.
    * Optionally clear previous contents if the field already exists.
+   * @param {String} name - The identifier for this cache field.
+   * @param {String} value - The new value to store in the cache field.
+   * @param {boolean=} overwrite - Whether to overwrite if the identifier is already in the cache.
    */
-  self.addField = function(name, value, overwrite) {
+  self.insert = function(name, value, overwrite) {
     if (overwrite || !(name in self.tmp)) {
       self.tmp[name] = value;
     }
   };
 
   /**
-   * Return a reference to a cache field so it can be set later.
+   * Retrieve data from the cache.
+   * @param {String} name - The identifier for the cache field.
+   * @return {Anything} The data in the cache field.
    */
-  self.getField = function(name) {
+  self.get = function(name) {
     return self.tmp[name];
   };
 }();

@@ -15,8 +15,8 @@ Yacs.user = new function () {
   /**
    * Sets the value of a cookie by name
    * http://www.w3schools.com/js/js_cookies.asp
-   * @param {String} name - name of cookie
-   * @param {String} value - value of cookie
+   * @param {string} name - name of cookie
+   * @param {string} value - value of cookie
    * @memberOf Yacs.user
    */
   var setCookie = function (name, value) {
@@ -26,8 +26,8 @@ Yacs.user = new function () {
   /**
    * Gets the value of a cookie by name
    * http://www.w3schools.com/js/js_cookies.asp
-   * @param {String} name - name of cookie
-   * @return {String} value of cookie
+   * @param {string} name - name of cookie
+   * @return {string} value of cookie
    * @memberOf Yacs.user
    */
   var getCookie = function (name) {
@@ -51,8 +51,9 @@ Yacs.user = new function () {
   var observable = new Yacs.Observable('selection');
 
   /**
-   * Gets the raw value of the selection cookie, with no processing.
-   * @return {String} section ids as comma separated values
+   * Gets the selections as an object that maps course IDs to
+   * arrays of section IDs.
+   * @return {Object} An object of this format.
    * @memberOf Yacs.user
    */
   self.getSelections = function () {
@@ -102,10 +103,10 @@ Yacs.user = new function () {
    * Add a selection to those already selected. Return the success value.
    * This does an insertion sort into the selections list in order to maintain
    * its sorted order.
-   * @param {String/Int} sid - the section id
-   * @param {String/Int} cid - the course id of the parent course
-   * @param {Boolean, optional} notify - whether to notify the observer
-   * @return {Boolean} true if the selection was added, false if it was already present
+   * @param {string|int} addSid - the section id to add
+   * @param {string|int} addCid - the course id that corresponds to the section id
+   * @param {boolean=} notify - whether to notify the observer
+   * @return {boolean} true if the selection was added, false if it was already present
    * @memberOf Yacs.user
    */
   self.addSelection = function (addSid, addCid, notify) {
@@ -165,24 +166,27 @@ Yacs.user = new function () {
 
   /**
    * Add multiple selections to a single course in the cookie.
-   * @param {String[]/Int[]} sids - List of section ids
-   * @param {String} cid - the course id
-   * @return {Boolean} true if any selections were inserted, false otherwise
+   * @param {string[]|int[]} sids - List of section ids
+   * @param {string} cid - the course id
+   * @return {boolean} true if any selections were inserted, false otherwise
    * @memberOf Yacs.user
    */
   self.addMultipleSelections = function(sids, cid) {
     var sidlen = sids.length;
-    var inserted = false;
+    var added = false;
     for (var i = 0; i < sidlen; ++i) {
-      inserted = self.addSelection(sids[i], cid, false) || inserted;
+      if (self.addSelection(sids[i], cid, false)) {
+        added = true;
+      }
     }
     observable.notify();
+    return added;
   };
 
   /**
    * Remove a selection from the cookie. Return the success value.
-   * @param {String/Int} sid - the section id
-   * @param {String} cid - the course id of the parent course
+   * @param {string|int} sid - the section id
+   * @param {string} cid - the course id of the parent course
    * @return {Boolean} true if the selection was removed, false if it was not present
    * @memberOf Yacs.user
    */
@@ -206,8 +210,8 @@ Yacs.user = new function () {
   };
 
   /** Remove one course and all its selections from the cookie.
-   * @param {String} cid - the course id
-   * @return {Boolean} true if the course id existed and was removed, false if not
+   * @param {string} cid - the course id
+   * @return {boolean} true if the course id existed and was removed, false if not
    * @memberOf Yacs.user
    */
   self.removeCourse = function(cid) {
@@ -223,9 +227,9 @@ Yacs.user = new function () {
 
   /**
    * Determine whether the user has already selected a given section ID
-   * @param  {String} sid - the section id
-   * @param {String} cid - the course id of the parent course
-   * @return {Boolean} true if the section is selected, false if it is not
+   * @param  {string} sid - the section id
+   * @param {string} cid - the course id of the parent course
+   * @return {boolean} true if the section is selected, false if it is not
    * @memberOf Yacs.user
    */
   self.hasSelection = function (sid, cid) {
@@ -238,7 +242,7 @@ Yacs.user = new function () {
 
   /**
    * Determine whether a course has any selected sections and is thus considered "selected".
-   * @param {String} cid - course id
+   * @param {string} cid - course id
    * @return {Boolean} whether a course has selected sections
    * @memberOf Yacs.user
    */
