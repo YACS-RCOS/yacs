@@ -5,8 +5,10 @@
  * @return {undefined}
  * @memberOf Yacs.views
  */
+'use strict';
+
 Yacs.views.courses = function (target, params) {
-  params.show_sections = params.show_periods = true;
+  params['show_sections'] = params['show_periods'] = true;
 
   /**
    * When a section is clicked, toggle its individual selection status.
@@ -17,7 +19,7 @@ Yacs.views.courses = function (target, params) {
     Yacs.on('click', target.querySelectorAll('section'), function (section) {
       var sid = section.dataset.id;
       var cid = section.dataset.courseId;
-      if(! Yacs.user.removeSelection(sid, cid)) {
+      if (!Yacs.user.removeSelection(sid, cid)) {
         // remove failed so add instead
         Yacs.user.addSelection(sid, cid, true);
       }
@@ -27,10 +29,12 @@ Yacs.views.courses = function (target, params) {
       var cid = courseInfo.parentElement.dataset.id;
       if (Yacs.user.courseIsSelected(cid)) {
         Yacs.user.removeCourse(cid);
-      } else {
+      }
+      else {
         var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed)');
+
         // TODO: optimize
-        Yacs.user.addMultipleSelections(map(sections, function (section) {
+        Yacs.user.addMultipleSelections(sections.map(function (section) {
           return section.dataset.id;
         }), cid);
       }
@@ -43,17 +47,18 @@ Yacs.views.courses = function (target, params) {
    */
   var populateConflictsCache = function(data) {
     var courselen = data.courses.length;
-    for(var i=0; i<courselen; ++i) {
+    for (var i = 0; i < courselen; ++i) {
       var sectlen = data.courses[i].sections.length;
-      for(var j=0; j<sectlen; ++j) {
+      for (var j = 0; j < sectlen; ++j) {
         var id = data.courses[i].sections[j].id;
+
         // TODO some method of cache expiration
-        if(! (id in Yacs.cache.conflicts)) {
+        if (!(id in Yacs.cache.conflicts)) {
           Yacs.cache.conflicts[id] = data.courses[i].sections[j].conflicts;
         }
       }
     }
-  }
+  };
 
   /**
    * Flatten the selection data into an array of arrays [sectionId, courseId]
@@ -65,20 +70,20 @@ Yacs.views.courses = function (target, params) {
    * Return an object containing the flattened array and the course id map.
    */
   var flattenSelections = function(selections) {
-    selectionsFlat = []
-    courseSelectionCounts = {}
+    var selectionsFlat = [];
+    var courseSelectionCounts = {};
 
-    for(var cid in selections) {
+    for (var cid in selections) {
       courseSelectionCounts[cid] = 0;
       var sidlen = selections[cid].length;
 
-      for(var i=0; i<sidlen; ++i) {
+      for (var i = 0; i < sidlen; ++i) {
         var sid = selections[cid][i];
         selectionsFlat.push([sid, cid]);
         courseSelectionCounts[cid]++;
       }
-
     }
+
     // then sort selectionsFlat by ascending order of sid
     // this could be improved with an optimized k-merge of the sectionId arrays, TODO
     selectionsFlat.sort(function(sidcid1, sidcid2) {
@@ -87,37 +92,53 @@ Yacs.views.courses = function (target, params) {
     });
     return {
       'selectionsFlat': selectionsFlat,
-      'courseSelectionCounts': courseSelectionCounts,
+      'courseSelectionCounts': courseSelectionCounts
     };
   };
 
-  /** Given a section ID, the course ID of the course the section is associated with,
-   * the values returned from flattenSelections, (and data in the conflicts cache),
+  /** Given a section ID,
+   * the output of flattenSelections, (and data in the conflicts cache),
    * return a boolean of whether this section has any conflicts with current selections.
    */
-  var doesConflict = function(sectId, courseId, selectionsFlat, courseSelectionCounts) {
-    if(! (sectId in Yacs.cache.conflicts)) {
+  var doesConflict = function(sectId, flattenedSelections) {
+    var selectionsFlat = flattenedSelections.selectionsFlat;
+    var courseSelectionCounts = {};
+
+    /* this decrements the numbers in course selection counts, so make a deep copy
+     * of flattenedSelections.courseSelectionCount.
+     */
+    for (var key in flattenedSelections.courseSelectionCounts) {
+      courseSelectionCounts[key] = flattenedSelections.courseSelectionCounts[key];
+    }
+
+    flattenedSelections.courseSelectionCounts;
+    if (!(sectId in Yacs.cache.conflicts)) {
       // can't do anything, not going to ask the API for information
       return false;
     }
+
     // ASSUMPTIONS:
     // Section IDs in the flattened selections object and conflicts list are in increasing numeric order.
     // At least one of the arrays contains integer section IDs. This breaks if both are strings.
 
     var conflicts = Yacs.cache.conflicts[sectId];
-    var i=0, j=0;
-    var imax = conflicts.length, jmax = selectionsFlat.length;
-    while(i < imax && j < jmax) {
+    var i = 0;
+    var j = 0;
+    var imax = conflicts.length;
+    var jmax = selectionsFlat.length;
+    while (i < imax && j < jmax) {
       // remember, selectionsFlat contains Array[2]s containing a section id and a course id
       var selectedSectionId = selectionsFlat[j][0];
       var selectedCourseId = selectionsFlat[j][1];
-      if(conflicts[i] < selectedSectionId)
+      if (conflicts[i] < selectedSectionId) {
         ++i;
-      else if(conflicts[i] > selectedSectionId)
+      }
+      else if (conflicts[i] > selectedSectionId) {
         ++j;
-      else if(conflicts[i] == selectedSectionId) {
+      }
+      else if (conflicts[i] === selectedSectionId) {
         --courseSelectionCounts[selectedCourseId];
-        if(courseSelectionCounts[selectedCourseId] < 1) {
+        if (courseSelectionCounts[selectedCourseId] < 1) {
           // all sections for a single selected course conflict with this section
           // the function does not need to go any further
           return true;
@@ -126,6 +147,7 @@ Yacs.views.courses = function (target, params) {
         ++j;
       }
     }
+
     // if here, either the conflict array or the flat selections array has been exhausted
     return false;
 
@@ -161,42 +183,29 @@ Yacs.views.courses = function (target, params) {
   };
 
   /**
-   * Make a deep copy of the courseSelectionCounts object and return it.
-   */
-  var copyCounts = function(courseSelectionCounts) {
-    var output = {};
-    for(var key in courseSelectionCounts) {
-      output[key] = courseSelectionCounts[key];
-    }
-    return output;
-  };
-
-  /**
    * Update selected status (class) of sections and courses. If all open
    * sections of a course are selected, the course is considered selected.
    */
   var updateSelected = function () {
     // It would be a good idea for conflicts to optimize by checking only the course that
     // actually updated. Actually, why doesn't this already do that?
-    var selected = Yacs.user.getSelections();
-    flatObj = flattenSelections(selected);
-
-    each(target.querySelectorAll('course'), function (course) {
+    var flatObj = flattenSelections(Yacs.user.getSelections());
+    target.querySelectorAll('course').forEach(function (course) {
       var courseSelected = false;
       var sections = course.querySelectorAll('section');
       if (sections.length > 0) {
         courseSelected = true;
-        each(sections, function (section) {
+        sections.forEach(function (section) {
           // TODO optimize this next line somehow
           var sectionSelected = Yacs.user.hasSelection(section.dataset.id, course.dataset.id);
           section.classList.toggle('selected', sectionSelected);
 
-          // doesConflict modifies the data courseSelectionCounts passed into it, so do a deep copy of it
-          var hasConflict = doesConflict(section.dataset.id, selected, flatObj.selectionsFlat, copyCounts(flatObj.courseSelectionCounts));
+          var hasConflict = doesConflict(section.dataset.id, flatObj);
           section.classList.toggle('conflicts', hasConflict);
 
-          if (!sectionSelected && !section.classList.contains('closed'))
+          if (!sectionSelected && !section.classList.contains('closed')) {
             courseSelected = false;
+          }
         });
       }
       course.classList.toggle('selected', courseSelected);
