@@ -29,7 +29,18 @@ class Section < ActiveRecord::Base
   end
 
   def update_conflicts!
-    self.update_column :conflicts, self.class.compute_conflict_ids_for(self.id)
+    new_conflict_ids = self.class.compute_conflict_ids_for self.id
+    old_conflicts = Section.where(id: self.conflicts)
+    new_conflicts = Section.where(id: new_conflict_ids)
+    Section.transaction do
+      (old_conflicts - new_conflicts).each do |old_conflict|
+        old_conflict.update_column :conflicts, old_conflict.conflicts - [self.id]
+      end
+      (new_conflicts - old_conflicts).each do |new_conflict|
+        new_conflict.update_column :conflicts, new_conflict.conflicts | [self.id]
+      end
+      self.update_column :conflicts, new_conflict_ids
+    end
   end
 
   def sort_periods
