@@ -29,7 +29,7 @@ class Section < ActiveRecord::Base
   end
 
   def update_conflicts!
-    new_conflict_ids = self.class.compute_conflict_ids_for self.id
+    new_conflict_ids = self.class.compute_conflict_ids_for(self.id)
     old_conflicts = Section.where(id: self.conflicts)
     new_conflicts = Section.where(id: new_conflict_ids)
     Section.transaction do
