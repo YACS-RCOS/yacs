@@ -24,7 +24,8 @@ Yacs.views.schedules = function (target, params) {
   if ('section_ids' in params) {
     // if there are query parameters,
     // use them and ignore current selections
-    scheduleIDs = params.section_ids.split(',');
+    // also make them numbers, they are strings by default
+    scheduleIDs = params.section_ids.split(',').map(Number);
 
     // check if the current selections are not equivalent to the parameter selections
     // if so, this is a temporary schedule
