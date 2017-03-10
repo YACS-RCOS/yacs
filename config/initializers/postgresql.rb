@@ -19,8 +19,8 @@ procedures << <<-SQL
         j := 0;
         WHILE j < other_section.num_periods AND conflict_found = 'false' LOOP
           IF (this_section.periods_day[i] = other_section.periods_day[j]
-            AND ((this_section.periods_start[i] <= other_section.periods_start[j] AND this_section.periods_end[i] >= other_section.periods_start[j])
-            OR (this_section.periods_start[i] >= other_section.periods_start[j] AND this_section.periods_start[i] <= other_section.periods_end[j])))
+            AND ((this_section.periods_start[i] <= other_section.periods_start[j] AND this_section.periods_end[i] > other_section.periods_start[j])
+            OR (this_section.periods_start[i] >= other_section.periods_start[j] AND this_section.periods_start[i] < other_section.periods_end[j])))
           THEN
             conflict_ids := conflict_ids || other_section.id;
             conflict_found := 'true';
