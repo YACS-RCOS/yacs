@@ -47,6 +47,11 @@ Yacs.views.courses = function (target, params) {
    * @param {Object} data - The verbatim JSON object returned from the courses API.
    */
   var populateConflictsCache = function(data) {
+    // Javascript sorts numbers alphabetically, i.e. [1,10,100,1001,2] (-.-)
+    // Define a custom sort callback to avoid this.
+    var numericSort = function(a,b) {
+      return a - b;
+    }
     var courselen = data.courses.length;
     for (var i = 0; i < courselen; ++i) {
       var sectlen = data.courses[i].sections.length;
@@ -55,7 +60,7 @@ Yacs.views.courses = function (target, params) {
 
         // TODO some method of cache expiration
         if (!(id in Yacs.cache.conflicts)) {
-          Yacs.cache.conflicts[id] = data.courses[i].sections[j].conflicts;
+          Yacs.cache.conflicts[id] = data.courses[i].sections[j].conflicts.sort(numericSort);
         }
       }
     }
