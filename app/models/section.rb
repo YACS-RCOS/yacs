@@ -35,7 +35,7 @@ class Section < ActiveRecord::Base
     new_conflicts = Section.where(id: new_conflict_ids)
     Section.transaction do
       (old_conflicts - new_conflicts).each do |old_conflict|
-        old_conflict.update_column :conflicts, (old_conflict.conflicts - [self.id]).sort!
+        old_conflict.update_column :conflicts, old_conflict.conflicts - [self.id]
       end
       (new_conflicts - old_conflicts).each do |new_conflict|
         new_conflict.update_column :conflicts, (new_conflict.conflicts | [self.id]).sort!
