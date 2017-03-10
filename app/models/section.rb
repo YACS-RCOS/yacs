@@ -7,7 +7,8 @@ class Section < ActiveRecord::Base
   after_save :update_conflicts!, if: :periods_changed?
 
   def self.compute_conflict_ids_for id
-    find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN (SELECT(unnest(conflict_ids(#{id}))))").map(&:id)
+    find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
+      (SELECT(unnest(conflict_ids(#{id.to_i})))) ORDER BY ID").map(&:id)
   end
 
   def conflicts_with(section)
@@ -34,10 +35,10 @@ class Section < ActiveRecord::Base
     new_conflicts = Section.where(id: new_conflict_ids)
     Section.transaction do
       (old_conflicts - new_conflicts).each do |old_conflict|
-        old_conflict.update_column :conflicts, old_conflict.conflicts - [self.id]
+        old_conflict.update_column :conflicts, (old_conflict.conflicts - [self.id]).sort!
       end
       (new_conflicts - old_conflicts).each do |new_conflict|
-        new_conflict.update_column :conflicts, new_conflict.conflicts | [self.id]
+        new_conflict.update_column :conflicts, (new_conflict.conflicts | [self.id]).sort!
       end
       self.update_column :conflicts, new_conflict_ids
     end
