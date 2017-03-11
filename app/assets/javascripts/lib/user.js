@@ -58,11 +58,11 @@ Yacs.user = new function () {
    */
   self.getSelections = function () {
     var selections = getCookie('selections');
-    if(selections) {
+    if (selections) {
       try {
         selections = JSON.parse(selections);
       }
-      catch(error) {
+      catch (error) {
         // if parsing the cookie fails, silently discard selections
         // TODO: when error notices are implemented: create an error notice here
         self.clearSelections();
