@@ -161,35 +161,6 @@ Yacs.views.courses = function (target, params) {
     // if here, either the conflict array or the flat selections array has been exhausted
     return false;
 
-    /*
-    for(var cid in selections) {
-      var i=0, j=0;
-      var imax = selections[cid].length, jmax = conflicts.length;
-      var available_sections = imax;
-      while(i<imax && j < jmax) {
-        if(selections[cid][i] < conflicts[j]) {
-          ++i;
-        }
-        else if(selections[cid][i] > conflicts[j]) {
-          ++j;
-        }
-        else if(selections[cid][i] == conflicts[j]) {
-          ++i;
-          ++j;
-          --available_sections;
-        }
-        else {
-          // nan or some other bad comparison
-          // will infinite loop
-        }
-      }
-      if(available_sections < 1) {
-        // every selected section for this course conflicts with this section
-        // therefore this section "conflicts with selected courses"
-        return true;
-      }
-    }
-    */
   };
 
   /**
