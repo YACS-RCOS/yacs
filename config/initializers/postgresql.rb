@@ -14,10 +14,10 @@ procedures << <<-SQL
     FOR other_section IN SELECT * FROM sections WHERE sections.course_id != this_section.course_id
     LOOP
       conflict_found := 'false';
-      i := 0;
-      WHILE i < this_section.num_periods AND conflict_found = 'false' LOOP
-        j := 0;
-        WHILE j < other_section.num_periods AND conflict_found = 'false' LOOP
+      i := 1;
+      WHILE i <= this_section.num_periods AND conflict_found = 'false' LOOP
+        j := 1;
+        WHILE j <= other_section.num_periods AND conflict_found = 'false' LOOP
           IF (this_section.periods_day[i] = other_section.periods_day[j]
             AND ((this_section.periods_start[i] <= other_section.periods_start[j] AND this_section.periods_end[i] > other_section.periods_start[j])
             OR (this_section.periods_start[i] >= other_section.periods_start[j] AND this_section.periods_start[i] < other_section.periods_end[j])))
