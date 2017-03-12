@@ -18,8 +18,8 @@ class Section < ActiveRecord::Base
       j = 0
       while j < section.num_periods
         if (periods_day[i] == section.periods_day[j] \
-          && ((periods_start[i].to_i <= section.periods_start[j] && periods_end[i].to_i >= section.periods_start[j]) \
-          || (periods_start[i].to_i >= section.periods_start[j] && periods_start[i].to_i <= section.periods_end[j])))
+            && ((periods_start[i].to_i <= section.periods_start[j].to_i && periods_end[i].to_i >= section.periods_start[j].to_i) \
+            || (periods_start[i].to_i >= section.periods_start[j].to_i && periods_start[i].to_i <= section.periods_end[j].to_i)))
           return true
         end
         j += 1
