@@ -55,7 +55,12 @@ sections>section.selected {
 sections>section.closed, sections>section.closed:hover {
     color: #888;
 }
-
+section.conflicts, section.conflicts:hover {
+    color: #aaa;
+}
+section.conflicts>section-information {
+    text-decoration: line-through;
+}
 section-name {
     font-weight: 400;
 }
@@ -77,4 +82,26 @@ section-period {
 }
 period-day {
     font-weight: 400;
+}
+div.conflict-note {
+    margin-left:0.4em;
+    display:inline;
+    color:#000;
+}
+section:not(.conflicts)>div.conflict-note {
+    display:none;
+}
+span.conflict-img-center {
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+img.conflict-img {
+    display:inline-block;
+    vertical-align:middle;
+    width: 0.9em;
+}
+span.conflict-text {
+    font-size:75%;
+    color: #cf2c2c;
 }

@@ -9,6 +9,8 @@
 'use strict';
 
 Yacs.views.schedules = function (target, params) {
+  var self = this;
+
   // before doing anything, determine how to use the route
   // parameters to choose the section ids to be passed to the
   // API
@@ -16,24 +18,25 @@ Yacs.views.schedules = function (target, params) {
 
   // is this a temporary set of schedules? (i.e. accessed via a URL
   // rather than normal use, AND there are already sections selected)
-  var isTemporary = false;
+  self.isTemporary = false;
 
   // check for query parameters
   if ('section_ids' in params) {
     // if there are query parameters,
     // use them and ignore current selections
-    scheduleIDs = params.section_ids.split(',');
+    // also make them numbers, they are strings by default
+    scheduleIDs = params.section_ids.split(',').map(Number);
 
     // check if the current selections are not equivalent to the parameter selections
     // if so, this is a temporary schedule
-    if (!Yacs.helpers.arraysEquivalent(Yacs.user.getSelections().sort(), scheduleIDs.sort())) {
-      isTemporary = true;
+    if (!Yacs.helpers.arraysEquivalent(Yacs.user.getSelectionsAsArray().sort(), scheduleIDs.sort())) {
+      self.isTemporary = true;
     }
   }
   else {
     // if section_ids is not specified in params, use the cookie
     // to populate the scheduleIDs list
-    scheduleIDs = Yacs.user.getSelections();
+    scheduleIDs = Yacs.user.getSelectionsAsArray();
   }
 
   // initialize scheduleIndex at 0, unless explicitly specified in the query
@@ -43,7 +46,7 @@ Yacs.views.schedules = function (target, params) {
     scheduleIndex = parseInt(params.schedule_index);
   }
 
-  var templateParams = { 'temporary': isTemporary };
+  var templateParams = { 'temporary': self.isTemporary };
   Yacs.render(target, 'schedules', templateParams);
 
   var scheduleElement = target.querySelector('#schedule-container');
@@ -59,6 +62,14 @@ Yacs.views.schedules = function (target, params) {
   var replaceSelectionsButton = target.querySelector('#replace-selections-btn');
   var scheduleInstance = new Schedule(scheduleElement);
   var scheduleData = [];
+
+  /* Map of section IDs to course IDs from the schedule API.
+   * This is so that the replace button will work properly
+   * (on a temporary schedule, only section IDs are known from
+   * the params, and there isn't any information about which course
+   * IDs they correspond to. This information is present in the response
+   * from the schedule API, though, so they can be parsed out there.) */
+  self.sectionIDMap = {};
 
   /**
    * Convert military time string to minutes-since-midnight integer form.
@@ -93,8 +104,13 @@ Yacs.views.schedules = function (target, params) {
    * Translate schedules returned by the API into a displayable form.
    * For each schedule, convert period times to minutes-since-midnight form,
    * and collect the CRNs from each section.
-   * Additionally, determine the min star time and the max end time
-   * of all of the schedules.
+   *
+   * There are two major side effects in this function:
+   * 1. Determine the min start time and the max end time of all of the schedules.
+   * 2. Populate sectionIDMap. This is so a temporary schedule's Replace Selections
+   *    button can work properly by adding the relevant sections.
+   *    This only needs to happen when the schedule being shown is temporary.
+   *
    * @param {Object} schedules - The object containing all schedule information returned from the API.
    * @return {Object} An object containing: the schedules reformatted as lists of events and crns, and the start and end times of the schedule.
    */
@@ -128,6 +144,11 @@ Yacs.views.schedules = function (target, params) {
             'tooltip': section.course_name
           });
         });
+
+        // in a temporary schedule, add relevant id pairs to sectionIDMap
+        if (self.isTemporary) {
+          self.sectionIDMap[section.id] = section.course_id;
+        }
       });
       return {
         'events': events,
@@ -164,7 +185,7 @@ Yacs.views.schedules = function (target, params) {
     }
     else {
       showSchedule(-1);
-      if (Yacs.user.getSelections().length > 0) {
+      if (Yacs.user.getTotalSelections() > 0) {
         scheduleStatusElement.textContent = 'No schedules found :( Try removing some courses';
       }
       else {
@@ -183,12 +204,12 @@ Yacs.views.schedules = function (target, params) {
   var updateSchedules = function (selections) {
     var currSelections = selections;
     if (typeof selections === 'undefined') {
-      currSelections = Yacs.user.getSelections();
+      currSelections = Yacs.user.getSelectionsAsArray();
     }
     if (currSelections.length > 0) {
       Yacs.models.schedules.query(
         {
-          'section_ids': currSelections,
+          'section_ids': currSelections.join(','),
           'show_periods': true
         },
         function(data, success) {
@@ -229,7 +250,7 @@ Yacs.views.schedules = function (target, params) {
   var copyScheduleLink = function() {
     var targetUrl = window.location.protocol + '//' +
       window.location.host +
-      '/#/schedules?section_ids=' + Yacs.user.getSelections().join(',') +
+      '/#/schedules?section_ids=' + Yacs.user.getSelectionsAsArray().join(',') +
       '&schedule_index=' + scheduleIndex;
 
     // js hack to create and copy from a phantom element
@@ -275,11 +296,15 @@ Yacs.views.schedules = function (target, params) {
    * with the ones from the params, then refresh the view.
    */
   var replaceSelections = function() {
-    if (!isTemporary) {
+    if (!self.isTemporary) {
       return;
     }
     Yacs.user.clearSelections();
-    Yacs.user.addSelections(scheduleIDs);
+    for (var sid in self.sectionIDMap) {
+      var cid = self.sectionIDMap[sid];
+      Yacs.user.addSelection(sid, cid, false);
+    }
+    self.sectionIDMap = {};
     Yacs.views.schedules(target, {});
   };
 
@@ -329,8 +354,8 @@ Yacs.views.schedules = function (target, params) {
    * Do not do this if the schedule is temporary; having a deselection list
    * in that case is confusing.
    */
-  var selections = Yacs.user.getSelections();
-  if (!isTemporary && selections.length > 0) {
+  var selections = Yacs.user.getSelectionsAsArray();
+  if (!self.isTemporary && selections.length > 0) {
     Yacs.views.courses(selectionElement, { 'section_id': selections });
   }
 
