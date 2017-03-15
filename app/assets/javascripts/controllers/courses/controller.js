@@ -27,11 +27,11 @@ Yacs.views.courses = function (target, params) {
 
     Yacs.on('click', target.querySelectorAll('course-info'), function (courseInfo) {
       var cid = courseInfo.parentElement.dataset.id;
-      if (Yacs.user.courseIsSelected(cid)) {
+      if (courseInfo.parentElement.classList.contains('selected')) {
         Yacs.user.removeCourse(cid);
       }
       else {
-        var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed)');
+        var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed):not(.conflicts)');
 
         // TODO: optimize
         Yacs.user.addMultipleSelections(sections.map(function (section) {
@@ -184,7 +184,7 @@ Yacs.views.courses = function (target, params) {
           var hasConflict = doesConflict(section.dataset.id, flatObj);
           section.classList.toggle('conflicts', hasConflict);
 
-          if (!sectionSelected && !section.classList.contains('closed')) {
+          if (!sectionSelected && !section.classList.contains('closed') && !section.classList.contains('conflicts')) {
             courseSelected = false;
           }
         });
