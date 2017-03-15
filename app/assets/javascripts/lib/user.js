@@ -61,6 +61,9 @@ Yacs.user = new function () {
     if (selections) {
       try {
         selections = JSON.parse(selections);
+        if (typeof selections !== 'object') {
+          throw 'Invalid Cookie';
+        }
       }
       catch (error) {
         // if parsing the cookie fails, silently discard selections
