@@ -46,4 +46,30 @@ describe 'Schools API' do
       json_validate_schools(School.all, true)
     end
   end
+
+  context 'There is a school to be updated' do
+    it 'updates the name for school' do
+      school = FactoryGirl.create(:school, name: 'Stanford University')
+      school_params={
+        school:{
+          name: 'Stanford University'
+        }
+      }
+      put "/api/v5/schools/#{school.id}", school_params
+      school.reload
+      expect(school.name).to eq 'Stanford University'
+    end
+
+    it 'deletes a school' do
+      school = FactoryGirl.create(:school)
+      delete "/api/v5/schools/#{school.id}"
+      expect(response.status).to eq 204
+    end
+
+    it 'school id not found for deletion' do
+      school = FactoryGirl.create(:school)
+      delete "/api/v5/schools/#{5000000000}"
+      expect(response.status).to eq 404
+    end
+  end
 end
