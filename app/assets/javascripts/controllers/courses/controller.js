@@ -27,11 +27,11 @@ Yacs.views.courses = function (target, params) {
 
     Yacs.on('click', target.querySelectorAll('course-info'), function (courseInfo) {
       var cid = courseInfo.parentElement.dataset.id;
-      if (courseInfo.parentElement.classList.contains('selected')) {
+      if (Yacs.user.courseIsSelected(cid)) {
         Yacs.user.removeCourse(cid);
       }
       else {
-        var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed):not(.conflicts)');
+        var sections = courseInfo.parentElement.querySelectorAll('section:not(.closed)');
 
         // TODO: optimize
         Yacs.user.addMultipleSelections(sections.map(function (section) {
@@ -74,7 +74,8 @@ Yacs.views.courses = function (target, params) {
    * in their normal format.
    * Return an object containing the flattened array and the course id map.
    * @param {Object} selections - The selections object returned verbatim from Yacs.user.getSelections().
-   * @return {Object} The selection data converted into an array of 2-element arrays, each with a section id and its associated course id, and a map of each course ID to its number of selected sections.
+   * @return {Object} The selection data converted into an array of 2-element arrays, each with a section
+   * id and its associated course id, and a map of each course ID to its number of selected sections.
    */
   var flattenSelections = function(selections) {
     var selectionsFlat = [];
@@ -172,24 +173,17 @@ Yacs.views.courses = function (target, params) {
     // actually updated. Actually, why doesn't this already do that?
     var flatObj = flattenSelections(Yacs.user.getSelections());
     target.querySelectorAll('course').forEach(function (course) {
-      var courseSelected = false;
       var sections = course.querySelectorAll('section');
       if (sections.length > 0) {
-        courseSelected = true;
         sections.forEach(function (section) {
           // TODO optimize this next line somehow
           var sectionSelected = Yacs.user.hasSelection(section.dataset.id, course.dataset.id);
           section.classList.toggle('selected', sectionSelected);
-
           var hasConflict = doesConflict(section.dataset.id, flatObj);
           section.classList.toggle('conflicts', hasConflict);
-
-          if (!sectionSelected && !section.classList.contains('closed') && !section.classList.contains('conflicts')) {
-            courseSelected = false;
-          }
         });
       }
-      course.classList.toggle('selected', courseSelected);
+      course.classList.toggle('selected', Yacs.user.courseIsSelected(course.dataset.id));
     });
   };
 
