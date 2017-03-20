@@ -74,8 +74,7 @@ Yacs.views.courses = function (target, params) {
    * in their normal format.
    * Return an object containing the flattened array and the course id map.
    * @param {Object} selections - The selections object returned verbatim from Yacs.user.getSelections().
-   * @return {Object} The selection data converted into an array of 2-element arrays, each with a section
-   * id and its associated course id, and a map of each course ID to its number of selected sections.
+   * @return {Object} The selection data converted into an array of 2-element arrays, each with a section id and its associated course id, and a map of each course ID to its number of selected sections.
    */
   var flattenSelections = function(selections) {
     var selectionsFlat = [];
@@ -161,7 +160,6 @@ Yacs.views.courses = function (target, params) {
 
     // if here, either the conflict array or the flat selections array has been exhausted
     return false;
-
   };
 
   /**
