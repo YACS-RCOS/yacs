@@ -62,7 +62,7 @@ Yacs.user = new function () {
       try {
         selections = JSON.parse(selections);
         if (typeof selections !== 'object') {
-          throw 'Invalid Cookie';
+          throw new Error('Invalid Cookie');
         }
       }
       catch (error) {
