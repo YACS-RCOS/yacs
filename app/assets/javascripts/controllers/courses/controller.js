@@ -160,7 +160,6 @@ Yacs.views.courses = function (target, params) {
 
     // if here, either the conflict array or the flat selections array has been exhausted
     return false;
-
   };
 
   /**
@@ -172,24 +171,17 @@ Yacs.views.courses = function (target, params) {
     // actually updated. Actually, why doesn't this already do that?
     var flatObj = flattenSelections(Yacs.user.getSelections());
     target.querySelectorAll('course').forEach(function (course) {
-      var courseSelected = false;
       var sections = course.querySelectorAll('section');
       if (sections.length > 0) {
-        courseSelected = true;
         sections.forEach(function (section) {
           // TODO optimize this next line somehow
           var sectionSelected = Yacs.user.hasSelection(section.dataset.id, course.dataset.id);
           section.classList.toggle('selected', sectionSelected);
-
           var hasConflict = doesConflict(section.dataset.id, flatObj);
           section.classList.toggle('conflicts', hasConflict);
-
-          if (!sectionSelected && !section.classList.contains('closed')) {
-            courseSelected = false;
-          }
         });
       }
-      course.classList.toggle('selected', courseSelected);
+      course.classList.toggle('selected', Yacs.user.courseIsSelected(course.dataset.id));
     });
   };
 
