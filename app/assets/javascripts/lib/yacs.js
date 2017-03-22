@@ -1,22 +1,5 @@
 'use strict';
 
-/* TODO: REMOVE THESE WHEN ESLINTING IS FINISHED */
-
-window.each = function (arr, func) {
-  if (arr.length === undefined)
-    arr = [arr];
-  for (var i = 0; i < arr.length; ++i)
-    func(arr[i]);
-};
-
-window.map = function (arr, func) {
-  var mapped = [];
-  each(arr, function (itm) {
-    mapped.push(func(itm));
-  });
-  return mapped;
-};
-
 /**
  * @namespace
  * @description
@@ -76,92 +59,7 @@ window.Yacs = new function () {
 
   self.models = { };
 
-  /**
-   * @constructor Model
-   * @description
-   * Represents a collection of objects obtained from the YACS API
-   * @param {String} name - pluralized name of collection
-   * @param {Object} [options] - extra properties of the collection
-   * @param {String} [options.has_many] - name of one-to-many association
-   * @memberOf Yacs
-   */
-  var Model = function (name, initOptions) {
-    var options = initOptions || {};
-    var self = this;
-    var childParam = 'show_' + options.has_many;
-
-    /**
-     * Stores preloaded members of the collection for synchronous access
-     * @type {Object}
-     */
-    self.store = {
-      all: [],
-      id: {}
-    };
-    self.preloaded = false;
-
-    /**
-     * Makes request to YACS API
-     * @param  {Object} params - query params as hash
-     * @param  {Function} callback - callback with data and success parameters
-     * @return {undefined}
-     * @memberOf Yacs.Model
-     */
-    self.query = function (params, callback) {
-      Yacs.api(name, params, callback);
-    };
-
-    /**
-     * Preloads the full collection into temporary storage to allow synchronous access
-     * @param  {Function} callback - callback
-     * @return {undefined}
-     * @memberOf Yacs.Model
-     */
-    self.preload = function (callback) {
-      var params = {};
-      if (options.has_many) {
-        params[childParam] = true;
-      }
-      self.query(params, function (data, success) {
-        if (success) {
-          var models = data[name];
-          for (var m in models) {
-            self.store.all = models;
-            self.store.id[models[m].id] = models[m];
-            if (options.has_many) {
-              var children = [];
-              for (var n in models[m][options.has_many]) {
-                var child = models[m][options.has_many][n];
-                Yacs.models[options.has_many].store.id[child.id] = child;
-                children.push(child);
-              }
-              Yacs.models[options.has_many].store.all = children;
-            }
-          }
-          self.preloaded = true;
-        }
-        if (callback) {
-          callback(data, success);
-        }
-      });
-    };
-  };
-
-  /**
-   * Helper method to create and add collections to externally accessible models namespace
-   * @param {String} name - pluralized name of collection
-   * @param {Object} [options] - extra properties of the collection
-   * @memberOf Yacs
-   */
-  var addModel = function (name, options) {
-    self.models[name] = new Model(name, options);
-    return self.models[name];
-  };
-
-  addModel('schools', { has_many: 'departments' });
-  addModel('departments');
-  addModel('courses');
-  addModel('schedules');
+  // models defined and added in lib/model.js
 
 /* ======================================================================== *
     DOM
@@ -186,14 +84,23 @@ window.Yacs = new function () {
   };
 
   /**
-   * @param  {String} eventType - name of event
-   * @param  {HTMLElement} elem - DOM element
+   * Adds an event listener to the given element or list of elements.
+   * @param  {String} eventType - type of event, "click" or "keydown", etc
+   * @param  {HTMLElement} elem - DOM element or NodeList
    * @param  {Function} callback - callback
    * @return {undefined}
    * @memberOf Yacs
    */
   self.on = function (eventType, elem, callback) {
-    each(elem, function (e) {
+    /* elem may be a NodeList returned by querySelector, a single
+     * element, or just document. If it does not have a defined length,
+     * convert it to a single-element array so forEach will work on it.
+     */
+    var elements = elem;
+    if (typeof elements.length === 'undefined') {
+      elements = [elements];
+    }
+    elements.forEach(function (e) {
       e.addEventListener(eventType, function (event) {
         callback(e, event);
       });
@@ -212,6 +119,7 @@ window.Yacs = new function () {
 Yacs.onload(function () {
   Yacs.views.root(document.getElementById('content'));
 });
+
 
 /* ======================================================================== *
     any other top level code
