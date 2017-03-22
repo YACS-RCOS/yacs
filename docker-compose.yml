@@ -12,8 +12,6 @@ services:
     restart: unless-stopped
     expose:
       - "6379"
-    volumes:
-      - ./data/redis/:/var/lib/redis/data/
 
   nginx:
     build: ./nginx
