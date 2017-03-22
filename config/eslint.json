@@ -1,3 +1,6 @@
+// YACS ESLint config file.
+// Comments are not part of the JSON standard, but ESLint doesn't appear to care about them.
+// Minify this file if you have trouble parsing it.
 {
   "ecmaFeatures": {},
   "parser": "espree",
@@ -9,6 +12,15 @@
     "jasmine": false
   },
 
+  /*
+   * 0 = ignore, stay silent even if rule is violated
+   * 1 = throw warning
+   * 2 = throw error
+   * The general rule of picking between warnings and errors is that warnings
+   * should be used only when it's pretty certain that a violation would not
+   * cause any problems (i.e. the rule that strings must use single quotes).
+   * If it has even a low chance of causing a problem, make it an error.
+   */
   "rules": {
     "no-alert": 2,
     "no-array-constructor": 2,
@@ -27,19 +39,22 @@
     "no-dupe-args": 2,
     "no-else-return": 2,
     "no-empty": 2,
-    "no-empty-function": 2,
+    "no-empty-function": 1,
     "no-eq-null": 2,
     "no-eval": 2,
     "no-ex-assign": 2,
     "no-extend-native": 2,
     "no-extra-bind": 2,
     "no-extra-boolean-cast": 2,
-    "no-extra-parens": 0,
-    "no-extra-semi": 2,
+    // no extra parens except for binary expressions
+    // to preserve compatibility with no-mixed-operators
+    "no-extra-parens": [1, "all", {"nestedBinaryExpressions": false}],
+    "no-extra-semi": 1,
     "no-fallthrough": 2,
-    "no-floating-decimal": 0,
+    "no-floating-decimal": 1,
     "no-func-assign": 2,
     "no-implied-eval": 2,
+    // Inline comments are OK. We have many of them and like using them.
     "no-inline-comments": 0,
     "no-inner-declarations": [2, "functions"],
     "no-invalid-regexp": 2,
@@ -50,13 +65,18 @@
     "no-lone-blocks": 2,
     "no-lonely-if": 2,
     "no-loop-func": 2,
-    "no-magic-numbers": [1, { "ignore": [0, -1] }],
+    // We'd really, really like to have no-magic-numbers on. Sadly, YACS
+    // uses so many of them, mostly relating to time, that it just doesn't
+    // make sense to have on, with enough warnings to clog up the output.
+    "no-magic-numbers": 0,
     "no-mixed-requires": [0, false],
-    "no-mixed-spaces-and-tabs": [2, false],
+    "no-mixed-spaces-and-tabs": 2,
     "no-mixed-operators": 2,
-    "no-multi-spaces": 2,
+    // allow multiple spaces when declaring variables (to let certain blocks or = be aligned)
+    "no-multi-spaces": [1, { "exceptions": { "VariableDeclarator": true } }],
     "no-multi-str": 2,
-    "no-multiple-empty-lines": [0, {"max": 2}],
+    // allow at most 2 empty lines
+    "no-multiple-empty-lines": [1, {"max": 2}],
     "no-native-reassign": 2,
     "no-negated-condition": 2,
     "no-negated-in-lhs": 2,
@@ -64,35 +84,29 @@
     "no-new": 2,
     "no-new-func": 2,
     "no-new-object": 2,
-    "no-new-require": 0,
+    "no-new-require": 2,
     "no-new-wrappers": 2,
     "no-obj-calls": 2,
     "no-octal": 2,
     "no-octal-escape": 2,
     "no-param-reassign": 2,
-    "no-path-concat": 0,
     "no-plusplus": 0,
-    "no-process-env": 0,
-    "no-process-exit": 2,
     "no-proto": 2,
     "no-redeclare": 2,
-    "no-regex-spaces": 2,
-    "no-reserved-keys": 0,
-    "no-restricted-modules": 0,
+    "no-regex-spaces": 1,
     "no-return-assign": 2,
     "no-return-await": 2,
     "no-script-url": 2,
-    "no-self-assign": 1,
-    "no-self-compare": 0,
+    "no-self-assign": 2,
+    "no-self-compare": 2,
     "no-sequences": 2,
     "no-shadow": 2,
     "no-shadow-restricted-names": 2,
-    "no-space-before-semi": 0,
     "no-spaced-func": 2,
     "no-sparse-arrays": 2,
-    "no-sync": 0,
     "no-tabs": 2,
     "no-template-curly-in-string": 2,
+    // Whether we want to have ternaries or not is debatable.
     "no-ternary": 0,
     "no-trailing-spaces": 2,
     "no-throw-literal": 2,
@@ -101,27 +115,36 @@
     "no-undefined": 2,
     "no-underscore-dangle": 2,
     "no-unexpected-multiline": 2,
-    "no-unneeded-ternary": 2,
+    "no-unneeded-ternary": 1,
     "no-unreachable": 2,
     "no-unsafe-finally": 2,
     "no-unsafe-negation": 2,
     "no-unused-expressions": 2,
-    "no-unused-vars": [1, {"vars": "all", "args": "all"}],
+    "no-unused-vars": [1, {"vars": "all", "args": "after-used"}],
     "no-use-before-define": 2,
     "no-useless-call": 2,
     "no-useless-concat": 2,
     "no-useless-escape": 2,
     "no-useless-return": 2,
-    "no-void": 0,
+    "no-void": 2,
+    // When we can finally support ECMAScript 6 completely, all uses of var
+    // should be switched over to let, and this rule should be turned on.
+    // Until then, it has to remain off.
     "no-var": 0,
-    "no-warning-comments": [0, { "terms": ["todo", "fixme", "xxx"], "location": "start" }],
+    // it'd be nice to warn on TODOs in comments, but we're kind of in the habit
+    // of sticking them on things that will get done later.
+    "no-warning-comments": 0,
     "no-whitespace-before-property": 2,
     "no-with": 2,
 
+    // We're not currently concerned with consistency of bracket spacing.
+    "array-bracket-spacing": 0,
     "array-callback-return": 2,
     "block-spacing": 1,
     "block-scoped-var": 2,
+    // stroustrup: open brace on same line as if/for/whatever expression, closing brace on its own line
     "brace-style": [1, "stroustrup"],
+    // note that constants (all uppercase) can still contain underscores
     "camelcase": [2, { "properties": "always" }],
     "comma-dangle": [1, "never"],
     "comma-spacing": 2,
@@ -131,55 +154,87 @@
     "consistent-this": [1, "self"],
     "curly": [2, "all"],
     "default-case": 2,
-    "dot-notation": [2, { "allowKeywords": true }],
+    // pattern allows for snake case things to be put in brackets, like API parameters.
+    "dot-notation": [2, { "allowPattern": "^[a-z]+(_[a-z]+)+$" }],
     "eol-last": [1, "always"],
     "eqeqeq": 2,
+    // could have this as warning with the "never" option, but it's possible someone
+    // might want to use function names to debug stuff in the future
     "func-names": 0,
     "func-style": [1, "expression"],
-    "generator-star": 0,
+    // We don't currently use any generators.
+    "generator-star-spacing": 0,
+    // This SHOULD be turned on, but Yacs.Model currently uses some extremely dense
+    // for in statements to which this rule can't easily be applied.
     "guard-for-in": 0,
-    "handle-callback-err": 0,
     "indent": [1, 2],
     "key-spacing": [1, { "beforeColon": false, "afterColon": true }],
     "keyword-spacing": 1,
     "linebreak-style": [1, "unix"],
     "lines-around-comment": [1, { "beforeLineComment": true, "beforeBlockComment": true, "allowBlockStart": true}],
     "max-depth": [1, 4],
+    // Max length is a nice thing that will never happen.
     "max-len": [0, 80],
-    "max-nested-callbacks": [0, 2],
-    "max-params": [0, 3],
+    "max-nested-callbacks": [1, { "max": 4 }],
+    "max-params": [1, { "max": 3 }],
+    // We don't particularly want to limit function length, since all the
+    // files are just big functions.
     "max-statements": [0, 10],
     "new-cap": 2,
     "new-parens": 2,
+    // Enforce multiline objects with 2 or more properties.
+    // min-properties with 1 works in some cases, but looks
+    // really awkward elsewhere.
     "object-curly-newline": [1, { "multiline": true, "minProperties": 2 } ],
+    "object-curly-spacing": [1, "always"],
     "object-property-newline": 1,
-    "one-var": 0,
+    // Disallow declaring multiple things on the same line.
+    "one-var": [1, "never"],
+    // This is also a nice rule, but there's a couple places that have nice
+    // parallel construction that relies on x = x + foo being there, so it's off.
     "operator-assignment": [0, "always"],
     "operator-linebreak": [1, "after"],
     "padded-blocks": [1, "never"],
-    "quote-props": 0,
+    // For any object, disallow quotes around properties, unless one or more
+    // properties are reserved words, in which case force all properties to
+    // be quoted.
+    "quote-props": 1,
     "quotes": [1, "single"],
+    // we don't have any strong feelings about forcing this right now
     "radix": 0,
+    "require-jsdoc": 1,
     "semi": 2,
+    // Spaces are not allowed before semicolons, and there must be
+    // some whitespace after semicolons.
     "semi-spacing": [2, {"before": false, "after": true}],
+    // Sorting variables alphabetically makes you do a lot of unnecessary work
     "sort-vars": 0,
-    "space-after-function-name": [0, "never"],
-    "space-after-keywords": [0, "always"],
     "space-before-blocks": [1, "always"],
-    "space-before-function-paren": [0, "always"],
-    "space-in-brackets": [0, "never"],
+    // enforce spaces before function parens, except for anonymous functions
+    // which can either have the space or not, it doesn't matter.
+    "space-before-function-paren": [1, { "anonymous": "ignore" }],
+    // we don't particularly care about parenthesis spacing
     "space-in-parens": [0, "always"],
     "space-infix-ops": 2,
-    "space-unary-ops": [0, { "words": true, "nonwords": false }],
+    "space-unary-ops": [1, { "words": true, "nonwords": false }],
+    // application.js contains "//=" comments, so count //= as a valid comment
     "spaced-comment": [1, "always", { "markers": ["="]}],
-    "spaced-line-comment": [0, "always"],
+    // require global scope 'use strict'; in all files
     "strict": [2, "global"],
     "use-isnan": 2,
-    "valid-jsdoc": 0,
+    // JSdocs should use @return instead of @returns,
+    // and @param instead of @arg or @argument.
+    // Don't require a @return if the function has no return statement.
+    // Description must match regex .+ (i.e. must be present).
+    "valid-jsdoc": [1, { "prefer": { "arg": "param", "argument": "param", "returns": "return" }, "requireReturn": false, "matchDescription": ".+" }],
     "valid-typeof": 2,
+    // Enabling this would be annoying since it means you can't have simple
+    // for(var i=...) statements because you would have to declare i at the
+    // top of the parent scope.
     "vars-on-top": 0,
     "wrap-iife": [2, "any", { "functionPrototypeMethods": false }],
-    "wrap-regex": 0,
+    "wrap-regex": 2,
+    // enforce literals as RHS of comparisons
     "yoda": [2, "never"]
   },
   "globals": {
@@ -187,6 +242,10 @@
     "Yacs": true,
     "document": true,
     "Handlebars": true,
-    "XMLHttpRequest": true
+    "HandlebarsTemplates": true,
+    "XMLHttpRequest": true,
+    "Schedule": true,
+    // should be removed pending future browser support
+    "NodeList": true
   }
 }
