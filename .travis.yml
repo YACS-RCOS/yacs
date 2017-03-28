@@ -2,6 +2,7 @@ sudo: required
 
 services:
   - docker
+  - npm
 
 env:
   - RAILS_ENV=test
@@ -15,3 +16,8 @@ install:
 script:
   - docker-compose run web bundle exec rake db:create db:migrate
   - bin/yacs-test
+  - npm install -g eslint
+
+script:
+  - bin/yacs-test
+  - eslint app/assets/javascripts/ vendor/assets/javascripts/schedule --config config/eslint.json --max-warnings 12

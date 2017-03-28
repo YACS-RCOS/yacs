@@ -34,5 +34,8 @@
 \.tern-port
 
 /coverage/
+
 solr/*
 /data/**/
+
+.env
