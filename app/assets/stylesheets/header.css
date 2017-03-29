@@ -8,6 +8,10 @@ nav#headerbar {
     white-space: nowrap;
 }
 
+nav#headerbar a {
+    color:inherit;
+}
+
 table#navtable {
     width:100%;
     height:100%;
