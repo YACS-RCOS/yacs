@@ -1,2 +1,2 @@
-import Hello from './hello.jsx';
+import Root from './root.jsx';
 
