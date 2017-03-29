@@ -1,10 +1,11 @@
 article#about {
-    text-align:center;
+    text-align:left;
     width: 60%;
     min-width:400px;
     margin: 0 auto;
 }
 article#about h1 {
+    text-align:center;
     padding:15px 0;
     font-size:35px;
 }
@@ -17,20 +18,40 @@ article#about h2 {
     padding:10px 0;
     margin-bottom:8px;
 }
-article#about h2.bottomrule {
+article#about .bottomrule {
     border-bottom:1px #b0b0b0 solid;
 }
 article#about h3 {
     text-align:left;
     font-size:20px;
 }
-article#about table {
-    margin: 8 auto;
-    border:1px black solid;
+article#about ul {
+    list-style-type:none;
+    padding:0;
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
 }
-article#about table tr {
-
+article#about ul li {
+    display:block;
+    margin-bottom: 0.5em;
 }
-article#about table tr td {
-    width:200px;
+article#about ul li developer {
+    display: table-row;
+}
+article#about img.devavatar {
+    display:table-cell;
+    border:3px #000 solid;
+    width:5em;
+}
+article#about div.devsummary {
+    display:table-cell;
+    padding-left:0.8em;
+    vertical-align:middle;
+}
+article#about p {
+    margin-bottom:auto;
+}
+article#about p.years {
+    font-style: italic;
 }
