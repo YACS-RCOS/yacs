@@ -8,7 +8,10 @@ body {
 
 a {
     text-decoration: none;
-    color: inherit;
+    /* by default, "text" links should be this shade of red -
+     * others, like in the header and departments list, are
+     * special cases. */
+    color: #993333;
 }
 
 div#content {
