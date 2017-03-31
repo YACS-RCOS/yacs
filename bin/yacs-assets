@@ -1,5 +1,5 @@
 #!/bin/bash
-cd $(dirname `readlink -f "$0"`)/../
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
 
 docker-compose run web rake assets:precompile && rm -f public/index.html
 chmod -f a+r public/* || :
