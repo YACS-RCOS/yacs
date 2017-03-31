@@ -1,5 +1,5 @@
 #!/bin/bash
-cd $(dirname `readlink -f "$0"`)/../nginx/ssl
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../nginx/ssl
 
 openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout privkey.pem -out cert.pem -subj '/CN=localhost'
 
