@@ -23,9 +23,8 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
     head :no_content
   end
   private 
-
-    def department_params
-      params.require(:department).permit(:code, :name, :school_id)
-    end 
+  def department_params
+    params.require(:department).permit(:code, :name, :school_id)
+  end 
 
 end

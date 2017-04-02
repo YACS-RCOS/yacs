@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       resources :departments, only: [:index, :update, :destroy, :create]
       resources :courses,     only: [:index, :update, :destroy, :create]
       resources :sections,    only: [:index, :update, :destroy, :create]
-      resources :schedules,   only: [:index, :update, :destroy, :create]
+      resources :schedules,   only: [:index]
     end
   end  
 
