@@ -19,9 +19,8 @@ class Api::V5::SectionsController < Api::V5::ApiController
     head :no_content
   end
   private 
-
-    def section_params
-      params.require(:section).permit(:name, :crn, :seats, :seats_taken, 
-        :instructors, :num_periods, :course_id)
-    end 
+  def section_params
+    params.require(:section).permit(:name, :crn, :seats, :seats_taken, 
+      :instructors, :num_periods, :course_id)
+  end 
 end

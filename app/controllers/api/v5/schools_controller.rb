@@ -14,17 +14,17 @@ class Api::V5::SchoolsController < Api::V5::ApiController
   end
 
   def update
-  	School.find(params[:id]).update!(school_params)
-  	head :no_content
+    School.find(params[:id]).update!(school_params)
+    head :no_content
   end
 
   def destroy
-  	School.find(params[:id]).destroy!
-  	head :no_content
+    School.find(params[:id]).destroy!
+    head :no_content
   end
 
   private
-  	def school_params
-  		params.require(:school).permit(:name)
-  	end
+  def school_params
+  	params.require(:school).permit(:name)
+  end
 end
