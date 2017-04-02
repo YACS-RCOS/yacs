@@ -8,13 +8,18 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
     end
   end
 
+  def create
+    Department.create!(department_params)
+    head :no_content
+  end
+
   def update
     Department.find(params[:id]).update!(department_params)
     head :no_content
   end
 
   def destroy
-    Department.find(params[:id]).destroy
+    Department.find(params[:id]).destroy!
     head :no_content
   end
   private 

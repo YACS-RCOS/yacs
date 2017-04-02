@@ -47,17 +47,33 @@ describe 'Schools API' do
     end
   end
 
+  context 'There is a school to be created' do
+    it 'creates a school' do
+     # school = FactoryGirl.create(:school, name: 'Harvard University')
+      school_params={
+        school:{
+          name: 'Harvard University'
+        }
+      }
+      post "/api/v5/schools/", school_params
+      expect(response).to be_success
+      created_school=School.find_by(name: 'Harvard University')
+     # school.reload
+      expect(created_school.name).to eq 'Harvard University'
+    end
+  end
+
   context 'There is a school to be updated' do
     it 'updates the name for school' do
       school = FactoryGirl.create(:school, name: 'Stanford University')
       school_params={
         school:{
-          name: 'Stanford University'
+          name: 'MIT'
         }
       }
       put "/api/v5/schools/#{school.id}", school_params
       school.reload
-      expect(school.name).to eq 'Stanford University'
+      expect(school.name).to eq 'MIT'
     end
 
     it 'deletes a school' do
@@ -72,4 +88,5 @@ describe 'Schools API' do
       expect(response.status).to eq 404
     end
   end
+  
 end

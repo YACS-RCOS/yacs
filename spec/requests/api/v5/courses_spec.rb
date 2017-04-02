@@ -69,6 +69,26 @@ describe 'Courses API' do
     end
   end
 
+  context 'There is a course to be created' do
+    it 'creates a course' do
+      department = FactoryGirl.create(:department)
+      course_params={
+        course: {
+          name: 'Principles of Software',
+          number: 2600,
+          min_credits: 1,
+          max_credits: 4,
+          description: 'XXXXXX',
+          department_id: department.id
+        }
+      }
+      post "/api/v5/courses/", course_params
+      expect(response).to be_success
+      created_course=Course.find_by(name: 'Principles of Software', number: 2600)
+      expect(created_course).to be_present
+    end
+  end
+
   context 'There is a course to be updated' do
     it 'updates the maximum number of credits for the course'do
       course = FactoryGirl.create(:course, max_credits: 4)

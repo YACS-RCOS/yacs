@@ -3,13 +3,19 @@ class Api::V5::SectionsController < Api::V5::ApiController
     filter_model Section
     filter_any :id, :course_id, :name, :crn
   end
+
+  def create
+    Section.create!(section_params)
+    head :no_content
+  end
+
   def update
     Section.find(params[:id]).update!(section_params)
     head :no_content
   end
 
   def destroy
-    Section.find(params[:id]).destroy
+    Section.find(params[:id]).destroy!
     head :no_content
   end
   private 

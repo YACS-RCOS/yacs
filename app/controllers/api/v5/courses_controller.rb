@@ -18,6 +18,13 @@ class Api::V5::CoursesController < Api::V5::ApiController
     end
   end
 
+
+  def create
+    Course.create!(course_params)
+    head :no_content
+  end
+
+  
   def update
     Course.find(params[:id]).update(course_params)
     head :no_content

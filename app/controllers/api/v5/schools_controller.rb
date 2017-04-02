@@ -8,6 +8,10 @@ class Api::V5::SchoolsController < Api::V5::ApiController
     end
     query.order! :id
   end
+  def create
+    School.create!(school_params)
+    head :no_content
+  end
 
   def update
   	School.find(params[:id]).update!(school_params)
@@ -15,7 +19,7 @@ class Api::V5::SchoolsController < Api::V5::ApiController
   end
 
   def destroy
-  	School.find(params[:id]).destroy
+  	School.find(params[:id]).destroy!
   	head :no_content
   end
 

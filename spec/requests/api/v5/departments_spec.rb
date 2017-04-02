@@ -59,29 +59,46 @@ describe 'Departments API' do
       json_validate_departments(Department.all, true)
     end
   end
+
+    context 'There is a department to be created' do
+      it 'creates a department' do
+       # department = FactoryGirl.build(:department, name: 'ITWS');
+        department_params={
+          department: {
+            name: 'Information Technology and Web Science',
+            code: 'ITWS'
+          }
+        }
+        post "/api/v5/departments/", department_params
+        expect(response).to be_success
+        created_department=Department.find_by(code: 'ITWS')
+        expect(created_department).to be_present
+      end
+
+    end
   
     context 'There is a department to be updated' do
      it 'updates the code for department' do
        department = FactoryGirl.create(:department, code: 'XYZ')
        department_params = {
          department: {
-           code: 'XYZ'
+           code: 'other'
          }
        }
        put "/api/v5/departments/#{department.id}", department_params
        department.reload
-       expect(department.code).to eq 'XYZ'
+       expect(department.code).to eq 'other'
      end
      it 'updates the name for department' do
+       department = FactoryGirl.create(:department, name: 'ITWS')
        department_params = { 
          department: {
-           name: 'ITWS'
+           name: 'other'
          }
        }
-       department = FactoryGirl.create(:department, name: 'ITWS')
        put "/api/v5/departments/#{department.id}", department_params
        department.reload
-       expect(department.name).to eq 'ITWS'    
+       expect(department.name).to eq 'other'    
      end
 
      it 'deletes a department' do
