@@ -1,1 +1,0 @@
-export function yacsFetch(path)
