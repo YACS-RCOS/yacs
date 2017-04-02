@@ -197,10 +197,10 @@ Yacs.views.schedules = function (target, params) {
 
   /**
    * Hide or show the schedule loading overlay.
-   * @param {boolean} Whether it should be shown.
+   * @param {boolean} doShow - whether it should be shown.
    */
   var setLoadingOverlayDisplay = function(doShow) {
-    if(doShow) {
+    if (doShow) {
       // should show immediately, and not fade in
       // setting to 1.0 and later to 0.0 seems to make it work well enough, with a short transition
       loadingOverlay.style.opacity = 1.0;
@@ -208,7 +208,7 @@ Yacs.views.schedules = function (target, params) {
     else {
       loadingOverlay.style.opacity = 0.0;
     }
-  }
+  };
 
   /**
    * Query the server for schedules based on either a set of selections
