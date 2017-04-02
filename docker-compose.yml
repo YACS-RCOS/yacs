@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./src:/usr/src/app/src
+    command: "npm start"
