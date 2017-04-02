@@ -18,7 +18,7 @@ class App extends React.Component {
 export default App;
 
 
-      
+
       // <header>
       //   <Link to='/schools'>Schools</Link>
       //   <Link to='/courses'>Courses</Link>

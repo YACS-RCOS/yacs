@@ -24,7 +24,9 @@
     "react-redux": "^5.0.3",
     "react-router": "^3.0.3",
     "react-router-redux": "^4.0.8",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-rest": "0.0.1-alpha.9",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",

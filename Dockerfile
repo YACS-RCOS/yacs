@@ -12,4 +12,3 @@ RUN npm install
 
 COPY ./src $APP_DIR
 RUN npm build
-
