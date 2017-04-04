@@ -6,6 +6,7 @@ import { AppRouterModule } from './app-router.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
+import { FooterComponent } from './footer.component';
 import { SchoolsModule } from './schools.module';
 import { CourseListModule } from './courselist.module';
 
@@ -20,7 +21,8 @@ import { CourseListModule } from './courselist.module';
   ],
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
