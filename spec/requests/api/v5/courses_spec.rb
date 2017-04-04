@@ -69,18 +69,61 @@ describe 'Courses API' do
     end
   end
 
- # context 'There is a course to be updated' do
-  #  it 'updates the maximum number of credits for the course'do
-  #    course = FactoryGirl.create(:course, max_credits: 4)
-  #    course_params={
- #       course: {
-  #        max_credits: 7
-  #      }
- #     }
- #     put "/api/v5/courses/#{course.id}", course_params
- #     course.reload
- #     expect(course.max_credits).to eq 7
- #   end
+  context 'There is a course to be created' do
+    it 'creates a course' do
+      department = FactoryGirl.create(:department)
+      course_params={
+        course: {
+          name: 'Principles of Software',
+          number: 2600,
+          min_credits: 1,
+          max_credits: 4,
+          description: 'XXXXXX',
+          department_id: department.id
+        }
+      }
+      post "/api/v5/courses/", course_params
+      expect(response).to be_success
+      created_course=Course.find_by(name: 'Principles of Software', number: 2600)
+      expect(created_course).to be_present
+    end
+  end
 
-  #end
+  context 'There is a course to be updated' do
+    it 'updates the maximum number of credits for the course'do
+      course = FactoryGirl.create(:course, max_credits: 4)
+      course_params={
+        course: {
+          max_credits: 7
+        }
+      }
+      put "/api/v5/courses/#{course.id}", course_params
+      course.reload
+      expect(course.max_credits).to eq 7
+    end
+    it 'updates the minimum number of credits for the course' do
+      course_params={
+        course: {
+          min_credits:2
+        }
+      }
+
+      course = FactoryGirl.create(:course, min_credits: 2)
+      put "/api/v5/courses/#{course.id}", course_params
+      course.reload
+      expect(course.min_credits).to eq 2
+    end
+    it 'deletes a course' do
+      course = FactoryGirl.create(:course)
+      delete "/api/v5/courses/#{course.id}"
+      expect(response.status).to eq 204
+    end
+
+    it 'course id is not found for deletion' do
+      course = FactoryGirl.create(:course)
+      delete "/api/v5/courses/#{5000000}"
+      expect(response.status).to eq 404
+    end
+
+  end
 end
