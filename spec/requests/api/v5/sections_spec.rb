@@ -56,6 +56,28 @@ describe 'Sections API' do
       json_validate_sections(Section.all, true)
     end
   end
+
+  context 'There is a section to be created' do
+    it 'creates a section' do
+      course = FactoryGirl.create(:course)
+      section_params = {
+        section: {
+          seats_taken: 2,
+          seats: 20,
+          instructors: 'Stacy Patterson',
+          course_id: course.id,
+          num_periods: 5,
+          name: 'third',
+          crn: 4423
+        }
+      }
+      post "/api/v5/sections/", section_params
+      expect(response).to be_success
+      created_section=Section.find_by(seats_taken: 2, seats: 20)
+      expect(created_section).to be_present
+    end
+
+  end
   context 'There is a section to be updated' do
     it 'updates the seats_taken for section' do
       section = FactoryGirl.create(:section_with_periods, seats_taken: 0)

@@ -7,4 +7,24 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
       query.includes! courses: [:sections] if @show_sections
     end
   end
+
+  def create
+    Department.create!(department_params)
+    head :no_content
+  end
+
+  def update
+    Department.find(params[:id]).update!(department_params)
+    head :no_content
+  end
+
+  def destroy
+    Department.find(params[:id]).destroy!
+    head :no_content
+  end
+  private 
+  def department_params
+    params.require(:department).permit(:code, :name, :school_id)
+  end 
+
 end

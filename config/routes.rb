@@ -4,13 +4,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v5 do
-      resources :schools,     only: [:index]
-      resources :departments, only: [:index]
-      resources :courses,     only: [:index, :update, :destroy]
-      resources :sections,    only: [:index, :update, :destroy]
+      resources :schools,     only: [:index, :update, :destroy, :create]
+      resources :departments, only: [:index, :update, :destroy, :create]
+      resources :courses,     only: [:index, :update, :destroy, :create]
+      resources :sections,    only: [:index, :update, :destroy, :create]
       resources :schedules,   only: [:index]
     end
-  end
+  end  
 
   get '/' => 'static#index'
   get '/about' => 'static#about'
