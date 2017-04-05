@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Section } from './section.component';
+import { Section } from '../section/component';
 
 export class Course {
   id: number;
@@ -14,7 +14,7 @@ export class Course {
 
 @Component({
   selector: 'course',
-  templateUrl: './course.component.html',
+  templateUrl: './component.html',
 })
 export class CourseComponent {
   @Input() course: Course;

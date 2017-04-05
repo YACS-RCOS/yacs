@@ -24,7 +24,7 @@ const MINUTES_PER_DAY: number = 1440;
 
 @Component({
   selector: 'section',
-  templateUrl: './section.component.html',
+  templateUrl: './component.html',
 })
 export class SectionComponent {
   @Input() section: Section;

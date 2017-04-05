@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 // this is added so that an ngFor in the schools html will work.
 import { CommonModule } from '@angular/common';
 
-import { SchoolsComponent } from './schools.component';
-import { DepartmentComponent } from './department.component';
+import { SchoolListComponent } from './component';
+import { DepartmentComponent } from './department/component';
 
 @NgModule({
     declarations: [
-        SchoolsComponent,
+        SchoolListComponent,
         DepartmentComponent
     ],
     imports: [
@@ -15,5 +15,5 @@ import { DepartmentComponent } from './department.component';
     ],
     providers: [],
 })
-export class SchoolsModule {}
+export class SchoolListModule {}
 
