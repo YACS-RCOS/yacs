@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Department } from './department.component';
+import { Department } from './department/component';
 
 export class School {
     id: number;
@@ -28,10 +28,10 @@ const SCHOOL_TEST_DATA: School[] = [
 
 @Component({
   selector: 'schools',
-  templateUrl: './schools.component.html',
+  templateUrl: './component.html',
   // styleUrls: []
 })
-export class SchoolsComponent {
+export class SchoolListComponent {
     schools = SCHOOL_TEST_DATA;
 }
 

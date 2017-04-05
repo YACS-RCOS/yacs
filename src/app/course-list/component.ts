@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Course } from './course.component';
+import { Course } from './course/component';
 
 const COURSELIST_TEST_DATA: Course[] = [
   {
@@ -50,7 +50,7 @@ const COURSELIST_TEST_DATA: Course[] = [
 
 @Component({
     selector: 'course-list',
-    templateUrl: './courselist.component.html'
+    templateUrl: './component.html'
 })
 export class CourseListComponent {
   courses = COURSELIST_TEST_DATA;
