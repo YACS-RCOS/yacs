@@ -1,0 +1,20 @@
+<div class="schedule-legend">
+  <!-- todo add legend-hours -->
+  <!-- will need some SASS variable in here to make sure the margin-top of the legend equals the height of the header -->
+</div>
+<div class="schedule-header">
+  <div class="day-label" style="width: {{schedule.getDayWidth}}%" *ngFor="let dayNum of schedule.dayNums">
+    {{ longDayName(dayNum) }}
+  </div>
+</div>
+<div class="schedule-grid">
+  <div class="grid-day" style="width: {{schedule.getDayWidth}}%" *ngFor="let dayNum of schedule.dayNums">
+    <div class="grid-hour" *ngFor="let hourNum of schedule.hourNums"></div>
+    <div class="period" *ngFor="let p of periodsOnDay(dayNum)">
+      <p>{{ p.name }}</p>
+      <p>{{ p.crn }}</p>
+      <p>{{ p.instructor }}</p>
+    </div>
+  </div>
+  <!-- TODO -->
+</div>
