@@ -8,6 +8,11 @@ class Api::V5::SchoolsController < Api::V5::ApiController
     end
     query.order! :id
   end
+
+  def show
+    @query = School.where(id: params[:id])
+  end
+
   def create
     School.create!(school_params)
     head :no_content

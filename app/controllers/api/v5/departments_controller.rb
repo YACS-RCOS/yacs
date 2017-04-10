@@ -8,6 +8,10 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
     end
   end
 
+  def show
+    @query = Department.where(id: params[:id])
+  end
+
   def create
     Department.create!(department_params)
     head :no_content
