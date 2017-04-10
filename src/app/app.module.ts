@@ -7,8 +7,12 @@ import { AppRouterModule } from './app-router/module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/component';
 import { FooterComponent } from './footer/component';
+
 import { SchoolListModule } from './school-list/module';
 import { CourseListModule } from './course-list/module';
+import { ScheduleViewModule } from './schedule-view/module';
+
+import { ConstantsService } from './services/constants';
 
 @NgModule({
   imports: [
@@ -17,14 +21,17 @@ import { CourseListModule } from './course-list/module';
     HttpModule,
     AppRouterModule,
     SchoolListModule,
-    CourseListModule
+    CourseListModule,
+    ScheduleViewModule
   ],
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent
   ],
-  providers: [],
+  providers: [
+    ConstantsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
