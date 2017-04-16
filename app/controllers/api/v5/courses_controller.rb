@@ -19,7 +19,6 @@ class Api::V5::CoursesController < Api::V5::ApiController
   end
 
   def show
-    #puts params
     @query = Course.where(id: params[:id])
   end
 
@@ -31,8 +30,6 @@ class Api::V5::CoursesController < Api::V5::ApiController
   def update
     @query = [Course.find(params[:id])]
     @query.first.update(course_params)
-    #puts params
-    #@query = Course.find(params[:id])
     render action: :show, status: :success
   end
 
