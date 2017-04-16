@@ -75,6 +75,7 @@ describe 'Sections API' do
       expect(response).to be_success
       created_section=Section.find_by(seats_taken: 2, seats: 20)
       expect(created_section).to be_present
+      json_validate_sections([created_section])
     end
 
   end
@@ -89,6 +90,7 @@ describe 'Sections API' do
       put "/api/v5/sections/#{section.id}", section_params
       section.reload
       expect(section.seats_taken).to eq 2
+      json_validate_sections([section])
     end
     it 'updates the seats for section' do
       section_params = { 
@@ -101,6 +103,7 @@ describe 'Sections API' do
       put "/api/v5/sections/#{section.id}", section_params
       section.reload
       expect(section.seats).to eq 40    
+      json_validate_sections([section])
     end
 
     it 'deletes a section' do

@@ -60,6 +60,7 @@ describe 'Schools API' do
       created_school=School.find_by(name: 'Harvard University')
      # school.reload
       expect(created_school.name).to eq 'Harvard University'
+      json_validate_schools([created_school])
     end
   end
 
@@ -74,6 +75,7 @@ describe 'Schools API' do
       put "/api/v5/schools/#{school.id}", school_params
       school.reload
       expect(school.name).to eq 'MIT'
+      json_validate_schools([school])
     end
 
     it 'deletes a school' do

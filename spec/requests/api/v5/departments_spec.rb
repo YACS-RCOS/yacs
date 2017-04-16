@@ -62,7 +62,6 @@ describe 'Departments API' do
 
     context 'There is a department to be created' do
       it 'creates a department' do
-       # department = FactoryGirl.build(:department, name: 'ITWS');
         department_params={
           department: {
             name: 'Information Technology and Web Science',
@@ -73,6 +72,7 @@ describe 'Departments API' do
         expect(response).to be_success
         created_department=Department.find_by(code: 'ITWS')
         expect(created_department).to be_present
+        json_validate_departments([created_department])
       end
 
     end
@@ -88,6 +88,7 @@ describe 'Departments API' do
        put "/api/v5/departments/#{department.id}", department_params
        department.reload
        expect(department.code).to eq 'other'
+       json_validate_departments([department])
      end
      it 'updates the name for department' do
        department = FactoryGirl.create(:department, name: 'ITWS')
@@ -99,6 +100,7 @@ describe 'Departments API' do
        put "/api/v5/departments/#{department.id}", department_params
        department.reload
        expect(department.name).to eq 'other'    
+       json_validate_departments([department])
      end
 
      it 'deletes a department' do

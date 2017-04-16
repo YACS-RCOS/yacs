@@ -9,13 +9,14 @@ class Api::V5::SectionsController < Api::V5::ApiController
   end
 
   def create
-    Section.create!(section_params)
-    head :no_content
+    @query = [Section.create!(section_params)]
+    render action: :show, status: :created
   end
 
   def update
-    Section.find(params[:id]).update!(section_params)
-    head :no_content
+    @query = [Section.find(params[:id])]
+    @query.first.update!(section_params)
+    render action: :show, status: :success
   end
 
   def destroy

@@ -14,13 +14,14 @@ class Api::V5::SchoolsController < Api::V5::ApiController
   end
 
   def create
-    School.create!(school_params)
-    head :no_content
+    @query = [School.create!(school_params)]
+    render action: :show, status: :created
   end
 
   def update
-    School.find(params[:id]).update!(school_params)
-    head :no_content
+    @query = [School.find(params[:id])]
+    @query.first.update!(school_params)
+    render action: :show, status: :success
   end
 
   def destroy
