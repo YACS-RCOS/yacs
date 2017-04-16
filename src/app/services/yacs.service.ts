@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-abstract class YacsService {
-  protected baseUrl = '/api/v5';
+export class YacsService {
+  protected baseUrl = 'http://yacs.cs.rpi.edu/api/v5';
 
   constructor (private http: Http) {}
 

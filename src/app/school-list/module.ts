@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { SchoolListComponent } from './component';
 import { DepartmentComponent } from './department/component';
+import { YacsService } from '../services/yacs.service';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,7 @@ import { DepartmentComponent } from './department/component';
     imports: [
       CommonModule
     ],
-    providers: [],
+    providers: [YacsService],
 })
 export class SchoolListModule {}
 

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Department } from './department/component';
+import { YacsService } from '../services/yacs.service';
 
 export class School {
     id: number;
@@ -31,7 +32,19 @@ const SCHOOL_TEST_DATA: School[] = [
   templateUrl: './component.html',
   // styleUrls: []
 })
-export class SchoolListComponent {
-    schools = SCHOOL_TEST_DATA;
-}
+export class SchoolListComponent implements OnInit {
+  schools: School[];
 
+  constructor (private yacsService: YacsService) {}
+
+  getSchools () {
+    this.yacsService
+        .get('schools')
+        .then((data) => this.schools = data['schools'] as School[]);
+  }
+
+  ngOnInit () : void {
+    this.getSchools();
+    console.log(this.schools)
+  }
+}
