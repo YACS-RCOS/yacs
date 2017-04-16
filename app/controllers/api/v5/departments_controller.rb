@@ -13,12 +13,13 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
   end
 
   def create
-    Department.create!(department_params)
+    @query = [Department.create!(department_params)]
     render action: :show, status: :created
   end
 
   def update
-    Department.find(params[:id]).update!(department_params)
+    @query = [Department.find(params[:id])]
+    @query.first.update!(department_params)
     render action: :show, status: :success
   end
 

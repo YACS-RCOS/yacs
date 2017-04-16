@@ -86,6 +86,7 @@ describe 'Courses API' do
       expect(response).to be_success
       created_course=Course.find_by(name: 'Principles of Software', number: 2600)
       expect(created_course).to be_present
+      json_validate_courses([created_course])
     end
   end
 
@@ -100,6 +101,7 @@ describe 'Courses API' do
       put "/api/v5/courses/#{course.id}", course_params
       course.reload
       expect(course.max_credits).to eq 7
+      json_validate_courses([course])
     end
     it 'updates the minimum number of credits for the course' do
       course_params={
@@ -112,6 +114,7 @@ describe 'Courses API' do
       put "/api/v5/courses/#{course.id}", course_params
       course.reload
       expect(course.min_credits).to eq 2
+      json_validate_courses([course])
     end
     it 'deletes a course' do
       course = FactoryGirl.create(:course)
