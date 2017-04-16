@@ -1,0 +1,17 @@
+THIS IS THE SCHEDULE VIEW
+<div class="schedule-menu">
+  <div class="switch">
+    <span class="schedule-switch">&#9664;</span>
+    <span class="schedule-index">{{scheduleIndex}} / {{totalSchedules}}</span>
+    <span class="schedule-switch">&#9654;</span>
+  </div>
+  <button type="button" class="schedule-button" [disabled]="isTemporary">Clear</button>
+  <button type="button" class="schedule-button">Download ICS</button>
+  <button type="button" class="schedule-button" [disabled]="isTemporary">Copy Schedule Link</button>
+  <div class="schedule-status">
+    {{ status }}
+  </div>
+</div>
+<schedule [schedule]="currentSchedule"></schedule>
+
+<!-- TODO deselection list -->
