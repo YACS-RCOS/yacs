@@ -14,12 +14,12 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
 
   def create
     Department.create!(department_params)
-    head :no_content
+    render action: :show, status: :created
   end
 
   def update
     Department.find(params[:id]).update!(department_params)
-    head :no_content
+    render action: :show, status: :success
   end
 
   def destroy

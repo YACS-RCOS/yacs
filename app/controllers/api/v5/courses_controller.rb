@@ -19,17 +19,21 @@ class Api::V5::CoursesController < Api::V5::ApiController
   end
 
   def show
+    #puts params
     @query = Course.where(id: params[:id])
   end
 
   def create
-    Course.create!(course_params)
-    head :no_content
+    @query = [Course.create!(course_params)]
+    render action: :show, status: :created
   end
 
   def update
-    Course.find(params[:id]).update(course_params)
-    head :no_content
+    @query = [Course.find(params[:id])]
+    @query.first.update(course_params)
+    #puts params
+    #@query = Course.find(params[:id])
+    render action: :show, status: :success
   end
 
   def destroy
