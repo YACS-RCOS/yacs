@@ -33,6 +33,13 @@ course-description {
     display:block;
     font-size:87%;
     text-align: justify;
+    white-space:nowrap;
+    overflow-x:hidden;
+    text-overflow:ellipsis;
+}
+course-description.expanded {
+   white-space: normal;
+   overflow-x: visible;
 }
 section {
     display:block;
