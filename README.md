@@ -19,7 +19,7 @@ YACS is currently only in use at its alma mater, the Rensselaer Polytechnic Inst
 
 YACS is primarily developed within [RCOS, the Rensselaer Center for Open Source](https://rcos.io), an amazing organization at RPI that aims to facilitate open source education and solve societal problems. However, other developers and universities are strongly encouraged to contribute to and influence the direction of this project.
 
-Visit [our blog](https://yacsblog.wordpress.com/), [pull requests](https://github.com/YACS-RCOS/yacs/pulls), and [issues page](https://github.com/YACS-RCOS/yacs/issues) for development updates and information.
+Visit [our blog](https://yacs-rcos.github.io/), [pull requests](https://github.com/YACS-RCOS/yacs/pulls), and [issues page](https://github.com/YACS-RCOS/yacs/issues) for development updates and information.
 
 # YACS Status, Architecture and Extensions
 We are currently working towards a microservice architecture to enhance extensibility and decrease coupling between the core YACS project and any universities that implmenent the application. The new architecture will consist of the following core service types.
@@ -29,8 +29,8 @@ We are currently working towards a microservice architecture to enhance extensib
 (This repository) yacs-api is the core YACS API. It is written using Ruby on Rails. It provides a centralized, hierarchal interface for your university's course-related data. It holds and provides data on a university's schools, departments (subjects), courses, sections, and meeting times. In addition, it provides an interface for the scheduling algorithm, and can generate valid schedule combinations given a list of selections. All rivers flow through yacs-api. See [API Docs](#api-docs) for more information.
 [Repository](https://github.com/YACS-RCOS/yacs)
 ### yacs-web
-(Currently this repository, but moving to its own eventually). yacs-web is the YACS web frontend. It is written in VanillaJS with a side of Handlebars. It provides an easy-to-use web interface for browsing, searching, selecting, and scheduling courses. It currently uses the Rails asset pipeline for compilation and minification, however all dependencies on the backend have been removed, and it will eventually be moved to its own repository with a modern Javascript tool chain.
-[Repository](https://github.com/YACS-RCOS/yacs)
+(Currently this repository, but moving to its own eventually). yacs-web is the YACS web frontend. The frontend in production currently is written in VanillaJS with a side of Handlebars. It provides an easy-to-use web interface for browsing, searching, selecting, and scheduling courses. The frontend is currently being rewritten in Typescript / Angular 4.0. This new version should be more maintainable than our current roll-your-own solution. If you would like to contribute to the new frontend, please visit its repository.
+[Repository](https://github.com/YACS-RCOS/yacs-web)
 ### yacs-catalog
 In development; near complete. yacs-catalog pulls and aggregates course and section data from a university's data sources, of which there are often many. This service exposes a simple HTTP API and is easily replaceable. If you wish to deploy YACS to your university, you will likely have to modify or replace this service. The example included here to be used at RPI aggregates data from Acalog ACMS and Ellucien Banner. If your university also uses these services, then you may not have to write any code to get YACS working!
 [Repository](https://github.com/YACS-RCOS/yacs-catalog-service-rpi)
