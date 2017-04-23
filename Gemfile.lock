@@ -101,6 +101,7 @@ GEM
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
+    ffi (1.9.14)
     ffi (1.9.14-x86-mingw32)
     gherkin (4.0.0)
     globalid (0.3.7)
@@ -115,6 +116,7 @@ GEM
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
     json (1.8.3)
+    libv8 (3.16.14.19)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -128,8 +130,11 @@ GEM
     multi_json (1.12.1)
     multi_test (0.1.2)
     newrelic_rpm (3.17.1.326)
+    nokogiri (1.6.8.1)
+      mini_portile2 (~> 2.1.0)
     nokogiri (1.6.8.1-x86-mingw32)
       mini_portile2 (~> 2.1.0)
+    pg (0.19.0)
     pg (0.19.0-x86-mingw32)
     pickle (0.5.1)
       cucumber (>= 0.8)
@@ -244,6 +249,9 @@ GEM
       sunspot (= 2.2.7)
     term-ansicolor (1.3.2)
       tins (~> 1.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.19.4)
     thread_safe (0.3.5)
     tilt (2.0.5)
@@ -265,6 +273,7 @@ GEM
       nokogiri (~> 1.3)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
@@ -302,9 +311,6 @@ DEPENDENCIES
   therubyracer
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
-
-RUBY VERSION
-   ruby 2.2.3p173
 
 BUNDLED WITH
    1.13.1
