@@ -34,6 +34,8 @@ gem 'newrelic_rpm'
 
 gem 'coveralls'
 
+gem 'redis'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-remote'
@@ -58,3 +60,5 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
 end
+
+gem 'sunspot_rails'
