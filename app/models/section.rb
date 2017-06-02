@@ -21,8 +21,8 @@ class Section < ActiveRecord::Base
             "name" => "#{name}",
             "crn" => "#{crn}",
           },
-          "before" => "#0",
-          "after" =>  "#0",
+          "before" => "0",
+          "after" =>  "0",
         }
       }
     }
@@ -47,7 +47,7 @@ class Section < ActiveRecord::Base
             "crn" => "#{crn}",
           },
           "before" => "0",
-          "after" =>  "#0",
+          "after" =>  "0",
         }
       }
     }
@@ -72,14 +72,14 @@ class Section < ActiveRecord::Base
       after = seats
       send_message = true
     end
-    if((self.changed & %w(seats_taken)).any? and seats_taken >= seats and seats_taken_was < seats) #checks specifically if there were open seats beforehand and now there's not
+    if((self.changed & %w(seats_taken)).any? and seats_taken >= seats and seats_taken_was < seats) #checks specifically if there were open seats beforehand and none open after
       puts "Section closed"
       fieldname = "sectionclosed"
       before = seats_taken_was
       after = seats_taken
       send_message = true
     end
-    if((self.changed & %w(seats_taken)).any? and seats_taken_was >= seats and seats_taken < seats) #checks specifically if there were open seats beforehand and now there's not
+    if((self.changed & %w(seats_taken)).any? and seats_taken_was >= seats and seats_taken < seats) 
       puts "Section opened"
       fieldname = "sectionopened"
       before = seats_taken_was
