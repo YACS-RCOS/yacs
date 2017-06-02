@@ -6,6 +6,111 @@ class Section < ActiveRecord::Base
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
 
+  after_create do 
+    puts "Section added"
+    require 'json'
+    tempHash = {
+      "event_type" => "some event type",
+      "data" => {
+        "id" => "0",
+        "name" => "#{course.name}",
+        "number" => "#{course.number}",
+        "update" => {
+          "fieldname" => "sectionadded",
+          "section" => {
+            "name" => "#{name}",
+            "crn" => "#{crn}",
+          },
+          "before" => "#0",
+          "after" =>  "#0",
+        }
+      }
+    }
+    File.open("addsectiontest.json","w") do |f|
+      f.write(tempHash.to_json)
+    end
+  end
+
+  after_destroy do 
+    puts "Section removed"
+    require 'json'
+    tempHash = {
+      "event_type" => "some event type",
+      "data" => {
+        "id" => "0",
+        "name" => "#{course.name}",
+        "number" => "#{course.number}",
+        "update" => {
+          "fieldname" => "sectionremoved",
+          "section" => {
+            "name" => "#{name}",
+            "crn" => "#{crn}",
+          },
+          "before" => "0",
+          "after" =>  "#0",
+        }
+      }
+    }
+    File.open("removesectiontest.json","w") do |f|
+      f.write(tempHash.to_json)
+    end
+  end
+  
+  after_update do  
+    send_message = false
+    if((self.changed & %w(seats)).any? and (seats_was > seats))
+      puts "#{seats_was - seats} seats removed"
+      fieldname = "seatsremoved"
+      before = seats_was
+      after = seats
+      send_message = true
+    end
+    if((self.changed & %w(seats)).any? and (seats_was < seats))
+      puts "#{seats - seats_was} seat(s) added"
+      fieldname = "seatsadded"
+      before = seats_was
+      after = seats
+      send_message = true
+    end
+    if((self.changed & %w(seats_taken)).any? and seats_taken >= seats and seats_taken_was < seats) #checks specifically if there were open seats beforehand and now there's not
+      puts "Section closed"
+      fieldname = "sectionclosed"
+      before = seats_taken_was
+      after = seats_taken
+      send_message = true
+    end
+    if((self.changed & %w(seats_taken)).any? and seats_taken_was >= seats and seats_taken < seats) #checks specifically if there were open seats beforehand and now there's not
+      puts "Section opened"
+      fieldname = "sectionopened"
+      before = seats_taken_was
+      after = seats_taken
+      send_message = true
+    end
+    if(send_message)
+      require 'json'
+      tempHash = {
+        "event_type" => "some event type",
+        "data" => {
+          "id" => "0",
+          "name" => "#{course.name}",
+          "number" => "#{course.number}",
+          "update" => {
+            "fieldname" => "#{fieldname}",
+            "section" => {
+              "name" => "#{name}",
+              "crn" => "#{crn}",
+            },
+            "before" => "#{before}",
+            "after" =>  "#{after}",
+          }
+        }
+      }
+      File.open("sectionupdatetest.json","w") do |f|
+        f.write(tempHash.to_json)
+      end
+    end
+  end
+
   def self.compute_conflict_ids_for id
     find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
       (SELECT(unnest(conflict_ids(#{id.to_i})))) ORDER BY ID").map(&:id)

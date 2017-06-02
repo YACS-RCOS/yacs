@@ -14,4 +14,5 @@ Rails.application.routes.draw do
 
   get '/' => 'static#index'
   get '/about' => 'static#about'
+  get 'messaging' => 'messaging#send_message'
 end

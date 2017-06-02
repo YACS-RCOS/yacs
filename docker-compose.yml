@@ -42,6 +42,8 @@ services:
     command: bundle exec puma -C config/puma.rb
     expose:
       - "3000"
+    ports:
+      - "3000:3000"
 
   worker:
     build: .

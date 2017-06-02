@@ -1,4 +1,6 @@
 class Api::V5::CoursesController < Api::V5::ApiController
+  include ActionController::Live
+  
   caches_action :index, if: Proc.new { |c| c.params[:department_id].present? && @show_sections && @show_periods },
     cache_path: Proc.new { |c| "/api/v5/courses.json?department_id=#{c.params[:department_id]}" } # TODO: rework caching scheme
 
@@ -17,5 +19,14 @@ class Api::V5::CoursesController < Api::V5::ApiController
       query.includes! :sections if @show_sections
     end
   end
+
+  def send_message
+    response.headers['Content-Type'] = 'text/event-stream'
+    10.times {
+      response.stream.write "This is a test Messagen"
+      sleep 1
+    }
+    response.stream.close
+    end
 
 end
