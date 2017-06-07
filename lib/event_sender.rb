@@ -13,9 +13,7 @@ class EventSender
 	    	tempHash["data"]["update"]["section"]["name"] = "#{obj.name}"
 	    	tempHash["data"]["update"]["section"]["crn"] = "#{obj.crn}"
 	    end
-	    File.open("test.json","w") do |f|
-	      f.write(tempHash.to_json)
-	    end
+	    Redis.current.publish("channel",tempHash.to_json)
 	end
 
 end

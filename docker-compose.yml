@@ -13,6 +13,12 @@ services:
     expose:
       - "6379"
 
+  rcli:
+    image: redis:latest
+    links:
+      - redis
+    command: redis-cli -h redis
+
   nginx:
     build: ./nginx
     image: nginx:1.11.9
