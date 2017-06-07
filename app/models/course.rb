@@ -5,53 +5,11 @@ class Course < ActiveRecord::Base
   default_scope { order(number: :asc) }
 
   after_create do 
-    puts "Course added"
-    require 'json'
-    tempHash = {
-      "event_type" => "some event type",
-      "data" => {
-        "id" => "0",
-        "name" => "#{name}",
-        "number" => "#{number}",
-        "update" => {
-          "fieldname" => "courseadded",
-          "section" => {
-            "name" => "0",
-            "crn" => "0",
-          },
-          "before" => "0",
-          "after" =>  "0",
-        }
-      }
-    }
-    File.open("addcoursetest.json","w") do |f|
-      f.write(tempHash.to_json)
-    end
+    EventSender.send_event(self,"courseadded")
   end
 
   after_destroy do 
-    puts "Course removed"
-    require 'json'
-    tempHash = {
-      "event_type" => "some event type",
-      "data" => {
-        "id" => "0",
-        "name" => "#{name}",
-        "number" => "#{number}",
-        "update" => {
-          "fieldname" => "courseremoved",
-          "section" => {
-            "name" => "0",
-            "crn" => "0",
-          },
-          "before" => "0",
-          "after" =>  "0",
-        }
-      }
-    }
-    File.open("removecoursetest.json","w") do |f|
-      f.write(tempHash.to_json)
-    end
+    EventSender.send_event(self,"courseremoved")
   end
 
   def self.get code, number
