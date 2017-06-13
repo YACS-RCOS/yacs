@@ -42,100 +42,111 @@ RSpec.describe Section do
     end
   end
 
-  context 'when sections are created' do
-    before do
-      @section = create(:section)
-    end
+  # context 'when sections are created' do
+  #   before do
+  #     #@section = create(:section)
+  #   end
 
-    it 'sends a section_added event' do
-      file = mock('file')
-      @buffer = StringIO.new()
-      @filename = 'test.json'
-      allow(File).to receive(:open).with(@filename, 'w').and_yield(@buffer)
+  #   it 'sends a section_added event' do
+  #     redis = stub_redis
+  #     @section = create(:section)
 
-      parsed = JSON.parse(@buffer.string)
-      expect(parsed['data']['name']).to eq 'section_added'
-    end
-  end
+  #     expect(redis).to have_received(:publish).once
+  #     # file = mock('file')
+  #     # @buffer = StringIO.new()
+  #     # @filename = 'test.json'
+  #     # allow(File).to receive(:open).with(@filename, 'w').and_yield(@buffer)
 
-  context 'when sections are removed' do
-    before do
-      @section = create(:section)
-      @section.destroy
-    end
+  #     # parsed = JSON.parse(@buffer.string)
+  #     # expect(parsed['data']['name']).to eq 'section_added'
+  #   end
+  # end
 
-    it 'sends a section_removed event' do
+  # def stub_redis
+  #   double("redis").tap do |redis|
+  #     redis.stubs(:publish)
+  #     Redis.stubs(:current).return(redis)
+  #   end
+  # end
 
-    end
-  end
+  # context 'when sections are removed' do
+  #   before do
+  #     @section = create(:section)
+  #     @section.destroy
+  #   end
 
-  context 'when section seats are added' do
-    context 'when section opens due to seats add' do
-      before do
-        @section = create(:section, seats: 150, seats_taken: 160)
-        @section.update(seats: 165)
-      end
+  #   it 'sends a section_removed event' do
 
-      it 'sends a seats_added_section_opened event' do
+  #   end
+  # end
 
-      end
-    end
+  # context 'when section seats are added' do
+  #   context 'when section opens due to seats add' do
+  #     before do
+  #       @section = create(:section, seats: 150, seats_taken: 160)
+  #       @section.update(seats: 165)
+  #     end
 
-    context 'when seats add does not open a section' do
-      before do
-        @section = create(:section, seats: 50, seats_taken: 30)
-        @section.update(seats: 60)
-      end
+  #     it 'sends a seats_added_section_opened event' do
 
-      it 'sends a seats_added event' do
+  #     end
+  #   end
 
-      end
-    end
-  end
+  #   context 'when seats add does not open a section' do
+  #     before do
+  #       @section = create(:section, seats: 50, seats_taken: 30)
+  #       @section.update(seats: 60)
+  #     end
 
-  context 'when section seats are removed' do
-    context 'when section closes due to seats remove' do
-      before do
-        @section = create(:section, seats: 250, seats_taken: 240)
-        @section.update(seats: 200)
-      end
+  #     it 'sends a seats_added event' do
 
-      it 'sends a seats_removed_section_closed event' do
+  #     end
+  #   end
+  # end
 
-      end
-    end
+  # context 'when section seats are removed' do
+  #   context 'when section closes due to seats remove' do
+  #     before do
+  #       @section = create(:section, seats: 250, seats_taken: 240)
+  #       @section.update(seats: 200)
+  #     end
 
-    context 'when seats remove does not close a section' do
-      before do
-        @section = create(:section, seats: 100, seats_taken: 70)
-        @section.update(seats: 90)
-      end
+  #     it 'sends a seats_removed_section_closed event' do
 
-      it 'sends a seats_removed event' do
+  #     end
+  #   end
 
-      end
-    end
-  end
+  #   context 'when seats remove does not close a section' do
+  #     before do
+  #       @section = create(:section, seats: 100, seats_taken: 70)
+  #       @section.update(seats: 90)
+  #     end
 
-  context 'when section is opened' do
-    before do
-      @section = create(:section, seats: 100, seats_taken: 100)
-      @section.update(seats_taken: 99)
-    end
+  #     it 'sends a seats_removed event' do
 
-    it 'sends a sectionopened event' do
+  #     end
+  #   end
+  # end
 
-    end
-  end
+  # context 'when section is opened' do
+  #   before do
+  #     @section = create(:section, seats: 100, seats_taken: 100)
+  #     @section.update(seats_taken: 99)
+  #   end
 
-  context 'when section is closed' do
-    before do
-      @section = create(:section, seats: 200, seats_taken: 199)
-      @section.update(seats_taken: 200)
-    end
+  #   it 'sends a sectionopened event' do
 
-    it 'sends a secionclosed event' do
+  #   end
+  # end
 
-    end
-  end
+  # context 'when section is closed' do
+  #   before do
+  #     @section = create(:section, seats: 200, seats_taken: 199)
+  #     @section.update(seats_taken: 200)
+  #   end
+
+  #   it 'sends a secionclosed event' do
+
+  #   end
+  # end
 end
