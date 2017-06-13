@@ -5,6 +5,7 @@ class Course < ActiveRecord::Base
   default_scope { order(number: :asc) }
 
   after_create do 
+    puts "HI"
     EventSender.send_event(self,"courseadded")
   end
 
