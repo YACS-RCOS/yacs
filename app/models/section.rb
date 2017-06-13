@@ -7,7 +7,7 @@ class Section < ActiveRecord::Base
   after_save :update_conflicts!, if: :periods_changed?
 
   after_create do 
-    EventSender.send_event(self, "section_added") 
+    EventSender.send_event(self, "section_added")
   end
   after_destroy do 
     EventSender.send_event(self, "section_removed")

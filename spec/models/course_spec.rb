@@ -5,6 +5,7 @@ RSpec.describe Course do
     before do
       @course = create(:course)
     end
+
     context 'when there is a section' do
       before do
         @section = create(:section, course: @course)
@@ -13,6 +14,22 @@ RSpec.describe Course do
       it 'has the section' do
         expect(@course.sections).to eq [@section]
       end
+    end
+  end
+
+  context 'when course is created and destroyed' do
+    before do
+      allow(EventSender).to receive(:send_event)
+      @course = create(:course)
+      @course.destroy
+    end
+
+    it 'sends a courseadded event' do
+      expect(EventSender).to have_received(:send_event).with(anything, "courseadded")
+    end
+
+    it 'sends a courseremoved event' do
+      expect(EventSender).to have_received(:send_event).with(anything, "courseremoved")
     end
   end
 end
