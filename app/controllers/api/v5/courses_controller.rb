@@ -19,5 +19,4 @@ class Api::V5::CoursesController < Api::V5::ApiController
        query.includes! :sections if @show_sections
      end
    end
-
- end
+end
