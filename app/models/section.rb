@@ -5,36 +5,17 @@ class Section < ActiveRecord::Base
   default_scope { order(name: :asc) }
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
-
+  
   after_create do 
-    EventSender.send_event(self, "section_added")
+    EventSender.send_section_event(self, :section_added) 
   end
   after_destroy do 
-    EventSender.send_event(self, "section_removed")
+    EventSender.send_section_event(self, :section_removed)
   end
   after_update do  
-    if seats_changed? and seats_was > seats
-      if seats_taken < seats_was and seats_taken >= seats
-        EventSender.send_event(self, "seats_removed_section_closed", seats_was, seats)
-      else 
-        EventSender.send_event(self, "seats_removed", seats_was, seats)
-      end
-    end
-    if seats_changed? and seats_was < seats
-      if seats_taken >= seats_was and seats_taken < seats
-        EventSender.send_event(self, "seats_added_section_opened", seats_was, seats)
-      else 
-        EventSender.send_event(self, "seats_added", seats_was, seats)
-      end
-    end
-    if seats_taken_changed? and seats_taken >= seats and seats_taken_was < seats 
-      EventSender.send_event(self, "sectionclosed", seats_taken_was, seats_taken)
-    end
-    if seats_taken_changed? and seats_taken_was >= seats and seats_taken < seats 
-      EventSender.send_event(self, "sectionopened", seats_taken_was, seats_taken)
-    end
+    EventSender.send_section_event(self, :section_updated)
   end
-
+  
   def self.compute_conflict_ids_for id
     find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
       (SELECT(unnest(conflict_ids(#{id.to_i})))) ORDER BY ID").map(&:id)
