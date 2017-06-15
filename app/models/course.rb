@@ -5,11 +5,11 @@ class Course < ActiveRecord::Base
   default_scope { order(number: :asc) }
 
   after_create do 
-    EventSender.send_event(self,"courseadded")
+    EventSender.send_course_event(self,:course_added)
   end
 
   after_destroy do 
-    EventSender.send_event(self,"courseremoved")
+    EventSender.send_course_event(self,:course_removed)
   end
 
   def self.get code, number
