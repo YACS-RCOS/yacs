@@ -1,13 +1,17 @@
-a {
-  color: #d57f7f;
-}
+@import "../../_vars.scss";
 
 .footer-column {
-  float: left;
-  width: 50%;
-  color: #afafaf;
+    font-family: $font;
+    font-weight: 300;
+    float: left;
+    width: 50%;
+    color: #AFAFAF;
+    &:last-child {
+        text-align: right;
+    }
+    a {
+        text-decoration:none;
+        color: #D57F7F;
+    }
 }
 
-.footer-column:last-child {
-  text-align: right;
-}
