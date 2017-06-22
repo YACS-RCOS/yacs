@@ -9,6 +9,7 @@ export class Department {
 @Component({
     selector: 'department',
     templateUrl: './component.html',
+    styleUrls: ['./component.scss']
 })
 export class DepartmentComponent {
   // declare "dept" as a field of this component that comes from a []=
