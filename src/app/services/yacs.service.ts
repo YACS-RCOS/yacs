@@ -12,7 +12,7 @@ export class YacsService {
   constructor (private http: Http) {}
 
   get (path: string, params: Object = {}): Promise<Object[]> {
-    return this.http.get(`${this.baseUrl}/${path}?${this.objectToQueryString(params)}`)
+    return this.http.get(`${this.baseUrl}/${path}.json?${this.objectToQueryString(params)}`)
                     .toPromise()
                     .then(this.extractData)
                     .catch(this.handleError);

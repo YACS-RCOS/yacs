@@ -8,25 +8,6 @@ export class School {
     departments: Department[];
 }
 
-const SCHOOL_TEST_DATA: School[] = [
-    {
-        id:1,
-        name:'Science',
-        departments: [
-            {
-                id: 1,
-                code: 'CSCI',
-                name: 'Computer Science'
-            },
-            {
-                id: 2,
-                code: 'MATH',
-                name: 'Mathematics'
-            }
-        ]
-    }
-];
-
 @Component({
   selector: 'schools',
   templateUrl: './component.html',
