@@ -1,0 +1,29 @@
+header-bar {
+  width:100%;
+  height:50px;
+  position:fixed;
+  z-index: 1;
+  color: white;
+  background-color: #c65353;
+  white-space: nowrap;
+}
+
+div#content {
+  padding: 60px 15px 0px 15px;
+}
+
+img#loading {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  /* browsers handle fractional pixel values differently, but the worst that
+     can happen is that it's 1/2 pixel off center. So it's best to use the
+     real values (half of the image width and height) here. */
+  margin-top: -4.5px;
+  margin-left: -62.5px;
+}
+
+footer {
+  margin: 0px auto;
+  max-width: 950px;
+}

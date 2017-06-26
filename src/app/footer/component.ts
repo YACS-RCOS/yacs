@@ -49,7 +49,8 @@ const FLAVORTEXTS: string[] = [
 
 @Component({
   selector: 'footer',
-  templateUrl: './component.html'
+  templateUrl: './component.html',
+  styleUrls: ['component.scss']
 })
 
 export class FooterComponent {

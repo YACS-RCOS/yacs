@@ -30,7 +30,7 @@ const SCHOOL_TEST_DATA: School[] = [
 @Component({
   selector: 'schools',
   templateUrl: './component.html',
-  // styleUrls: []
+  styleUrls: ['./component.scss']
 })
 export class SchoolListComponent implements OnInit {
   schools: School[];
@@ -39,12 +39,13 @@ export class SchoolListComponent implements OnInit {
 
   getSchools () {
     this.yacsService
-        .get('schools')
-        .then((data) => this.schools = data['schools'] as School[]);
+        .get('schools', { show_departments: true })
+        .then((data) => {
+          this.schools = data['schools'] as School[];
+        });
   }
 
   ngOnInit () : void {
     this.getSchools();
-    console.log(this.schools)
   }
 }
