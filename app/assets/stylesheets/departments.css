@@ -28,6 +28,9 @@ departments {
     margin-bottom: 15px;
     font-size:17px;
 }
+departments a {
+    color: black;
+}
 department {
     display:block;
     cursor:pointer;

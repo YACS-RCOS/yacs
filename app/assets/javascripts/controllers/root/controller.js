@@ -21,6 +21,9 @@ Yacs.views.root = function (target) {
   Yacs.router.define('/schedules', function (params) {
     Yacs.views.schedules(target, params);
   });
+  Yacs.router.define('/about', function (params) {
+    Yacs.views.about(target, params);
+  });
 
   /**
    * Handle input destined for search bar. Assume all text input is intended

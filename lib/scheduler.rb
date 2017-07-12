@@ -7,7 +7,7 @@ class Scheduler
   end
 
   def self.search(params, schedules, schedule=[])
-    return if params.size == 0
+    return if params.size == 0 or schedules.size > 999
     if schedule.size < params.size
       params[schedule.size].each do |new_section|
         conflict = false

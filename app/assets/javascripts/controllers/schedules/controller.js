@@ -60,6 +60,7 @@ Yacs.views.schedules = function (target, params) {
   var downloadICSElement = target.querySelector('#ics-btn');
   var copyLinkElement = target.querySelector('#link-btn');
   var replaceSelectionsButton = target.querySelector('#replace-selections-btn');
+  var loadingOverlay = target.querySelector('#schedule-loading');
   var scheduleInstance = new Schedule(scheduleElement);
   var scheduleData = [];
 
@@ -195,6 +196,21 @@ Yacs.views.schedules = function (target, params) {
   };
 
   /**
+   * Hide or show the schedule loading overlay.
+   * @param {boolean} doShow - whether it should be shown.
+   */
+  var setLoadingOverlayDisplay = function(doShow) {
+    if (doShow) {
+      // should show immediately, and not fade in
+      // setting to 1.0 and later to 0.0 seems to make it work well enough, with a short transition
+      loadingOverlay.style.opacity = 1.0;
+    }
+    else {
+      loadingOverlay.style.opacity = 0.0;
+    }
+  };
+
+  /**
    * Query the server for schedules based on either a set of selections
    * passed to the function, or the stored selections if none,
    * and update the view to show the new schedules.
@@ -207,6 +223,7 @@ Yacs.views.schedules = function (target, params) {
       currSelections = Yacs.user.getSelectionsAsArray();
     }
     if (currSelections.length > 0) {
+      setLoadingOverlayDisplay(true);
       Yacs.models.schedules.query(
         {
           'section_ids': currSelections.join(','),
@@ -220,6 +237,7 @@ Yacs.views.schedules = function (target, params) {
             Yacs.user.clearSelections();
             setSchedules([]);
           }
+          setLoadingOverlayDisplay(false);
         }
       );
     }
