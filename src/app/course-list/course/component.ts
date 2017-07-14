@@ -1,17 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Section } from '../section/component';
-
-export class Course {
-  id: number;
-  name: string;
-  num: string;
-  department_code: string;
-  department_id: number;
-  min_credits:number;
-  max_credits:number;
-  description: string;
-  sections: Section[];
-}
+import { Course } from './course';
 
 @Component({
   selector: 'course',

@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Department } from './department/component';
 import { YacsService } from '../services/yacs.service';
 
-export class School {
-    id: number;
-    name: string;
-    departments: Department[];
-}
+import { School } from './school';
 
 @Component({
   selector: 'schools',

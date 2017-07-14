@@ -1,31 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-export class Period {
-  type: string;
-  day: number;
-  // start and end are in MINUTES SINCE START OF THE WEEK // no?
-  start: number;
-  end: number;
-}
-
-export class Section {
-  id: number;
-  course_id: number;
-  name: string;
-  crn: number;
-  instructors: string[];
-  seats: number;
-  seats_taken: number;
-  conflicts: number[];
-  periods: Period[];
-  num_periods: number;
-  course_name: string;
-  course_number: number;
-  department_code: string;
-}
+import { Section } from './section';
+import { Period } from './period';
 
 const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sam'];
-const MINUTES_PER_DAY: number = 1440;
 
 @Component({
   selector: 'section',

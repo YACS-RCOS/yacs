@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Course } from '../course-list/course/component';
+import { Component, Input } from '@angular/core';
+import { Course } from '../course-list/course/course';
 
 
 @Component({
@@ -7,13 +7,7 @@ import { Course } from '../course-list/course/component';
     templateUrl: './component.html',
     styleUrls: ['./component.scss']
 })
-export class CourseListComponent implements OnInit {
+export class CourseListComponent {
 
   @Input() courses : Course[];
-
-  constructor () {}
-
-  ngOnInit () : void {
-    
-  }
 }
