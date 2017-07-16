@@ -1,31 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Department } from './department/component';
 import { YacsService } from '../services/yacs.service';
 
-export class School {
-    id: number;
-    name: string;
-    departments: Department[];
-}
-
-const SCHOOL_TEST_DATA: School[] = [
-    {
-        id:1,
-        name:'Science',
-        departments: [
-            {
-                id: 1,
-                code: 'CSCI',
-                name: 'Computer Science'
-            },
-            {
-                id: 2,
-                code: 'MATH',
-                name: 'Mathematics'
-            }
-        ]
-    }
-];
+import { School } from './school';
 
 @Component({
   selector: 'schools',

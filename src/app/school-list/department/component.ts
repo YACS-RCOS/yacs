@@ -1,10 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-export class Department {
-    id: number;
-    code: string;
-    name: string;
-}
+import { Department } from './department'
 
 @Component({
     selector: 'department',

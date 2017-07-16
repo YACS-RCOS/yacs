@@ -9,7 +9,7 @@ import { HeaderComponent } from './header/component';
 import { FooterComponent } from './footer/component';
 
 import { SchoolListModule } from './school-list/module';
-import { CourseListModule } from './course-list/module';
+import { CourseViewModule } from './course-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
 
 import { ConstantsService } from './services/constants';
@@ -21,7 +21,7 @@ import { ConstantsService } from './services/constants';
     HttpModule,
     AppRouterModule,
     SchoolListModule,
-    CourseListModule,
+    CourseViewModule,
     ScheduleViewModule
   ],
   declarations: [

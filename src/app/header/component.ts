@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// Every component must be declared in one - and only one - Angular module.
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'header-bar',
@@ -8,6 +8,13 @@ import { Component } from '@angular/core';
 })
 
 export class HeaderComponent {
-  searchText = '';
 
+  constructor(private router: Router) { }
+
+  search(term: string) {
+    this.router.navigate(['/courses'],
+      { queryParams: {
+        search: term
+      }});
+  }
 }

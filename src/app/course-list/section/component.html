@@ -1,12 +1,13 @@
-THIS IS A SECTION
 <span class="section-name">{{section.name}}</span>
 <span class="section-crn">{{section.crn}}</span>
 <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
-<span class="section-seats">{{ section.seatsAvailable }} / {{ section.seats }} seats</span>
+<span class="section-seats-available">
+  {{ section.seats-section.seats_taken }}<span class="section-seats">/{{ section.seats }} seats</span>
+</span>
 <!-- conflicts here... -->
 <div class="section-periods">
-  <div class="period" *ngFor="let period of section.periods">
+  <span class="period" *ngFor="let period of section.periods">
     <span class="period-day">{{ getDay(period) }}</span>
     <span class="period-time">{{ getHours(period) }}</span>
-  </div>
+  </span>
 </div>

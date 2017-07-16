@@ -6,7 +6,7 @@
       <td>
         <span id="searchcontainer">
           <img id="searchglyph" src="assets/images/search.svg"/>
-          <input id="searchbar" placeholder="Search Fall 2017"/>
+          <input #term id="searchbar" placeholder="Search Fall 2017" (keyup.enter)="search(term.value)"/>
         </span>
       </td>
       <td class="sidelink" id="schedule-btn">

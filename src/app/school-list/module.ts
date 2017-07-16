@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 // this is added so that an ngFor in the schools html will work.
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { SchoolListComponent } from './component';
 import { DepartmentComponent } from './department/component';
@@ -12,7 +13,8 @@ import { YacsService } from '../services/yacs.service';
         DepartmentComponent
     ],
     imports: [
-      CommonModule
+      CommonModule,
+      RouterModule
     ],
     providers: [YacsService],
 })

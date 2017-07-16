@@ -13,6 +13,9 @@ import { SectionComponent } from './section/component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    CourseListComponent
   ]
 })
-export class CourseListModule {}
+export class CourseListModule { }
