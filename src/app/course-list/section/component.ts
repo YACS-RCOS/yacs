@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+import { SelectionService } from '../../services/selection.service'
 import { Section } from './section';
 import { Period } from './period';
 
@@ -13,6 +14,8 @@ const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sam'];
 export class SectionComponent {
   @Input() section: Section;
 
+  constructor(
+    private selectService : SelectionService) { }
   public getDay(period: Period) : string {
     return SHORT_DAYS[period.day];
   }

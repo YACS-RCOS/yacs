@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Course } from './course';
+import { Section } from '../section/section';
+import { SelectionService } from '../../services/selection.service'
 
 @Component({
   selector: 'course',
@@ -9,6 +11,8 @@ import { Course } from './course';
 export class CourseComponent {
   @Input() course: Course;
 
+  constructor(
+    private selectService : SelectionService) { }
   /* A getter function for the range of credits based on the min and max.
    * When {{creditRange}} is used in the template, this function will be called. */
   public get creditRange() {
@@ -25,5 +29,14 @@ export class CourseComponent {
       }
     }
     return outstr;
+  }
+
+  public isSelected(section : Section) : boolean {
+    return this.selectService.isSelected(section);
+  }
+
+  public clickSection(section : Section) {
+    let selIndex = this.selectService.selectedSections.indexOf(section);
+    selIndex > -1 ? this.selectService.removeSection(section): this.selectService.addSection(section);
   }
 }

@@ -13,6 +13,7 @@ import { CourseViewModule } from './course-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
 
 import { ConstantsService } from './services/constants';
+import { SelectionService } from './services/selection.service';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { ConstantsService } from './services/constants';
     FooterComponent
   ],
   providers: [
-    ConstantsService
+    ConstantsService,
+    SelectionService
   ],
   bootstrap: [AppComponent]
 })
