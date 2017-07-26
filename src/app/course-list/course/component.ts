@@ -32,7 +32,7 @@ export class CourseComponent {
   }
 
   public isSelected(section : Section) : boolean {
-    return this.selectService.isSelected(section);
+    return this.selectService.isSectionSelected(section);
   }
 
   public clickSection(section : Section) {
