@@ -1,26 +1,47 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'angular2-cookie';
 
 import { Section } from '../course-list/section/section';
 
 @Injectable()
 export class SelectionService {
-  selectedSections : Section[] = [];
+
+  constructor(
+    private cookieService : CookieService) { }
 
   public addSection(section : Section) {
-    this.selectedSections.push(section);
-    console.log(this.selectedSections);
+    let obj = this.cookieService.get('selections') || {};
+    console.log('before add', obj);
+    this.cookieService.remove('selections');
+    if (obj[section.course_id]) {
+      let sectionIndex = obj[section.course_id].indexOf(section.id);
+      if (sectionIndex == -1) {
+        obj[section.course_id].push(section.id);
+        obj[section.course_id].sort();
+      }
+    } else {
+      obj[section.course_id] = [section.id];
+    }
+    console.log('add', obj);
+    this.cookieService.put('selections', JSON.stringify(obj));
   }
 
   public removeSection(section : Section) {
-    let i = this.selectedSections.indexOf(section);
-    if (i != -1) {
-      this.selectedSections.splice(i, 1);
+    let obj = this.cookieService.get('selections') || {};
+    console.log('before remove', obj);
+    this.cookieService.remove('selections');
+    if (obj[section.course_id]) {
+      let sectionIndex = obj[section.course_id].indexOf(section.id);
+      if (sectionIndex > -1) {
+        obj[section.course_id].split(sectionIndex, 1);
+      }
     }
+    console.log('remove', obj);
+    this.cookieService.put('selections', JSON.stringify(obj));
   }
 
   public isSelected(section : Section) : boolean {
-    return this.selectedSections.filter((s : Section) => {
-      return s.id == section.id;
-    }).length > 0;
+    console.log((this.cookieService.get('selections') && this.cookieService.get('selections')[section.course_number]) ? this.cookieService.get('selections')[section.course_number].indexOf(section.id) : 'no');
+    return this.cookieService.get('selections') && this.cookieService.get('selections')[section.course_number] && this.cookieService.get('selections')[section.course_number].indexOf(section.id) > -1;
   }
 }

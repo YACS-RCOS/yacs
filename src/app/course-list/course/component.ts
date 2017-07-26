@@ -36,7 +36,6 @@ export class CourseComponent {
   }
 
   public clickSection(section : Section) {
-    let selIndex = this.selectService.selectedSections.indexOf(section);
-    selIndex > -1 ? this.selectService.removeSection(section): this.selectService.addSection(section);
+    this.isSelected(section) ? this.selectService.removeSection(section) : this.selectService.addSection(section);
   }
 }
