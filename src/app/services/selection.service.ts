@@ -10,9 +10,7 @@ export class SelectionService {
     private cookieService : CookieService) { }
 
   public addSection(section : Section) {
-    let obj = this.cookieService.get('selections') || {};
-    console.log('before add', obj);
-    this.cookieService.remove('selections');
+    let obj = JSON.parse(localStorage.getItem('selections')) || {};
     if (obj[section.course_id]) {
       let sectionIndex = obj[section.course_id].indexOf(section.id);
       if (sectionIndex == -1) {
@@ -22,26 +20,22 @@ export class SelectionService {
     } else {
       obj[section.course_id] = [section.id];
     }
-    console.log('add', obj);
-    this.cookieService.put('selections', JSON.stringify(obj));
+    localStorage.setItem('selections', JSON.stringify(obj));
   }
 
   public removeSection(section : Section) {
-    let obj = this.cookieService.get('selections') || {};
-    console.log('before remove', obj);
-    this.cookieService.remove('selections');
+    let obj = JSON.parse(localStorage.getItem('selections')) || {};
     if (obj[section.course_id]) {
       let sectionIndex = obj[section.course_id].indexOf(section.id);
       if (sectionIndex > -1) {
-        obj[section.course_id].split(sectionIndex, 1);
+        obj[section.course_id].splice(sectionIndex, 1);
       }
     }
-    console.log('remove', obj);
-    this.cookieService.put('selections', JSON.stringify(obj));
+    localStorage.setItem('selections', JSON.stringify(obj));
   }
 
   public isSelected(section : Section) : boolean {
-    console.log((this.cookieService.get('selections') && this.cookieService.get('selections')[section.course_number]) ? this.cookieService.get('selections')[section.course_number].indexOf(section.id) : 'no');
-    return this.cookieService.get('selections') && this.cookieService.get('selections')[section.course_number] && this.cookieService.get('selections')[section.course_number].indexOf(section.id) > -1;
+    let store = JSON.parse(localStorage.getItem('selections'));
+    return store && store[section.course_id] && store[section.course_id].indexOf(section.id) > -1;
   }
 }
