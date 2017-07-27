@@ -31,6 +31,10 @@ export class CourseComponent {
     return outstr;
   }
 
+  public clickCourse(course : Course) {
+    this.selectService.toggleCourse(course);
+  }
+
   public isSelected(section : Section) : boolean {
     return this.selectService.isSectionSelected(section);
   }

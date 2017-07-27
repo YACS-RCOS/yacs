@@ -1,4 +1,4 @@
-<div class="course-info">
+<div class="course-info" (click)="clickCourse(course)">
   <span class="course-name">{{course.name}}</span>
   <span class="dept-code">{{course.sections[0].department_code}}</span> <!-- api issues, so have to grab dept code by going into sections for now -->
   <span class="course-number">{{course.number}}</span>
