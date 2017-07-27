@@ -12,7 +12,8 @@ export class SelectionService {
 
   public addSection(section : Section) {
     let store = JSON.parse(localStorage.getItem('selections')) || {};
-    if (!(store[section.course_id] || []).includes(section.id)) {
+    store[section.course_id] = store[section.course_id] || [];
+    if (!store[section.course_id].includes(section.id)) {
       store[section.course_id].push(section.id);
       store[section.course_id].sort();
     } else {
