@@ -36,6 +36,6 @@ export class CourseComponent {
   }
 
   public clickSection(section : Section) {
-    this.isSelected(section) ? this.selectService.removeSection(section) : this.selectService.addSection(section);
+    this.selectService.toggleSection(section);
   }
 }

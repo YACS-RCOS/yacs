@@ -16,16 +16,6 @@ export class CourseListComponent {
     private selectService : SelectionService) { }
 
   public clickCourse(course : Course) {
-    if (this.selectService.hasSelectedSelection(course)) {
-      course.sections.forEach((s) => {
-        this.selectService.removeSection(s);
-      });
-    } else {
-      course.sections.forEach((s) => {
-        if (s.seats_taken < s.seats) {
-          this.selectService.addSection(s);
-        }
-      });
-    }
+    this.selectService.toggleCourse(course);
   }
 }
