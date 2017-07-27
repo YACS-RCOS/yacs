@@ -13,20 +13,18 @@ export class SelectionService {
   public addSection(section : Section) {
     let store = JSON.parse(localStorage.getItem('selections')) || {};
     store[section.course_id] = store[section.course_id] || [];
-    if (!store[section.course_id].includes(section.id)) {
-      store[section.course_id].push(section.id);
-      store[section.course_id].sort();
-    }
+    if (store[section.course_id].includes(section.id)) return;
+    store[section.course_id].push(section.id);
+    store[section.course_id].sort();
     localStorage.setItem('selections', JSON.stringify(store));
   }
 
   public removeSection(section : Section) {
-    let store = JSON.parse(localStorage.getItem('selections')) || {};
-    if ((store[section.course_id] || []).includes(section.id)) {
-      store[section.course_id].splice(store[section.course_id].indexOf(section.id), 1);
-      if (store[section.course_id].length == 0) {
-        delete store[section.course_id];
-      }
+    let store = JSON.parse(localStorage.getItem('selections'));
+    if (!store || !store[section.course_id] || !store[section.course_id].includes(section.id)) return;
+    store[section.course_id].splice(store[section.course_id].indexOf(section.id), 1);
+    if (store[section.course_id].length == 0) {
+      delete store[section.course_id];
     }
     localStorage.setItem('selections', JSON.stringify(store));
   }
