@@ -11,34 +11,36 @@ export class SelectionService {
   }
 
   public addSection(section : Section) {
-    let obj = JSON.parse(localStorage.getItem('selections')) || {};
-    if (obj[section.course_id]) {
-      if (!obj[section.course_id].includes(section.id)) {
-        obj[section.course_id].push(section.id);
-        obj[section.course_id].sort();
+    let store = JSON.parse(localStorage.getItem('selections')) || {};
+    if (store[section.course_id]) {
+      if (!store[section.course_id].includes(section.id)) {
+        store[section.course_id].push(section.id);
+        store[section.course_id].sort();
       }
     } else {
-      obj[section.course_id] = [section.id];
+      store[section.course_id] = [section.id];
     }
-    localStorage.setItem('selections', JSON.stringify(obj));
+    localStorage.setItem('selections', JSON.stringify(store));
   }
 
   public removeSection(section : Section) {
-    let obj = JSON.parse(localStorage.getItem('selections')) || {};
-    if (obj[section.course_id]) {
-      if (obj[section.course_id].includes(section.id)) {
-        obj[section.course_id].splice(obj[section.course_id].indexOf(section.id), 1);
-        if (obj[section.course_id].length == 0) {
-          delete obj[section.course_id];
+    let store = JSON.parse(localStorage.getItem('selections')) || {};
+    if (store[section.course_id]) {
+      if (store[section.course_id].includes(section.id)) {
+        store[section.course_id].splice(store[section.course_id].indexOf(section.id), 1);
+        if (store[section.course_id].length == 0) {
+          delete store[section.course_id];
         }
       }
     }
-    localStorage.setItem('selections', JSON.stringify(obj));
+    localStorage.setItem('selections', JSON.stringify(store));
   }
 
   public toggleCourse(course : Course) {
     if (this.hasSelectedSelection(course)) {
-      delete JSON.parse(localStorage.getItem('selections'))[course.id];
+      let store = JSON.parse(localStorage.getItem('selections'));
+      delete store[course.id];
+      localStorage.setItem('selections', JSON.stringify(store));
     } else {
       course.sections.forEach((s) => {
         if (s.seats_taken < s.seats) {
