@@ -16,8 +16,6 @@ export class SelectionService {
     if (!store[section.course_id].includes(section.id)) {
       store[section.course_id].push(section.id);
       store[section.course_id].sort();
-    } else {
-      store[section.course_id] = [section.id];
     }
     localStorage.setItem('selections', JSON.stringify(store));
   }
