@@ -38,9 +38,7 @@ export class SelectionService {
 
   public toggleCourse(course : Course) {
     if (this.hasSelectedSelection(course)) {
-      course.sections.forEach((s) => {
-        this.removeSection(s);
-      });
+      delete JSON.parse(localStorage.getItem('selections'))[course.id];
     } else {
       course.sections.forEach((s) => {
         if (s.seats_taken < s.seats) {
