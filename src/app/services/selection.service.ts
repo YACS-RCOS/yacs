@@ -33,7 +33,7 @@ export class SelectionService {
   }
 
   public toggleCourse(course : Course) {
-    if (this.hasSelectedSelection(course)) {
+    if (this.hasSelectedSection(course)) {
       let store = JSON.parse(localStorage.getItem('selections'));
       delete store[course.id];
       localStorage.setItem('selections', JSON.stringify(store));
@@ -51,8 +51,8 @@ export class SelectionService {
     return store && store[section.course_id] && store[section.course_id].includes(section.id);
   }
 
-  public hasSelectedSelection(course : Course) : boolean {
+  public hasSelectedSection(course : Course) : boolean {
     let store = JSON.parse(localStorage.getItem('selections'));
-    return store && store[course.id];
+    return store && store[course.id] && store[course.id].length > 0;
   }
 }
