@@ -21,12 +21,14 @@ const SCHEDULE_TEST_DATA: Schedule[] = [
 @Component({
   selector: 'schedule-view',
   templateUrl: './component.html',
+  styleUrls: ['./component.scss']
 })
+
 export class ScheduleViewComponent {
   scheduleIndex: number = 0;
   totalSchedules: number = 0;
   isTemporary: boolean = false;
-  status: string = "";
+  status: string = "CRNs";
   schedules: Schedule[] = SCHEDULE_TEST_DATA;
 
   public get currentSchedule(): Schedule {
