@@ -6,9 +6,14 @@
   </div>
 
   <div class="schedule-grid">
-    <div class="grid-day" [style.width.%] = "schedule.getDayWidth" *ngFor="let dayNum of schedule.dayNums">
+    <div class="grid-day" [style.width.%] = "schedule.getDayWidth" *ngFor="let dayNum of schedule.dayNums; let last = last">
       <div class="day-label">{{ longDayName(dayNum) }}</div>
-      <div class="grid-hour" [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
+      <ng-container *ngIf=!last>
+        <div class="grid-hour"  [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
+      </ng-container>
+      <ng-container *ngIf=last>
+        <div class="grid-hour-last"  [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
+      </ng-container>
       <!-- TODO -->
       <!-- get rid of border-right in last column -->
     </div>
