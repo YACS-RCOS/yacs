@@ -9,7 +9,7 @@ import { School } from './school';
   styleUrls: ['./component.scss']
 })
 export class SchoolListComponent implements OnInit {
-  schools: School[];
+  schools: School[] = [];
 
   constructor (private yacsService: YacsService) {}
 

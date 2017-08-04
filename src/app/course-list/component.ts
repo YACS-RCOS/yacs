@@ -9,5 +9,5 @@ import { Section } from '../course-list/section/section';
 })
 export class CourseListComponent {
 
-  @Input() courses : Course[];
+  @Input() courses : Course[] = [];
 }

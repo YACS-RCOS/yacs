@@ -1,3 +1,4 @@
+<div *ngIf="schools.length == 0" class="loader"></div>
 <div class="schools">
   <div class="school" *ngFor="let school of schools">
     <span class="school-name">{{school.name}}</span>
