@@ -10,14 +10,15 @@ import { YacsService } from '../services/yacs.service';
   styleUrls: ['./component.scss']
 })
 export class CourseViewComponent implements OnInit {
-
   courses : Course[] = [];
+  isLoaded : boolean = false;
 
   constructor (
     private yacsService : YacsService,
     private activatedRoute: ActivatedRoute) { }
 
   getCourses (params: Params) {
+    this.isLoaded = false;
     let newParams : Object = {
       show_sections: true,
       show_periods: true
@@ -28,6 +29,7 @@ export class CourseViewComponent implements OnInit {
         .get('courses', newParams)
         .then((data) => {
           this.courses = data['courses'] as Course[];
+          this.isLoaded = true;
         });
   }
 

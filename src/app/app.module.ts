@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/component';
 import { FooterComponent } from './footer/component';
 
-import { SchoolListModule } from './school-list/module';
+import { SchoolViewModule } from './school-view/module';
 import { CourseViewModule } from './course-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
 
@@ -21,7 +21,7 @@ import { SelectionService } from './services/selection.service';
     FormsModule,
     HttpModule,
     AppRouterModule,
-    SchoolListModule,
+    SchoolViewModule,
     CourseViewModule,
     ScheduleViewModule
   ],
