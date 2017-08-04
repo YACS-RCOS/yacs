@@ -1,20 +1,22 @@
-<div class="schedule-legend">
-  <!-- todo add legend-hours -->
-  <!-- will need some SASS variable in here to make sure the margin-top of the legend equals the height of the header -->
-</div>
-<div class="schedule-header">
-  <div class="day-label" style="width: {{schedule.getDayWidth}}%" *ngFor="let dayNum of schedule.dayNums">
-    {{ longDayName(dayNum) }}
-  </div>
-</div>
-<div class="schedule-grid">
-  <div class="grid-day" style="width: {{schedule.getDayWidth}}%" *ngFor="let dayNum of schedule.dayNums">
-    <div class="grid-hour" *ngFor="let hourNum of schedule.hourNums"></div>
-    <div class="period" *ngFor="let p of periodsOnDay(dayNum)">
-      <p>{{ p.name }}</p>
-      <p>{{ p.crn }}</p>
-      <p>{{ p.instructor }}</p>
+<div class="schedule">
+  <div class="schedule-legend">
+    <div class="hour-label" [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums ; let i = index">
+      <div *ngIf="(i != 0)">{{ hourName(hourNum) }}</div>
     </div>
   </div>
-  <!-- TODO -->
+
+  <div class="schedule-grid">
+    <div class="grid-day" [style.width.%] = "schedule.getDayWidth" *ngFor="let dayNum of schedule.dayNums; let last = last">
+      <div class="day-label">{{ longDayName(dayNum) }}</div>
+      <ng-container *ngIf=!last>
+        <div class="grid-hour"  [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
+      </ng-container>
+      <ng-container *ngIf=last>
+        <div class="grid-hour-last"  [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
+      </ng-container>
+      <!-- TODO -->
+      <!-- get rid of border-right in last column -->
+    </div>
+   
+  </div>
 </div>

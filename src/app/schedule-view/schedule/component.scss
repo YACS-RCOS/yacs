@@ -1,0 +1,56 @@
+.schedule-legend{
+  position: absolute;
+  height: 100%;
+  left: .75em;
+}
+
+.hour-label{
+  color: #777777;
+  font-size: 0.5em;
+  text-align: right;
+  font-variant: small-caps;
+}
+
+.schedule-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 2.5em;
+}
+
+.day-label {
+  color: #777777;
+  display:block;
+  margin: 0 auto;
+  text-align: center;
+  font-size: .8em;
+  font-variant: small-caps;
+}
+
+.grid-day {
+  width: 1000;
+  height: 100%;
+  float: left;
+}
+
+.grid-hour {
+  display: block;
+  box-sizing: border-box;
+  border-top: 1px solid #e7e7e7;
+  border-right: 1px solid #e7e7e7;
+}
+
+.grid-hour-last {
+  display: block;
+  box-sizing: border-box;
+  border-top: 1px solid #e7e7e7;
+}
+
+.schedule {
+  height: 600px;
+  margin-right: 15px;
+  margin-top: 10px;
+  position:relative; /* so the overlay will position properly */
+  margin-bottom: 15px;
+}
+
