@@ -14,6 +14,7 @@ import { ScheduleViewModule } from './schedule-view/module';
 
 import { ConstantsService } from './services/constants';
 import { SelectionService } from './services/selection.service';
+import { AboutComponent } from './about/component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { SelectionService } from './services/selection.service';
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AboutComponent
   ],
   providers: [
     ConstantsService,
