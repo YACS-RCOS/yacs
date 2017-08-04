@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Schedule, SchedulePeriod } from './schedule/component';
+import { SchedulePeriod } from './schedule/scheduleperiod';
+import { Schedule} from './schedule/schedule';
 
 const SCHEDULE_TEST_DATA: Schedule[] = [
   // must instantiate Schedule with new + constructor
