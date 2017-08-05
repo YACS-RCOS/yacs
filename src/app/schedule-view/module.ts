@@ -7,6 +7,10 @@ import { ScheduleViewComponent } from './component';
 import { ScheduleComponent } from './schedule/component';
 //import { YacsService } from '../services/yacs.service';
 
+import { CourseListModule } from '../course-list/module';
+//import { CourseComponent } from '../course-list/course/component';
+
+
 @NgModule({
   declarations: [
     ScheduleViewComponent,
@@ -14,6 +18,8 @@ import { ScheduleComponent } from './schedule/component';
   ],
   imports: [
     CommonModule,
+    CourseListModule
+    //CourseComponent
     //RouterModule
   ],
   providers: [],
