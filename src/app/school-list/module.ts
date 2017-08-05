@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
-// this is added so that an ngFor in the schools html will work.
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SchoolListComponent } from './component';
+import { SchoolComponent } from './school/component';
 import { DepartmentComponent } from './department/component';
-import { YacsService } from '../services/yacs.service';
 
 @NgModule({
-    declarations: [
-        SchoolListComponent,
-        DepartmentComponent
-    ],
-    imports: [
-      CommonModule,
-      RouterModule
-    ],
-    providers: [YacsService],
+  declarations: [
+    SchoolListComponent,
+    SchoolComponent,
+    DepartmentComponent
+  ],
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
+  exports: [
+    SchoolListComponent
+  ]
 })
-export class SchoolListModule {}
-
+export class SchoolListModule { }
