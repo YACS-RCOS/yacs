@@ -1,49 +1,75 @@
 <article id="about">
   <h1>About YACS</h1>
-  <p>YACS is an open-source course scheduler for the community at Rensselaer Polytechnic Institute. It is developed in the <a href="http://rcos.io">Rensselaer Center for Open Source</a> and is sponsored by Red Hat. It's got a <a href="http://github.com/aosdict/yacs">repository on Github</a> and a <a href="http://yacsblog.wordpress.com">blog on Wordpress</a>. If you have a bug report or feature request, send us an email at <a href="mailto:yacsrpi@gmail.com">yacsrpi@gmail.com</a>.
+  <p>
+    YACS is an open-source course scheduler for the community at Rensselaer
+    Polytechnic Institute. It's one of the leading projects of the
+    <a href="http://rcos.io">Rensselaer Center for Open Source</a>
+    and is supported by Red Hat. It's got a
+    <a href="http://github.com/YACS-RCOS/yacs">repository on Github</a>
+    and a <a href="http://yacsblog.wordpress.com">blog on Wordpress</a>.
+    If you have a bug report or feature request, send us an email at
+    <a href="mailto:yacsrpi@gmail.com">yacsrpi@gmail.com</a>.
   </p>
-  <h2>History</h2>
-  <p>The project was started by Jeff Hui, RPI Class of '12, who launched the first site yacs.me as a replacement to the increasingly antiquated Rensselaer Open Couse Scheduler. The site became a staple of RPI over the years, but it fell into disrepair after the original development team had been gone for a couple of years. In the fall 2015 semester, a new group was formed to repair the site and bring it back up for the upcoming semesters. The code base was refactored into Ruby on Rails and built from the ground up, with the project finally launching to the RPI community on March 21, 2016. 
+  <h2 class="bottomrule">History</h2>
+  <p>
+    In the fall of 2010, the Rensselaer Open Course Scheduler was becoming
+    increasingly antiquated. Jeff Hui, RPI class of 2012, decided to create
+    yacs.me, an improved and much more user-friendly site, as an RCOS project.
+  </p>
+  <p>
+    YACS quickly became a staple of RPI. Then, as years went by and the original
+    development team graduated, it gradually fell into disrepair. Requests
+    slowed and the accuracy of data became less reliable.
+  </p>
+  <p>
+    In the fall 2015 semester, a new group was formed to repair and restore the
+    site and bring it back up for the upcoming semesters. The API was refactored
+    into Ruby on Rails, and it and the Web frontend were rebuilt from the ground
+    up. It garnered support from Red Hat in January 2016, became established
+    on-campus in early March, and finally launched to the RPI community on March
+    21.
+  </p>
+  <h2 class="bottomrule">Goals</h2>
+  <p>
+    Thus far, the YACS team has focused on re-implementing all of the major
+    features from the older version, while trying to maximize its flexibility so
+    that it can be used at other institutions. So far, it's more or less at
+    feature parity with the old YACS already, and there are several other features
+    that didn't exist in that version.
+  </p>
+  <p>
+    We currently still consider YACS to be in beta. Once YACS has been deployed at
+    another school and we implement support for multiple semesters, we'll probably
+    mark it as the first 1.0 release.
+  </p>
+  <p>
+    Our current projects include adding multiple semesters of data, providing a control panel
+    for administrative use, refactoring the Web frontend, and improving our search engine.
+    Keep an eye on our blog and our Github issue tracker to stay updated.
   </p>
   <h2 class="bottomrule">Development Team</h2>
   <h3>Current developers</h3>
-  <table id="currentdevs">
-    <tr>
-      <td>Cameron Root</td>
-      <td>Fall 2015 - Spring 2016</td>
-    </tr>
-    <tr>
-      <td>Richie Young</td>
-      <td>Fall 2015 - Spring 2016</td>
-    </tr>
-    <tr>
-      <td>James Grippo</td>
-      <td>Fall 2015 - Spring 2016</td>
-    </tr>
-    <tr>
-      <td>Wyatt Kroemer</td>
-      <td>Spring 2016</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Aesa Kamar</td>
-      <td>Spring 2016</td>
-      <td></td>
-    </tr>
-  </table>
+  <ul>
+    <li *ngFor="let dev of data.current_devs">
+      <div class="developer">
+        <img class="devavatar" src="https://github.com/{{dev.github}}.png">
+        <div class="devsummary">
+          <p>{{dev.name}}</p>
+          <p class="years">{{dev.years}}</p>
+        </div>
+      </div>
+    </li>
+  </ul>
   <h3>Past developers</h3>
-  <table id="pastdevs">
-    <tr>
-      <td>Jeff Hui (Original yacs.me developer)</td>
-      <td>Fall 2010 - Fall 2011</td>
-    </tr>
-    <tr>
-      <td>Jinzhen Gong</td>
-      <td>Spring 2011 - Fall 2011</td>
-    </tr>
-    <tr>
-      <td>Arijit Deb</td>
-      <td>Fall 2015</td>
-    </tr>
-  </table>
+  <ul>
+    <li *ngFor="let dev of data.past_devs">
+      <div class="developer">
+        <img class="devavatar" src="https://github.com/{{dev.github}}.png">
+        <div class="devsummary">
+          <p>{{dev.name}}</p>
+          <p class="years">{{dev.years}}</p>
+        </div>
+      </div>
+    </li>
+  </ul>
 </article>
