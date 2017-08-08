@@ -7,7 +7,8 @@ import { ConflictsService } from '../../services/conflicts.service';
 @Component({
   selector: 'course',
   templateUrl: './component.html',
-  styleUrls: ['./component.scss']
+  styleUrls: ['./component.scss'],
+  host: { '[class.selected]': 'hasSelected()' }
 })
 export class CourseComponent {
   @Input() course: Course;
@@ -35,6 +36,10 @@ export class CourseComponent {
 
   public clickCourse(course : Course) {
     this.selectService.toggleCourse(course);
+  }
+
+  public hasSelected() {
+    return this.selectService.hasSelectedSection(this.course);
   }
 
   public isSelected(section : Section) : boolean {

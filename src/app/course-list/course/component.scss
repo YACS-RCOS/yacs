@@ -34,13 +34,14 @@ section.selected:hover {
     color: #efefef;
     background-color: #d57f7f;
 }
+section.conflicts, section.conflicts:hover {
+    color: #aaa;
+}
+
 section.selected {
     color: #efefef;
     background-color: #c65353;
 }
 section.closed, section.closed:hover {
     color: #888;
-}
-section.conflicts, section.conflicts:hover {
-    color: #aaa;
 }
