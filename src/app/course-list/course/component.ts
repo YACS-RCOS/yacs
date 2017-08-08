@@ -8,13 +8,13 @@ import { ConflictsService } from '../../services/conflicts.service';
   selector: 'course',
   templateUrl: './component.html',
   styleUrls: ['./component.scss'],
-  host: { '[class.selected]': 'hasSelected()' }
+  host: { '[class.selected]': 'isCourseSelected()' }
 })
 export class CourseComponent {
   @Input() course: Course;
 
   constructor(
-    private selectService : SelectionService,
+    private selectionService : SelectionService,
     private conflictsService: ConflictsService) { }
   /* A getter function for the range of credits based on the min and max.
    * When {{creditRange}} is used in the template, this function will be called. */
@@ -35,19 +35,19 @@ export class CourseComponent {
   }
 
   public clickCourse(course : Course) {
-    this.selectService.toggleCourse(course);
+    this.selectionService.toggleCourse(course);
   }
 
-  public hasSelected() {
-    return this.selectService.hasSelectedSection(this.course);
+  public isCourseSelected() {
+    return this.selectionService.hasSelectedSection(this.course);
   }
 
-  public isSelected(section : Section) : boolean {
-    return this.selectService.isSectionSelected(section);
+  public isSectionSelected(section : Section) : boolean {
+    return this.selectionService.isSectionSelected(section);
   }
 
   public clickSection(section : Section) {
-    this.selectService.toggleSection(section);
+    this.selectionService.toggleSection(section);
   }
 
   public doesConflict(secId: number) {

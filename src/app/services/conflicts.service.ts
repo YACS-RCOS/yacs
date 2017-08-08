@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 
+import { SelectionService } from './selection.service';
+
 @Injectable()
 export class ConflictsService {
 
   private conflicts: any = {};
+
+  constructor(private selectionService: SelectionService) { }
 
   /**
    * Given the data returned from the API, populate the conflicts cache with
@@ -15,18 +19,16 @@ export class ConflictsService {
      * Currently we are assuming the conflicts in the API will always be sorted.
      * If that is not the case, a sort must be implemented here.
      */
-    var courselen = data.courses.length;
-    for (var i = 0; i < courselen; ++i) {
-      var sectlen = data.courses[i].sections.length;
-      for (var j = 0; j < sectlen; ++j) {
-        var id = data.courses[i].sections[j].id;
-
-        // TODO some method of cache expiration
-        if (!(id in this.conflicts)) {
-          this.conflicts[id] = data.courses[i].sections[j].conflicts;
+    let courses = data.courses || [];
+    courses.forEach((course) => {
+      let sections = course.sections || [];
+      sections.forEach((section) => {
+        let id = section.id;
+        if (!this.conflicts[id]) {
+          this.conflicts[id] = section.conflicts;
         }
-      }
-    }
+      });
+    });
   };
 
   /**
@@ -41,19 +43,16 @@ export class ConflictsService {
    * @return {Object} The selection data converted into an array of 2-element arrays, each with a section id and its associated course id, and a map of each course ID to its number of selected sections.
    */
   public flattenSelections(selections) {
-    var selectionsFlat = [];
-    var courseSelectionCounts = {};
+    let selectionsFlat = [];
+    let courseSelectionCounts = {};
 
-    for (var cid in selections) {
+    Object.keys(selections).forEach((cid) => {
       courseSelectionCounts[cid] = 0;
-      var sidlen = selections[cid].length;
-
-      for (var i = 0; i < sidlen; ++i) {
-        var sid = selections[cid][i];
+      selections[cid].forEach((sid) => {
         selectionsFlat.push([sid, cid]);
         courseSelectionCounts[cid]++;
-      }
-    }
+      });
+    });
 
     // then sort selectionsFlat by ascending order of sid
     // this could be improved with an optimized k-merge of the sectionId arrays, TODO
@@ -75,18 +74,18 @@ export class ConflictsService {
    * @return {boolean} Whether this section conflicts with currently selected sections.
    */
   public doesConflict(sectId: number) {
-    let flattenedSelections = this.flattenSelections(JSON.parse(localStorage.getItem('selections'))); // An object in the same format returned by flattenSelections.
-    var selectionsFlat = flattenedSelections.selectionsFlat;
-    var courseSelectionCounts = {};
+    let flattenedSelections = this.flattenSelections(this.selectionService.getSelections()); // An object in the same format returned by flattenSelections.
+    let selectionsFlat = flattenedSelections.selectionsFlat;
+    let courseSelectionCounts = {};
 
     /* this decrements the numbers in course selection counts, so make a deep copy
      * of flattenedSelections.courseSelectionCount.
      */
-    for (var key in flattenedSelections.courseSelectionCounts) {
-      courseSelectionCounts[key] = flattenedSelections.courseSelectionCounts[key];
-    }
+    Object.keys(flattenedSelections.courseSelectionCounts).forEach((cid) => {
+      courseSelectionCounts[cid] = flattenedSelections.courseSelectionCounts[cid];
+    });
 
-    if (!(sectId in this.conflicts)) {
+    if (!this.conflicts[sectId]) {
       // can't do anything, not going to ask the API for information
       return false;
     }
@@ -95,15 +94,15 @@ export class ConflictsService {
     // Section IDs in the flattened selections object and conflicts list are in increasing numeric order.
     // At least one of the arrays contains integer section IDs. This breaks if both are strings.
 
-    var conflicts = this.conflicts[sectId];
-    var i = 0;
-    var j = 0;
-    var imax = conflicts.length;
-    var jmax = selectionsFlat.length;
+    let conflicts = this.conflicts[sectId];
+    let i = 0;
+    let j = 0;
+    let imax = conflicts.length;
+    let jmax = selectionsFlat.length;
     while (i < imax && j < jmax) {
       // remember, selectionsFlat contains Array[2]s containing a section id and a course id
-      var selectedSectionId = selectionsFlat[j][0];
-      var selectedCourseId = selectionsFlat[j][1];
+      let selectedSectionId = selectionsFlat[j][0];
+      let selectedCourseId = selectionsFlat[j][1];
       if (conflicts[i] < selectedSectionId) {
         ++i;
       }

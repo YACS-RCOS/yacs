@@ -5,22 +5,15 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
-import { ConflictsService } from './conflicts.service';
-
 @Injectable()
 export class YacsService {
   protected baseUrl = 'http://yacs.cs.rpi.edu/api/v5';
 
-  constructor (private http: Http,
-               private conflictsService: ConflictsService) {}
+  constructor (private http: Http) {}
 
   get (path: string, params: Object = {}): Promise<Object[]> {
     return this.http.get(`${this.baseUrl}/${path}.json?${this.objectToQueryString(params)}`)
                     .toPromise()
-                    .then((response: Response) => {
-                      this.conflictsService.populateConflictsCache(response.json());
-                      return response;
-                    })
                     .then(this.extractData)
                     .catch(this.handleError);
   }

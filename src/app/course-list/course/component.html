@@ -8,5 +8,5 @@
   </div>
 </div>
 <div class="section-list">
-  <section *ngFor="let theSection of course.sections" [ngClass]="{ 'selected': isSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
+  <section *ngFor="let theSection of course.sections" [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
 </div>

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Course } from '../course-list/course/course';
 import { YacsService } from '../services/yacs.service';
 
+import { ConflictsService } from '../services/conflicts.service';
 
 @Component({
   selector: 'course-view',
@@ -15,7 +16,8 @@ export class CourseViewComponent implements OnInit {
 
   constructor (
     private yacsService : YacsService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private conflictsService: ConflictsService) { }
 
   getCourses (params: Params) {
     let newParams : Object = {
@@ -28,6 +30,7 @@ export class CourseViewComponent implements OnInit {
         .get('courses', newParams)
         .then((data) => {
           this.courses = data['courses'] as Course[];
+          this.conflictsService.populateConflictsCache(data);
         });
   }
 

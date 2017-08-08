@@ -14,8 +14,6 @@ const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sam'];
 export class SectionComponent {
   @Input() section: Section;
 
-  private conflicts: any = {};
-
   constructor(private conflictsService: ConflictsService) { }
 
   public getDay(period: Period) : string {
