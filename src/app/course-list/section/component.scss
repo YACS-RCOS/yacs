@@ -1,4 +1,4 @@
-.conflicts>section-information {
+:host.conflicts>.section-information {
     text-decoration: line-through;
 }
 .section-name {
@@ -28,7 +28,7 @@ div.conflict-note {
     display:inline;
     color:#000;
 }
-:not(.conflicts)>div.conflict-note {
+:host:not(.conflicts)>div.conflict-note {
     display:none;
 }
 span.conflict-img-center {

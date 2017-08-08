@@ -14,6 +14,8 @@ import { ScheduleViewModule } from './schedule-view/module';
 
 import { ConstantsService } from './services/constants';
 import { SelectionService } from './services/selection.service';
+import { ConflictsService } from './services/conflicts.service';
+
 import { AboutComponent } from './about/component';
 
 @NgModule({
@@ -34,7 +36,8 @@ import { AboutComponent } from './about/component';
   ],
   providers: [
     ConstantsService,
-    SelectionService
+    SelectionService,
+    ConflictsService
   ],
   bootstrap: [AppComponent]
 })

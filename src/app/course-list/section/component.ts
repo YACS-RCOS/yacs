@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { Section } from './section';
 import { Period } from './period';
+import { ConflictsService } from '../../services/conflicts.service';
 
 const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sam'];
 
@@ -12,6 +13,10 @@ const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sam'];
 })
 export class SectionComponent {
   @Input() section: Section;
+
+  private conflicts: any = {};
+
+  constructor(private conflictsService: ConflictsService) { }
 
   public getDay(period: Period) : string {
     return SHORT_DAYS[period.day];
@@ -47,5 +52,9 @@ export class SectionComponent {
 
   public getHours(period: Period) : string {
     return this.timeToString(period.start) + '-' + this.timeToString(period.end);
+  }
+
+  public doesConflict(secId: number) {
+    return this.conflictsService.doesConflict(secId);
   }
 }
