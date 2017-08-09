@@ -6,17 +6,21 @@ import { RouterModule } from '@angular/router';
 import { SchoolListComponent } from './component';
 import { DepartmentComponent } from './department/component';
 import { YacsService } from '../services/yacs.service';
+import { ConflictsService } from '../services/conflicts.service';
 
 @NgModule({
     declarations: [
-        SchoolListComponent,
-        DepartmentComponent
+      SchoolListComponent,
+      DepartmentComponent
     ],
     imports: [
       CommonModule,
       RouterModule
     ],
-    providers: [YacsService],
+    providers: [
+      ConflictsService,
+      YacsService
+    ]
 })
 export class SchoolListModule {}
 

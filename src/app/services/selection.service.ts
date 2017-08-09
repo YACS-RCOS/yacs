@@ -11,7 +11,7 @@ export class SelectionService {
   }
 
   public addSection(section : Section) {
-    let store = JSON.parse(localStorage.getItem('selections')) || {};
+    let store = this.getSelections() || {};
     store[section.course_id] = store[section.course_id] || [];
     if (store[section.course_id].includes(section.id)) return false;
     store[section.course_id].push(section.id);
@@ -21,7 +21,7 @@ export class SelectionService {
   }
 
   public removeSection(section : Section) {
-    let store = JSON.parse(localStorage.getItem('selections')) || {};
+    let store = this.getSelections() || {};
     if (!store[section.course_id] || !store[section.course_id].includes(section.id)) return false;
     store[section.course_id].splice(store[section.course_id].indexOf(section.id), 1);
     if (store[section.course_id].length == 0) {
@@ -33,7 +33,7 @@ export class SelectionService {
 
   public toggleCourse(course : Course) {
     if (this.hasSelectedSection(course)) {
-      let store = JSON.parse(localStorage.getItem('selections'));
+      let store = this.getSelections();
       delete store[course.id];
       localStorage.setItem('selections', JSON.stringify(store));
     } else {
@@ -46,12 +46,16 @@ export class SelectionService {
   }
 
   public isSectionSelected(section : Section) : boolean {
-    let store = JSON.parse(localStorage.getItem('selections'));
+    let store = this.getSelections();
     return store && store[section.course_id] && store[section.course_id].includes(section.id);
   }
 
   public hasSelectedSection(course : Course) : boolean {
-    let store = JSON.parse(localStorage.getItem('selections'));
+    let store = this.getSelections();
     return store && store[course.id] && store[course.id].length > 0;
+  }
+
+  public getSelections() {
+    return JSON.parse(localStorage.getItem('selections'));
   }
 }
