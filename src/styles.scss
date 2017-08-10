@@ -68,4 +68,8 @@ footer {
 @keyframes spin {
   from {transform:rotate(0deg);}
   to {transform:rotate(360deg);}
+
+a {
+  text-decoration: none;
+  color: #993333;
 }
