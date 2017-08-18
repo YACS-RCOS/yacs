@@ -6,6 +6,9 @@ import { SchoolListComponent } from './component';
 import { SchoolComponent } from './school/component';
 import { DepartmentComponent } from './department/component';
 
+import { YacsService } from '../services/yacs.service';
+import { ConflictsService } from '../services/conflicts.service';
+
 @NgModule({
   declarations: [
     SchoolListComponent,
@@ -18,6 +21,10 @@ import { DepartmentComponent } from './department/component';
   ],
   exports: [
     SchoolListComponent
+  ],
+  providers: [
+    ConflictsService,
+    YacsService
   ]
 })
 export class SchoolListModule { }
