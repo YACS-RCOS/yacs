@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 
 import { ScheduleViewComponent } from './component';
 import { ScheduleComponent } from './schedule/component';
+import { ScheduleEventComponent } from './scheduleevent/component';
+//import { SectionComponent } from '../course-list/section/component';
+
 //import { YacsService } from '../services/yacs.service';
 
 import { CourseListModule } from '../course-list/module';
@@ -15,6 +18,7 @@ import { CourseListModule } from '../course-list/module';
   declarations: [
     ScheduleViewComponent,
     ScheduleComponent,
+    ScheduleEventComponent,
   ],
   imports: [
     CommonModule,

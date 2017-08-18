@@ -1,22 +1,36 @@
-<div class="schedule">
+<div class="schedule" [style.height.px] = "schedule.height">
   <div class="schedule-legend">
-    <div class="hour-label" [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums ; let i = index">
+    <div class="hour-label" [style.height.%] = "getHourHeight" *ngFor="let hourNum of schedule.hourNums ; let i = index">
       <div *ngIf="(i != 0)">{{ hourName(hourNum) }}</div>
     </div>
   </div>
 
   <div class="schedule-grid">
-    <div class="grid-day" [style.width.%] = "schedule.getDayWidth" *ngFor="let dayNum of schedule.dayNums; let last = last">
+  <!-- <div class="foo" [style.width.%] = "getDayWidth" *ngFor="let dayNum of schedule.dayNums; let j = index; let last = last"> 
+  
+  </div> -->
+    <div class="grid-day"  [style.width.%] = "getDayWidth" *ngFor="let dayNum of schedule.dayNums; let j = index; let last = last">
       <div class="day-label">{{ longDayName(dayNum) }}</div>
-      <ng-container *ngIf=!last>
-        <div class="grid-hour"  [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
+      <ng-container *ngIf=!last >
+        <!-- <ng-container *ngIf="j==3" > -->
+          <scheduleevent   *ngFor="let p of periodsOnDay(dayNum) ; let i = index" [style.margin-top.px] = "eventPosition(p.startTime)" [style.backgroundColor] = "schedule.colors[p.color]" [style.height.px] = "eventHeight(p.endTime - p.startTime)" [style.borderColor] = "schedule.border_colors[p.color]" [style.color] = "schedule.text_colors[p.color]" [scheduleevent] = "p"></scheduleevent>
+        <!-- </ng-container> -->
+        <div class="grid-hour"  [style.height.%] = "getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
       </ng-container>
+
       <ng-container *ngIf=last>
-        <div class="grid-hour-last"  [style.height.%] = "schedule.getHourHeight" *ngFor="let hourNum of schedule.hourNums"></div>
+        <ng-container>
+        <scheduleevent   *ngFor="let p of periodsOnDay(dayNum) ; let i = index" [style.margin-top.px] = "eventPosition(p.startTime)" [style.backgroundColor] = "schedule.colors[p.color]" [style.height.px] = "eventHeight(p.endTime - p.startTime)" [style.borderColor] = "schedule.border_colors[p.color]" [style.color] = "schedule.text_colors[p.color]" [scheduleevent] = "p"></scheduleevent>        </ng-container>
+
+        <div class="grid-hour-last" [style.height.%] = "getHourHeight" *ngFor="let hourNum of schedule.hourNums ; let i = index" >
+        
+        </div>
       </ng-container>
-      <!-- TODO -->
-      <!-- get rid of border-right in last column -->
+
+      
     </div>
-   
+    
   </div>
-</div>
+</div> 
+
+

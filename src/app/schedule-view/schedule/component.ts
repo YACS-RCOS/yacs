@@ -1,9 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ConstantsService } from '../../services/constants';
-import { SchedulePeriod } from './scheduleperiod';
+import { ScheduleEvent } from '../scheduleevent/scheduleevent';
 import { Schedule } from './schedule';
-
-
+import { Section } from '../../course-list/section/section';
 
 @Component({
   selector: 'schedule',
@@ -48,6 +47,22 @@ export class ScheduleComponent {
   /* Filter and return only the periods on a given day. */
   public periodsOnDay(day: number) {
     return this.schedule.periods.filter(p => (p.day === day));
+  }
+
+  public get getDayWidth(): number {
+    return (100 / this.schedule.getDaySpan);
+  }
+
+  public get getHourHeight(){
+    return (60 * 100 / this.schedule.getTimeSpan);
+  }
+
+  public eventPosition(eventStart: number){
+    return (this.schedule.height * ((eventStart - this.schedule.earliestStart) / this.schedule.getTimeSpan));
+  }
+
+  public eventHeight(eventDuration: number){
+    return (this.schedule.height  * (eventDuration / this.schedule.getTimeSpan));
   }
 
 
