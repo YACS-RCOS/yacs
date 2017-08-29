@@ -1,5 +1,5 @@
 body {
-    /*background-color:#efefef;*/
+    background-color:#ffffff;
     color: #000;
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 300;
@@ -8,7 +8,10 @@ body {
 
 a {
     text-decoration: none;
-    color: inherit;
+    /* by default, "text" links should be this shade of red -
+     * others, like in the header and departments list, are
+     * special cases. */
+    color: #993333;
 }
 
 div#content {
@@ -19,11 +22,8 @@ img#loading {
     position:absolute;
     top: 50%;
     left: 50%;
-    /* browsers handle fractional pixel values differently, but the worst that
-       can happen is that it's 1/2 pixel off center. So it's best to use the
-       real values (half of the image width and height) here. */
-    margin-top: -4.5px;
-    margin-left: -62.5px;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
 
 footer {

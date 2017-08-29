@@ -34,6 +34,8 @@ gem 'newrelic_rpm'
 
 gem 'coveralls'
 
+gem 'redis'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-remote'

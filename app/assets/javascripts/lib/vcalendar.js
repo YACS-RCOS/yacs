@@ -5,7 +5,7 @@
  */
 'use strict';
 
-window.Yacs.vCalendar = new function() {
+Yacs.vCalendar = new function () {
   var self = this;
 
   /**
@@ -15,6 +15,8 @@ window.Yacs.vCalendar = new function() {
    * could be imported into a calendar application.
    * All periods are set to recur weekly, starting at the current
    * week.
+   * @param {Object[]} periods - array of period objects as they appear after being processed by the schedules controller (events)
+   * @return {String} The VCalendar file data as a string
    */
   self.createVCalendar = function(periods) {
     var vCalendarData = 'BEGIN:VCALENDAR\r\n' +
@@ -66,7 +68,7 @@ window.Yacs.vCalendar = new function() {
         'END:VEVENT\r\n';
     };
 
-    each(periods, function(period) {
+    periods.forEach(function(period) {
       vCalendarData += periodToVevent(period);
     });
     vCalendarData += 'END:VCALENDAR';
@@ -78,6 +80,7 @@ window.Yacs.vCalendar = new function() {
    * named yacs-schedule.ics.
    * Do this by attaching a phantom <a> to the DOM and setting its
    * href to the calendar data, then simulating a click on it.
+   * @param {String} vCalendarData - Raw VCalendar file data returned by createVCalendar().
    */
   self.download = function(vCalendarData) {
     var elt = document.createElement('a');
@@ -87,4 +90,4 @@ window.Yacs.vCalendar = new function() {
     elt.click();
     document.body.removeChild(elt);
   };
-};
+}();
