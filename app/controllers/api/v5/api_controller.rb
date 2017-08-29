@@ -6,14 +6,21 @@ class Api::V5::ApiController < ActionController::Metal
   include ActionController::Caching
   include ActionController::Instrumentation
   include ActionView::Layouts
-
+  include ActionController::StrongParameters
+  include ActionController::Head
+  include ActionController::Rescue
+  include ActionController::Redirecting
+  
   append_view_path "#{Rails.root}/app/views"
 
   self.page_cache_directory = Rails.public_path
   self.perform_caching = true
   self.cache_store = :dalli_store
   
-  before_filter :nested_queries, only: [:index]
+  before_action :nested_queries, only: [:show, :index]
+  before_action :authenticate, except: [:show, :index]
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
   def nested_queries
@@ -26,6 +33,10 @@ class Api::V5::ApiController < ActionController::Metal
   protected
   def query
     @query
+  end
+
+  def record_not_found
+    head :not_found
   end
   
   def any param
@@ -46,5 +57,9 @@ class Api::V5::ApiController < ActionController::Metal
         q.where param => any(param)
       end
     end
+  end
+
+  def authenticate
+    Rails.env.test? || Rails.env.development?
   end
 end

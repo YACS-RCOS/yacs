@@ -56,4 +56,66 @@ describe 'Sections API' do
       json_validate_sections(Section.all, true)
     end
   end
+
+  context 'There is a section to be created' do
+    it 'creates a section' do
+      course = FactoryGirl.create(:course)
+      section_params = {
+        section: {
+          seats_taken: 2,
+          seats: 20,
+          instructors: 'Stacy Patterson',
+          course_id: course.id,
+          num_periods: 5,
+          name: 'third',
+          crn: 4423
+        }
+      }
+      post "/api/v5/sections/", section_params
+      expect(response).to be_success
+      created_section=Section.find_by(seats_taken: 2, seats: 20)
+      expect(created_section).to be_present
+      json_validate_sections([created_section])
+    end
+
+  end
+  context 'There is a section to be updated' do
+    it 'updates the seats_taken for section' do
+      section = FactoryGirl.create(:section_with_periods, seats_taken: 0)
+      section_params = {
+        section: {
+          seats_taken: 2
+        }
+      }
+      put "/api/v5/sections/#{section.id}", section_params
+      section.reload
+      expect(section.seats_taken).to eq 2
+      json_validate_sections([section])
+    end
+    it 'updates the seats for section' do
+      section_params = { 
+        section: {
+          seats: 40
+        }
+      }
+
+      section = FactoryGirl.create(:section_with_periods, seats: 20)
+      put "/api/v5/sections/#{section.id}", section_params
+      section.reload
+      expect(section.seats).to eq 40    
+      json_validate_sections([section])
+    end
+
+    it 'deletes a section' do
+      section = FactoryGirl.create(:section_with_periods)
+      delete "/api/v5/sections/#{section.id}"
+      expect(response.status).to eq 204
+    end
+
+    it 'section id is not found for deletion' do
+      section = FactoryGirl.create(:section_with_periods)
+      delete "/api/v5/sections/#{500000}"
+      expect(response.status).to eq 404
+    end
+  end
 end
