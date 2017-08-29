@@ -17,7 +17,8 @@ class Api::V5::ApiController < ActionController::Metal
   self.perform_caching = true
   self.cache_store = :dalli_store
   
-  before_filter :nested_queries, only: [:index]
+  before_action :nested_queries, only: [:show, :index]
+  before_action :authenticate, except: [:show, :index]
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
@@ -56,5 +57,9 @@ class Api::V5::ApiController < ActionController::Metal
         q.where param => any(param)
       end
     end
+  end
+
+  def authenticate
+    Rails.env.test? || Rails.env.development?
   end
 end

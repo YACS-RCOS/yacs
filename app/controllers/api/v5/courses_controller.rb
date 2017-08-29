@@ -29,7 +29,7 @@ class Api::V5::CoursesController < Api::V5::ApiController
 
   def update
     @query = [Course.find(params[:id])]
-    @query.first.update(course_params)
+    @query.first.update!(course_params)
     render action: :show, status: :success
   end
 
@@ -37,7 +37,9 @@ class Api::V5::CoursesController < Api::V5::ApiController
     Course.find(params[:id]).destroy
     head :no_content
   end
+
   private
+
   def course_params
     params.require(:course).permit(:name, :number, :min_credits, 
     :max_credits, :description, :department_id)

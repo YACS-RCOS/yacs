@@ -27,9 +27,10 @@ class Api::V5::DepartmentsController < Api::V5::ApiController
     Department.find(params[:id]).destroy!
     head :no_content
   end
-  private 
+
+  private
+
   def department_params
     params.require(:department).permit(:code, :name, :school_id)
   end 
-
 end
