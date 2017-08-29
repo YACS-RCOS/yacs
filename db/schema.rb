@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160310202420) do
+ActiveRecord::Schema.define(version: 20170305230340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20160310202420) do
     t.integer  "periods_end",   default: [], null: false, array: true
     t.string   "periods_type",  default: [], null: false, array: true
     t.string   "instructors",   default: [], null: false, array: true
+    t.integer  "conflicts",     default: [], null: false, array: true
   end
 
   add_index "sections", ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true, using: :btree

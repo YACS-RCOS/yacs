@@ -47,7 +47,7 @@ Handlebars.registerHelper('time_range', function (start, end) {
     var ampm = hour >= 12 ? 'p' : 'a';
 
     if (hour > 12) {
-      hour = hour - 12;
+      hour -= 12;
     }
     else if (hour === 0) {
       hour = 12;
