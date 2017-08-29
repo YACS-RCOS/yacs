@@ -30,6 +30,7 @@ class Api::V5::SchoolsController < Api::V5::ApiController
   end
 
   private
+
   def school_params
   	params.require(:school).permit(:name)
   end
