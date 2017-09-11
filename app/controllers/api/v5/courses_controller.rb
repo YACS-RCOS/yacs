@@ -18,4 +18,30 @@ class Api::V5::CoursesController < Api::V5::ApiController
     end
   end
 
+  def show
+    @query = Course.where(id: params[:id])
+  end
+
+  def create
+    @query = [Course.create!(course_params)]
+    render action: :show, status: :created
+  end
+
+  def update
+    @query = [Course.find(params[:id])]
+    @query.first.update!(course_params)
+    render action: :show, status: :success
+  end
+
+  def destroy
+    Course.find(params[:id]).destroy
+    head :no_content
+  end
+
+  private
+
+  def course_params
+    params.require(:course).permit(:name, :number, :min_credits, 
+    :max_credits, :description, :department_id)
+  end
 end

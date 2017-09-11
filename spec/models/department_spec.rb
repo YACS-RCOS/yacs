@@ -35,4 +35,5 @@ RSpec.describe Department do
     expect(build(:department, code: '')).to_not be_valid
     expect(build(:department, name: '')).to_not be_valid
   end
+
 end
