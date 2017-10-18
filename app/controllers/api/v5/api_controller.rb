@@ -15,7 +15,7 @@ class Api::V5::ApiController < ActionController::Metal
 
   self.page_cache_directory = Rails.public_path
   self.perform_caching = true
-  self.cache_store = :dalli_store
+  self.cache_store = :redis_store, 'redis://redis:6379/0/cache'
   
   before_action :nested_queries, only: [:show, :index]
   before_action :authenticate, except: [:show, :index]
