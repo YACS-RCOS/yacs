@@ -15,7 +15,7 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem 'rails-observers'
-gem 'dalli'
+gem 'redis-rails'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
