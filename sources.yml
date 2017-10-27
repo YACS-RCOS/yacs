@@ -1,0 +1,42 @@
+version: '1'
+
+sources:
+  acalog:
+    location: "acalog"
+    poll: 86400
+    root: course
+  banner:
+    location: "banner"
+    poll: 86400
+    root: course
+  banner-seats:
+    location: "banner-seats"
+    poll: 18000
+    root: section
+  admin:
+    location: "admin"
+    poll: 3600
+    root: school
+
+fields:
+  default:
+    - admin
+    - banner
+    - acalog
+  course:
+    name:
+      - admin
+      - acalog
+      - banner
+    description:
+      - admin
+      - acalog
+  section:
+    seats:
+      - admin
+      - banner-seats
+      - banner
+    seats_available:
+      - admin
+      - banner-seats
+      - banner
