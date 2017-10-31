@@ -1,6 +1,7 @@
 GIT
   remote: git@github.com:YACS-RCOS/yacs-auth.git
-  revision: ee0464ec2771795da2211ed0b5b6f2a2f13e039c
+  revision: c47ab84c97c055d9fb85dc9e296f9a640a976535
+  branch: master
   specs:
     yacs-auth (0.1.2)
 
@@ -60,6 +61,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
+    coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0)
@@ -108,6 +110,12 @@ GEM
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
     pg (0.21.0)
+    pry (0.11.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.5.0)
+      byebug (~> 9.1)
+      pry (~> 0.10)
     public_suffix (3.0.0)
     puma (3.10.0)
     rack (2.0.3)
@@ -207,6 +215,8 @@ DEPENDENCIES
   jwt
   listen (>= 3.0.5, < 3.2)
   pg
+  pry
+  pry-byebug
   puma (~> 3.7)
   rails (~> 5.1.4)
   redis (~> 3.0)
