@@ -39,7 +39,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     private activatedRoute: ActivatedRoute) { 
 
     this.subscription = this.selectionService.subscribe(
-      msg => {console.log(msg); this.courseSelections = this.selectionService.getSelections(); this.getCourses();});
+      msg => {this.courseSelections = this.selectionService.getSelections(); this.getCourses();});
   }
 
  ngOnDestroy(){
@@ -58,7 +58,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     this.isLoaded = false;
     let len = Object.keys(this.courseSelections).length;
     for(let key of Object.keys(this.courseSelections)){
-      Object.assign(newParams, {id: this.courseSelections[key]}); // cannot directly modify params
+      Object.assign(newParams, {id: this.courseSelections[key]}); 
       this.yacsService
         .get('sections', newParams)
         .then((data) => {
@@ -67,7 +67,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
            this.processSchedules();
           }
         });
-      Object.assign(newParams, {id: key}); // cannot directly modify params
+      Object.assign(newParams, {id: key}); 
       this.yacsService
         .get('courses', newParams)
         .then((data) => {
@@ -75,13 +75,11 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
       });
     }
     
-    
-    // add show_sections and show_periods to params
     for(let obj of this.courseIds) {
       
       
     }
-    //this.isLoaded = true; 
+
   }
 
   processSchedules () {
@@ -110,7 +108,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
           color: periodcolor,
           title: s['department_code'] + ' ' + s['course_number'] + ' - ' + s['name'],
         }
-        console.log(p['start']);
         if(earliestStart > this.toMinutes(p['start'])){
           earliestStart = this.toMinutes(p['start']);
         }

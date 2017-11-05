@@ -21,7 +21,7 @@ export class SelectionService {
   public toggleSection(section : Section) {
     
     this.isSectionSelected(section) ? this.removeSection(section) : this.addSection(section);
-    this.next('Broadcast this to the parent please!');
+    this.next('event'); //this should be changed
   }
 
   public addSection(section : Section) {
@@ -58,7 +58,7 @@ export class SelectionService {
         }
       });
     }
-    this.next('Broadcast this to the parent please!');
+    this.next('event');
   }
 
   public isSectionSelected(section : Section) : boolean {
