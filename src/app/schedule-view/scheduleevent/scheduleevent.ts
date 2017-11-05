@@ -9,4 +9,5 @@ export class ScheduleEvent {
   endTime: number;
 
   color: number;
+  title: string;
 }

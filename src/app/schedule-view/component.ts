@@ -1,48 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { YacsService } from '../services/yacs.service';
 import { Course } from '../course-list/course/course';
 import { Schedule} from './schedule/schedule';
 import { ScheduleEvent } from './scheduleevent/scheduleevent';
+import { SelectionService } from '../services/selection.service';
+import 'rxjs/Rx';
+import {Subject,Subscription} from 'rxjs/Rx';
 
-const SCHEDULE_TEST_DATA: Schedule[] = [
-  // must instantiate Schedule with new + constructor
-  // since it has getter properties that would otherwise have to be declared
-  // in this array
-  new Schedule(480, 1320, [
-      {
-        name: 'test1',
-        crn: 54,
-        instructor: 'Dr Sdfsdf',
-        day: 1,
-        startTime: 1200,
-        endTime: 1320,
-        color: 0,
-      },
-      {
-        name: 'test2',
-        crn: 55,
-        instructor: 'Dr Sdfsdf',
-        day: 2,
-        startTime: 480,
-        endTime: 640,
-        color: 0,
-      }
-    ]
-  ),
-  new Schedule(480, 1200, [
-      {
-        name: 'sdfsdf',
-        crn: 54,
-        instructor: 'Dr Sdfsdf',
-        day: 1,
-        startTime: 580,
-        endTime: 640,
-        color: 0,
-      }
-    ]
-  )
-];
+
 
 @Component({
   selector: 'schedule-view',
@@ -50,52 +16,128 @@ const SCHEDULE_TEST_DATA: Schedule[] = [
   styleUrls: ['./component.scss']
 })
 
-export class ScheduleViewComponent {
+export class ScheduleViewComponent implements OnInit, OnDestroy{
 
-  courses : Course[] = [];
-  paramCourses: Object[] = [{id: 303}, {id:393}];
+  courses : Course[];
+  isLoaded : boolean = false;
+  courseSelections : Object[];
+  courseIds: Object[];
+  sections : Object[];
+  processedSchedules: Schedule[]  = [];
+  crns : string;
+  schedules: Schedule[];
+  start: number = 480; //8AM    
+  end: number = 1200; //8PM
+
+  private subscription;
 
 
   constructor (
     
     private yacsService : YacsService,
-    private activatedRoute: ActivatedRoute) { }
+    private selectionService : SelectionService,
+    private activatedRoute: ActivatedRoute) { 
+
+    this.subscription = this.selectionService.subscribe(
+      msg => {console.log(msg); this.courseSelections = this.selectionService.getSelections(); this.getCourses();});
+  }
+
+ ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 
   getCourses () {
+    this.sections = [];
+    this.courses = [];
+    this.courseIds = [];
     let newParams : Object = {
       show_sections: true,
       show_periods: true
     };
-    // add show_sections and show_periods to params
-    for(let obj of this.paramCourses) {
-      Object.assign(newParams, obj); // cannot directly modify params
+    let i = 0;
+    this.isLoaded = false;
+    let len = Object.keys(this.courseSelections).length;
+    for(let key of Object.keys(this.courseSelections)){
+      Object.assign(newParams, {id: this.courseSelections[key]}); // cannot directly modify params
       this.yacsService
-          .get('courses', newParams)
-          .then((data) => {
-            this.courses = this.courses.concat(data['courses']) as Course[];
-          });
+        .get('sections', newParams)
+        .then((data) => {
+          this.sections = this.sections.concat(data['sections']);
+          if(++i == len){
+           this.processSchedules();
+          }
+        });
+      Object.assign(newParams, {id: key}); // cannot directly modify params
+      this.yacsService
+        .get('courses', newParams)
+        .then((data) => {
+          this.courses = this.courses.concat(data['courses']) as Course[];
+      });
     }
+    
+    
+    // add show_sections and show_periods to params
+    for(let obj of this.courseIds) {
+      
+      
+    }
+    //this.isLoaded = true; 
   }
 
+  processSchedules () {
+    this.crns = "CRNs: ";
+    this.schedules = [];
+    let periods =[];
+    let earliestStart = 480;
+    let latestEnd = 1320;
+    let periodcolor = 0;
+    for (let s of this.sections) {
+      periodcolor++;
+      if(periodcolor == 1){
+          this.crns += s['crn'];
+      }
+      else{
+        this.crns += ', ' + s['crn'];
+      }
+      for(let p of s['periods']){
+        let period = {
+          name: s['course_name'],
+          crn: s['crn'],
+          instructor: s['instructors'][0],
+          day: p['day'],
+          startTime: this.toMinutes(p['start']),
+          endTime: this.toMinutes(p['end']),
+          color: periodcolor,
+          title: s['department_code'] + ' ' + s['course_number'] + ' - ' + s['name'],
+        }
+        console.log(p['start']);
+        if(earliestStart > this.toMinutes(p['start'])){
+          earliestStart = this.toMinutes(p['start']);
+        }
+        if(latestEnd < this.toMinutes(p['end'])){
+          latestEnd = this.toMinutes(p['end']);
+        }
+        periods.push(period);
+      }
+    }
+    this.isLoaded = true;
+    this.schedules.push(new Schedule(earliestStart, latestEnd, periods));
+
+  }
+
+  toMinutes(timeString) {
+    let int = parseInt(timeString);
+    return (Math.floor(int / 100) * 60) + (int % 100);
+  };
+
   ngOnInit () : void {
+    this.courseSelections = this.selectionService.getSelections();
     this.getCourses();
 
-    // TO DO 
-    // Add this in: 
-      // this.activatedRoute.queryParams.subscribe((params: Params) => {
-      // this.getCourses(params);
-      // });
   }
 
   scheduleIndex: number = 0;
   totalSchedules: number = 0;
   isTemporary: boolean = false;
-  status: string = "CRNs";
-  schedules: Schedule[] = SCHEDULE_TEST_DATA;
-
-  public get currentSchedule(): Schedule {
-    return this.schedules[this.scheduleIndex];
-  }
-
 
 }

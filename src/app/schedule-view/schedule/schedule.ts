@@ -12,9 +12,6 @@ export class Schedule {
 
   periods: ScheduleEvent[];
 
-
-  // arrays of day numbers and hour numbers
-  // needed because ngFor must iterate over a container
   dayNums: number[];
   hourNums: number[];
 
@@ -30,12 +27,6 @@ export class Schedule {
     periods: ScheduleEvent[]
   ) {
     this.periods = periods;
-
-    let j = 0;
-    for(let p of this.periods){
-       p.color = j;
-       j++;
-    }
 
     // cap earliestStart and latestEnd to the nearest hours
     this.earliestStart = Math.floor(earliestStart/60) * 60;
@@ -57,6 +48,7 @@ export class Schedule {
       this.dayNums.push(i);
     }
     this.hourNums = [];
+    console.log(latestEnd);
     for(let i=this.earliestStart; i<this.latestEnd; i+=60) {
       this.hourNums.push(i);
     }
