@@ -13,13 +13,20 @@ class Malg
   # end
   
 
-  DATA_TYPES = %w(sections courses departments schools).freeze
+  DATA_TYPES = %w(schools departments courses sections).freeze
+  DATA_TYPE_UIDS = { 'schools' => 'name', 'departments' => 'code', 'courses' => 'number', 'sections' => 'name' }.freeze
 
   def initialize priorities
     @priorities = priorities
     @graph = { 'schools' => [], 'departments' => [], 'courses' => [], 'sections' => [] }
     @sources = {}
   end
+
+  def can_build_graph?
+    priorities.vital_sources_ready?
+  end
+
+
 
   def add_record record, type, source, parent
     throw 'Nil Parent Error' if parent == nil && type != 'schools'
@@ -30,47 +37,70 @@ class Malg
       parent[type] << new_record
     end
     @souces[new_record.object_id] = new_record.transform_values { |v| source }
+    new_record
   end
 
   def ammend_record old_record, new_record, type, new_source
-    return if old_record == new_record
     new_record.reject{ |k, v| DATA_TYPES.any? k }.each do |k, v|
       if priorities.get(type, k, new_source) > priorities.get(type, k, @sources[old_record.object_id])
         old_record[k] = v
         @sources[old_record.object_id][k] = new_source
       end
     end
+    old_record
   end
 
-  def can_build_graph?
-    priorities.vital_sources_ready?
+  def find_matching_record record, type, collection
+    return nil unless collection
+    collection.detect do |collection_record|
+      collection_record[DATA_TYPE_UIDS[type]] == record[DATA_TYPE_UIDS[type]]
+    end
   end
+
+  def handle_record record, type, source, parent
+    if parent
+      old_record = find_matching_record record, type, parent[type]
+      if old_record
+        return ammend_record old_record, record, type, source.name
+      else
+        return add_record record, type, source.name, parent
+      end
+    else
+      old_record = find_matching_record record, type, @graph[type]
+      if old_record
+        return ammend_record old_record, record, type, source.name
+      else
+        puts "Error: Unresolvable #{type} #{record} from source #{source.name}"
+      end
+    end
+  end
+
+  # def process_sections sections, course, source
+  #   sections.each do |ss|
+  #     if course
+  #       section = course['sectios'] && course['sections'].detect { |gs| gs['name'] == ss['name'] }
+  #       if section
+  #         ammend_record section, ss, 'sections', source.name
+  #       else
+  #         add_record ss, 'sections', source.name, course
+  #       end
+  #     else
+  #       section = @graph['sections'].detect { |gs| gs['name'] == ss['name'] }
+  #       if section
+  #         ammend_record section, ss, 'sections', source.name
+  #       else
+  #         puts "Error: Unresolvable section #{ss} from source #{source.name}"
+  #       end
+  #     end
+  #   end
+  # end
+
 
   def initialize_graph
     throw 'Necessary Sources Missing' unless can_build_graph?
 
     priorities.sources_by_hierarchy.each do |source|
 
-    end
-  end
-
-  def process_sections sections, course, source
-    sections.each do |ss|
-      if course
-        section = course['sectios'] && course['sections'].detect { |gs| gs['name'] == ss['name'] }
-        if section
-          ammend_record section, ss, 'sections', source.name
-        else
-          add_record ss, 'sections', source.name, course
-        end
-      else
-        section = @graph['sections'].detect { |gs| gs['name'] == ss['name'] }
-        if section
-          ammend_record section, ss, 'sections', source.name
-        else
-          puts "Error: Unresolvable section #{ss} from source #{source.name}"
-        end
-      end
     end
   end
 
@@ -99,12 +129,14 @@ class Malg
               sd['courses'] ||= []
               sd['courses'].each do |sc|
                 course = department['courses'].detect { |gc| gc['number'] == sc['number'] }
+                course = handle_record sc, 'courses', source, department
 
                 if course
                   ammend_record course, sc, 'courses', source.name
                   if sc['sections']
-                    course['sections'] ||= []
-                    process_sections sc['sections'], course, source
+                    sc['sections'].each { |section| handle_record section, 'sections', source, course }
+                    # course['sections'] ||= []
+                    # process_sections sc['sections'], course, source
 
                   # sc['sections'] ||= []
                   # sc['sections'].each do |ss|
