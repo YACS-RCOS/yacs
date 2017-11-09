@@ -25,11 +25,15 @@ class Malg
     throw 'Nil Parent Error' if parent == nil && type != 'schools'
     new_record = record.clone
     @graph[type] << new_record
-    parent[type] << new_record if parent
+    if parent
+      parent[type] ||= []
+      parent[type] << new_record
+    end
     @souces[new_record.object_id] = new_record.transform_values { |v| source }
   end
 
   def ammend_record old_record, new_record, type, new_source
+    return if old_record == new_record
     new_record.reject{ |k, v| DATA_TYPES.any? k }.each do |k, v|
       if priorities.get(type, k, new_source) > priorities.get(type, k, @sources[old_record.object_id])
         old_record[k] = v
@@ -40,6 +44,34 @@ class Malg
 
   def can_build_graph?
     priorities.vital_sources_ready?
+  end
+
+  def initialize_graph
+    throw 'Necessary Sources Missing' unless can_build_graph?
+
+    priorities.sources_by_hierarchy.each do |source|
+
+    end
+  end
+
+  def process_sections sections, course, source
+    sections.each do |ss|
+      if course
+        section = course['sectios'] && course['sections'].detect { |gs| gs['name'] == ss['name'] }
+        if section
+          ammend_record section, ss, 'sections', source.name
+        else
+          add_record ss, 'sections', source.name, course
+        end
+      else
+        section = @graph['sections'].detect { |gs| gs['name'] == ss['name'] }
+        if section
+          ammend_record section, ss, 'sections', source.name
+        else
+          puts "Error: Unresolvable section #{ss} from source #{source.name}"
+        end
+      end
+    end
   end
 
   def build_graph
@@ -70,16 +102,19 @@ class Malg
 
                 if course
                   ammend_record course, sc, 'courses', source.name
-                  course['sections'] ||= []
-                  sc['sections'] ||= []
-                  sc['sections'].each do |ss|
-                    section = course['sections'].detect { |gs| gs['name'] == ss['name'] }
+                  if sc['sections']
+                    course['sections'] ||= []
+                    process_sections sc['sections'], course, source
 
-                    if section
-                      ammend_record section, ss, 'sections', source.name
-                    else
-                      add_record ss, 'sections', source.name, course
-                    end
+                  # sc['sections'] ||= []
+                  # sc['sections'].each do |ss|
+                  #   section = course['sections'].detect { |gs| gs['name'] == ss['name'] }
+
+                  #   if section
+                  #     ammend_record section, ss, 'sections', source.name
+                  #   else
+                  #     add_record ss, 'sections', source.name, course
+                  #   end
                   end
                 else
                   add_record sc, 'courses', source.name, department
