@@ -2,41 +2,58 @@ version: '1'
 
 sources:
   acalog:
-    location: "acalog"
-    poll: 86400
-    root: course
+    location: acalog
+    poll: 86400 # 1 day
+    root: courses
   banner:
-    location: "banner"
-    poll: 86400
-    root: course
+    location: banner
+    poll: 43200 # 12 hours
+    root: courses
   banner-seats:
-    location: "banner-seats"
-    poll: 18000
-    root: section
-  admin:
-    location: "admin"
-    poll: 3600
-    root: school
+    location: banner-seats
+    poll: 300 # 5 minutes
+    root: sections
+  schools-config:
+    location: schools-config
+    poll: 2592000 # 30 days
+    root: schools
+  # topics-sheet:
+  #   location: topics-sheet
+  #   poll: 43200
+  #   root: courses
+  # admin:
+  #   location: admin
+  #   poll: 60 # 1 minute
+  #   root: schools
 
-fields:
+priorities:
   default:
-    - admin
-    - banner
-    - acalog
-  course:
-    name:
+    fields:
       - admin
+      - banner
       - acalog
-      - banner
-    description:
-      - admin
-      - acalog
-  section:
-    seats:
-      - admin
-      - banner-seats
-      - banner
-    seats_available:
-      - admin
-      - banner-seats
-      - banner
+  schools:
+    existence: schools-config
+  departments:
+    existence: schools-config
+  courses:
+    existence: banner
+    fields:
+      name:
+        - admin
+        - acalog
+        - banner
+      description:
+        - admin
+        - acalog
+  sections:
+    existence: banner-seats
+    fields:
+      seats:
+        - admin
+        - banner-seats
+        - banner
+      seats_available:
+        - admin
+        - banner-seats
+        - banner
