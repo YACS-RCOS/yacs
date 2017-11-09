@@ -29,7 +29,7 @@ sources:
 priorities:
   default:
     fields:
-      - admin
+      # - admin
       - banner
       - acalog
   schools:
@@ -40,20 +40,20 @@ priorities:
     existence: banner
     fields:
       name:
-        - admin
+        # - admin
         - acalog
         - banner
       description:
         - admin
         - acalog
   sections:
-    existence: banner-seats
+    existence: banner
     fields:
       seats:
-        - admin
+        # - admin
         - banner-seats
         - banner
       seats_available:
-        - admin
+        # - admin
         - banner-seats
         - banner
