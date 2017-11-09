@@ -2,12 +2,13 @@ require 'faraday'
 
 class Source
 
-  attr_reader :name, :location, :polling_frequency, :data, :thread, :connection
+  attr_reader :name, :location, :polling_frequency, :data, :thread, :connection, :has_data
 
   def initialize name, location, polling_frequency
     @name = name
     @location = location
     @polling_frequency = polling_frequency
+    @has_data = false
   end
 
   def start
@@ -33,6 +34,7 @@ class Source
     response = @connection.get
     data = JSON.parse response.body
     merge_data data
+    @has_data ||= true
   end
 
   def merge_data new_data
