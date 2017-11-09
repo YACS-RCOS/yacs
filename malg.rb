@@ -11,13 +11,17 @@ class Malg
   #     @graph[]
   #   end
   # end
+  
 
-  def initialize
+  DATA_TYPES = %w(sections courses departments schools).freeze
+
+  def initialize priorities
+    @priorities = priorities
     @graph = { 'schools' => [], 'departments' => [], 'courses' => [], 'sections' => [] }
     @sources = {}
   end
 
-  def add_record record, type, source, parent = nil
+  def add_record record, type, source, parent
     throw 'Nil Parent Error' if parent == nil && type != 'schools'
     new_record = record.clone
     @graph[type] << new_record
@@ -25,7 +29,22 @@ class Malg
     @souces[new_record.object_id] = new_record.transform_values { |v| source }
   end
 
+  def ammend_record old_record, new_record, type, new_source
+    new_record.reject{ |k, v| DATA_TYPES.any? k }.each do |k, v|
+      if priorities.get(type, k, new_source) > priorities.get(type, k, @sources[old_record.object_id])
+        old_record[k] = v
+        @sources[old_record.object_id][k] = new_source
+      end
+    end
+  end
+
+  def can_build_graph?
+    priorities.vital_sources_ready?
+  end
+
   def build_graph
+
+    # throw 'Necessary Sources Missing' unless can_build_graph?
     
     default_order = sources.sort { |a, b| priorities.default(a) <=> priorities.default(b) }
 
@@ -49,33 +68,29 @@ class Malg
               sd['courses'].each do |sc|
                 course = department['courses'].detect { |gc| gc['number'] == sc['number'] }
 
-                if course 
+                if course
+                  ammend_record course, sc, 'courses', source.name
                   course['sections'] ||= []
                   sc['sections'] ||= []
                   sc['sections'].each do |ss|
                     section = course['sections'].detect { |gs| gs['name'] == ss['name'] }
 
                     if section
-                      sc.each do |k, v|
-                        
-                      end
+                      ammend_record section, ss, 'sections', source.name
                     else
-                      course['sections'] << ss
-                      @graph['sections'] << ss
+                      add_record ss, 'sections', source.name, course
                     end
                   end
                 else
-                  department['courses'] << sc
-                  @graph['courses'] << sc
+                  add_record sc, 'courses', source.name, department
                 end
               end
             else
-              school['departments'] << sd
-              @graph['departments'] << sd
+              add_record sd, 'departments', source.name, school
             end
           end
         else
-          @graph['schools'] << ss
+          add_record ss, 'schools', source.name, nil
         end
       end
     end
