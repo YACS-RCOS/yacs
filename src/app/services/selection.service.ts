@@ -79,6 +79,7 @@ export class SelectionService {
     let selections = JSON.parse(localStorage.getItem('selections'));
     let s = [];
     for (let key in selections){
+
       s.push(selections[key]);
     }
     return s.join(",");

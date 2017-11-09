@@ -4,9 +4,9 @@
   <div class="schedule-menu">
     <div class="left">
       <div class="switch">
-        <span class="schedule-switch">&#9664;</span>
-        <span class="schedule-index">{{scheduleIndex}} / {{totalSchedules}}</span>
-        <span class="schedule-switch">&#9654;</span>
+        <span class="schedule-switch" (click) = "dec($event)">&#9664;</span>
+        <span class="schedule-index">{{scheduleIndex + 1}} / {{totalSchedules}}</span>
+        <span class="schedule-switch" (click) = "inc($event)">&#9654;</span>
       </div>
       <button class="schedule-button" [disabled]="isTemporary">Clear&thinsp;</button>
       <button class="schedule-button">Download ICS</button>
@@ -18,7 +18,7 @@
       </div>
     </div>
   </div>
-  <schedule [schedule]="schedules[0]"></schedule>
+  <schedule [schedule]="schedules[scheduleIndex]"></schedule>
   <course-list [courses]="courses"></course-list>
 </div>
 

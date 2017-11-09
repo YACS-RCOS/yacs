@@ -49,12 +49,21 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
 
   getCourses () {
     let params = this.selectionService.getSectionSelections();
+     let newParams2 : Object = {
+      show_periods: true
+    };
+    console.log(params);
+    Object.assign(newParams2, {section_ids: params});
       this.yacsService
-      // .get('schedules', {section_ids: [sectionid1, sectionid2, sectionid3]})
-        .get('section_ids', params)
+        .get('schedules', newParams2)
         .then((data) => {
-        this.foo = this.foo.concat(data['section_ids']);
-          console.log(this.foo);
+          console.log(data);
+        this.foo = this.foo.concat(data['schedules']);
+        console.log(this.foo);
+          for(let x in this.foo){
+            console.log(x);
+          }
+          this.processSchedules();
         });
     this.sections = [];
     this.courses = [];
@@ -73,7 +82,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
         .then((data) => {
           this.sections = this.sections.concat(data['sections']);
           if(++i == len){
-           this.processSchedules();
+           //this.processSchedules();
           }
         });
       Object.assign(newParams, {id: key}); 
@@ -83,52 +92,52 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
           this.courses = this.courses.concat(data['courses']) as Course[];
       });
     }
-    
-    // for(let obj of this.courseIds) {
-      
-      
-    // }
 
   }
 
   processSchedules () {
+    
     this.crns = "CRNs: ";
     this.schedules = [];
-    let periods =[];
-    let earliestStart = 480;
-    let latestEnd = 1320;
-    let periodcolor = 0;
-    for (let s of this.sections) {
-      periodcolor++;
-      if(periodcolor == 1){
-          this.crns += s['crn'];
-      }
-      else{
-        this.crns += ', ' + s['crn'];
-      }
-      for(let p of s['periods']){
-        let period = {
-          name: s['course_name'],
-          crn: s['crn'],
-          instructor: s['instructors'][0],
-          day: p['day'],
-          startTime: this.toMinutes(p['start']),
-          endTime: this.toMinutes(p['end']),
-          color: periodcolor,
-          title: s['department_code'] + ' ' + s['course_number'] + ' - ' + s['name'],
+    for(let sched in this.foo){
+      console.log("here");
+      let periods =[];
+      let earliestStart = 480;
+      let latestEnd = 1320;
+      let periodcolor = 0;
+      console.log(this.foo[sched]);
+      for (let s of this.foo[sched]['sections']) {
+        periodcolor++;
+        if(periodcolor == 1){
+            this.crns += s['crn'];
         }
-        if(earliestStart > this.toMinutes(p['start'])){
-          earliestStart = this.toMinutes(p['start']);
+        else{
+          this.crns += ', ' + s['crn'];
         }
-        if(latestEnd < this.toMinutes(p['end'])){
-          latestEnd = this.toMinutes(p['end']);
+        for(let p of s['periods']){
+          let period = {
+            name: s['course_name'],
+            crn: s['crn'],
+            instructor: s['instructors'][0],
+            day: p['day'],
+            startTime: this.toMinutes(p['start']),
+            endTime: this.toMinutes(p['end']),
+            color: periodcolor,
+            title: s['department_code'] + ' ' + s['course_number'] + ' - ' + s['name'],
+          }
+          if(earliestStart > this.toMinutes(p['start'])){
+            earliestStart = this.toMinutes(p['start']);
+          }
+          if(latestEnd < this.toMinutes(p['end'])){
+            latestEnd = this.toMinutes(p['end']);
+          }
+          periods.push(period);
         }
-        periods.push(period);
       }
+      //this.isLoaded = true;
+      this.schedules.push(new Schedule(480, 1320, periods));
+      //console.log(this.schedules);
     }
-    //this.isLoaded = true;
-    this.schedules.push(new Schedule(earliestStart, latestEnd, periods));
-
   }
 
   toMinutes(timeString) {
@@ -158,4 +167,11 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
   totalSchedules: number = 0;
   isTemporary: boolean = false;
 
+  public dec(event) {
+    this.scheduleIndex = this.scheduleIndex - 1;
+  }
+  
+  public inc(event) {
+    this.scheduleIndex = this.scheduleIndex + 1;
+  }
 }
