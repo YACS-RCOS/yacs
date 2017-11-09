@@ -19,10 +19,11 @@ import {Subject,Subscription} from 'rxjs/Rx';
 export class ScheduleViewComponent implements OnInit, OnDestroy{
 
   courses : Course[];
-  isLoaded : boolean = false;
+  isLoaded : boolean = true;
   courseSelections : Object[];
   courseIds: Object[];
   sections : Object[];
+  foo: Object[] = [];
   processedSchedules: Schedule[]  = [];
   crns : string;
   schedules: Schedule[];
@@ -47,6 +48,14 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
   }
 
   getCourses () {
+    let params = this.selectionService.getSectionSelections();
+      this.yacsService
+      // .get('schedules', {section_ids: [sectionid1, sectionid2, sectionid3]})
+        .get('section_ids', params)
+        .then((data) => {
+        this.foo = this.foo.concat(data['section_ids']);
+          console.log(this.foo);
+        });
     this.sections = [];
     this.courses = [];
     this.courseIds = [];
@@ -55,7 +64,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
       show_periods: true
     };
     let i = 0;
-    this.isLoaded = false;
+    this.isLoaded = true;
     let len = Object.keys(this.courseSelections).length;
     for(let key of Object.keys(this.courseSelections)){
       Object.assign(newParams, {id: this.courseSelections[key]}); 
@@ -75,10 +84,10 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
       });
     }
     
-    for(let obj of this.courseIds) {
+    // for(let obj of this.courseIds) {
       
       
-    }
+    // }
 
   }
 
@@ -117,7 +126,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
         periods.push(period);
       }
     }
-    this.isLoaded = true;
+    //this.isLoaded = true;
     this.schedules.push(new Schedule(earliestStart, latestEnd, periods));
 
   }
@@ -127,8 +136,20 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     return (Math.floor(int / 100) * 60) + (int % 100);
   };
 
+
   ngOnInit () : void {
     this.courseSelections = this.selectionService.getSelections();
+    
+    // let foo = [];
+    // this.yacsService
+    //     .get('section_ids', params)
+    //     .then((data) => {
+    //     foo = foo.concat(data['section_ids']);
+    //       console.log(foo);
+    //     });
+    
+    console.log("HI");
+        
     this.getCourses();
 
   }
