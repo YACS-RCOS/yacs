@@ -16,7 +16,7 @@ class Malg
   
 
   DATA_TYPES = %w(schools departments courses sections).freeze
-  DATA_TYPE_UIDS = { 'schools' => 'name', 'departments' => 'code', 'courses' => 'number', 'sections' => 'name' }.freeze
+  DATA_TYPE_UIDS = { 'schools' => 'name', 'departments' => 'code', 'courses' => 'number', 'sections' => 'crn' }.freeze
 
   def initialize priorities, schema
     @priorities = priorities
