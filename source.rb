@@ -1,7 +1,8 @@
+require 'observer'
 require 'faraday'
 
 class Source
-
+  include Observable
   attr_reader :name, :location, :polling_frequency, :data, :thread, :connection, :has_data
 
   def initialize name, location, polling_frequency
@@ -9,6 +10,7 @@ class Source
     @location = location
     @polling_frequency = polling_frequency
     @has_data = false
+    @data = nil
   end
 
   def start
@@ -31,13 +33,20 @@ class Source
   end
 
   def update
-    response = @connection.get
-    data = JSON.parse response.body
-    merge_data data
-    @has_data ||= true
+    begin
+      response = @connection.get
+      data = JSON.parse response.body
+      if data != @data
+        @data = data
+        notify_observers @data
+        @has_data = true
+      end
+    rescue
+      puts "Error: Unable to get data from source #{@name}"
+    end
   end
 
-  def merge_data new_data
+  def handle_data new_data
     @data = data
   end
 end
