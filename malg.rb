@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class Malg
 
   # class Graph
@@ -23,6 +25,25 @@ class Malg
     @sources = {}
   end
 
+  def update_from_source source
+    type = source.root_type
+    handle_collection source.data[source.root_type], source, nil
+  end
+
+  def initialize_graph
+    throw 'Necessary Sources Missing' unless can_build_graph?
+
+    priorities.sources_by_hierarchy.each do |source|
+      update_from_source source
+    end
+  end
+
+  private
+
+  def next_uuid
+    SecureRandom.uuid
+  end
+
   def can_build_graph?
     priorities.vital_sources_ready?
   end
@@ -30,20 +51,21 @@ class Malg
   def add_record record, type, source, parent
     throw 'Nil Parent Error' if parent == nil && type != 'schools'
     new_record = record.clone
+    new_record['uuid'] = next_uuid
     @graph[type] << new_record
     if parent
       parent[type] ||= []
       parent[type] << new_record
     end
-    @souces[new_record.object_id] = new_record.transform_values { |v| source }
+    @souces[new_record['uuid']] = new_record.transform_values { |v| source }
     new_record
   end
 
   def ammend_record old_record, new_record, type, new_source
     new_record.reject{ |k, v| DATA_TYPES.any? k }.each do |k, v|
-      if priorities.get(type, k, new_source) > priorities.get(type, k, @sources[old_record.object_id])
+      if priorities.get(type, k, new_source) > priorities.get(type, k, @sources[old_record['uuid']])
         old_record[k] = v
-        @sources[old_record.object_id][k] = new_source
+        @sources[old_record['uuid']][k] = new_source
       end
     end
     old_record
@@ -85,22 +107,5 @@ class Malg
       end
       record
     end
-  end
-
-  def update_from_source source
-    type = source.root_type
-    handle_collection source.data[source.root_type], source, nil
-  end
-
-  def initialize_graph
-    throw 'Necessary Sources Missing' unless can_build_graph?
-
-    priorities.sources_by_hierarchy.each do |source|
-      update_from_source source
-    end
-  end
-
-  def update data
-
   end
 end
