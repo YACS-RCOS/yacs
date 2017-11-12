@@ -1,6 +1,6 @@
 require 'securerandom'
 
-class Malg
+class Graph
 
   # class Graph
   #   attr_accessor :graph, :sources
@@ -23,6 +23,7 @@ class Malg
     @schema = schema
     @graph = { 'schools' => [], 'departments' => [], 'courses' => [], 'sections' => [] }
     @sources = {}
+    @initialized = false
   end
 
   def update_from_source source
@@ -30,12 +31,19 @@ class Malg
     handle_collection source.data[source.root_type], source, nil
   end
 
-  def initialize_graph
-    throw 'Necessary Sources Missing' unless can_build_graph?
-
-    priorities.sources_by_hierarchy.each do |source|
-      update_from_source source
+  def build sources
+    until can_build_graph?
+      puts 'WARNING: Missing existence sources. Cannot build graph. Will try again...'
+      sleep 1
     end
+    
+    order_by_existence_hierarchy sources
+    sources.each { |source| update_from_source source }
+    @initialized = true
+  end
+
+  def update source
+    update_from_source source if @initialized
   end
 
   private
@@ -44,8 +52,22 @@ class Malg
     SecureRandom.uuid
   end
 
-  def can_build_graph?
-    priorities.vital_sources_ready?
+  def can_build_graph? sources
+    sources.map &:name
+    priorities.existence_sources.any? do |source_name|
+
+    end
+  end
+
+  def order_by_existence_hierarchy sources
+    DATA_TYPES.reverse.each do |type|
+      existence_source = priorities.existence_source_for_type type
+      existence_index = sources.index { |source| source.name == existence_source }
+      unless existence_index
+        throw "ERROR: Existence source #{existence_source} missing for type #{type}"
+      end
+      sources.unshift sources.delete_at(existence_index)
+    end
   end
 
   def add_record record, type, source, parent
@@ -63,7 +85,7 @@ class Malg
 
   def ammend_record old_record, new_record, type, new_source
     new_record.reject{ |k, v| DATA_TYPES.any? k }.each do |k, v|
-      if priorities.get(type, k, new_source) > priorities.get(type, k, @sources[old_record['uuid']])
+      if priorities.higher? new_source, @sources[old_record['uuid']], type, k
         old_record[k] = v
         @sources[old_record['uuid']][k] = new_source
       end

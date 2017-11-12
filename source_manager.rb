@@ -9,11 +9,21 @@ class SourceManager
     @sources = SourceFactory.load_sources filename
   end
 
+  def register_all graph
+    @sources.each &:add_observer
+  end
+
   def start_all
     @sources.each do |source|
       source.start
     end
   end
+
+  def start_watcher
+    Thread.new do { watch }
+  end
+
+  private
 
   def watch
     loop do

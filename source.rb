@@ -38,7 +38,7 @@ class Source
       data = JSON.parse response.body
       if data != @data
         @data = data
-        notify_observers @data
+        notify_observers self
         @has_data = true
       end
     rescue
