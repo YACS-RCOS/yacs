@@ -26,8 +26,6 @@ class Malg
     priorities.vital_sources_ready?
   end
 
-
-
   def add_record record, type, source, parent
     throw 'Nil Parent Error' if parent == nil && type != 'schools'
     new_record = record.clone
@@ -75,6 +73,17 @@ class Malg
     end
   end
 
+  def handle_collection collection, type, source, parent
+    collection.map do |source_record|
+      record = handle_record source_record, type, source, parent
+      child_type = @schema.child_type_for type
+      if child_type && source_record[child_type]
+        handle_collection source_record[child_type], child_type, source, record
+      end
+      record
+    end
+  end
+
   # def process_sections sections, course, source
   #   sections.each do |ss|
   #     if course
@@ -94,13 +103,18 @@ class Malg
   #     end
   #   end
   # end
+  
 
+  def update_from_source source
+    type = source.root_type
+    handle_collection source.data[source.root_type], source, nil
+  end
 
   def initialize_graph
     throw 'Necessary Sources Missing' unless can_build_graph?
 
     priorities.sources_by_hierarchy.each do |source|
-
+      update_from_source source
     end
   end
 

@@ -1,5 +1,20 @@
 version: '1'
 
+schema:
+  types:
+    schools:
+      identifier: name
+      child_type: departments
+    departments:
+      identifier: code
+      child_type: courses
+    courses:
+      identifier: number
+      child_type: sections
+    sections:
+      identifier: name
+
+
 sources:
   acalog:
     location: acalog
