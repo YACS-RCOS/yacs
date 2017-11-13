@@ -62,9 +62,9 @@ class Graph
     #       until all sources are ready, and ignore updates until initialization
     #       is completed.
     #       
-    ready_sources = sources.map { |source| source.name if source.has_data }.compact
-    (@priorities.existence_sources - ready_sources).empty?
-    # sources.all? &:has_data
+    # ready_sources = sources.map { |source| source.name if source.has_data }.compact
+    # (@priorities.existence_sources - ready_sources).empty?
+    sources.all? &:has_data
   end
 
   def order_by_existence_hierarchy sources
@@ -94,31 +94,16 @@ class Graph
 
   def ammend_record old_record, new_record, type, new_source
     new_record.except(@schema.child_type_for type).each do |k, v|
+      old_source = @sources[old_record['uuid']][k]
       p1 = @priorities.get type, k, new_source
-      p2 = @priorities.get type, k, @sources[old_record['uuid']][k]
-
+      p2 = @priorities.get type, k, old_source
       if p1 <= p2
         @sources[old_record['uuid']][k] = new_source
         if old_record[k] != v
-          STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
+          STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{old_source} -> #{new_source}" if @initialized
           old_record[k] = v
         end
       end
-
-
-      # if old_record[k] != v && p1 <= p2
-      #   STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
-      #   old_record[k] = v
-      #   @sources[old_record['uuid']][k] = new_source
-      # elsif p1 <= p2
-      #   @sources[old_record['uuid']][k] = new_source
-      # end
-
-      # if @priorities.should_replace? new_source, @sources[old_record['uuid']], v, old_record[k], type, k
-      #   STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
-      #   old_record[k] = v
-      #   @sources[old_record['uuid']][k] = new_source
-      # end
     end
     old_record
   end
@@ -140,7 +125,6 @@ class Graph
         return add_record record, type, source.name, parent
       end
     else
-
       old_record = find_matching_record record, type, @graph[type]
       if old_record
         return ammend_record old_record, record, type, source.name
