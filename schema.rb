@@ -4,7 +4,7 @@ class Schema
   attr_reader :types
 
   def initialize filename
-    @types = Yaml.load_file(filename)['types']
+    @types = YAML.load_file(filename)['schema']['types']
   end
 
   def child_type_for type

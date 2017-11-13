@@ -10,7 +10,7 @@ class SourceManager
   end
 
   def register_all graph
-    @sources.each &:add_observer
+    @sources.each { |source| source.add_observer graph }
   end
 
   def start_all
@@ -20,7 +20,7 @@ class SourceManager
   end
 
   def start_watcher
-    Thread.new do { watch }
+    Thread.new { watch }
   end
 
   private
@@ -29,7 +29,7 @@ class SourceManager
     loop do
       @sources.each do |source|
         unless source.healthy?
-          puts "Error: #{source.name} failed healthcheck. Restarting..."
+          STDERR.puts "Error: #{source.name} failed healthcheck. Restarting..."
           source.start
         end
       end

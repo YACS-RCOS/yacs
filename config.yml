@@ -17,23 +17,23 @@ schema:
 
 sources:
   acalog:
-    location: adapter-acalog:4201
+    location: http://adapter-acalog:4201
     poll: 86400 # 1 day
     root: departments
   banner:
-    location: adapter-banner:4201
+    location: http://adapter-banner:4201
     poll: 43200 # 12 hours
     root: departments
   banner-seats:
-    location: adapter-banner:4201/seats
+    location: http://adapter-banner:4201/seats
     poll: 300 # 5 minutes
     root: sections
   yaml-schools:
-    location: adapter-yaml:4201
+    location: http://adapter-yaml:4201
     poll: 2592000 # 30 days
     root: schools
   csv-topics:
-    location: adapter-csv:4201
+    location: http://adapter-csv:4201
     poll: 43200 # 12 hours
     root: departments
   # admin:

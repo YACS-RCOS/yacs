@@ -5,7 +5,6 @@ class SourceFactory
   class << self
     def load_sources filename
       yaml = YAML.load_file filename
-      puts yaml
 
       sources = []
       yaml['sources'].each do |name, attrs|

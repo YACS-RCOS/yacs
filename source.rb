@@ -1,5 +1,6 @@
 require 'observer'
 require 'faraday'
+require 'oj'
 
 class Source
   include Observable
@@ -35,14 +36,18 @@ class Source
   def update
     begin
       response = @connection.get
-      data = JSON.parse response.body
+      data = Oj.load response.body
+      STDERR.puts "DEBUG: Got #{data.first[1].size} records from source #{@name}"
       if data != @data
         @data = data
         notify_observers self
         @has_data = true
       end
-    rescue
-      puts "Error: Unable to get data from source #{@name}"
+    rescue Exception => msg
+      STDERR.puts msg
+      STDERR.puts "Error: Unable to get data from source #{@name}"
+      sleep 5
+      update
     end
   end
 
