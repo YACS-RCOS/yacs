@@ -3,6 +3,9 @@ require './source_manager'
 require './graph'
 require './schema'
 require './priorities'
+require 'sinatra'
+require 'sinatra/contrib'
+require 'oj'
 
 config_file = ENV['CONFIG_FILE'] || 'config.yml'
 
@@ -16,6 +19,11 @@ source_manager.register_all graph
 source_manager.start_all
 source_manager.start_watcher
 
-# binding.pry
-
 graph.build source_manager.sources
+
+set :bind, '0.0.0.0'
+set :port, 4301
+
+get '/' do
+  json graph.graph
+end

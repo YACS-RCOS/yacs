@@ -12,7 +12,7 @@ schema:
       identifier: number
       child_type: sections
     sections:
-      identifier: name
+      identifier: crn
 
 
 sources:

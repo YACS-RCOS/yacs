@@ -10,4 +10,12 @@ class Schema
   def child_type_for type
     @types[type]['child_type']
   end
+
+  def type_names
+    @types.keys
+  end
+
+  def identifier_for type
+    @types[type]['identifier']
+  end
 end
