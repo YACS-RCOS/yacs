@@ -22,7 +22,13 @@ class Priorities
   def higher? source1, source2, type, field
     p1 = @field_map[type][field].index(source1) || 999
     p2 = @field_map[type][field].index(source2) || 999
-    p1 < p2
+    p1 <= p2
+  end
+
+  def should_replace? source1, source2, val1, val2, type, field
+    p1 = @field_map[type][field].index(source1) || 999
+    p2 = @field_map[type][field].index(source2) || 999
+    p1 < p2 || (p1 == p2 && val1 != val2 && source1 != source2)
   end
 
   def existence_source_for_type type

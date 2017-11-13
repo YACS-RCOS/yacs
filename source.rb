@@ -39,6 +39,7 @@ class Source
       data = Oj.load response.body
       STDERR.puts "DEBUG: Got #{data.first[1].size} records from source #{@name}"
       if data != @data
+        changed
         @data = data
         notify_observers self
         @has_data = true

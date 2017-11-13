@@ -4,9 +4,6 @@ require 'active_support'
 class Graph
   attr_reader :graph
 
-  DATA_TYPES = %w(schools departments courses sections).freeze
-  DATA_TYPE_UIDS = { 'schools' => 'name', 'departments' => 'code', 'courses' => 'number', 'sections' => 'crn' }.freeze
-
   def initialize priorities, schema
     @priorities = priorities
     @schema = schema
@@ -46,6 +43,7 @@ class Graph
   end
 
   def update source
+    STDERR.puts "DEBUG: Update from source #{source.name}"
     update_from_source source if @initialized
   end
 
@@ -70,7 +68,7 @@ class Graph
   end
 
   def order_by_existence_hierarchy sources
-    DATA_TYPES.reverse.each do |type|
+    @schema.type_names.reverse.each do |type|
       existence_source = @priorities.existence_source_for_type type
 
       existence_index = sources.index { |source| source.name == existence_source }
@@ -96,8 +94,8 @@ class Graph
 
   def ammend_record old_record, new_record, type, new_source
     new_record.except(@schema.child_type_for type).each do |k, v|
-      if @priorities.higher? new_source, @sources[old_record['uuid']], type, k
-        STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}"
+      if @priorities.should_replace? new_source, @sources[old_record['uuid']], v, old_record[k], type, k
+        STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
         old_record[k] = v
         @sources[old_record['uuid']][k] = new_source
       end
@@ -108,7 +106,8 @@ class Graph
   def find_matching_record record, type, collection
     return nil unless collection
     collection.detect do |collection_record|
-      collection_record[DATA_TYPE_UIDS[type]] == record[DATA_TYPE_UIDS[type]]
+      id_field = @schema.identifier_for type
+      collection_record[id_field] == record[id_field]
     end
   end
 
