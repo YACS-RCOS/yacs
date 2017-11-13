@@ -5,14 +5,19 @@ schema:
     schools:
       identifier: name
       child_type: departments
+      parent_type: null
     departments:
       identifier: code
       child_type: courses
+      parent_type: schools
     courses:
       identifier: number
       child_type: sections
+      parent_type: departments
     sections:
       identifier: crn
+      child_type: null
+      parent_type: courses
 
 sources:
   acalog:

@@ -1,6 +1,7 @@
 require 'yaml'
 
 class Priorities
+  FIXED = '$'
 
   def initialize filename
     @config = YAML.load_file(filename)['priorities']
@@ -20,6 +21,7 @@ class Priorities
   end
 
   def get type, field, source
+    return -1 if source == FIXED
     @field_map[type][field].index(source) || 999
   end
 

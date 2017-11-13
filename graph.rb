@@ -33,20 +33,6 @@ class Graph
     print_status
   end
 
-  def print_status
-    STDERR.puts "Status:"
-    @graph.each do |k, v|
-      STDERR.puts "Resolved #{v.count} #{k}"
-    end
-    STDERR.puts "Failed to resolve #{@unresolvable.count} records:"
-    STDERR.puts @unresolvable
-  end
-
-  def update source
-    STDERR.puts "DEBUG: Update from source #{source.name}"
-    update_from_source source if @initialized
-  end
-
   private
 
   def next_uuid
@@ -80,15 +66,19 @@ class Graph
   end
 
   def add_record record, type, source, parent
-    throw 'Nil Parent Error' if parent == nil && type != 'schools'
+    throw 'Nil Parent Error' if parent == nil && @schema.parent_type_for(type)
     new_record = record.except @schema.child_type_for type
     new_record['uuid'] = next_uuid
+    @sources[new_record['uuid']] = new_record.transform_values { |v| source }
+    @sources[new_record['uuid']]['uuid'] = Priorities::FIXED
     @graph[type] << new_record
     if parent
       parent[type] ||= []
       parent[type] << new_record
+      parent_uuid_field = "#{@schema.singularize(@schema.parent_type_for(type))}_uuid"
+      new_record[parent_uuid_field] = parent['uuid']
+      @sources[new_record['uuid']][parent_uuid_field] = Priorities::FIXED
     end
-    @sources[new_record['uuid']] = new_record.transform_values { |v| source }
     new_record
   end
 
@@ -147,5 +137,19 @@ class Graph
       end
       record
     end
+  end
+
+  def print_status
+    STDERR.puts "Status:"
+    @graph.each do |k, v|
+      STDERR.puts "Resolved #{v.count} #{k}"
+    end
+    STDERR.puts "Failed to resolve #{@unresolvable.count} records:"
+    STDERR.puts @unresolvable
+  end
+
+  def update source
+    STDERR.puts "DEBUG: Update from source #{source.name}"
+    update_from_source source if @initialized
   end
 end
