@@ -2,19 +2,7 @@ require 'securerandom'
 require 'active_support'
 
 class Graph
-
-  # class Graph
-  #   attr_accessor :graph, :sources
-  #   def initialize
-  #     @graph = { 'schools' => [], 'departments' => [], 'courses' => [], 'sections' => [] }
-  #     @sources {}
-  #   end
-
-  #   def add_record type, record, source
-  #     @graph[]
-  #   end
-  # end
-  
+  attr_reader :graph
 
   DATA_TYPES = %w(schools departments courses sections).freeze
   DATA_TYPE_UIDS = { 'schools' => 'name', 'departments' => 'code', 'courses' => 'number', 'sections' => 'crn' }.freeze
@@ -33,11 +21,8 @@ class Graph
       STDERR.puts "ERROR: Null data from source #{source.name}"
       return
     end
-    # STDERR.puts 
     type = source.data.first[0]
     handle_collection source.data[type], type, source, nil
-    # STDERR.puts @graph
-    sleep 5
   end
 
   def build sources
@@ -45,12 +30,7 @@ class Graph
       STDERR.puts 'WARNING: Missing existence sources. Cannot build graph. Will try again...'
       sleep 5
     end
-
-    STDERR.puts "-------- SOURCES -------- #{sources.map &:name}"
-    
     order_by_existence_hierarchy sources
-    STDERR.puts "-------- SOURCES -------- #{sources.map &:name}"
-    # exit
     sources.each { |source| update_from_source source }
     @initialized = true
     print_status
@@ -76,9 +56,17 @@ class Graph
   end
 
   def can_build_graph? sources
-    # ready_sources = sources.map { |source| source.name if source.has_data }.compact
-    # (@priorities.existence_sources - ready_sources).empty?
-    sources.all? &:has_data
+    # TODO: This is a bit of a hack to avoid a race condition. Ideally, the graph
+    #       should be able to be initialized with only the existential sources,
+    #       but we need some sort of update queue or semaphore to make sure updates
+    #       from late-loading sources are not either lost or executed before the
+    #       graph has been initialized. So as a quick fix, we delay initialization
+    #       until all sources are ready, and ignore updates until initialization
+    #       is completed.
+    #       
+    ready_sources = sources.map { |source| source.name if source.has_data }.compact
+    (@priorities.existence_sources - ready_sources).empty?
+    # sources.all? &:has_data
   end
 
   def order_by_existence_hierarchy sources
@@ -109,6 +97,7 @@ class Graph
   def ammend_record old_record, new_record, type, new_source
     new_record.except(@schema.child_type_for type).each do |k, v|
       if @priorities.higher? new_source, @sources[old_record['uuid']], type, k
+        STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}"
         old_record[k] = v
         @sources[old_record['uuid']][k] = new_source
       end
@@ -150,7 +139,6 @@ class Graph
     collection.map do |source_record|
       record = handle_record source_record, type, source, parent
       child_type = @schema.child_type_for type
-      # STDERR.puts "+++++", child_type, source_record[child_type]
       if child_type && source_record[child_type]
         handle_collection source_record[child_type], child_type, source, record
       end
