@@ -94,11 +94,31 @@ class Graph
 
   def ammend_record old_record, new_record, type, new_source
     new_record.except(@schema.child_type_for type).each do |k, v|
-      if @priorities.should_replace? new_source, @sources[old_record['uuid']], v, old_record[k], type, k
-        STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
-        old_record[k] = v
+      p1 = @priorities.get type, k, new_source
+      p2 = @priorities.get type, k, @sources[old_record['uuid']][k]
+
+      if p1 <= p2
         @sources[old_record['uuid']][k] = new_source
+        if old_record[k] != v
+          STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
+          old_record[k] = v
+        end
       end
+
+
+      # if old_record[k] != v && p1 <= p2
+      #   STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
+      #   old_record[k] = v
+      #   @sources[old_record['uuid']][k] = new_source
+      # elsif p1 <= p2
+      #   @sources[old_record['uuid']][k] = new_source
+      # end
+
+      # if @priorities.should_replace? new_source, @sources[old_record['uuid']], v, old_record[k], type, k
+      #   STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{@sources[old_record['uuid']][k]} -> #{new_source}" if @initialized
+      #   old_record[k] = v
+      #   @sources[old_record['uuid']][k] = new_source
+      # end
     end
     old_record
   end
