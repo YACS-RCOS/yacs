@@ -33,6 +33,11 @@ class Graph
     print_status
   end
 
+  def update source
+    STDERR.puts "DEBUG: Update from source #{source.name}"
+    update_from_source source if @initialized
+  end
+
   private
 
   def next_uuid
@@ -48,9 +53,9 @@ class Graph
     #       until all sources are ready, and ignore updates until initialization
     #       is completed.
     #       
-    # ready_sources = sources.map { |source| source.name if source.has_data }.compact
-    # (@priorities.existence_sources - ready_sources).empty?
-    sources.all? &:has_data
+    ready_sources = sources.map { |source| source.name if source.has_data }.compact
+    (@priorities.existence_sources - ready_sources).empty?
+    # sources.all? &:has_data
   end
 
   def order_by_existence_hierarchy sources
@@ -137,6 +142,7 @@ class Graph
       end
       record
     end
+    records
   end
 
   def print_status
@@ -146,10 +152,5 @@ class Graph
     end
     STDERR.puts "Failed to resolve #{@unresolvable.count} records:"
     STDERR.puts @unresolvable
-  end
-
-  def update source
-    STDERR.puts "DEBUG: Update from source #{source.name}"
-    update_from_source source if @initialized
   end
 end
