@@ -41,4 +41,100 @@ RSpec.describe Section do
       end
     end
   end
+
+  context 'when sections are created and destroyed' do
+    before do
+      allow(EventSender).to receive(:send_event)
+      @section = create(:section)
+      @section.destroy
+    end
+
+    it 'sends a section_added event' do
+      expect(EventSender).to have_received(:send_event).with(anything, "section_added", any_args)
+    end
+
+    it 'sends a section_removed event' do
+      expect(EventSender).to have_received(:send_event).with(anything, "section_removed", any_args)
+    end
+  end
+
+  context 'when section seats are added' do
+    before do
+      allow(EventSender).to receive(:send_event)
+    end
+
+    context 'and section opens' do
+      before do
+        @section = create(:section, seats: 150, seats_taken: 160)
+        @section.update(seats: 165)
+      end
+
+      it 'sends a seats_added_section_opened event' do
+        expect(EventSender).to have_received(:send_event).with(anything, "seats_added_section_opened", any_args)
+      end
+    end
+
+    context 'and section remains closed' do
+      before do
+        @section = create(:section, seats: 50, seats_taken: 30)
+        @section.update(seats: 60)
+      end
+
+      it 'sends a seats_added event' do
+        expect(EventSender).to have_received(:send_event).with(anything, "seats_added", any_args)
+      end
+    end
+  end
+
+  context 'when section seats are removed' do
+    before do
+      allow(EventSender).to receive(:send_event)
+    end
+
+    context 'and section closes' do
+      before do
+        @section = create(:section, seats: 250, seats_taken: 240)
+        @section.update(seats: 200)
+      end
+
+      it 'sends a seats_removed_section_closed event' do
+        expect(EventSender).to have_received(:send_event).with(anything, "seats_removed_section_closed", any_args)
+      end
+    end
+
+    context 'and section remains opened' do
+      before do
+        @section = create(:section, seats: 100, seats_taken: 70)
+        @section.update(seats: 90)
+      end
+
+      it 'sends a seats_removed event' do
+        expect(EventSender).to have_received(:send_event).with(anything, "seats_removed", any_args)
+      end
+    end
+  end
+
+  context 'when section is opened' do
+    before do
+      allow(EventSender).to receive(:send_event)
+      @section = create(:section, seats: 100, seats_taken: 100)
+      @section.update(seats_taken: 99)
+    end
+
+    it 'sends a sectionopened event' do
+      expect(EventSender).to have_received(:send_event).with(anything, "sectionopened", any_args)
+    end
+  end
+
+  context 'when section is closed' do
+    before do
+      allow(EventSender).to receive(:send_event)
+      @section = create(:section, seats: 200, seats_taken: 199)
+      @section.update(seats_taken: 200)
+    end
+
+    it 'sends a secionclosed event' do
+      expect(EventSender).to have_received(:send_event).with(anything, "sectionclosed", any_args)
+    end
+  end
 end

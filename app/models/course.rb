@@ -4,6 +4,14 @@ class Course < ActiveRecord::Base
   validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
 
+  after_create do 
+    EventSender.send_course_event(self,:course_added)
+  end
+
+  after_destroy do 
+    EventSender.send_course_event(self,:course_removed)
+  end
+
   def self.get code, number
     joins(:department).where("departments.code = ? AND number = ?", code, number).first
   end

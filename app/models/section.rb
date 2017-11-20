@@ -5,7 +5,17 @@ class Section < ActiveRecord::Base
   default_scope { order(name: :asc) }
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
-
+  
+  after_create do 
+    EventSender.send_section_event(self, :section_added) 
+  end
+  after_destroy do 
+    EventSender.send_section_event(self, :section_removed)
+  end
+  after_update do  
+    EventSender.send_section_event(self, :section_updated)
+  end
+  
   def self.compute_conflict_ids_for id
     find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
       (SELECT(unnest(conflict_ids(#{id.to_i})))) ORDER BY ID").map(&:id)
