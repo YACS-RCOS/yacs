@@ -7,7 +7,7 @@ class Graph
   def initialize priorities, schema
     @priorities = priorities
     @schema = schema
-    @graph = { 'schools' => [], 'departments' => [], 'courses' => [], 'sections' => [] }
+    @graph = empty_graph []
     @sources = {}
     @initialized = false
     @unresolvable = []
@@ -18,8 +18,10 @@ class Graph
       STDERR.puts "ERROR: Null data from source #{source.name}"
       return
     end
+    reset_sweepers
     type = source.data.first[0]
     handle_collection source.data[type], type, source, nil
+    sweep_extant_records
   end
 
   def build sources
@@ -37,6 +39,14 @@ class Graph
     STDERR.puts "DEBUG: Update from source #{source.name}"
     update_from_source source if @initialized
   end
+
+  # def delete_flagged
+  #   @flagged_for_removal.each do |type, records|
+  #     records.each do |record|
+
+  #     end
+  #   end
+  # end
 
   private
 
@@ -56,6 +66,10 @@ class Graph
     ready_sources = sources.map { |source| source.name if source.has_data }.compact
     (@priorities.existence_sources - ready_sources).empty?
     # sources.all? &:has_data
+  end
+
+  def empty_graph value
+    @schema.type_names.map { |type| [type, value.try(:dup) || value] }.to_h
   end
 
   def order_by_existence_hierarchy sources
@@ -84,6 +98,7 @@ class Graph
       new_record[parent_uuid_field] = parent['uuid']
       @sources[new_record['uuid']][parent_uuid_field] = Priorities::FIXED
     end
+    # EventTransport.send_create(new_record, type)
     new_record
   end
 
@@ -100,8 +115,21 @@ class Graph
         end
       end
     end
+    # EventTransport.send_update(old_record, type) unless old_record['removed']
     old_record
   end
+
+  def remove_record record, type
+    @graph[type].delete record
+    child_type = @schema.child_type_for type
+    # EventTransport.send_delete(record, type)
+    STDERR.puts "DEBUG: Removed #{type} #{record['uuid']}"
+    record[child_type].each { |child| remove_record child, child_type } if record[child_type]
+  end
+
+  # def undelete_record record, type
+
+  # end
 
   def find_matching_record record, type, collection
     return nil unless collection
@@ -126,7 +154,8 @@ class Graph
       elsif type == 'schools'
         return add_record record, type, source, nil
       else
-        STDERR.puts "Error: Unresolvable #{type} #{record} from source #{source.name}"
+        # TODO: Throw error if it's the existence source and debug otherwise
+        # STDERR.puts "WARNING: Unresolvable #{type} #{record} from source #{source.name}"
         @unresolvable << record
         return nil
       end
@@ -134,16 +163,70 @@ class Graph
   end
 
   def handle_collection collection, type, source, parent
-    collection.map do |source_record|
+    handle_delete = @priorities.existence_source_for_type(type) == source.name
+    records = collection.map do |source_record|
       record = handle_record source_record, type, source, parent
+      # if handle_delete && record['removed']
+      #   undelete_record record
+      # end
+
       child_type = @schema.child_type_for type
       if child_type && source_record[child_type]
         handle_collection source_record[child_type], child_type, source, record
       end
       record
     end
+    if handle_delete
+      STDERR.puts "#{@graph[type].map{|d|d['code']}.join(' ')}\n#{records.map{|d|d['code']}.join(' ')}\n" if type == 'departments'
+      @extant_records[type].concat records
+      @sweep_flags[type] = true
+      # (@graph[type] - records).each do |removed_record|
+      #   # STDERR.puts "DEBUG: Removed #{type} #{removed_record['uuid']} at source #{source.name}"
+      #   remove_record removed_record, type
+      # end
+    end
     records
   end
+
+  # def flag_as_extant record, type
+  #   @extant_records[type] << record
+  # end
+
+  def sweep_extant_records
+    @sweep_flags.each do |type, should_sweep|
+      if should_sweep
+        (@graph[type] - @extant_records[type]).each do |removed_record|
+          # STDERR.puts "DEBUG: Removed #{type} #{removed_record['uuid']} at source #{source.name}"
+          remove_record removed_record, type
+        end
+      end
+    end
+  end
+
+  def reset_sweepers
+    @extant_records = empty_graph []
+    @sweep_flags = empty_graph false
+  end
+
+  # def record_exists? record, type
+
+  # end
+
+  # def children_for_record record, type
+  #   child_type = @schema.child_type_for type
+  #   record[child_type] || []
+  # end
+
+  # def handle_removed extant_records, type
+  #   (@graph[type] - extant_records).each do |removed_record|
+  #     set_removed removed_record
+  #   end
+  # end
+
+  # def set_removed record
+  #   record['removed'] = true
+  #   @sources[record['uuid']] = Priorities::FIXED
+  # end
 
   def print_status
     STDERR.puts "Status:"
@@ -151,6 +234,6 @@ class Graph
       STDERR.puts "Resolved #{v.count} #{k}"
     end
     STDERR.puts "Failed to resolve #{@unresolvable.count} records:"
-    STDERR.puts @unresolvable
+    # STDERR.puts @unresolvable
   end
 end
