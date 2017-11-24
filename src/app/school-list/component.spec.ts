@@ -3,7 +3,7 @@ import {} from 'jasmine';
 import { Http, Response, HttpModule } from '@angular/http';
 import { TestBed, fakeAsync, tick, ComponentFixture, async } from '@angular/core/testing';
 import { Component, OnInit, DebugElement } from '@angular/core';
-import { By }              from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 
 import * as Stubs from '../../lib/router-stubs';
 
