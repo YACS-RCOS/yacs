@@ -68,7 +68,7 @@ describe("Testing getSchools()", function() {
 });
 
 //TODO: integration tests for components
-describe("Testing getSchools()", function() {
+describe("Testing SchoolListComponent", function() {
   let component: SchoolListComponent;
   let fixture: ComponentFixture<SchoolListComponent>;
   let de: DebugElement;

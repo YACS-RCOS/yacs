@@ -20,7 +20,7 @@ describe("Testing currentSchedule", function() {
       providers:[ ScheduleViewComponent ]
     });
     schedule = TestBed.get(ScheduleViewComponent);
-  }); // mocking YacsService with constant return value for testing
+  });
 
   it("instantiated testbed", function() {
     expect(schedule).toBeDefined();
@@ -28,7 +28,7 @@ describe("Testing currentSchedule", function() {
 
   it("currentSchedule() works successfully", fakeAsync(() => {
     var x = schedule.currentSchedule;
-    tick(); // force getSchools to be called
+    tick(); // force currentSchedule to be called
 
     expect(schedule.schedules).toBeDefined();
   }));
@@ -59,9 +59,18 @@ describe("Testing schedule-view component", function() {
     expect(component).toBeDefined();
   });
 
-  it("Schedule View is correct", function() {
+  it("Schedule View contains correct links", function() {
     expect(element.textContent).toContain("Clear");
     expect(element.textContent).toContain("Download ICS");
     expect(element.textContent).toContain("Copy Schedule Link");
   });
+
+  // it("Contains Correct Schedule Number", fakeAsync(() => {
+  //   component.scheduleIndex = 1;
+  //   component.totalSchedules = 15;
+  //   tick();
+  //
+  //   console.log(component.scheduleIndex);
+  //   console.log(element.textContent);
+  // }));
 });
