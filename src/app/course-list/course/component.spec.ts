@@ -13,7 +13,7 @@ import { Period } from '../section/period';
 import { SelectionService } from '../../services/selection.service'
 import { ConflictsService } from '../../services/conflicts.service';
 
-describe("Testing Course-List component", function() {
+describe("Testing Course component", function() {
   let component: CourseComponent;
   let fixture: ComponentFixture<CourseComponent>;
   let de: DebugElement;
