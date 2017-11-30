@@ -6,6 +6,7 @@ import { Component, OnInit, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { Period } from './period';
+import { Section } from './section';
 import { SectionComponent } from './component';
 import { ConflictsService } from '../../services/conflicts.service';
 
@@ -15,15 +16,20 @@ describe("Testing Section component", function() {
   let de: DebugElement;
   let element: HTMLElement;
 
-  let mockConflictsService:any;
-      class MockConflictsService {
-          doesConflict = jasmine.createSpy('doesConflict');
+  class MockConflictsService {
+      public doesConflict() {
+        return false;
       }
+  }
+
+  let per1: Period;
+  let per2: Period;
+  let sec: Section;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
        declarations: [ SectionComponent ],
-       providers: [{ provide: ConflictsService, useValue: mockConflictsService }]
+       providers: [{ provide: ConflictsService, useClass: MockConflictsService }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SectionComponent);
@@ -31,15 +37,39 @@ describe("Testing Section component", function() {
     de = fixture.debugElement.query(By.css('span'));
     element  = de.nativeElement;
 
-    let per1: Period[] = [
-      {"type":"Lecture", "day": 1, "start":10, "end": 12},
-      {"type":"Lecture", "day": 2, "start":10, "end": 12}
-    ]
+    per1 = new Period();
+    per1.type = "Lecture";
+    per1.day = 1;
+    per1.start = 10;
+    per1.end = 12;
+    per2 = new Period();
+    per2.type = "Lecture";
+    per2.day = 2;
+    per2.start = 10;
+    per2.end = 12;
+    let per: Period[] = [
+      per1,
+      per2
+    ];
 
-    component.section = {"id": 1, "course_id": 1, "name": "Mock Course 1", "crn": 99999,
-                  "instructors": ["Inst1", "Inst2"], "seats":1, "seats_taken":1,
-                  "conflicts":[], "periods": per1, "num_periods": 1, "course_name": "Mock Course 1",
-                  "course_number":1, "department_code":'T'};
+    sec = new Section();
+    sec.id = 1;
+    sec.course_id = 1;
+    sec.name = "Mock Course 1";
+    sec.crn = 99999;
+    sec.instructors = ["Inst1", "Inst2"];
+    sec.seats = 10;
+    sec.seats_taken = 5;
+    sec.conflicts = [];
+    sec.periods = per;
+    sec.num_periods = 2;
+    sec.course_name = "Mock Course 1 1";
+    sec.course_number = 1;
+    sec.department_code = "TEST";
+
+    component.section = sec;
+
+    fixture.detectChanges();
   }));
 
   it("should have a component", function() {
@@ -54,9 +84,9 @@ describe("Testing Section component", function() {
     expect(component.getDay(component.section.periods[1])).toEqual('Tue');
   });
 
-  it("test", function() {
-    // NOTE: feels like there isn't data being written here...
-    console.log(element.textContent);
+  it("testing html content", function() {
+    expect(element.textContent).toContain("Mock Course 1");
+    expect(element.textContent).toContain("Inst1, Inst2");
+    expect(element.textContent).toContain("99999");
   })
-
 });

@@ -12,29 +12,6 @@ import { Schedule } from './schedule/component';
 import { ScheduleViewModule } from './module';
 import { ConstantsService } from '../services/constants';
 
-describe("Testing currentSchedule", function() {
-  let schedule : ScheduleViewComponent;
-
-  beforeEach(function() {
-    TestBed.configureTestingModule({
-      providers:[ ScheduleViewComponent ]
-    });
-    schedule = TestBed.get(ScheduleViewComponent);
-  });
-
-  it("instantiated testbed", function() {
-    expect(schedule).toBeDefined();
-  });
-
-  it("currentSchedule() works successfully", fakeAsync(() => {
-    var x = schedule.currentSchedule;
-    tick(); // force currentSchedule to be called
-
-    expect(schedule.schedules).toBeDefined();
-  }));
-
-});
-
 describe("Testing schedule-view component", function() {
   let component: ScheduleViewComponent;
   let fixture: ComponentFixture<ScheduleViewComponent>;
@@ -44,8 +21,7 @@ describe("Testing schedule-view component", function() {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ ScheduleViewModule ],
-      providers: [ ConstantsService ],
-      declarations: [ Stubs.RouterLinkStubDirective, Stubs.RouterOutletStubComponent, Stubs.QueryParamsStubDirective ]
+      providers: [ ConstantsService ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ScheduleViewComponent);
@@ -53,6 +29,7 @@ describe("Testing schedule-view component", function() {
 
     de = fixture.debugElement.query(By.css('.schedule-menu'));
     element  = de.nativeElement;
+    fixture.detectChanges();
   }));
 
   it("should have a component", function() {
@@ -65,12 +42,4 @@ describe("Testing schedule-view component", function() {
     expect(element.textContent).toContain("Copy Schedule Link");
   });
 
-  // it("Contains Correct Schedule Number", fakeAsync(() => {
-  //   component.scheduleIndex = 1;
-  //   component.totalSchedules = 15;
-  //   tick();
-  //
-  //   console.log(component.scheduleIndex);
-  //   console.log(element.textContent);
-  // }));
 });
