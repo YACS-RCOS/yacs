@@ -1,12 +1,20 @@
 
 import {} from 'jasmine';
 
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
-import {Injectable} from '@angular/core';
+import { TestBed, getTestBed, async, inject } from '@angular/core/testing';
+import { Headers, BaseRequestOptions, Response,
+  HttpModule, Http, XHRBackend, RequestMethod
+} from '@angular/http';
+
+import {ResponseOptions} from '@angular/http';
+import {MockBackend, MockConnection} from '@angular/http/testing';
 
 import { YacsService } from './yacs.service';
 
 describe("Testing YacsService", function() {
+
+  let mockBackend: MockBackend;
+
   beforeEach(async(() => {
       TestBed.configureTestingModule({
         providers: [
@@ -23,7 +31,6 @@ describe("Testing YacsService", function() {
            }
         ],
         imports: [
-          FormsModule,
           HttpModule
         ]
       });
@@ -33,6 +40,8 @@ describe("Testing YacsService", function() {
 
   it('get() should return defined', function() {
     let yacsService: YacsService = getTestBed().get(YacsService);
-    console.log(yacsService.baseUrl);
+    expect(yacsService).toBeDefined();
+    // Example from SchoolListComponent
+    expect(yacsService.get('schools', { show_departments: true })).toBeDefined();
   });
 });
