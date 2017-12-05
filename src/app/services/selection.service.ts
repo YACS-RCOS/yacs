@@ -75,13 +75,12 @@ export class SelectionService {
     return JSON.parse(localStorage.getItem('selections'));
   }
   
-  public getSectionSelections(){
+  public getSectionSelections() {
     let selections = JSON.parse(localStorage.getItem('selections'));
     let s = [];
-    for (let key in selections){
-
+    for (let key in selections) {
       s.push(selections[key]);
     }
-    return s.join(",");
+    return s;
   }
 }

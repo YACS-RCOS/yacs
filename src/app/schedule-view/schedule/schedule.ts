@@ -19,12 +19,13 @@ export class Schedule {
   text_colors: string[];
   border_colors: string[];
   percents: number[];
+  statusText: string;
   
 
   constructor(
+    periods: ScheduleEvent[],
     earliestStart: number,
-    latestEnd: number,
-    periods: ScheduleEvent[]
+    latestEnd: number
   ) {
     this.periods = periods;
 

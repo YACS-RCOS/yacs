@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ConstantsService } from '../../services/constants';
-import { ScheduleEvent } from '../scheduleevent/scheduleevent';
+import { ScheduleEvent } from '../schedule-event/schedule-event';
 import { Schedule } from './schedule';
 import { Section } from '../../course-list/section/section';
 import { SelectionService } from '../../services/selection.service'
