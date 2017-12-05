@@ -2,46 +2,24 @@
 import {} from 'jasmine';
 
 import { TestBed, getTestBed, async, inject } from '@angular/core/testing';
-import { Headers, BaseRequestOptions, Response,
-  HttpModule, Http, XHRBackend, RequestMethod
-} from '@angular/http';
+import { ConflictsService } from './conflicts.service';
+import { SelectionService } from './selection.service';
 
-import {ResponseOptions} from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
+describe("Testing ConflictsService", function() {
 
-import { YacsService } from './yacs.service';
-
-describe("Testing YacsService", function() {
-
-  let mockBackend: MockBackend;
+  let conflictsService: ConflictsService;
 
   beforeEach(async(() => {
       TestBed.configureTestingModule({
-        providers: [
-          YacsService,
-          MockBackend,
-          BaseRequestOptions,
-          {
-            provide: Http,
-            deps: [MockBackend, BaseRequestOptions],
-            useFactory:
-              (backend: XHRBackend, defaultOptions: BaseRequestOptions) => {
-                  return new Http(backend, defaultOptions);
-              }
-           }
-        ],
-        imports: [
-          HttpModule
-        ]
+        providers: [ ConflictsService, SelectionService ]
       });
 
       TestBed.compileComponents();
+
+      conflictsService = getTestBed().get(ConflictsService);
   }));
 
-  it('get() should return defined', function() {
-    let yacsService: YacsService = getTestBed().get(YacsService);
-    expect(yacsService).toBeDefined();
-    // Example from SchoolListComponent
-    expect(yacsService.get('schools', { show_departments: true })).toBeDefined();
+  it('conflictsService should be defined', function() {
+    expect(conflictsService).toBeDefined();
   });
 });
