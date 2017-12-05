@@ -19,11 +19,11 @@ import {Subject,Subscription} from 'rxjs/Rx';
 export class ScheduleViewComponent implements OnInit, OnDestroy{
 
   courses : Course[];
-  isLoaded : boolean = true;
-  courseSelections : Object[];
-  courseIds: Object[];
-  sections : Object[];
-  foo: Object[] = [];
+  isLoaded : boolean = false;
+  // courseSelections : Object[];
+  // courseIds: Object[];
+  // sections : Object[];
+  // foo: Object[] = [];
   processedSchedules: Schedule[]  = [];
   crns : string;
   schedules: Schedule[];
@@ -34,65 +34,55 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
 
 
   constructor (
-    
     private yacsService : YacsService,
     private selectionService : SelectionService,
     private activatedRoute: ActivatedRoute) { 
 
-    this.subscription = this.selectionService.subscribe(
-      msg => {this.courseSelections = this.selectionService.getSelections(); this.getCourses();});
+    this.subscription = this.selectionService.subscribe(() => {
+      this.getSchedulesAndCourses();
+    });
   }
 
- ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  getCourses () {
-    let params = this.selectionService.getSectionSelections();
-     let newParams2 : Object = {
-      show_periods: true
-    };
-    console.log(params);
-    Object.assign(newParams2, {section_ids: params});
-      this.yacsService
-        .get('schedules', newParams2)
-        .then((data) => {
-          console.log(data);
-        this.foo = this.foo.concat(data['schedules']);
-        console.log(this.foo);
-          for(let x in this.foo){
-            console.log(x);
-          }
-          this.processSchedules();
-        });
-    this.sections = [];
-    this.courses = [];
-    this.courseIds = [];
-    let newParams : Object = {
-      show_sections: true,
-      show_periods: true
-    };
-    let i = 0;
-    this.isLoaded = true;
-    let len = Object.keys(this.courseSelections).length;
-    for(let key of Object.keys(this.courseSelections)){
-      Object.assign(newParams, {id: this.courseSelections[key]}); 
-      this.yacsService
-        .get('sections', newParams)
-        .then((data) => {
-          this.sections = this.sections.concat(data['sections']);
-          if(++i == len){
-           //this.processSchedules();
-          }
-        });
-      Object.assign(newParams, {id: key}); 
-      this.yacsService
-        .get('courses', newParams)
-        .then((data) => {
-          this.courses = this.courses.concat(data['courses']) as Course[];
-      });
+  getSchedulesAndCourses () {
+    this.isLoaded = false;
+    const selections = this.selectionService.getSelections();
+    const sectionIds = [];
+    for (let selection of selections) {
+      sectionIds.push(...selection);
     }
+    const queryParams = { section_id: sectionIds.join(','), show_section: true };
 
+    this.yacsService
+      .get('schedules', queryParams)
+      .then((data) => {
+        this.processSchedules(data['schedules']);
+        this.isLoaded = true;
+      });
+
+    this.yacsService
+      .get('courses', queryParams)
+      .then((data) => {
+        this.courses = data['courses'] as Course[];
+      });
+  }
+
+  processSchedules (rawSchedules: Object[]) {
+    const schedules: Schedule[] = [];
+    const crns = [];
+
+    let earliestStart = 480;
+    let latestEnd = 1320;
+
+    for (let schedule of rawSchedules) {
+      const events = [];
+      for (let section of schedule['sections']) {
+        let color = 0;
+      }
+    }
   }
 
   processSchedules () {
@@ -147,20 +137,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
 
 
   ngOnInit () : void {
-    this.courseSelections = this.selectionService.getSelections();
-    
-    // let foo = [];
-    // this.yacsService
-    //     .get('section_ids', params)
-    //     .then((data) => {
-    //     foo = foo.concat(data['section_ids']);
-    //       console.log(foo);
-    //     });
-    
-    console.log("HI");
-        
-    this.getCourses();
-
+    this.getSchedulesAndCourses();
   }
 
   scheduleIndex: number = 0;
