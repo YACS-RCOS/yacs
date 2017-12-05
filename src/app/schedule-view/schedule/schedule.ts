@@ -1,4 +1,4 @@
-import { ScheduleEvent } from '../scheduleevent/scheduleevent';
+import { ScheduleEvent } from '../schedule-event/schedule-event';
 
 export class Schedule {
   // these times are in minutes since midnight

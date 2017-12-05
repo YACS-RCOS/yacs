@@ -1,12 +1,12 @@
 <div *ngIf="!isLoaded" class="loader"></div>
-<div *ngIf="isLoaded">
+<!-- <div *ngIf="isLoaded"> -->
 <div class="schedule-view">
   <div class="schedule-menu">
     <div class="left">
       <div class="switch">
-        <span class="schedule-switch" (click) = "dec($event)">&#9664;</span>
-        <span class="schedule-index">{{scheduleIndex + 1}} / {{totalSchedules}}</span>
-        <span class="schedule-switch" (click) = "inc($event)">&#9654;</span>
+        <span class="schedule-switch" (click) = "previousSchedule()">&#9664;</span>
+        <span class="schedule-index">{{scheduleIndex + 1}} / {{schedules.length}}</span>
+        <span class="schedule-switch" (click) = "nextSchedule()">&#9654;</span>
       </div>
       <button class="schedule-button" [disabled]="isTemporary">Clear&thinsp;</button>
       <button class="schedule-button">Download ICS</button>
@@ -18,7 +18,7 @@
       </div>
     </div>
   </div>
-  <schedule [schedule]="schedules[scheduleIndex]"></schedule>
+  <schedule [schedule]="schedules[scheduleIndex]" *ngIf="schedules.length > 0"></schedule>
   <course-list [courses]="courses"></course-list>
 </div>
 

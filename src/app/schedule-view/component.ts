@@ -19,17 +19,12 @@ import {Subject,Subscription} from 'rxjs/Rx';
 
 export class ScheduleViewComponent implements OnInit, OnDestroy{
 
-  courses : Course[];
+  courses : Course[] = [];
   isLoaded : boolean = false;
-  // courseSelections : Object[];
-  // courseIds: Object[];
-  // sections : Object[];
-  // foo: Object[] = [];
-  processedSchedules: Schedule[]  = [];
-  crns : string;
-  schedules: Schedule[];
-  start: number = 480; //8AM    
-  end: number = 1200; //8PM
+
+  schedules: Schedule[] = [];
+  scheduleIndex: number = 0;
+  isTemporary: boolean = false;
 
   private subscription;
 
@@ -40,7 +35,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     private activatedRoute: ActivatedRoute) { 
 
     this.subscription = this.selectionService.subscribe(() => {
-      this.getSchedulesAndCourses();
+      this.getSchedules();
     });
   }
 
@@ -48,27 +43,28 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     this.subscription.unsubscribe();
   }
 
-  getSchedulesAndCourses () {
-    this.isLoaded = false;
-    const selections = this.selectionService.getSelections();
-    const sectionIds = [];
-    for (let selection of selections) {
-      sectionIds.push(...selection);
+  getSchedules () {
+    const sectionIds = this.selectionService.getSelectedSectionIds();
+    if (sectionIds.length > 0) {
+      this.isLoaded = false;
+      this.yacsService
+        .get('schedules', { section_ids: sectionIds.join(','), show_periods: true })
+        .then((data) => {
+          this.schedules = this.processSchedules(data['schedules']);
+          this.isLoaded = true;
+        });
     }
-    const queryParams = { section_id: sectionIds.join(','), show_section: true };
+  }
 
-    this.yacsService
-      .get('schedules', queryParams)
-      .then((data) => {
-        this.schedules = this.processSchedules(data['schedules']);
-        this.isLoaded = true;
-      });
-
-    this.yacsService
-      .get('courses', queryParams)
-      .then((data) => {
-        this.courses = data['courses'] as Course[];
-      });
+  getCourses () {
+    const courseIds = this.selectionService.getSelectedCourseIds();
+    if (courseIds.length > 0) {
+      this.yacsService
+        .get('courses', { id: courseIds.join(','), show_sections: true, show_periods: true })
+        .then((data) => {
+          this.courses = data['courses'] as Course[];
+        });
+    }
   }
 
   processSchedules (rawSchedules: Object[]): Schedule[] {
@@ -106,7 +102,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     for (let i in allScheduleEvents) {
       schedules.push(new Schedule(allScheduleEvents[i], earliestStart, latestEnd));
     }
-
     return schedules;
   }
 
@@ -160,20 +155,24 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     return (Math.floor(int / 100) * 60) + (int % 100);
   };
 
-
   ngOnInit () : void {
-    this.getSchedulesAndCourses();
+    this.getSchedules();
+    this.getCourses();
   }
 
-  scheduleIndex: number = 0;
-  totalSchedules: number = 0;
-  isTemporary: boolean = false;
-
-  public dec(event) {
-    this.scheduleIndex = this.scheduleIndex - 1;
+  public previousSchedule () {
+    if (this.scheduleIndex > 0) {
+      --this.scheduleIndex;
+    } else {
+      this.scheduleIndex = this.schedules.length - 1;
+    }
   }
   
-  public inc(event) {
-    this.scheduleIndex = this.scheduleIndex + 1;
+  public nextSchedule () {
+    if (this.scheduleIndex < this.schedules.length - 1) {
+      ++this.scheduleIndex;
+    } else {
+      this.scheduleIndex = 0;
+    }
   }
 }

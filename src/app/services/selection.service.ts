@@ -75,12 +75,16 @@ export class SelectionService {
     return JSON.parse(localStorage.getItem('selections'));
   }
   
-  public getSectionSelections() {
-    let selections = JSON.parse(localStorage.getItem('selections'));
-    let s = [];
-    for (let key in selections) {
-      s.push(selections[key]);
-    }
-    return s;
+  public getSelectedSectionIds () {
+    const selections = this.getSelections();
+    const sectionIds = [];
+    Object.keys(selections).forEach((key) => {
+      sectionIds.push(...selections[key]);
+    });
+    return sectionIds;
+  }
+
+  public getSelectedCourseIds () {
+    return Object.keys(this.getSelections());
   }
 }
