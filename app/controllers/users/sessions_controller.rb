@@ -31,8 +31,14 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    puts 'User Logged out'
-    super
+    puts '------------------------User Logged out eyyyyy--------------------'    
+    # binding.pry
+    Yacs::Auth.sign_out(current_user)
+    # super
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    set_flash_message! :notice, :signed_out if signed_out
+    yield if block_given?
+    respond_to_on_destroy    
   end
 
 
@@ -42,7 +48,7 @@ class Users::SessionsController < Devise::SessionsController
   def after_sign_in_path_for(resource)
     puts '------------------------AFTER SIGN IN--------------------'
     stored_location_for(resource) || signed_in_root_path(resource)
-    # request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+    
   end
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params

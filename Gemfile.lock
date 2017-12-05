@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:YACS-RCOS/yacs-auth.git
-  revision: c47ab84c97c055d9fb85dc9e296f9a640a976535
+  revision: 7bb455c2a9137b16310cb19d97586f6915d1a3d9
   branch: master
   specs:
     yacs-auth (0.1.2)
