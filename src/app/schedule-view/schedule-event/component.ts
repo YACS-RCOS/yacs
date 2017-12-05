@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ScheduleEvent } from './scheduleevent';
+import { ScheduleEvent } from './schedule-event';
 
 @Component({
-  selector: 'scheduleevent',
+  selector: 'schedule-event',
   templateUrl: './component.html',
   styleUrls: ['./component.scss'],
   // don't need to specify ConstantsService here as long as
@@ -13,5 +13,5 @@ import { ScheduleEvent } from './scheduleevent';
 })
 
 export class ScheduleEventComponent{
-	@Input() scheduleevent: ScheduleEvent;
+	@Input() scheduleEvent: ScheduleEvent;
 }
