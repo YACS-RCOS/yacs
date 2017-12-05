@@ -34,7 +34,7 @@ gem 'redis', '~> 3.0'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise', '~> 4.3'
-gem 'yacs-auth', git:"git@github.com:YACS-RCOS/yacs-auth.git", branch: 'master'
+gem 'yacs-auth', git:"https://github.com/YACS-RCOS/yacs-auth.git", branch: 'master'
 gem 'jwt'
 
 group :development, :test do
