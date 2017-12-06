@@ -17,15 +17,13 @@ import {Subject, Subscription} from 'rxjs/Rx';
 
 export class ScheduleViewComponent implements OnInit, OnDestroy{
 
-  courses : Course[] = [];
   isLoaded : boolean = false;
-
+  courses : Course[] = [];
   schedules: Schedule[] = [];
   scheduleIndex: number = 0;
   isTemporary: boolean = false;
 
   private subscription;
-
 
   constructor (
     private yacsService : YacsService,
@@ -37,11 +35,11 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy () {
     this.subscription.unsubscribe();
   }
 
-  getSchedules () {
+  getSchedules () : void {
     const sectionIds = this.selectionService.getSelectedSectionIds();
     this.isLoaded = false;
     this.yacsService
@@ -52,7 +50,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
       });
   }
 
-  getCourses () {
+  getCourses () : void {
     const courseIds = this.selectionService.getSelectedCourseIds();
     if (courseIds.length > 0) {
       this.yacsService
@@ -106,7 +104,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     return schedules;
   }
 
-  toMinutes(timeString) {
+  toMinutes (timeString) : number {
     let int = parseInt(timeString);
     return (Math.floor(int / 100) * 60) + (int % 100);
   };
@@ -116,15 +114,15 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     this.getCourses();
   }
 
-  public previousSchedule () {
+  public previousSchedule () : void {
     if (this.scheduleIndex > 0) {
       --this.scheduleIndex;
     } else {
       this.scheduleIndex = this.schedules.length - 1;
     }
   }
-  
-  public nextSchedule () {
+ 
+  public nextSchedule () : void {
     if (this.scheduleIndex < this.schedules.length - 1) {
       ++this.scheduleIndex;
     } else {
