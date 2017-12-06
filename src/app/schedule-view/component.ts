@@ -7,9 +7,7 @@ import { Schedule} from './schedule/schedule';
 import { ScheduleEvent } from './schedule-event/schedule-event';
 import { SelectionService } from '../services/selection.service';
 import 'rxjs/Rx';
-import {Subject,Subscription} from 'rxjs/Rx';
-
-
+import {Subject, Subscription} from 'rxjs/Rx';
 
 @Component({
   selector: 'schedule-view',
@@ -45,15 +43,13 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
 
   getSchedules () {
     const sectionIds = this.selectionService.getSelectedSectionIds();
-    if (sectionIds.length > 0) {
-      this.isLoaded = false;
-      this.yacsService
-        .get('schedules', { section_ids: sectionIds.join(','), show_periods: true })
-        .then((data) => {
-          this.schedules = this.processSchedules(data['schedules']);
-          this.isLoaded = true;
-        });
-    }
+    this.isLoaded = false;
+    this.yacsService
+      .get('schedules', { section_ids: sectionIds.join(','), show_periods: true })
+      .then((data) => {
+        this.schedules = this.processSchedules(data['schedules']);
+        this.isLoaded = true;
+      });
   }
 
   getCourses () {
@@ -68,8 +64,12 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
   }
 
   processSchedules (rawSchedules: Object[]): Schedule[] {
+    if (rawSchedules.length == 0) {
+      return [new Schedule([], 480, 1200, "Try selecting some courses :)")];
+    }
+
     const allScheduleEvents: ScheduleEvent[][] = [];
-    const allStatusTexts: number[][] = [];
+    const allStatusTexts: string[] = [];
 
     let earliestStart = 480;
     let latestEnd = 1320;
@@ -96,59 +96,15 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
         ++color;
       }
       allScheduleEvents.push(scheduleEvents);
+      allStatusTexts.push(`CRNs: ${crns.join(',')}`);
     }
 
     const schedules: Schedule[] = [];
     for (let i in allScheduleEvents) {
-      schedules.push(new Schedule(allScheduleEvents[i], earliestStart, latestEnd));
+      schedules.push(new Schedule(allScheduleEvents[i], earliestStart, latestEnd, allStatusTexts[i]));
     }
     return schedules;
   }
-
-  // processSchedules () {
-    
-  //   this.crns = "CRNs: ";
-  //   this.schedules = [];
-  //   for(let sched in this.foo){
-  //     console.log("here");
-  //     let periods =[];
-  //     let earliestStart = 480;
-  //     let latestEnd = 1320;
-  //     let periodcolor = 0;
-  //     console.log(this.foo[sched]);
-  //     for (let s of this.foo[sched]['sections']) {
-  //       periodcolor++;
-  //       if(periodcolor == 1){
-  //           this.crns += s['crn'];
-  //       }
-  //       else{
-  //         this.crns += ', ' + s['crn'];
-  //       }
-  //       for(let p of s['periods']){
-  //         let period = {
-  //           name: s['course_name'],
-  //           crn: s['crn'],
-  //           instructor: s['instructors'][0],
-  //           day: p['day'],
-  //           startTime: this.toMinutes(p['start']),
-  //           endTime: this.toMinutes(p['end']),
-  //           color: periodcolor,
-  //           title: s['department_code'] + ' ' + s['course_number'] + ' - ' + s['name'],
-  //         }
-  //         if(earliestStart > this.toMinutes(p['start'])){
-  //           earliestStart = this.toMinutes(p['start']);
-  //         }
-  //         if(latestEnd < this.toMinutes(p['end'])){
-  //           latestEnd = this.toMinutes(p['end']);
-  //         }
-  //         periods.push(period);
-  //       }
-  //     }
-  //     //this.isLoaded = true;
-  //     this.schedules.push(new Schedule(480, 1320, periods));
-  //     //console.log(this.schedules);
-  //   }
-  // }
 
   toMinutes(timeString) {
     let int = parseInt(timeString);

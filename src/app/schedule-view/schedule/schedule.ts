@@ -25,13 +25,16 @@ export class Schedule {
   constructor(
     periods: ScheduleEvent[],
     earliestStart: number,
-    latestEnd: number
+    latestEnd: number,
+    statusText
   ) {
     this.periods = periods;
 
     // cap earliestStart and latestEnd to the nearest hours
     this.earliestStart = Math.floor(earliestStart/60) * 60;
     this.latestEnd = Math.ceil(latestEnd/60) * 60;
+
+    this.statusText = statusText;
 
     // for now, hardcode Mon-Fri week
     this.earliestDay = 1;
