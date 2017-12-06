@@ -15,7 +15,7 @@ import {Subject, Subscription} from 'rxjs/Rx';
   styleUrls: ['./component.scss']
 })
 
-export class ScheduleViewComponent implements OnInit, OnDestroy{
+export class ScheduleViewComponent implements OnInit, OnDestroy {
 
   isLoaded : boolean = false;
   courses : Course[] = [];
@@ -128,5 +128,16 @@ export class ScheduleViewComponent implements OnInit, OnDestroy{
     } else {
       this.scheduleIndex = 0;
     }
+  }
+
+  public currentSchedule () : Schedule {
+    return this.schedules[this.scheduleIndex];
+  }
+
+  public statusText () : string {
+    if (!this.schedules[this.scheduleIndex]) {
+      return "";
+    }
+    return this.schedules[this.scheduleIndex].statusText;
   }
 }
