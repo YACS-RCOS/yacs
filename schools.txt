@@ -1,6 +1,6 @@
-School of Humanities, Arts and Social Sciences	ARTS	COGS	STSH	STSS	COMM	ECON	IHSS	LANG	LITR	PHIL	PSYC	WRIT
-School of Engineering	BMED	CHME	ECSE	ENVE	MANE	MTLE	CIVL	ENGR	ESCI	ISYE	EPOW
-School of Science	BCBP	CSCI	ERTH	IENV	ISCI	MATP	PHYS	ASTR	BIOL	CHEM	MATH	ITWS
-School of Architecture	ARCH	LGHT
-School of Business Management	MGMT
-Other	ADMN	LGHT	USAF	USNA	USAR
+School of Humanities, Arts and Social Sciences  ARTS    COGS    STSH    STSS    COMM    ECON    IHSS    LANG    LITR    PHIL    PSYC    WRIT    GSAS
+School of Engineering   BMED    CHME    ECSE    ENVE    MANE    MTLE    CIVL    ENGR    ESCI    ISYE    EPOW
+School of Science   BCBP    CSCI    ERTH    IENV    ISCI    MATP    PHYS    ASTR    BIOL    CHEM    MATH    ITWS
+School of Architecture  ARCH    LGHT
+School of Business Management   MGMT
+Other   ADMN    LGHT    USAF    USNA    USAR
