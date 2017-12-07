@@ -1,0 +1,8 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
+
+bin/yacs-generate-cert
+bin/yacs-build-development
+bin/yacs-dbsetup
+bin/yacs-dbsetup # Don't Ask
+
