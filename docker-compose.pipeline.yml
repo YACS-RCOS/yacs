@@ -9,22 +9,22 @@ services:
       - adapter-csv
 
   adapter-acalog:
-    build: yacsrcos/adapter-acalog-rpi
+    image: yacsrcos/adapter-acalog-rpi
     restart: unless-stopped
     expose:
       - "4600"
   adapter-banner:
-    build: yacsrcos/adapter-banner-rpi
+    image: yacsrcos/adapter-banner-rpi
     restart: unless-stopped
     expose:
       - "4600"
   adapter-yaml:
-    build: yacsrcos/adapter-yaml-rpi
+    image: yacsrcos/adapter-yaml-rpi
     restart: unless-stopped
     expose:
       - "4600"
   adapter-csv:
-    build: yacsrcos/adapter-csv-rpi
+    image: yacsrcos/adapter-csv-rpi
     restart: unless-stopped
     expose:
       - "4600"

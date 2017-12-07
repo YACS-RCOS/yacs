@@ -1,4 +1,4 @@
 #!/bin/bash
 cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
 
-docker-compose -f docker-compose.yml -f docker-compose.development.yml build
+bin/yacs-compose-development build
