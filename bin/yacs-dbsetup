@@ -1,5 +1,0 @@
-#!/bin/bash
-cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
-
-mkdir -p data/potsgres
-docker-compose run web bundle exec rake db:create db:migrate
