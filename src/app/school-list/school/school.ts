@@ -1,4 +1,4 @@
-import { Department } from './department/department';
+import { Department } from '../department/department';
 
 export class School {
   id: number;
