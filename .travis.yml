@@ -16,9 +16,10 @@ addons:
     - redis
 
 env:
-  - RAILS_ENV=test
-  - SECRET_KEY_BASE=gyq3dgq378dhqd8qdqudbdq3d
-  - SECRET_TOKEN=d2huqdwhq8dq23d8qhd2389
+  global:
+    - RAILS_ENV=test
+    - SECRET_KEY_BASE=gyq3dgq378dhqd8qdqudbdq3d
+    - SECRET_TOKEN=d2huqdwhq8dq23d8qhd2389
 
 install:
   - npm install -g eslint
