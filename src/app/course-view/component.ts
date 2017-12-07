@@ -11,8 +11,8 @@ import { ConflictsService } from '../services/conflicts.service';
   styleUrls: ['./component.scss']
 })
 export class CourseViewComponent implements OnInit {
-
   courses : Course[] = [];
+  isLoaded : boolean = false;
 
   constructor (
     private yacsService : YacsService,
@@ -20,6 +20,7 @@ export class CourseViewComponent implements OnInit {
     private conflictsService: ConflictsService) { }
 
   getCourses (params: Params) {
+    this.isLoaded = false;
     let newParams : Object = {
       show_sections: true,
       show_periods: true
@@ -30,6 +31,7 @@ export class CourseViewComponent implements OnInit {
         .get('courses', newParams)
         .then((data) => {
           this.courses = data['courses'] as Course[];
+          this.isLoaded = true;
           this.conflictsService.populateConflictsCache(data);
         });
   }

@@ -1,81 +1,21 @@
 import { Component, Input } from '@angular/core';
 import { ConstantsService } from '../../services/constants';
-
-export class SchedulePeriod {
-  name: string; // e.g. "MATH 1010 - 01"
-  crn: number;
-  instructor: string;
-  day: number;
-
-  // these are minutes since midnight
-  startTime: number;
-  endTime: number;
-}
-
-export class Schedule {
-  // these times are in minutes since midnight
-  earliestStart: number;
-  latestEnd: number;
-
-  earliestDay: number;
-  latestDay: number;
-
-  periods: SchedulePeriod[];
-
-  // arrays of day numbers and hour numbers
-  // needed because ngFor must iterate over a container
-  dayNums: number[];
-  hourNums: number[];
-
-  constructor(
-    earliestStart: number,
-    latestEnd: number,
-    periods: SchedulePeriod[]
-  ) {
-    this.periods = periods;
-
-    // cap earliestStart and latestEnd to the nearest hours
-    this.earliestStart = Math.floor(earliestStart/60) * 60;
-    this.latestEnd = Math.ceil(latestEnd/60) * 60;
-
-    // for now, hardcode Mon-Fri week
-    this.earliestDay = 1;
-    this.latestDay = 5;
-
-    this.dayNums = [];
-    for(let i=this.earliestDay; i<=this.latestDay; ++i) {
-      this.dayNums.push(i);
-    }
-    this.hourNums = [];
-    for(let i=this.earliestStart; i<this.latestEnd; i+=60) {
-      this.hourNums.push(i);
-    }
-  }
-
-  /* Return the total number of days in the schedule. */
-  public get getDaySpan(): number {
-    return (this.latestDay - this.earliestDay) + 1;
-  }
-  /* Return the total number of minutes in the schedule,
-   * not including the exact minute of the latestEnd. */
-  public get getTimeSpan(): number {
-    return this.latestEnd - this.earliestStart;
-  }
-  /* Return the percentage width of a day. */
-  public get getDayWidth(): number {
-    return (100 / this.getDaySpan);
-  }
-}
+import { ScheduleEvent } from '../schedule-event/schedule-event';
+import { Schedule } from './schedule';
+import { Section } from '../../course-list/section/section';
+import { SelectionService } from '../../services/selection.service'
 
 @Component({
   selector: 'schedule',
   templateUrl: './component.html',
+  styleUrls: ['./component.scss'],
   // don't need to specify ConstantsService here as long as
   // it's on the AppComponent
   providers: [
     // ConstantsService,
   ],
 })
+
 export class ScheduleComponent {
   @Input() schedule: Schedule;
   constants: ConstantsService;
@@ -89,8 +29,42 @@ export class ScheduleComponent {
     return this.constants.longDayName(day);
   }
 
+  public hourName(hour: number){
+    hour = hour / 60;
+    if (hour === 0) {
+        return '12 AM';
+      }
+      else if (hour < 12) {
+        return hour + ' AM';
+      }
+      else if (hour === 12) {
+        return 'Noon';
+      }
+      else {
+        return (hour - 12) + ' PM';
+      }
+  }
+
   /* Filter and return only the periods on a given day. */
   public periodsOnDay(day: number) {
     return this.schedule.periods.filter(p => (p.day === day));
   }
+
+  public get getDayWidth(): number {
+    return (100 / this.schedule.getDaySpan);
+  }
+
+  public get getHourHeight(){
+    return (60 * 100 / this.schedule.getTimeSpan);
+  }
+
+  public eventPosition(eventStart: number){
+    return (this.schedule.height * ((eventStart - this.schedule.earliestStart) / this.schedule.getTimeSpan));
+  }
+
+  public eventHeight(eventDuration: number){
+    return (this.schedule.height  * (eventDuration / this.schedule.getTimeSpan));
+  }
+
+
 }
