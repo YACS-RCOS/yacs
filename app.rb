@@ -22,7 +22,7 @@ source_manager.start_watcher
 graph.build source_manager.sources
 
 set :bind, '0.0.0.0'
-set :port, 4301
+set :port, 4500
 
 get '/' do
   json graph.graph
