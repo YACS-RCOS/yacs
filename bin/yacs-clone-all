@@ -5,7 +5,8 @@ REPOS="yacs
 yacs-web
 yacs-admin
 yacs-users
-yacs-nginx"
+yacs-nginx
+yacs-malg"
 
 for repo in $REPOS; do
   uri="git@github.com:YACS-RCOS/$repo.git"

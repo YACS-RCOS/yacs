@@ -49,3 +49,8 @@ services:
     build: ./develop/yacs-users
     ports:
       - "4400:4400"
+
+  malg:
+    build: ./develop/yacs-malg
+    ports:
+      - "4500:4500"

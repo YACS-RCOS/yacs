@@ -32,3 +32,6 @@ services:
 
   users:
     restart: unless-stopped
+
+  malg:
+    restart: unless-stopped

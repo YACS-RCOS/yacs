@@ -7,7 +7,7 @@ services:
       - "5432"
 
   redis:
-    image: redis
+    image: redis:4-alpine
     expose:
       - "6379"
 
@@ -68,3 +68,10 @@ services:
       - redis
     expose:
       - "4400"
+
+  malg:
+    images: yacsrcos/yacs-malg
+    links:
+      - core
+    expose:
+      - "4500"

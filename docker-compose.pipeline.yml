@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  amalgamator:
+    links:
+      - adapter-acalog
+      - adapter-banner
+      - adapter-yaml
+      - adapter-csv
+
+  adapter-acalog:
+    build: yacsrcos/adapter-acalog-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
+  adapter-banner:
+    build: yacsrcos/adapter-banner-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
+  adapter-yaml:
+    build: yacsrcos/adapter-yaml-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
+  adapter-csv:
+    build: yacsrcos/adapter-csv-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
