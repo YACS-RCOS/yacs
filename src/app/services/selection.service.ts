@@ -14,8 +14,10 @@ export class SelectionService {
   subscribe(next): Subscription {
     return this.clickEvent.subscribe(next);
   }
-  next(event){
+  
+  next(event) {
     this.clickEvent.next(event);
+  }
 
   private setItem(data1:string, data2) {
     localStorage.setItem(data1, data2);
