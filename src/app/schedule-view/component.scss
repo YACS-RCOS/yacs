@@ -1,0 +1,71 @@
+.schedule-view {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.schedule-menu {
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 500;
+    margin: 5px;
+    margin-right: 20px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+}
+.schedule-menu:after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+.schedule-menu>.left {
+    float: left;
+}
+.schedule-menu>.right {
+    float: right;
+    height: 1em;
+}
+
+.switch {
+    float: left;
+}
+.schedule-switch {
+    padding:5px;
+    cursor:pointer;
+}
+.schedule-switch.disabled {
+    color: #999;
+    cursor: default;
+}
+
+.schedule-button {
+    border: solid;
+    border-radius: 1px;
+    border-width: 1px;
+    border-color: #c65353;
+    color: #ffffff;
+    background-color: #d57f7f;
+    font-size: 14px;
+    outline: none;
+}
+
+.schedule-button:focus {
+    background-color: #c65353;
+}
+
+.schedule-button[disabled] {
+  border-color: #a88;
+  background-color:#daa;
+}
+
+.schedule-status {
+    float:right;
+    margin: 0 auto;
+    font-size: 90%;
+    -moz-user-select:text;
+    -webkit-user-select:text;
+    -ms-user-select:text;
+}
+
