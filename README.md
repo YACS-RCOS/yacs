@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+Progress:
+
+- Finished implementation with user auth, sign up and sign out.
+
+
+TODO:
