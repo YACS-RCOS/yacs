@@ -70,7 +70,7 @@ services:
       - "4400"
 
   malg:
-    images: yacsrcos/yacs-malg
+    image: yacsrcos/yacs-malg
     links:
       - core
     expose:
