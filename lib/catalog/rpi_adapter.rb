@@ -43,10 +43,10 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
       end
     end
   end
-  
+
   private
   def sem_string
-    "201701"
+    "201801"
   end
 
   def load_courses
@@ -85,7 +85,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
           end
           section.instructors.delete("Staff")
           section.instructors.uniq!
-          section.save!
+          section.save
         end
       else
         errors << "#{dept.code} - #{course.number}"
@@ -114,7 +114,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
       sections_xml.each do |section_xml|
         section = course.sections.find_by_crn(section_xml[:crn])
         if section.nil?
-          section           = course.sections.build 
+          section           = course.sections.build
           puts "section added to #{course.inspect} - #{section.inspect}"
         end
         section.name        = section_xml[:num]
@@ -138,7 +138,11 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
         end
         section.instructors.delete("Staff")
         section.instructors.uniq!
-        section.save!
+        begin
+    section.save
+  rescue
+    puts section.attributes
+  end
       end
     end
     puts errors
@@ -148,7 +152,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     base = "http://catalog.rpi.edu/"
     page_no = 1
     while page_no <= 19 do
-      path = "content.php?catoid=15&navoid=367&filter%5Bcpage%5D=" + page_no.to_s
+      path = "content.php?catoid=16&navoid=390&filter%5Bcpage%5D=" + page_no.to_s
       page = base + path
       page = Nokogiri::HTML(open(page))
       page_no += 1
@@ -167,7 +171,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
             desc = desc_page.css('td.block_content')
             course_description = desc.text
             course_description.slice! "HELP"
-            course_description.slice! "Rensselaer Catalog 2016-2017"
+            course_description.slice! "Rensselaer Catalog 2017-2018"
             course_description.slice! "Print-Friendly Page [Add to Portfolio]"
             course_description.slice! " Back to Top | Print-Friendly Page [Add to Portfolio]"
             course_description = course_description.strip

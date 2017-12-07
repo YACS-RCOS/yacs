@@ -1,65 +1,66 @@
-STVSUBJ_CODE	STVSUBJ_DESC
-BIOL	Biology
-MATH	Mathematics
-CHEM	Chemistry
-PHYS	Physics
-BMED	Biomedical Engineering
-ECON	Economics
-PSYC	Psychology
-BCBP	Biochemistry and Biophysics
-ARTS	Arts
-CIVL	Civil Engineering
-ENGR	Core Engineering
-COMM	Communication
-CSCI	Computer Science
-DSES	Decision Sci & Engr. Systems
-ERTH	Earth and Environmental Science
-ESCI	Engineering Science
-EPOW	Electric Power Engineering
-ECSE	Electrical and Computer Systems Engineering
-GENL	General Institute Offerings
-IHSS	Interdisciplinary H&SS
-MGMT	Management
-LANG	Languages
-PHIL	Philosophy
-LITR	Literature
-STSH	Science and Technology Studies - Humanities
-STSS	Science and Technology Studies - Social Sciences
-MTLE	Materials Science and Engineering
-USAF	Aerospace Studies (Air Force ROTC)
-USAR	Military Science (Army ROTC)
-ISCI	Interdisciplinary Science
-USNA	Naval Science (Navy ROTC)
-WRIT	Writing
-EMBA	Management - EXEC MBA
-COOP	Cooperative Education
-MATP	Math Programming, Probability, and Statistics
-ARCH	Architecture
-MEAE	Mech. Eng, Aero Eng,&Mechanics
-IENV	Interdisciplinary Environmental
-ENVE	Environmental and Energy Engineering
-CHME	Chemical Engineering
-ADMN	Administrative Courses
-EXCH	Exchange
-ASTR	Astronomy
-METL	Metallurgy
-MPST	Math Prog, Prob & Math Stats
-ITEC	Information Technology
-BIOE	Bio - Med - Eng (H)
-LGHT	Lighting
-HLTH	Health Care Management (H)
-CISH	Computer Science (H)
-ZSPE	Systems and Power Engineering
-NSST	General Interdisciplinary
-URBN	Urban and Environmentl Studies
-ZANT	Anthropology
-ZCNS	Consortium
-ZHIS	History
-ZPHE	Physical Education
-ZPLS	Political Science
-ZSMI	Stat. Mgmt. & Info. Sciences
-ZSOC	Sociology
-MANE	Mechanical, Aerospace, and Nuclear Engineering
-COGS	Cognitive Science
-ISYE	Industrial and Systems Engineering
-ITWS	Information Technology and Web Science
+STVSUBJ_CODE    STVSUBJ_DESC
+BIOL    Biology
+MATH    Mathematics
+CHEM    Chemistry
+PHYS    Physics
+BMED    Biomedical Engineering
+ECON    Economics
+PSYC    Psychology
+BCBP    Biochemistry and Biophysics
+ARTS    Arts
+CIVL    Civil Engineering
+ENGR    Core Engineering
+COMM    Communication
+CSCI    Computer Science
+DSES    Decision Sci & Engr. Systems
+ERTH    Earth and Environmental Science
+ESCI    Engineering Science
+EPOW    Electric Power Engineering
+ECSE    Electrical and Computer Systems Engineering
+GENL    General Institute Offerings
+IHSS    Interdisciplinary H&SS
+MGMT    Management
+LANG    Languages
+PHIL    Philosophy
+LITR    Literature
+STSH    Science and Technology Studies - Humanities
+STSS    Science and Technology Studies - Social Sciences
+MTLE    Materials Science and Engineering
+USAF    Aerospace Studies (Air Force ROTC)
+USAR    Military Science (Army ROTC)
+ISCI    Interdisciplinary Science
+USNA    Naval Science (Navy ROTC)
+WRIT    Writing
+EMBA    Management - EXEC MBA
+COOP    Cooperative Education
+MATP    Math Programming, Probability, and Statistics
+ARCH    Architecture
+MEAE    Mech. Eng, Aero Eng,&Mechanics
+IENV    Interdisciplinary Environmental
+ENVE    Environmental and Energy Engineering
+CHME    Chemical Engineering
+ADMN    Administrative Courses
+EXCH    Exchange
+ASTR    Astronomy
+METL    Metallurgy
+MPST    Math Prog, Prob & Math Stats
+ITEC    Information Technology
+BIOE    Bio - Med - Eng (H)
+LGHT    Lighting
+HLTH    Health Care Management (H)
+CISH    Computer Science (H)
+ZSPE    Systems and Power Engineering
+NSST    General Interdisciplinary
+URBN    Urban and Environmentl Studies
+ZANT    Anthropology
+ZCNS    Consortium
+ZHIS    History
+ZPHE    Physical Education
+ZPLS    Political Science
+ZSMI    Stat. Mgmt. & Info. Sciences
+ZSOC    Sociology
+MANE    Mechanical, Aerospace, and Nuclear Engineering
+COGS    Cognitive Science
+ISYE    Industrial and Systems Engineering
+ITWS    Information Technology and Web Science
+GSAS    Games and Simulations Arts and Sciences
