@@ -1,0 +1,13 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../develop
+
+REPOS="yacs
+yacs-web
+yacs-admin
+yacs-users
+yacs-nginx"
+
+for repo in $REPOS; do
+  uri="git@github.com:YACS-RCOS/$repo.git"
+  git clone $uri
+done
