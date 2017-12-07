@@ -1,4 +1,4 @@
 #!/bin/bash
 cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
 
-RAILS_ENV=test docker-compose run core bundle exec rake
+RAILS_ENV=test docker-compose -f docker-compose.yml -f docker-compose.development.yml run core bundle exec rake
