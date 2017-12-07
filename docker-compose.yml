@@ -24,11 +24,11 @@ services:
   core:
     image: yacsrcos/yacs
     environment:
-      - RAILS_ENV=${RAILS_ENV}
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - SECRET_TOKEN=${SECRET_TOKEN}
-      - WEB_CONCURRENCY=${WEB_CONCURRENCY}
-      - MAX_THREADS=${MAX_THREADS}
+      - RAILS_ENV
+      - SECRET_KEY_BASE
+      - SECRET_TOKEN
+      - WEB_CONCURRENCY
+      - MAX_THREADS
     volumes:
       - ./ssl:/etc/ssl/yacs
     depends_on:
@@ -41,7 +41,7 @@ services:
   worker:
     image: yacsrcos/yacs
     environment:
-      - RAILS_ENV=${RAILS_ENV}
+      - RAILS_ENV
     depends_on:
       - postgres
       - redis
@@ -56,7 +56,8 @@ services:
 
   admin:
     image: yacsrcos/yacs-admin
-    depends_on: core
+    depends_on:
+      - core
     expose:
       - "4300"
 
