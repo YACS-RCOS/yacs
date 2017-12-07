@@ -1,33 +1,32 @@
-version: '2'
+version: '3'
 
 services:
   postgres:
-    image: postgres:9.5
+    image: postgres:9.5.6
+    restart: unless-stopped
     expose:
       - "5432"
-    volumes:
-      - ./data/postgres:/var/lib/postgresql/data
 
   redis:
     image: redis
+    restart: unless-stopped
     expose:
       - "6379"
-    volumes:
-      - ./data/redis/:/var/lib/redis/data/
 
   nginx:
-    build: ./nginx
-    image: nginx:mainline
+    build: yacsrcos/yacs-nginx
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
     links:
-      - web
+      - core
     volumes:
-      - .:/usr/src/app/
+      - ./ssl:/etc/ssl/yacs
 
-  web:
-    build: .
+  core:
+    build: yacsrcos/yacs
+    restart: unless-stopped
     environment:
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
@@ -35,21 +34,44 @@ services:
       - WEB_CONCURRENCY=${WEB_CONCURRENCY}
       - MAX_THREADS=${MAX_THREADS}
     volumes:
-      - .:/usr/src/app/
+      - ./ssl:/etc/ssl/yacs
     depends_on:
       - postgres
       - redis
     command: bundle exec puma -C config/puma.rb
     expose:
-      - "3000"
+      - "4100"
 
   worker:
-    build: .
+    build: yacsrcos/yacs
+    restart: unless-stopped
     environment:
       - RAILS_ENV=${RAILS_ENV}
-    volumes:
-      - .:/usr/src/app/
     depends_on:
       - postgres
       - redis
     command: bundle exec crono
+
+  web:
+    build: yacsrcos/yacs-web
+    restart: unless-stopped
+    depends_on:
+      - core
+    expose:
+      - "4200"
+
+  admin:
+    build: yacsrcos/yacs-admin
+    restart: unless-stopped
+    depends_on: core
+    expose:
+      - "4300"
+
+  users:
+    build: yacsrcos/yacs-users
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+    expose:
+      - "4400"
