@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:9.5.6
+    expose:
+      - "5432"
+
+  redis:
+    image: redis
+    expose:
+      - "6379"
+
+  nginx:
+    build: ./develop/yacs-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - core
+
+  core:
+    build: ./develop/yacs
+    environment:
+      - RAILS_ENV=development
+      - SECRET_KEY_BASE=6ae504547712ae4faf35b9d6186322cf
+      - SECRET_TOKEN=cc621dab5bb79f81057a7d17c8ceea42
+      - WEB_CONCURRENCY=1
+      - MAX_THREADS=2
+    ports:
+      - "4100:4100"
+
+  worker:
+    build: ./develop/yacs
+    environment:
+      - RAILS_ENV=development
+
+  web:
+    build: ./develop/yacs-web
+    ports:
+      - "4200:4200"
+
+  admin:
+    build: ./develop/yacs-admin
+    ports:
+      - "4300:4300"
+
+  users:
+    build: ./develop/yacs-users
+    ports:
+      - "4400:4400"

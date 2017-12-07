@@ -3,19 +3,16 @@ version: '3'
 services:
   postgres:
     image: postgres:9.5.6
-    restart: unless-stopped
     expose:
       - "5432"
 
   redis:
     image: redis
-    restart: unless-stopped
     expose:
       - "6379"
 
   nginx:
-    build: yacsrcos/yacs-nginx
-    restart: unless-stopped
+    image: yacsrcos/yacs-nginx
     ports:
       - "80:80"
       - "443:443"
@@ -25,8 +22,7 @@ services:
       - ./ssl:/etc/ssl/yacs
 
   core:
-    build: yacsrcos/yacs
-    restart: unless-stopped
+    image: yacsrcos/yacs
     environment:
       - RAILS_ENV=${RAILS_ENV}
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
@@ -43,8 +39,7 @@ services:
       - "4100"
 
   worker:
-    build: yacsrcos/yacs
-    restart: unless-stopped
+    image: yacsrcos/yacs
     environment:
       - RAILS_ENV=${RAILS_ENV}
     depends_on:
@@ -53,23 +48,20 @@ services:
     command: bundle exec crono
 
   web:
-    build: yacsrcos/yacs-web
-    restart: unless-stopped
+    image: yacsrcos/yacs-web
     depends_on:
       - core
     expose:
       - "4200"
 
   admin:
-    build: yacsrcos/yacs-admin
-    restart: unless-stopped
+    image: yacsrcos/yacs-admin
     depends_on: core
     expose:
       - "4300"
 
   users:
-    build: yacsrcos/yacs-users
-    restart: unless-stopped
+    image: yacsrcos/yacs-users
     depends_on:
       - postgres
       - redis
