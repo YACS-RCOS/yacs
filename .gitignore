@@ -2,3 +2,5 @@
 .env
 **/*.pem
 **/*.key
+develop/*
+!develop/.keep
