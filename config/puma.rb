@@ -10,8 +10,8 @@ rackup      DefaultRackup
 environment ENV['RAILS_ENV'] || 'development'
 
 ssl_bind '0.0.0.0', '3000', {
-    key: "/etc/puma/ssl/privkey.pem",
-    cert: "/etc/puma/ssl/cert.pem"
+    key: "/etc/ssl/yacs/privkey.pem",
+    cert: "/etc/ssl/yacs/cert.pem"
 }
 
 pidfile "/var/run/puma/puma.pid"
