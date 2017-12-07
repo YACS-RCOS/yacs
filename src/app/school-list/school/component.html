@@ -1,0 +1,4 @@
+<span class="school-name">{{school.name}}</span>
+<div class="departments dept-list">
+  <department *ngFor="let department of school.departments" [dept]="department" [routerLink]="['/courses']" [queryParams]="{ department_id: department.id }"></department>
+</div>

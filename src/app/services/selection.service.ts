@@ -1,13 +1,27 @@
 import { Injectable } from '@angular/core';
 
+import 'rxjs/Rx';
+import {Subject,Subscription, Subscriber} from 'rxjs/Rx';
+
 import { Section } from '../course-list/section/section';
 import { Course } from '../course-list/course/course';
 
 @Injectable()
 export class SelectionService {
 
+  private clickEvent = new Subject();
+
+  subscribe(next): Subscription {
+    return this.clickEvent.subscribe(next);
+  }
+  next(event){
+    this.clickEvent.next(event);
+  }
+
   public toggleSection(section : Section) {
+    
     this.isSectionSelected(section) ? this.removeSection(section) : this.addSection(section);
+    this.next('event'); //this should be changed
   }
 
   public addSection(section : Section) {
@@ -32,6 +46,7 @@ export class SelectionService {
   }
 
   public toggleCourse(course : Course) {
+    
     if (this.hasSelectedSection(course)) {
       let store = this.getSelections();
       delete store[course.id];
@@ -43,6 +58,7 @@ export class SelectionService {
         }
       });
     }
+    this.next('event');
   }
 
   public isSectionSelected(section : Section) : boolean {
@@ -57,5 +73,18 @@ export class SelectionService {
 
   public getSelections() {
     return JSON.parse(localStorage.getItem('selections'));
+  }
+  
+  public getSelectedSectionIds () {
+    const selections = this.getSelections();
+    const sectionIds = [];
+    Object.keys(selections).forEach((key) => {
+      sectionIds.push(...selections[key]);
+    });
+    return sectionIds;
+  }
+
+  public getSelectedCourseIds () {
+    return Object.keys(this.getSelections());
   }
 }

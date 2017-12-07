@@ -8,6 +8,5 @@ import { Section } from '../course-list/section/section';
     styleUrls: ['./component.scss']
 })
 export class CourseListComponent {
-
-  @Input() courses : Course[];
+  @Input() courses : Course[] = [];
 }
