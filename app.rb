@@ -4,7 +4,7 @@ require 'oj'
 require './banner_client'
 
 set :bind, '0.0.0.0'
-set :port, 4201
+set :port, 4600
 
 ENV['SEMESTER'] ||= '201801'
 
