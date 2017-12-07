@@ -1,19 +1,30 @@
 sudo: required
 
+language: ruby
+
+rvm:
+  - 2.2.3
+
 services:
-  - docker
   - npm
+  - postgresql
+  - redis
+
+addons:
+  hosts:
+    - postgres
+    - redis
 
 env:
   - RAILS_ENV=test
 
 install:
-  - bin/yacs-build
-  - bin/yacs-startd && docker ps
-  - sleep 10
-  - bin/yacs-dbsetup
   - npm install -g eslint
+  - bundle install
+  - sleep 10
+  - rake db:create
+  - rake db:test:prepare
 
 script:
-  - bin/yacs-test
+  - bundle exec rake
   - eslint app/assets/javascripts/ vendor/assets/javascripts/schedule --config config/eslint.json --max-warnings 12
