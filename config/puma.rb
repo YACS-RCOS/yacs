@@ -9,7 +9,7 @@ preload_app!
 rackup      DefaultRackup
 environment ENV['RAILS_ENV'] || 'development'
 
-ssl_bind '0.0.0.0', '3000', {
+ssl_bind '0.0.0.0', '4100', {
     key: "/etc/ssl/yacs/privkey.pem",
     cert: "/etc/ssl/yacs/cert.pem"
 }
