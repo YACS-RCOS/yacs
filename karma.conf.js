@@ -28,6 +28,7 @@ module.exports = function (config) {
       reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
+    noResolve: false,
     angularCli: {
       environment: 'dev'
     },
