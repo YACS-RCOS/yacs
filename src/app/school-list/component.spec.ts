@@ -36,27 +36,27 @@ describe("Testing SchoolListComponent", function() {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [ School ],
-      declarations: [ SchoolListComponent ]
+      declarations: [ SchoolListComponent, SchoolComponent, DepartmentComponent,
+        Stubs.RouterLinkStubDirective, Stubs.RouterOutletStubComponent,
+        Stubs.QueryParamsStubDirective ]
     }).compileComponents();
+
     fixture = TestBed.createComponent(SchoolListComponent);
     component = fixture.componentInstance;
 
-    de = fixture.debugElement.query(By.css('<span'));
-    element  = de.nativeElement;
-
-    // component.schools = mockSchools;
+    component.schools = mockSchools;
+    fixture.detectChanges();
   }));
 
-  // it("should have a component", function() {
-  //   expect(component).toBeTruthy();
-  // });
-  //
-  // it('should contain all schools', () => {
-  //  fixture.detectChanges();
-  //
-  //  for(var x of component.schools) {
-  //    expect(element.textContent).toContain(x.name);
-  //  }
-  // });
+  it("should have a component", function() {
+    expect(component).toBeTruthy();
+  });
+
+  it('should contain all schools', function() {
+   let de: DebugElement[] = fixture.debugElement.queryAll(By.css('school'));
+   for(var x of mockSchools) {
+     expect(de[x.id-1].nativeElement.textContent).toContain(x.name);
+   }
+  });
 
 });
