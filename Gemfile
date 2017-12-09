@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-ruby '2.2.3'
+ruby '2.4.2'
 
 gem 'puma', '2.16.0'
 
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.7.1'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -15,7 +15,6 @@ gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem 'rails-observers'
-gem 'redis-rails'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
@@ -35,6 +34,11 @@ gem 'newrelic_rpm'
 gem 'coveralls'
 
 gem 'redis'
+gem 'redis-rails'
+gem 'redis-store', '~> 1.4.0'
+
+gem 'rubyzip', '~> 1.2.1'
+
 
 group :development, :test do
   gem 'pry'
