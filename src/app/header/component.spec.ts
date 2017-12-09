@@ -17,32 +17,31 @@ let mockRouter:any;
         navigate = jasmine.createSpy('navigate');
     }
 
-// describe("Testing header component", function() {
-//   let component: HeaderComponent;
-//   let fixture: ComponentFixture<HeaderComponent>;
-//   let de: DebugElement;
-//   let element: HTMLElement;
-//
-//   beforeEach(async(() => {
-//     TestBed.configureTestingModule({
-//       imports: [ RouterTestingModule ],
-//        providers: [ { provide: Router, useValue: mockRouter }],
-//        declarations: [ HeaderComponent ]
-//     }).compileComponents();
-//
-//     fixture = TestBed.createComponent(HeaderComponent);
-//     component = fixture.componentInstance;
-//
-//     de = fixture.debugElement.query(By.css('nav'));
-//     element  = de.nativeElement;
-//   }));
-//
-//   it("should have a component", function() {
-//     expect(component).toBeDefined();
-//   });
-//
-//   it("should contain links", function() {
-//     expect(element.textContent).toContain("YACS beta");
-//     expect(element.textContent).toContain("Schedule");
-//   });
-// });
+describe("Testing header component", function() {
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
+  let de: DebugElement;
+  let element: HTMLElement;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+       providers: [ { provide: Router, useValue: mockRouter } ],
+       declarations: [ HeaderComponent, Stubs.RouterLinkStubDirective, Stubs.RouterOutletStubComponent ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(HeaderComponent);
+    component = fixture.componentInstance;
+
+    de = fixture.debugElement.query(By.css('nav'));
+    element  = de.nativeElement;
+  }));
+
+  it("should have a component", function() {
+    expect(component).toBeDefined();
+  });
+
+  it("should contain links", function() {
+    expect(element.textContent).toContain("YACS beta");
+    expect(element.textContent).toContain("Schedule");
+  });
+});
