@@ -3,7 +3,7 @@ sudo: required
 language: ruby
 
 rvm:
-  - 2.2.3
+  - 2.4.2
 
 services:
   - npm
@@ -24,10 +24,9 @@ env:
 install:
   - npm install -g eslint
   - bundle install
-  - sleep 10
-  - rake db:create
-  - rake db:test:prepare
+  - rails db:create
+  - rails db:test:prepare
 
 script:
-  - bundle exec rake
   - eslint app/assets/javascripts/ vendor/assets/javascripts/schedule --config config/eslint.json --max-warnings 12
+  - rails spec

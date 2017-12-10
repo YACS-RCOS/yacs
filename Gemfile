@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 ruby '2.4.2'
 
-gem 'puma', '2.16.0'
+gem 'puma', '3.11.0'
 
-gem 'rails', '4.2.7.1'
+gem 'rails', '5.1.4'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -38,7 +38,7 @@ gem 'redis-rails'
 gem 'redis-store', '~> 1.4.0'
 
 gem 'rubyzip', '~> 1.2.1'
-
+gem 'listen'
 
 group :development, :test do
   gem 'pry'
