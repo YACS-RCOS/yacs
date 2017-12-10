@@ -27,8 +27,8 @@ services:
   web:
     restart: unless-stopped
 
-  admin:
-    restart: unless-stopped
+  # admin:
+  #   restart: unless-stopped
 
   users:
     restart: unless-stopped

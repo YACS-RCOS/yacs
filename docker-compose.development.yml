@@ -40,10 +40,10 @@ services:
     ports:
       - "4200:4200"
 
-  admin:
-    build: ./develop/yacs-admin
-    ports:
-      - "4300:4300"
+  # admin:
+  #   build: ./develop/yacs-admin
+  #   ports:
+  #     - "4300:4300"
 
   users:
     build: ./develop/yacs-users

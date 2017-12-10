@@ -54,12 +54,12 @@ services:
     expose:
       - "4200"
 
-  admin:
-    image: yacsrcos/yacs-admin
-    depends_on:
-      - core
-    expose:
-      - "4300"
+  # admin:
+  #   image: yacsrcos/yacs-admin
+  #   depends_on:
+  #     - core
+  #   expose:
+  #     - "4300"
 
   users:
     image: yacsrcos/yacs-users
