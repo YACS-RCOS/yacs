@@ -89,4 +89,24 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.before :each do |example|
+    extend(FixLegacyTestRequests) # to be removed at some point!
+  end
+end
+
+# https://stackoverflow.com/questions/43412951/rspec-request-specs-and-rails-5
+module FixLegacyTestRequests
+  def get(path, par = {}, hdr = {})
+    process(:get, path, params: par, headers: hdr)
+  end
+  def post(path, par = {}, hdr = {})
+    process(:post, path, params: par, headers: hdr)
+  end
+  def put(path, par = {}, hdr = {})
+    process(:put, path, params: par, headers: hdr)
+  end
+  def delete(path, par = {}, hdr = {})
+    process(:delete, path, params: par, headers: hdr)
+  end
 end

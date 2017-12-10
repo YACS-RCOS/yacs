@@ -6,6 +6,7 @@ FactoryGirl.define do
   factory :department do
     sequence(:code) { |n| "DEPT#{n}" }
     sequence(:name) { |n| "Department #{n}" }
+    school
   end
 
   factory :course do

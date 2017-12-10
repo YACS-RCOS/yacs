@@ -91,8 +91,8 @@ describe 'Courses API' do
   end
 
   context 'There is a course to be updated' do
+    let(:course) { FactoryGirl.create(:course, max_credits: 4) }
     it 'updates the maximum number of credits for the course'do
-      course = FactoryGirl.create(:course, max_credits: 4)
       course_params={
         course: {
           max_credits: 7

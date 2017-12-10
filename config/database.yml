@@ -9,7 +9,7 @@ default: &default
   pool: 5
   timeout: 5000
   host: postgres
-  username: postgres
+  # username: postgres
 
 development:
   <<: *default
