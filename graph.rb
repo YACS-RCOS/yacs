@@ -40,14 +40,6 @@ class Graph
     update_from_source source if @initialized
   end
 
-  # def delete_flagged
-  #   @flagged_for_removal.each do |type, records|
-  #     records.each do |record|
-
-  #     end
-  #   end
-  # end
-
   private
 
   def next_uuid
@@ -127,10 +119,6 @@ class Graph
     record[child_type].each { |child| remove_record child, child_type } if record[child_type]
   end
 
-  # def undelete_record record, type
-
-  # end
-
   def find_matching_record record, type, collection
     return nil unless collection
     collection.detect do |collection_record|
@@ -177,20 +165,17 @@ class Graph
       record
     end
     if handle_delete
-      STDERR.puts "#{@graph[type].map{|d|d['code']}.join(' ')}\n#{records.map{|d|d['code']}.join(' ')}\n" if type == 'departments'
+      flag_as_extant records, type
       @extant_records[type].concat records
       @sweep_flags[type] = true
-      # (@graph[type] - records).each do |removed_record|
-      #   # STDERR.puts "DEBUG: Removed #{type} #{removed_record['uuid']} at source #{source.name}"
-      #   remove_record removed_record, type
-      # end
     end
     records
   end
 
-  # def flag_as_extant record, type
-  #   @extant_records[type] << record
-  # end
+  def flag_as_extant records, type
+    @extant_records[type].concat records
+    @sweep_flags[type] = true
+  end
 
   def sweep_extant_records
     @sweep_flags.each do |type, should_sweep|
@@ -207,26 +192,6 @@ class Graph
     @extant_records = empty_graph []
     @sweep_flags = empty_graph false
   end
-
-  # def record_exists? record, type
-
-  # end
-
-  # def children_for_record record, type
-  #   child_type = @schema.child_type_for type
-  #   record[child_type] || []
-  # end
-
-  # def handle_removed extant_records, type
-  #   (@graph[type] - extant_records).each do |removed_record|
-  #     set_removed removed_record
-  #   end
-  # end
-
-  # def set_removed record
-  #   record['removed'] = true
-  #   @sources[record['uuid']] = Priorities::FIXED
-  # end
 
   def print_status
     STDERR.puts "Status:"

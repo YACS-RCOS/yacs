@@ -14,9 +14,16 @@ class EventTransport
 
   def send_update record, type
     send_request({
-      method: :post,
+      method: :put,
       url: "#{API_BASE}/#{type}/#{record['uuid']}",
       payload: { type => record }
+    }, record, type)
+  end
+
+  def send_delete record, type
+    send_request({
+      method: :delete,
+      url: "#{API_BASE}/#{type}/#{record['uuid']}"
     }, record, type)
   end
 
