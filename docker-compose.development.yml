@@ -29,16 +29,22 @@ services:
       - MAX_THREADS=2
     ports:
       - "4100:4100"
+    volumes:
+      - ./develop/yacs:/usr/src/app
 
   worker:
     build: ./develop/yacs
     environment:
       - RAILS_ENV=development
+    volumes:
+      - ./develop/yacs:/usr/src/app
 
   web:
     build: ./develop/yacs-web
     ports:
       - "4200:4200"
+    volumes:
+      - "./develop/yacs-web/src:/usr/src/app/src"
 
   # admin:
   #   build: ./develop/yacs-admin
@@ -49,8 +55,20 @@ services:
     build: ./develop/yacs-users
     ports:
       - "4400:4400"
+    volumes:
+      - "./develop/yacs-users:/usr/src/app"
 
   malg:
     build: ./develop/yacs-malg
     ports:
       - "4500:4500"
+    volumes:
+      - "./develop/yacs-malg:/usr/src/app"
+
+  sidekiq:
+    build: "./develop/yacs-malg"
+    volumes:
+      - "./develop/yacs-malg:/usr/src/app"
+    links:
+      - core
+    command: "ash"
