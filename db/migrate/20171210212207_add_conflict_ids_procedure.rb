@@ -10,7 +10,7 @@ class AddConflictIdsProcedure < ActiveRecord::Migration[5.1]
         conflict_ids INTEGER[] := '{}';
         conflict_found BOOLEAN;
       BEGIN
-        SELECT * INTO this_section FROM sections where sections.id = section_id;
+        SELECT * INTO this_section FROM sections WHERE sections.id = section_id;
         FOR other_section IN SELECT * FROM sections WHERE sections.course_id != this_section.course_id
         LOOP
           conflict_found := 'false';
