@@ -25,7 +25,8 @@ install:
   - npm install -g eslint
   - bundle install
   - rails db:create
-  - rails db:migrate
+  - rails db:schema:load
+  - rails db:structure:load
   - rails db:test:prepare
 
 script:

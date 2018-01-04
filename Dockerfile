@@ -2,7 +2,7 @@ FROM ruby:2.4.2
 
 MAINTAINER Richie Young <richiejoeyoung@gmail.com>
 
-RUN apt-get update && apt-get install -qq -y build-essential nodejs wget --fix-missing --no-install-recommends
+RUN apt-get update && apt-get install -qq -y build-essential nodejs wget postgresql-client --fix-missing --no-install-recommends
 
 ENV PHANTOMJS_VERSION 2.1.14
 RUN \
