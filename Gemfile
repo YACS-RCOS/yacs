@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'responders', '~> 2.0'
 
 gem 'crono'
+gem 'httpclient'
 
 gem 'newrelic_rpm'
 
