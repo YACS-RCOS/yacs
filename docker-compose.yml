@@ -20,6 +20,7 @@ services:
       - core
     volumes:
       - ./ssl:/etc/ssl/yacs
+      - dist-web:/usr/src/app/dist-web
 
   core:
     image: yacsrcos/yacs
@@ -49,6 +50,8 @@ services:
 
   web:
     image: yacsrcos/yacs-web
+    volumes:
+      - dist-web:/usr/src/app/dist-web
     depends_on:
       - core
     expose:
@@ -69,9 +72,12 @@ services:
     expose:
       - "4400"
 
-  malg:
-    image: yacsrcos/yacs-malg
-    links:
-      - core
-    expose:
-      - "4500"
+  # malg:
+  #   image: yacsrcos/yacs-malg
+  #   links:
+  #     - core
+  #   expose:
+  #     - "4500"
+
+volumes:
+  dist-web:

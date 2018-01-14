@@ -1,30 +1,30 @@
 version: '3'
 
-services:
-  malg:
-    links:
-      - adapter-acalog
-      - adapter-banner
-      - adapter-yaml
-      - adapter-csv
+# services:
+#   malg:
+#     links:
+#       - adapter-acalog
+#       - adapter-banner
+#       - adapter-yaml
+#       - adapter-csv
 
-  adapter-acalog:
-    image: yacsrcos/adapter-acalog-rpi
-    restart: unless-stopped
-    expose:
-      - "4600"
-  adapter-banner:
-    image: yacsrcos/adapter-banner-rpi
-    restart: unless-stopped
-    expose:
-      - "4600"
-  adapter-yaml:
-    image: yacsrcos/adapter-yaml-rpi
-    restart: unless-stopped
-    expose:
-      - "4600"
-  adapter-csv:
-    image: yacsrcos/adapter-csv-rpi
-    restart: unless-stopped
-    expose:
-      - "4600"
+#   adapter-acalog:
+#     image: yacsrcos/adapter-acalog-rpi
+#     restart: unless-stopped
+#     expose:
+#       - "4600"
+#   adapter-banner:
+#     image: yacsrcos/adapter-banner-rpi
+#     restart: unless-stopped
+#     expose:
+#       - "4600"
+#   adapter-yaml:
+#     image: yacsrcos/adapter-yaml-rpi
+#     restart: unless-stopped
+#     expose:
+#       - "4600"
+#   adapter-csv:
+#     image: yacsrcos/adapter-csv-rpi
+#     restart: unless-stopped
+#     expose:
+#       - "4600"

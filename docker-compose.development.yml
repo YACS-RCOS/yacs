@@ -45,6 +45,7 @@ services:
       - "4200:4200"
     volumes:
       - "./develop/yacs-web/src:/usr/src/app/src"
+    command: "ng build --watch"
 
   # admin:
   #   build: ./develop/yacs-admin
@@ -58,12 +59,12 @@ services:
     volumes:
       - "./develop/yacs-users:/usr/src/app"
 
-  malg:
-    build: ./develop/yacs-malg
-    ports:
-      - "4500:4500"
-    volumes:
-      - "./develop/yacs-malg:/usr/src/app"
+  # malg:
+  #   build: ./develop/yacs-malg
+  #   ports:
+  #     - "4500:4500"
+  #   volumes:
+  #     - "./develop/yacs-malg:/usr/src/app"
 
   sidekiq:
     build: "./develop/yacs-malg"
@@ -71,4 +72,5 @@ services:
       - "./develop/yacs-malg:/usr/src/app"
     links:
       - core
+      - redis
     command: "ash"
