@@ -16,13 +16,12 @@ end
 describe 'Departments API' do
   context "there are schools with departments with courses" do
     before do
-      departments = FactoryGirl.create_list(:department, 5)
+      schools = FactoryGirl.create_list(:school, 2)
+      departments = FactoryGirl.create_list(:department, 2, school: schools[0])
+      departments.concat FactoryGirl.create_list(:department, 3, school: schools[1])
       courses = departments.map do |department|
         FactoryGirl.create_list(:course, 5, department: department)
       end.flatten
-      schools = FactoryGirl.create_list(:school, 2)
-      departments[0..1].each { |d| d.update_attributes!(school_id: schools[0].id) }
-      departments[2..4].each { |d| d.update_attributes!(school_id: schools[1].id) }
     end
 
     it '#index.json' do
@@ -60,59 +59,53 @@ describe 'Departments API' do
     end
   end
 
-    context 'There is a department to be created' do
-      it 'creates a department' do
-        department_params={
-          department: {
-            name: 'Information Technology and Web Science',
-            code: 'ITWS'
-          }
+  context 'There is a department to be created' do
+    it 'creates a department' do
+      school = FactoryGirl.create(:school)
+      department_params = {
+        department: {
+          name: 'Information Technology and Web Science',
+          code: 'ITWS',
+          school_id: school.id
         }
-        post "/api/v5/departments/", department_params
-        expect(response).to be_success
-        created_department=Department.find_by(code: 'ITWS')
-        expect(created_department).to be_present
-        json_validate_departments([created_department])
-      end
-
+      }
+      post "/api/v5/departments/", department_params
+      expect(response).to be_success
+      created_department = Department.find_by(code: 'ITWS')
+      expect(created_department).to be_present
+      json_validate_departments([created_department])
     end
-  
-    context 'There is a department to be updated' do
-     it 'updates the code for department' do
-       department = FactoryGirl.create(:department, code: 'XYZ')
-       department_params = {
-         department: {
-           code: 'other'
-         }
-       }
-       put "/api/v5/departments/#{department.id}", department_params
-       department.reload
-       expect(department.code).to eq 'other'
-       json_validate_departments([department])
-     end
-     it 'updates the name for department' do
-       department = FactoryGirl.create(:department, name: 'ITWS')
-       department_params = { 
-         department: {
-           name: 'other'
-         }
-       }
-       put "/api/v5/departments/#{department.id}", department_params
-       department.reload
-       expect(department.name).to eq 'other'    
-       json_validate_departments([department])
-     end
+  end
 
-     it 'deletes a department' do
-       department = FactoryGirl.create(:department)
-       delete "/api/v5/departments/#{department.id}"
-       expect(response.status).to eq 204
-     end
+  context 'There is a department to be updated' do
+    it 'updates the code for department' do
+      department = FactoryGirl.create(:department, code: 'XYZ')
+      department_params = { department: { code: 'other' } }
+      put "/api/v5/departments/#{department.id}", department_params
+      department.reload
+      expect(department.code).to eq 'other'
+      json_validate_departments([department])
+    end
 
-     it 'department id is not found for deletion' do
-       department = FactoryGirl.create(:department)
-       delete "/api/v5/departments/#{500000}"
-       expect(response.status).to eq 404
-     end
-   end
+    it 'updates the name for department' do
+      department_params = { department: { name: 'other' } }
+      department = FactoryGirl.create(:department, name: 'ITWS')
+      put "/api/v5/departments/#{department.id}", department_params
+      department.reload
+      expect(department.name).to eq 'other'    
+      json_validate_departments([department])
+    end
+
+    it 'deletes a department' do
+      department = FactoryGirl.create(:department, name: 'ITWS')
+      delete "/api/v5/departments/#{department.id}"
+      expect(response.status).to eq 204
+    end
+
+    it 'department id is not found for deletion' do
+      department = FactoryGirl.create(:department, name: 'ITWS')
+      delete "/api/v5/departments/#{500000}"
+      expect(response.status).to eq 404
+    end
+  end
 end
