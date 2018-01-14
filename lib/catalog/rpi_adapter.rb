@@ -1,4 +1,5 @@
-require 'open-uri'
+require 'httpclient'
+
 class Catalog::RpiAdapter < Catalog::AbstractAdapter
   public
   def load_catalog
@@ -26,7 +27,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
 
   def update_section_seats
     uri = "https://sis.rpi.edu/reg/rocs/YACS_#{sem_string}.xml"
-    sections = Nokogiri::XML(open(uri)).xpath("//CourseDB/SECTION")
+    sections = Nokogiri::XML(HTTPClient.new.get(uri).body).xpath("//CourseDB/SECTION")
     sections.each do |section_xml|
       section = Section.find_by_crn(section_xml.attr("crn"))
       if section
@@ -52,9 +53,10 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
   def load_courses
     errors = []
     uri = "https://sis.rpi.edu/reg/rocs/#{sem_string}.xml"
-    @courses_xml = Nokogiri::XML(open(uri)).xpath("//COURSE")
+    @courses_xml = Nokogiri::XML(HTTPClient.new.get(uri).body).xpath("//COURSE")
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
+      next unless dept
       course              = dept.courses.build
       course.name         = course_xml[:name].titleize
       course.number       = course_xml[:num]
@@ -97,7 +99,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
   def update_courses
     errors = []
     uri = "https://sis.rpi.edu/reg/rocs/#{sem_string}.xml"
-    @courses_xml = Nokogiri::XML(open(uri)).xpath("//COURSE")
+    @courses_xml = Nokogiri::XML(HTTPClient.new.get(uri).body).xpath("//COURSE")
     @courses_xml.each do |course_xml|
       dept = Department.where(code: course_xml[:dept])[0]
       course = dept.courses.find_by_number(course_xml[:num])
@@ -154,7 +156,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
     while page_no <= 19 do
       path = "content.php?catoid=16&navoid=390&filter%5Bcpage%5D=" + page_no.to_s
       page = base + path
-      page = Nokogiri::HTML(open(page))
+      page = Nokogiri::HTML(HTTPClient.new.get(page).body)
       page_no += 1
       rows = page.css('td.block_content table tr')
       rows[1..-2].each do |row|
@@ -166,7 +168,7 @@ class Catalog::RpiAdapter < Catalog::AbstractAdapter
           course_model = Course.where(number: course_title[1]).includes(:department).where(departments: {code: course_title[0]})[0]
           if course_model
             desc_path = base + href
-            desc_page = Nokogiri::HTML(open(desc_path))
+            desc_page = Nokogiri::HTML(HTTPClient.new.get(desc_path).body)
             desc_page.search('h1').remove
             desc = desc_page.css('td.block_content')
             course_description = desc.text
