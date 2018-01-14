@@ -81,7 +81,7 @@ export class SelectionService {
   }
 
   public getSelections() {
-    return JSON.parse(this.getItem('selections'));
+    return JSON.parse(this.getItem('selections')) || {};
   }
   
   public getSelectedSectionIds () {
