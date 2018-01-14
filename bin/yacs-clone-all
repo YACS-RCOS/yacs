@@ -12,3 +12,5 @@ for repo in $REPOS; do
   uri="git@github.com:YACS-RCOS/$repo.git"
   git clone $uri
 done
+
+cd yacs && git checkout micro
