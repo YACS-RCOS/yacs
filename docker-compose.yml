@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 services:
   postgres:
@@ -38,15 +38,19 @@ services:
     command: bundle exec puma -C config/puma.rb
     expose:
       - "4100"
-
-  worker:
+    extra_hosts:
+      - "kafka-server:138.197.2.46"
+   
+  core-consumer:
     image: yacsrcos/yacs
     environment:
       - RAILS_ENV
     depends_on:
       - postgres
       - redis
-    command: bundle exec crono
+      - kafka
+        #      - zookeeper
+    command: bundle exec karafka server
 
   web:
     image: yacsrcos/yacs-web
@@ -56,6 +60,7 @@ services:
       - core
     expose:
       - "4200"
+
 
   # admin:
   #   image: yacsrcos/yacs-admin
@@ -72,12 +77,45 @@ services:
     expose:
       - "4400"
 
-  # malg:
-  #   image: yacsrcos/yacs-malg
-  #   links:
-  #     - core
-  #   expose:
-  #     - "4500"
+  malg:
+    image: yacsrcos/yacs-malg
+    depends_on:
+      - kafka
+      - zookeeper
+      - redis
+    expose:
+      - "4500"
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:latest
+    # ports:
+    #  - target: 9094
+    #    published: 9094
+    #    protocol: tcp
+    #    mode: host
+    #ports:
+    #  - "9094:9094"
+    depends_on:
+      - zookeeper
+    expose:
+      - "9094"
+      - "9092"
+    hostname: kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: "kafka"      
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_PROTOCOL_NAME: OUTSIDE
+      KAFKA_ADVERTISED_PORT: 9094
+      KAFKA_PROTOCOL_NAME: INSIDE
+      KAFKA_PORT: 9092
+      #KAFKA_CREATE_TOPICS: "create:1:1,update:1:1,delete:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   dist-web:

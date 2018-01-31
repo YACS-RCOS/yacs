@@ -1,0 +1,8 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
+
+bin/yacs-compose-development run --rm core rails catalog:destroy
+bin/yacs-compose-development stop kafka zookeeper redis core-consumer
+bin/yacs-compose-development rm -vf kafka
+bin/yacs-compose-development rm -vf zookeeper
+bin/yacs-compose-development rm -vf redis
