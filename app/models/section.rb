@@ -53,4 +53,16 @@ class Section < ActiveRecord::Base
   def periods_changed?
     (self.changed & %w(periods_start periods_end periods_day periods_type)).any?
   end
+
+  def self.periods_hash_to_array periods
+    periods_array = { periods_day: [], periods_start: [], periods_end: [], periods_type: [] }
+    periods.each do |period|
+      periods_array[:periods_day]   << period[:day]
+      periods_array[:periods_start] << period[:start]
+      periods_array[:periods_end]   << period[:end]
+      periods_array[:periods_type]  << period[:type]
+    end
+    periods_array[:num_periods] = periods.count
+    periods_array
+  end
 end

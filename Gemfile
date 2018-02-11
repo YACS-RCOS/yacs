@@ -38,6 +38,8 @@ gem 'redis'
 gem 'redis-rails'
 gem 'redis-store', '~> 1.4.0'
 
+gem 'karafka'
+
 gem 'rubyzip', '~> 1.2.1'
 gem 'listen'
 
