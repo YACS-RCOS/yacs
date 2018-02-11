@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171210212207) do
+ActiveRecord::Schema.define(version: 20180123022622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(version: 20171210212207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description", default: ""
+    t.uuid "uuid", null: false
     t.index ["department_id", "number"], name: "index_courses_on_department_id_and_number", unique: true
     t.index ["name"], name: "index_courses_on_name"
+    t.index ["uuid"], name: "index_courses_on_uuid"
   end
 
   create_table "crono_jobs", id: :serial, force: :cascade do |t|
@@ -44,13 +46,17 @@ ActiveRecord::Schema.define(version: 20171210212207) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "school_id"
+    t.uuid "uuid", null: false
     t.index ["code"], name: "index_departments_on_code", unique: true
+    t.index ["uuid"], name: "index_departments_on_uuid"
   end
 
   create_table "schools", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "uuid", null: false
+    t.index ["uuid"], name: "index_schools_on_uuid"
   end
 
   create_table "sections", id: :serial, force: :cascade do |t|
@@ -68,8 +74,10 @@ ActiveRecord::Schema.define(version: 20171210212207) do
     t.string "periods_type", default: [], null: false, array: true
     t.string "instructors", default: [], null: false, array: true
     t.integer "conflicts", default: [], null: false, array: true
+    t.uuid "uuid", null: false
     t.index ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true
     t.index ["course_id"], name: "index_sections_on_course_id"
+    t.index ["uuid"], name: "index_sections_on_uuid"
   end
 
 end

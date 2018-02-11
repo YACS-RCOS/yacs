@@ -1,7 +1,7 @@
 class DestroyConsumer < ApplicationConsumer
 
   def consume
-    record = @type.constantize.find_by! uuid: @data[:uuid]
+    record = @type.capitalize.constantize.find_by! uuid: @data[:uuid]
     record.destroy!
   end
 end
