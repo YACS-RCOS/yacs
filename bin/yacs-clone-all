@@ -1,5 +1,6 @@
 #!/bin/bash
-cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../develop
+WORKDIR=$(cd -P -- "$(dirname -- "$0")" && pwd -P)/../develop
+cd $WORKDIR
 
 REPOS="yacs
 yacs-web
@@ -10,7 +11,12 @@ yacs-malg"
 
 for repo in $REPOS; do
   uri="git@github.com:YACS-RCOS/$repo.git"
-  git clone $uri
+  git clone --quiet $uri
 done
 
 cd yacs && git checkout micro
+
+for repo in $REPOS; do
+  cd $WORKDIR
+  cd $repo && git pull
+done
