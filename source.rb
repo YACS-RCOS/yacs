@@ -1,6 +1,8 @@
 require 'observer'
 require 'faraday'
 require 'oj'
+require 'active_support'
+require 'active_support/core_ext'
 
 class Source
   include Observable
@@ -10,8 +12,8 @@ class Source
     @name = name
     @location = location
     @polling_frequency = polling_frequency
-    @has_data = false
-    @data = nil
+    @data = read_state
+    @has_data = @data.present?
   end
 
   def start
@@ -41,6 +43,7 @@ class Source
       if data != @data
         changed
         @data = data
+        write_state
         notify_observers self
         @has_data = true
       end
@@ -54,5 +57,17 @@ class Source
 
   def handle_data new_data
     @data = data
+  end
+
+  def read_state
+    begin
+      Oj.load Redis.current.get("malg_state/source/#{@name}")
+    rescue
+      nil
+    end
+  end
+
+  def write_state
+    Redis.current.set "malg_state/source/#{@name}", @data.to_json
   end
 end

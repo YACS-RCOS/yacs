@@ -1,39 +1,14 @@
-require 'rest-client'
+require 'waterdrop'
+require 'active_support'
+require 'oj'
 
 class EventTransport
-  API_BASE = 'https://yacs.cs.rpi.edu/api/v5/'
-
-  def send_create record, type
-    send_request({
-      method: :post,
-      url: "#{API_BASE}/#{type}",
-      payload: { type => record }
-    }, record, type)
-  end
-
-
-  def send_update record, type
-    send_request({
-      method: :put,
-      url: "#{API_BASE}/#{type}/#{record['uuid']}",
-      payload: { type => record }
-    }, record, type)
-  end
-
-  def send_delete record, type
-    send_request({
-      method: :delete,
-      url: "#{API_BASE}/#{type}/#{record['uuid']}"
-    }, record, type)
-  end
-
-  private
-
-  def send_request request, record, type
-    begin
-      RestClient::Request.execute request
-    rescue RestClient::ExceptionWithResponse => e
-      STDERR.puts "ERROR: Failed to send #{request[:method]} for #{type} #{record['uuid']}. Response: #{e.response}"
+  class << self
+    %i(create update delete).each do |method|
+       define_method "send_#{method}" do |record, type|
+         type = ActiveSupport::Inflector.singularize type
+         WaterDrop::SyncProducer.call(Oj.dump({ 'type' => type, type => record, 'method' => method.to_s }), topic: 'full_transport') 
+      end
     end
   end
 end

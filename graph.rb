@@ -1,5 +1,10 @@
+require 'oj'
+require 'redis'
+require 'thread'
 require 'securerandom'
 require 'active_support'
+require 'active_support/core_ext'
+require_relative 'event_transport'
 
 class Graph
   attr_reader :graph
@@ -9,8 +14,9 @@ class Graph
     @schema = schema
     @graph = empty_graph []
     @sources = {}
-    @initialized = false
+    @state = :uninitialized
     @unresolvable = []
+    @semaphore = Mutex.new
   end
 
   def update_from_source source
@@ -22,22 +28,48 @@ class Graph
     type = source.data.first[0]
     handle_collection source.data[type], type, source, nil
     sweep_extant_records
+    write_state
+  end
+
+  def load
+    raise "ERROR: Cannot load an initialized Graph" if @state != :uninitialized
+    @state = :initializing
+    @semaphore.synchronize do
+      state = read_state
+      if state
+        @graph = state['graph']
+        @sources = state['sources']
+        @state = :initialized
+        true
+      else
+        STDERR.puts 'WARNING: Unable to read state'
+        @state = :uninitialized
+        false
+      end
+    end
   end
 
   def build sources
-    until can_build_graph? sources
-      STDERR.puts 'WARNING: Missing existence sources. Cannot build graph. Will try again...'
-      sleep 5
+    raise "ERROR: Cannot build an initialized Graph" if @state != :uninitialized
+    @state = :initializing
+    @semaphore.synchronize do
+      until can_build_graph? sources
+        STDERR.puts 'WARNING: Missing existence sources. Cannot build graph. Will try again...'
+        sleep 5
+      end
+      order_by_existence_hierarchy sources
+      sources.each { |source| update_from_source source }
+      @state = :initialized
+      print_status
     end
-    order_by_existence_hierarchy sources
-    sources.each { |source| update_from_source source }
-    @initialized = true
-    print_status
   end
 
   def update source
-    STDERR.puts "DEBUG: Update from source #{source.name}"
-    update_from_source source if @initialized
+    return if @state == :uninitialized
+    @semaphore.synchronize do
+      STDERR.puts "DEBUG: Update from source #{source.name}"
+      update_from_source source
+    end
   end
 
   private
@@ -70,14 +102,14 @@ class Graph
 
       existence_index = sources.index { |source| source.name == existence_source }
       unless existence_index
-        throw "ERROR: Existence source #{existence_source} missing for type #{type}"
+        raise "ERROR: Existence source #{existence_source} missing for type #{type}"
       end
       sources.unshift sources.delete_at(existence_index)
     end
   end
 
   def add_record record, type, source, parent
-    throw 'Nil Parent Error' if parent == nil && @schema.parent_type_for(type)
+    raise 'Nil Parent Error' if parent == nil && @schema.parent_type_for(type)
     new_record = record.except @schema.child_type_for type
     new_record['uuid'] = next_uuid
     @sources[new_record['uuid']] = new_record.transform_values { |v| source }
@@ -90,7 +122,7 @@ class Graph
       new_record[parent_uuid_field] = parent['uuid']
       @sources[new_record['uuid']][parent_uuid_field] = Priorities::FIXED
     end
-    # EventTransport.send_create(new_record, type)
+    EventTransport.send_create(new_record, type)
     new_record
   end
 
@@ -102,19 +134,19 @@ class Graph
       if p1 <= p2
         @sources[old_record['uuid']][k] = new_source
         if old_record[k] != v
-          STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{old_source} -> #{new_source}" if @initialized
+          #STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{old_source} -> #{new_source}" if @initialized
           old_record[k] = v
         end
       end
     end
-    # EventTransport.send_update(old_record, type) unless old_record['removed']
+    EventTransport.send_update(old_record, type) unless old_record['removed']
     old_record
   end
 
   def remove_record record, type
     @graph[type].delete record
     child_type = @schema.child_type_for type
-    # EventTransport.send_delete(record, type)
+    EventTransport.send_delete(record, type)
     STDERR.puts "DEBUG: Removed #{type} #{record['uuid']}"
     record[child_type].each { |child| remove_record child, child_type } if record[child_type]
   end
@@ -140,7 +172,7 @@ class Graph
       if old_record
         return ammend_record old_record, record, type, source.name
       elsif type == 'schools'
-        return add_record record, type, source, nil
+        return add_record record, type, source.name, nil
       else
         # TODO: Throw error if it's the existence source and debug otherwise
         # STDERR.puts "WARNING: Unresolvable #{type} #{record} from source #{source.name}"
@@ -200,5 +232,28 @@ class Graph
     end
     STDERR.puts "Failed to resolve #{@unresolvable.count} records:"
     # STDERR.puts @unresolvable
+  end
+
+  def read_state
+    begin
+      # binding.pry
+      raw_state = Redis.current.get 'malg_state'
+      state = Oj.load raw_state
+
+      raise 'Invalid state error' unless state.present? \
+        && state['sources'].present? && state['sources'].is_a?(Hash) \
+        && state['graph'].present? && state['graph'].is_a?(Hash) \
+        && @schema.type_names.all? do |type|
+          state['graph'][type] && state['graph'][type].is_a?(Array)
+        end
+      state
+    rescue
+      nil
+    end
+  end
+
+  def write_state
+    # binding.pry
+    Redis.current.set 'malg_state', { graph: @graph, sources: @sources }.to_json
   end
 end
