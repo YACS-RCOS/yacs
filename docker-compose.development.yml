@@ -66,13 +66,32 @@ services:
     volumes:
       - "./develop/yacs-malg:/usr/src/app"
 
-  kafka-manager:
-    image: sheepkiller/kafka-manager:latest
+#  kafka-manager:
+#    image: sheepkiller/kafka-manager:latest
+#    ports:
+#      - "9000:9000"
+#    links:
+#      - zookeeper
+#      - kafka
+#    environment:
+#      ZK_HOSTS: zookeeper:2181
+#      KM_ARGS: -Djava.net.preferIPv4Stack=true
+
+
+  # Planner Stuff!
+  planner-web:
+    build: ./develop/yacs-prereq-web
+    depends_on:
+      - planner-data
     ports:
-      - "9000:9000"
-    links:
-      - zookeeper
-      - kafka
-    environment:
-      ZK_HOSTS: zookeeper:2181
-      KM_ARGS: -Djava.net.preferIPv4Stack=true
+      - "4700:4200"
+    volumes:
+      - ./develop/yacs-prereq-web/src:/usr/src/app/src
+    command: "ng serve --host 0.0.0.0 --disable-host-check"
+
+  planner-data:
+    build: ./develop/yacs-prereq-data
+    ports:
+      - "4600:3100"
+    expose:
+      - "3100"
