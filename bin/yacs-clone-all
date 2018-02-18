@@ -7,14 +7,17 @@ yacs-web
 yacs-admin
 yacs-users
 yacs-nginx
-yacs-malg"
+yacs-malg
+yacs-prereq-web
+yacs-prereq-data"
 
 for repo in $REPOS; do
   uri="git@github.com:YACS-RCOS/$repo.git"
-  git clone --quiet $uri
+  git clone $uri
 done
 
-cd yacs && git checkout micro
+cd $WORKDIR && cd yacs && git checkout micro
+cd $WORKDIR && cd yacs-prereq-data && git checkout rails
 
 for repo in $REPOS; do
   cd $WORKDIR
