@@ -44,8 +44,8 @@ class Source
         changed
         @data = data
         write_state
-        notify_observers self
         @has_data = true
+        notify_observers self
       end
     rescue Exception => msg
       STDERR.puts msg

@@ -25,10 +25,13 @@ graph = Graph.new priorities, schema
 
 source_manager = SourceManager.new config_file
 source_manager.register_all graph
+
+should_build = !graph.load
+
 source_manager.start_all
 source_manager.start_watcher
 
-graph.build source_manager.sources unless graph.load
+graph.build source_manager.sources if should_build
 
 set :bind, '0.0.0.0'
 set :port, 4500

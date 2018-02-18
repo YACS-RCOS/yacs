@@ -127,6 +127,7 @@ class Graph
   end
 
   def ammend_record old_record, new_record, type, new_source
+    record_changed = false
     new_record.except(@schema.child_type_for type).each do |k, v|
       old_source = @sources[old_record['uuid']][k]
       p1 = @priorities.get type, k, new_source
@@ -136,10 +137,13 @@ class Graph
         if old_record[k] != v
           #STDERR.puts "DEBUG: Updated field #{k} of #{type} #{old_record['uuid']} | Value: #{old_record[k]} -> #{v} | Source: #{old_source} -> #{new_source}" if @initialized
           old_record[k] = v
+          record_changed = true
         end
       end
     end
-    EventTransport.send_update(old_record, type) unless old_record['removed']
+    if record_changed && !old_record['removed']
+      EventTransport.send_update(old_record, type)
+    end
     old_record
   end
 
@@ -164,7 +168,7 @@ class Graph
       old_record = find_matching_record record, type, parent[type]
       if old_record
         return ammend_record old_record, record, type, source.name
-      else
+      elsif @priorities.existence_source_for_type(type) == source.name
         return add_record record, type, source.name, parent
       end
     else
