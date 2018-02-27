@@ -1,6 +1,6 @@
 .school-name {
     display:block;
-    /*width:600px;*/
+    width:600px;
     margin-right:10px;
     font-size:21px;
     font-style:italic;
@@ -18,11 +18,11 @@ department {
     display:block;
     cursor:pointer;
     padding:2px 5px;
-    /*width:5;*/
+    width:5;
 }
 department:hover {
-/*    color: #fff;
-    background-color: #933;*/
-    color: white;
-    background-color: #c65353;
+    color: #fff;
+    background-color: #933;
+    /*color: white;
+    background-color: #c65353;*/
 }
