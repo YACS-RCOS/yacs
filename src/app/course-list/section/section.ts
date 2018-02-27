@@ -1,5 +1,4 @@
 import { Period } from './period';
-import { Location } from './location';
 
 export class Section {
   id: number;
@@ -15,5 +14,4 @@ export class Section {
   course_name: string;
   course_number: number;
   department_code: string;
-  locations: Location[];
 }
