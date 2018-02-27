@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 
 import { Section } from './section';
 import { Period } from './period';
+import { Location } from './location';
 import { ConflictsService } from '../../services/conflicts.service';
 
-const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sam'];
+const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 @Component({
   selector: 'section',
