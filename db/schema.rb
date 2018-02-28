@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180123022622) do
+ActiveRecord::Schema.define(version: 20180228222337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20180123022622) do
     t.string "instructors", default: [], null: false, array: true
     t.integer "conflicts", default: [], null: false, array: true
     t.uuid "uuid", null: false
+    t.string "periods_location", default: [], array: true
     t.index ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true
     t.index ["course_id"], name: "index_sections_on_course_id"
     t.index ["uuid"], name: "index_sections_on_uuid"
