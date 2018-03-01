@@ -39,7 +39,21 @@ Yacs.views.courses = function (target, params) {
         }), cid);
       }
     });
+
+    /*
+     * Click on a course description to expand its full text.
+     */
+    Yacs.on('click', target.querySelectorAll('course-description'), function(description, event) {
+      // target is the clicked course-description DOM element
+      // only add to class list and stop propagation when the description isn't already expanded
+      if(! event.target.classList.contains('expanded')) {
+        event.target.classList.add('expanded');
+        // don't bubble up, otherwise it will select/deselect the sections of this course
+        event.stopPropagation();
+      }
+    });
   };
+
 
   /**
    * Given the data returned from the API, populate the conflicts cache with

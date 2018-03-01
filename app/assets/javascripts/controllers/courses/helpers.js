@@ -19,7 +19,7 @@ Handlebars.registerHelper('course_credits', function (c) {
 
 Handlebars.registerHelper('formatted_description', function (description) {
   if (description === '') {
-    return new Handlebars.SafeString('Description not available...');
+    return new Handlebars.SafeString('Description not available.');
   }
   return new Handlebars.SafeString(description);
 });
