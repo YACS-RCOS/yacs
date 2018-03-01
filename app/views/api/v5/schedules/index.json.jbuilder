@@ -9,6 +9,7 @@ json.schedules @schedules do |schedule|
           json.day section.periods_day[i]
           json.start section.periods_start[i]
           json.end section.periods_end[i]
+          json.location section.periods_location[i]
           i += 1
         end
       end
