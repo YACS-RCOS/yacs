@@ -88,7 +88,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
             startTime: this.toMinutes(period.start),
             endTime:   this.toMinutes(period.end),
             title:     `${section.department_code} ${section.course_number} - ${section.name}`,
-            location: 'SAGE 3510'
+            location:  period.location
           } as ScheduleEvent;
           scheduleEvents.push(event);
         }
