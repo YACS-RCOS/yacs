@@ -37,3 +37,4 @@
 /data/**/
 
 .env
+errors.txt
