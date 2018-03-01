@@ -40,3 +40,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# todo: check this in when the build can handle it
+package-lock.json
