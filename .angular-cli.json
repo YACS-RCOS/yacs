@@ -19,12 +19,13 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss",
+        "./assets/styles/bootstrap.min.css",
         "./assets/styles/open_sans_300.css",
         "./assets/styles/open_sans_400.css",
         "./assets/styles/open_sans_600.css",
         "./assets/styles/open_sans_700.css",
-        "./assets/styles/open_sans_800.css"
+        "./assets/styles/open_sans_800.css",
+        "styles.scss"
       ],
       "scripts": [
       ],

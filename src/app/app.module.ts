@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRouterModule } from './app-router/module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/component';
@@ -24,6 +25,7 @@ import { AboutComponent } from './about/component';
     FormsModule,
     HttpModule,
     AppRouterModule,
+    NgbModule.forRoot(),
     SchoolViewModule,
     CourseViewModule,
     ScheduleViewModule
