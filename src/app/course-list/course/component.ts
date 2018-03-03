@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Course } from './course';
 import { Section } from '../section/section';
-import { SelectionService } from '../../services/selection.service'
+import { SelectionService } from '../../services/selection.service';
 import { ConflictsService } from '../../services/conflicts.service';
 
 @Component({
