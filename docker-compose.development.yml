@@ -79,19 +79,19 @@ services:
 
 
   # Planner Stuff!
-  planner-web:
-    build: ./develop/yacs-prereq-web
-    depends_on:
-      - planner-data
-    ports:
-      - "4700:4200"
-    volumes:
-      - ./develop/yacs-prereq-web/src:/usr/src/app/src
-    command: "ng serve --host 0.0.0.0 --disable-host-check"
+#  planner-web:
+#    build: ./develop/yacs-prereq-web
+#    depends_on:
+#      - planner-data
+#    ports:
+#      - "4700:4200"
+#    volumes:
+#      - ./develop/yacs-prereq-web/src:/usr/src/app/src
+#    command: "ng serve --host 0.0.0.0 --disable-host-check"
 
-  planner-data:
-    build: ./develop/yacs-prereq-data
-    ports:
-      - "4600:3100"
-    expose:
-      - "3100"
+#  planner-data:
+#    build: ./develop/yacs-prereq-data
+#    ports:
+#      - "4600:3100"
+#    expose:
+#      - "3100"
