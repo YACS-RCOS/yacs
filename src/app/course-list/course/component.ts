@@ -34,6 +34,16 @@ export class CourseComponent {
     return outstr;
   }
 
+  // TODO: This should just return course.department_code.
+  // That field needs to be added to the API
+  public subjectCode() {
+    if (this.course.sections && this.course.sections[0]) {
+      return this.course.sections[0].department_code;
+    } else {
+      return "";
+    }
+  }
+
   public clickCourse(course : Course) {
     this.selectionService.toggleCourse(course);
   }
