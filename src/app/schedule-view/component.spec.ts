@@ -8,7 +8,7 @@ import { By } from '@angular/platform-browser';
 import * as Stubs from '../../lib/router-stubs';
 
 import { ScheduleViewComponent } from './component';
-import { Schedule } from './schedule/schedule';
+import { Schedule } from '../models/schedule.model';
 import { ScheduleViewModule } from './module';
 import { ConstantsService } from '../services/constants';
 import { YacsService } from '../services/yacs.service';
