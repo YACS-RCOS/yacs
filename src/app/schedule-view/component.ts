@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { YacsService } from '../services/yacs.service';
-import { Course } from '../course-list/course/course';
-import { Section } from '../course-list/section/section';
-import { Schedule} from './schedule/schedule';
-import { ScheduleEvent } from './schedule-event/schedule-event';
+import { Course } from '../models/course.model';
+import { Section } from '../models/section.model';
+import { Schedule} from '../models/schedule.model';
+import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';

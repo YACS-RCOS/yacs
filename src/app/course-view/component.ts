@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Course } from '../course-list/course/course';
+import { Course } from '../models/course.model';
 import { YacsService } from '../services/yacs.service';
 
 import { ConflictsService } from '../services/conflicts.service';

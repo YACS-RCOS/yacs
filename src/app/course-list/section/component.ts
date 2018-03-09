@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { Section } from './section';
-import { Period } from './period';
+import { Section } from '../../models/section.model';
+import { Period } from '../../models/period.model';
 import { ConflictsService } from '../../services/conflicts.service';
 
 const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

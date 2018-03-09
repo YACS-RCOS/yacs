@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Course } from '../course-list/course/course';
-import { Section } from '../course-list/section/section';
+import { Course } from '../models/course.model';
+import { Section } from '../models/section.model';
 
 @Component({
     selector: 'course-list',

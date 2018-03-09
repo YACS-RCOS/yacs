@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Department } from './department'
+import { Department } from '../../models/department.model'
 
 @Component({
     selector: 'department',
