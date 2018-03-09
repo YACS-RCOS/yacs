@@ -5,7 +5,7 @@ class ApplicationConsumer < Karafka::BaseController
     school: %i(name uuid),
     department: %i(name code uuid school_uuid),
     course: %i(name number description min_credits max_credits uuid department_uuid),
-    section: %i(name crn seats seats_taken uuid course_uuid) << { periods: %i(day start end type) }
+    section: %i(name crn seats seats_taken uuid course_uuid) << { periods: %i(day start end type location) }
   }.with_indifferent_access.freeze
 
   include Karafka::Controllers::Callbacks

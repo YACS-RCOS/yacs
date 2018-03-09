@@ -45,22 +45,23 @@ class Section < ActiveRecord::Base
   end
 
   def sort_periods
-    periods_info = periods_day.zip periods_start, periods_end, periods_type
+    periods_info = periods_day.zip periods_start, periods_end, periods_type, periods_location
     periods_info = periods_info.sort!.transpose
-    self.periods_day, self.periods_start, self.periods_end, self.periods_type = periods_info
+    self.periods_day, self.periods_start, self.periods_end, self.periods_type, self.periods_location = periods_info 
   end
 
   def periods_changed?
-    (self.changed & %w(periods_start periods_end periods_day periods_type)).any?
+    (self.changed & %w(periods_start periods_end periods_day periods_type periods_location)).any?
   end
 
   def self.periods_hash_to_array periods
-    periods_array = { periods_day: [], periods_start: [], periods_end: [], periods_type: [] }
+    periods_array = { periods_day: [], periods_start: [], periods_end: [], periods_type: [], periods_location: [] }
     periods.each do |period|
-      periods_array[:periods_day]   << period[:day]
-      periods_array[:periods_start] << period[:start]
-      periods_array[:periods_end]   << period[:end]
-      periods_array[:periods_type]  << period[:type]
+      periods_array[:periods_day]      << period[:day]
+      periods_array[:periods_start]    << period[:start]
+      periods_array[:periods_end]      << period[:end]
+      periods_array[:periods_type]     << period[:type]
+      periods_array[:periods_location] << period[:location]
     end
     periods_array[:num_periods] = periods.count
     periods_array
