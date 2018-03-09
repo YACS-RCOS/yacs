@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as Stubs from '../../lib/router-stubs';
 
 import { CourseViewModule } from './module';
-import { Course } from '../course-list/course/course';
+import { Course } from '../models/course.model';
 import { CourseViewComponent } from './component';
 import { ConflictsService } from '../services/conflicts.service';
 import { YacsService } from '../services/yacs.service';

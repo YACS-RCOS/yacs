@@ -5,8 +5,8 @@ import { TestBed, fakeAsync, tick, ComponentFixture, async } from '@angular/core
 import { Component, OnInit, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { Period } from './period';
-import { Section } from './section';
+import { Period } from '../../models/period.model';
+import { Section } from '../../models/section.model';
 import { SectionComponent } from './component';
 import { ConflictsService } from '../../services/conflicts.service';
 
