@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 import {Subject,Subscription, Subscriber} from 'rxjs/Rx';
 
-import { Section } from '../course-list/section/section';
-import { Course } from '../course-list/course/course';
+import { Section } from '../models/section.model';
+import { Course } from '../models/course.model';
 
 @Injectable()
 export class SelectionService {

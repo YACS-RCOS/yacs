@@ -7,9 +7,9 @@ import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 import { CourseComponent } from './component';
-import { Section } from '../section/section';
-import { Period } from '../section/period';
-import { Course } from './course';
+import { Section } from '../../models/section.model';
+import { Period } from '../../models/period.model';
+import { Course } from '../../models/course.model';
 import { SectionComponent } from '../section/component';
 
 import { SelectionService } from '../../services/selection.service';

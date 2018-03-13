@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Course } from './course';
-import { Section } from '../section/section';
+import { Course } from '../../models/course.model';
+import { Section } from '../../models/section.model';
 import { SelectionService } from '../../services/selection.service'
 import { ConflictsService } from '../../services/conflicts.service';
 

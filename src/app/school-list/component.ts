@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { School } from './school/school';
+import { School } from '../models/school.model';
 
 @Component({
   selector: 'school-list',

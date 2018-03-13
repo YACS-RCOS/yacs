@@ -18,7 +18,7 @@ import { SchoolListModule } from './module';
 import { DepartmentComponent } from './department/component';
 import { SchoolComponent } from './school/component';
 
-import { School } from './school/school'
+import { School } from '../models/school.model'
 
 let mockSchools: School[] = [
   {"id":1,"name":"School of Humanities, Arts and Social Sciences", "departments":null},

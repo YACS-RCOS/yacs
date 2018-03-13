@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { School } from './school';
+import { School } from '../../models/school.model';
 
 @Component({
   selector: 'school',
