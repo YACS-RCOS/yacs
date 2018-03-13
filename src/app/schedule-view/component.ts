@@ -92,7 +92,12 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
           } as ScheduleEvent;
           scheduleEvents.push(event);
         }
-        ++color;
+        if (color == 6){
+          color = 0;
+        }
+        else{
+          ++color;
+        }
       }
       allScheduleEvents.push(scheduleEvents);
       allStatusTexts.push(`CRNs: ${crns.join(',')}`);
