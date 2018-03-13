@@ -15,9 +15,9 @@ export class Schedule {
   dayNums: number[];
   hourNums: number[];
 
-  colors: string[];
-  text_colors: string[];
-  border_colors: string[];
+  static colors = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
+  static text_colors = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
+  static border_colors = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
   percents: number[];
   statusText: string;
   
@@ -43,9 +43,6 @@ export class Schedule {
     this.height = 600;
 
     
-    this.colors = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
-    this.text_colors = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
-    this.border_colors = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
     this.percents = [480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140];
 
     this.dayNums = [];
@@ -69,6 +66,4 @@ export class Schedule {
     return this.latestEnd - this.earliestStart;
   }
   /* Return the percentage width of a day. */
-  
-
 }
