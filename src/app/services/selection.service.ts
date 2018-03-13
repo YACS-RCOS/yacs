@@ -96,4 +96,13 @@ export class SelectionService {
   public getSelectedCourseIds () {
     return Object.keys(this.getSelections());
   }
+
+  public clear (courses : Course[]) { 
+    for (let i in courses) {
+      for (let j in courses[i].sections){
+        this.removeSection(courses[i].sections[j]);
+      }
+    }
+    this.next('event');
+  }
 }
