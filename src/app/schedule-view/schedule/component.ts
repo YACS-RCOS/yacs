@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ConstantsService } from '../../services/constants';
-import { ScheduleEvent } from '../schedule-event/schedule-event';
-import { Schedule } from './schedule';
-import { Section } from '../../course-list/section/section';
+import { ScheduleEvent } from '../../models/schedule-event.model';
+import { Schedule } from '../../models/schedule.model';
+import { Section } from '../../models/section.model';
 import { SelectionService } from '../../services/selection.service'
 
 @Component({

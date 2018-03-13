@@ -1,4 +1,4 @@
-import { Section } from '../section/section';
+import { Section } from './section.model';
 
 export class Course {
   id: number;

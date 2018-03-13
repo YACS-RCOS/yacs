@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { School } from '../school-list/school/school';
+import { School } from '../models/school.model';
 import { YacsService } from '../services/yacs.service';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Period } from './period';
+import { Period } from './period.model';
 
 export class Section {
   id: number;

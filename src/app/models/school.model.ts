@@ -1,4 +1,4 @@
-import { Department } from '../department/department';
+import { Department } from './department.model';
 
 export class School {
   id: number;

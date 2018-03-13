@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ScheduleEvent } from './schedule-event';
+import { ScheduleEvent } from '../../models/schedule-event.model';
 
 @Component({
   selector: 'schedule-event',

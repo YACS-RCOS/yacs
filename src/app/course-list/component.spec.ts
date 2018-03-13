@@ -10,9 +10,9 @@ import * as Stubs from '../../lib/router-stubs';
 
 import { CourseListModule } from './module';
 import { CourseListComponent } from './component';
-import { Section } from './section/section';
-import { Period } from './section/period';
-import { Course } from './course/course';
+import { Section } from '../models/section.model';
+import { Period } from '../models/period.model';
+import { Course } from '../models/course.model';
 
 import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
