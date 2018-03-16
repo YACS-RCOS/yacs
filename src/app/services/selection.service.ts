@@ -96,4 +96,10 @@ export class SelectionService {
   public getSelectedCourseIds () {
     return Object.keys(this.getSelections());
   }
+
+  public clear () { 
+    let store = {};
+    this.setItem('selections', JSON.stringify(store));
+    this.next('event');
+  }
 }

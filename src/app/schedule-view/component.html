@@ -7,7 +7,7 @@
         <span class="schedule-index">{{scheduleIndex + 1}} / {{schedules.length}}</span>
         <span class="schedule-switch" (click) = "nextSchedule()">&#9654;</span>
       </div>
-      <button class="schedule-button" [disabled]="isTemporary">Clear</button>
+      <button class="schedule-button" (click) = "clear()">Clear</button>
       <button class="schedule-button">Download ICS</button>
       <button class="schedule-button" [disabled]="isTemporary">Copy Schedule Link</button>
     </div>
