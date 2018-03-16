@@ -88,7 +88,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
             startTime: this.toMinutes(period.start),
             endTime:   this.toMinutes(period.end),
             title:     `${section.department_code} ${section.course_number} - ${section.name}`,
-            location:  period.location
+            location: period.location
           } as ScheduleEvent;
           scheduleEvents.push(event);
         }
@@ -140,5 +140,9 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
       return "";
     }
     return this.schedules[this.scheduleIndex].statusText;
+  }
+
+  public clear (): void {
+    this.selectionService.clear();
   }
 }
