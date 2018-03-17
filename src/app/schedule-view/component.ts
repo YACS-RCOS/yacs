@@ -92,7 +92,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
           } as ScheduleEvent;
           scheduleEvents.push(event);
         }
-        if (color >= Schedule.colors.length){
+        if (color >= Schedule.COLORS.length){
           color = 0;
         }
         else{
