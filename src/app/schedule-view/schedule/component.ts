@@ -66,5 +66,17 @@ export class ScheduleComponent {
     return (this.schedule.height  * (eventDuration / this.schedule.getTimeSpan));
   }
 
+  public getBackgroundColor(color: number){
+    return Schedule.COLORS[color];
+  }
+
+  public getBorderColor(color: number){
+    return Schedule.BORDER_COLORS[color];
+  }
+
+  public getTextColor(color: number){
+    return Schedule.TEXT_COLORS[color];
+  }
+
 
 }
