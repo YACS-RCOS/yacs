@@ -8,6 +8,19 @@
         <span class="schedule-switch" (click) = "nextSchedule()">&#9654;</span>
       </div>
       <button class="schedule-button" (click) = "clear()">Clear</button>
+      <div ngbDropdown class="d-inline-block">
+          <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
+            Export as ...
+          </button>
+          <div ngbDropdownMenu>
+              <button class="schedule-button dropdown-item" (click) = "downloadImage()">Image</button>
+          </div>
+      </div>
+      <!-- <button class="schedule-button" (click) = "showExport()">Export as ...</button> -->
+      <!-- <button *ngIf="isExporting" class="schedule-button" [disabled]="!isExporting" (click) = "downloadImage()">Image</button> -->
+      <!-- <button *ngIf="isExporting" class="schedule-button" [disabled]="!isExporting">iCalendar</button>
+      <button *ngIf="isExporting" class="schedule-button" [disabled]="!isExporting">Link</button>
+      <button *ngIf="isExporting" class="schedule-button" [disabled]="!isExporting">Facebook Post</button> -->
       <button class="schedule-button">Download ICS</button>
       <button class="schedule-button" [disabled]="isTemporary">Copy Schedule Link</button>
     </div>

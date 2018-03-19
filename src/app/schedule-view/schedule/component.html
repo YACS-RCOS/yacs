@@ -1,4 +1,4 @@
-<div class="schedule" [style.height.px] = "schedule.height">
+<div class="schedule" [style.height.px] = "schedule.height" id="schedule-container">
   <div class="schedule-legend">
     <div class="hour-label" [style.height.%] = "getHourHeight" *ngFor="let hourNum of schedule.hourNums ; let i = index">
       <div *ngIf="(i != 0)">{{ hourName(hourNum) }}</div>
@@ -9,7 +9,7 @@
     <div class="grid-day"  [style.width.%] = "getDayWidth" *ngFor="let dayNum of schedule.dayNums">
       <div class="day-label">{{ longDayName(dayNum) }}</div>
       <ng-container >
-          <schedule-event *ngFor="let p of periodsOnDay(dayNum)" 
+          <schedule-event *ngFor="let p of periodsOnDay(dayNum)"
             [style.margin-top.px] = "eventPosition(p.startTime)"
             [style.backgroundColor] = "getBackgroundColor(p.color)"
             [style.height.px] = "eventHeight(p.endTime - p.startTime)"
@@ -21,6 +21,6 @@
           [style.height.%] = "getHourHeight" >
         </div>
       </ng-container>
-    </div> 
+    </div>
   </div>
 </div>
