@@ -8,6 +8,7 @@ import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
+import * as domtoimage  from 'dom-to-image';
 
 @Component({
   selector: 'schedule-view',
@@ -28,7 +29,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
   constructor (
     private yacsService : YacsService,
     private selectionService : SelectionService,
-    private activatedRoute: ActivatedRoute) { 
+    private activatedRoute: ActivatedRoute) {
 
     this.subscription = this.selectionService.subscribe(() => {
       this.getSchedules();
@@ -127,7 +128,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
       this.scheduleIndex = this.schedules.length - 1;
     }
   }
- 
+
   public nextSchedule () : void {
     if (this.scheduleIndex < this.schedules.length - 1) {
       ++this.scheduleIndex;
@@ -147,7 +148,29 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
     return this.schedules[this.scheduleIndex].statusText;
   }
 
+  public downloadImage () : void {
+      var node = document.getElementById('schedule-container');
+
+      domtoimage.toPng(node,{bgcolor:"white",quality:1.0})
+        .then(function (dataUrl) {
+            var link = document.createElement('a');
+            link.download = 'mySchedules.png';
+            link.href = dataUrl;
+            link.click();
+        })
+        .catch(function(error) {
+          console.error('oops, something went wrong!', error);
+        });
+  }
+
   public clear (): void {
     this.selectionService.clear();
   }
+}
+
+@Component({
+  selector: 'ngbd-export-component',
+  templateUrl: './component.html'
+})
+export class NgbdExportComponent {
 }
