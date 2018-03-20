@@ -1,0 +1,12 @@
+<div id="noticebar">
+  <div *ngIf="hasNotice()">
+    <div class="fix">
+      <table id="noticetable">
+        <tr>
+          <td><button type="button" class="btn btn-default" onclick="dismissNotice()">x</button></td>
+          <td><div id="noticeText"></div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
