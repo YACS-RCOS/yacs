@@ -2,14 +2,13 @@ import { Injectable } 	from '@angular/core';
 import { Notice } 		from '../models/notice.model';
 
 @Injectable()
-//store / handle state of notices (provider)
 export class NoticeService {
 
 	private noticeQueue : Notice[];		//array of all undismissed notices
 	private dismissedSet = new Set();	//set of ids of dismissed notices
 	private next: number;				//next notice (equal to length of noticeQueue, made for clarity)
 
-	constructor(noticeQueue: Notice[])	{
+	constructor()	{
 		this.noticeQueue = [
 			{
 				id: 0,
@@ -29,26 +28,24 @@ export class NoticeService {
 				time: new Date()
 			} as Notice
 		];
-		this.next = noticeQueue.length;
+		this.next = this.noticeQueue.length - 1;
 	}
 
 	public getNotice () : string {
-		return `test`;
-		//return this.noticeQueue[this.next].body;
+		return this.noticeQueue[this.next].body;
 	}
 
 	public hasNotice() : boolean {
+		if (this.next == -1) {
+			return false;
+		}
 		return true;
-		// if (this.next == -1) {
-		// 	return true;
-		// }
-		// return false;
 	}
 
 	public dismiss() : void {
 		this.dismissedSet.add(this.noticeQueue[this.next].id);
 		this.next--;
-		
+		document.getElementById("noticeText").innerHTML = this.getNotice();
 	}
 
 	//pull new notices (update next)

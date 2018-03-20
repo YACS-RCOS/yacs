@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Router }           from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
 import { NoticeService } 		from '../services/notice.service';
 import { Notice } 					from '../models/notice.model';
 
@@ -8,18 +7,25 @@ import { Notice } 					from '../models/notice.model';
   templateUrl: './component.html',
   styleUrls: ['component.scss'],
 })
+export class NoticeBarComponent implements OnInit {
 
-//controller of information
-export class NoticeBarComponent {
-
-  constructor(private noticeService: NoticeService) {}
-
-  public hasNotice() : boolean {
-  	return this.noticeService.hasNotice();
+  //display first notice, the rest will be displayed by the dismiss function
+  ngOnInit() {
+    document.getElementById("noticeText").innerHTML = this.getNotice();
   }
 
-  public getNotice() : string {
-  	return this.noticeService.getNotice();
+  constructor(private noticeService : NoticeService) {}
+
+  hasNotice() : boolean {
+    return this.noticeService.hasNotice();
+  }
+
+  getNotice() : string {
+    return this.noticeService.getNotice();
+  }
+
+  dismissNotice() : void {
+    this.noticeService.dismiss();
   }
 
 }
