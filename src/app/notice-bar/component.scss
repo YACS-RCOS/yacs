@@ -1,29 +1,6 @@
 @import "../../_vars.scss";
 
 .fix {
-    position: fixed;
-}
-
-table#noticetable {
-    width:100%;
-    height:100%;
-    border-collapse:collapse;
-    td {
-        text-align:center;
-        vertical-align:middle;
-    }
-}
-
-#noticebar {
-    //should dynamically size width to be size of text for style
-    width:100%;     
-    height:50px;
     margin-top: 50px;
-    position:fixed;
-    z-index: 1;
-    font-family: $font;  
-    font-weight: 300;  
-    background-color: $yacs_bgs;
-    white-space: nowrap;
-    //need to add a margin to the bottom to make school-list display correctly below notice bar
+    position: fixed;
 }
