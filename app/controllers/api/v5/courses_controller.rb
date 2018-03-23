@@ -13,6 +13,9 @@ class Api::V5::CoursesController < Api::V5::ApiController
       filter :department_code do |q|
         q.joins(:department).where :"departments.code" => any(:department_code)
       end
+      filter :tags do |q|
+        q.where :tags.include?("featured") 
+      end
       filter_any :id, :department_id, :name, :number, :min_credits, :max_credits
       query.includes! :sections if @show_sections
     end
