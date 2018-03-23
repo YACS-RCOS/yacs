@@ -19,7 +19,7 @@ class Course < ActiveRecord::Base
           to_tsvector(to_char(courses.number, '9999')) ||
           to_tsvector(courses.name) ||
           to_tsvector(coalesce((string_agg(array_to_string(sections.instructors, ' '), ' ')), '')) ||
-          to_tsvector(courses.tags)
+          to_tsvector(coalesce((string_agg(array_to_string(courses.tags, ' '), ' ')), ''))
         AS document FROM courses
         JOIN sections on sections.course_id = courses.id
         JOIN departments on courses.department_id = departments.id
