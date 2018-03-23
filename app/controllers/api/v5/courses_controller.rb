@@ -42,6 +42,6 @@ class Api::V5::CoursesController < Api::V5::ApiController
 
   def course_params
     params.require(:course).permit(:name, :number, :min_credits, 
-    :max_credits, :description, :department_id)
+    :max_credits, :description, :department_id, :tags)
   end
 end
