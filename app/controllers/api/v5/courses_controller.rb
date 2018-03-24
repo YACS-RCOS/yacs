@@ -14,7 +14,7 @@ class Api::V5::CoursesController < Api::V5::ApiController
         q.joins(:department).where :"departments.code" => any(:department_code)
       end
       filter :tags do |q|
-        q.where("tags @> ARRAY[?]::varchar[]", params[:tags])
+        q.where("tags @> ARRAY[?]::varchar[]", params[:tags]).order(:department_id)
       end
       filter_any :id, :department_id, :name, :number, :min_credits, :max_credits
       query.includes! :sections if @show_sections
