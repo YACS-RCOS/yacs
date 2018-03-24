@@ -10,6 +10,9 @@
         </span>
       </td>
       <td class="sidelink" id="schedule-btn">
+        <a [routerLink]="['/courses']" [queryParams]="{ tags: ['Featured'] }">Topics <span class = "tiny"> New </span></a>
+      </td>
+      <td class="sidelink" id="schedule-btn">
         <a [routerLink]="['/schedules']">Schedule</a>
       </td>
     </tr>
