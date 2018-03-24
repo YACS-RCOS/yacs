@@ -9,30 +9,12 @@ export class NoticeService {
 	private next: number;				//next notice (equal to length of noticeQueue, made for clarity)
 
 	constructor()	{
-		this.noticeQueue = [
-			{
-				id: 0,
-				body: "something",
-				time: new Date(),
-			} as Notice,
-
-			{
-				id: 1,
-				body: "HELLO",
-				time: new Date()
-			} as Notice,
-
-			{
-				id: 2,
-				body: "LAST",
-				time: new Date()
-			} as Notice
-		];
+		this.noticeQueue = [];
 		this.next = this.noticeQueue.length - 1;
 	}
 
-	public getNotice () : string {
-		return this.noticeQueue[this.next].body;
+	public getNotice () : Notice {
+		return this.noticeQueue[this.next];
 	}
 
 	public hasNotice() : boolean {
@@ -45,8 +27,5 @@ export class NoticeService {
 	public dismiss() : void {
 		this.dismissedSet.add(this.noticeQueue[this.next].id);
 		this.next--;
-		document.getElementById("noticeText").innerHTML = this.getNotice();
 	}
-
-	//pull new notices (update next)
 }

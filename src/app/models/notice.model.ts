@@ -1,5 +1,6 @@
 export class Notice {
 	id: number;
-	body: string;
+	message: string;
 	time: Date;
+	type: string;	//color of notice from bootstrap alert colors
 }

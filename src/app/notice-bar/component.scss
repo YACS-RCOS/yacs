@@ -1,6 +1,7 @@
 @import "../../_vars.scss";
 
-.fix {
-    margin-top: 50px;
+div#noticebar {
+    padding-top: 50px;
     position: fixed;
+    width: 100%;
 }
