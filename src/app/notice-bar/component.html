@@ -1,12 +1,7 @@
 <div id="noticebar">
   <div *ngIf="hasNotice()">
-    <div class="fix">
-      <div class="alert alert-info alert-dismissable fade show" role="alert">
-        {{getNotice()}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
+    <ngb-alert [type]="getNotice().type" (close)="dismissNotice()">
+      {{ getNotice().message }}
+    </ngb-alert>
   </div>
 </div>
