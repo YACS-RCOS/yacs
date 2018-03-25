@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 import { YacsService } from '../services/yacs.service';
 import { Course } from '../models/course.model';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
@@ -21,12 +20,7 @@ export class HeaderComponent {
 
   constructor(
     private router: Router, 
-    private config: NgbTypeaheadConfig,
-    private yacsService: YacsService) 
-  { 
-    //autocompletion of the first result
-    config.showHint = true;
-  }
+    private yacsService: YacsService) {}
 
   search(term: string) {
     this.router.navigate(['/courses'],
@@ -37,12 +31,15 @@ export class HeaderComponent {
 
   searchAhead = (text: Observable<string>) =>
     text
-      .debounceTime(200)
+      .debounceTime(400)
       .distinctUntilChanged()
       .switchMap(term =>
         this.yacsService
-          .get('courses', text)
-          .then((data) => {
-            this.courses = data['courses'] as Course[];
+          .get('courses', { search: term })
+          .then(data => {
+            this.courses = (data['courses'] as Course[]);
+            console.log(text);
+            console.log(this.courses);
+            return this.courses.map(c => c.name);
           }))
   }

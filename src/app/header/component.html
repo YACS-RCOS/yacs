@@ -6,9 +6,7 @@
       <td>
         <span id="searchcontainer">
           <img id="searchglyph" src="assets/images/search.svg"/>
-          <input #term id="searchbar" placeholder="Search Fall 2017" 
-          type="text" class="form-control" [ngbTypeahead]="searchAhead"
-          (keyup.enter)="search(term.value)"/>
+          <input #term id="searchbar" type="text" [ngbTypeahead]="searchAhead" placeholder="Search Fall 2017" (keyup.enter)="search(term.value)"/>
         </span>
       </td>
       <td class="sidelink" id="schedule-btn">
