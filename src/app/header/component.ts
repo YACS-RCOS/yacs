@@ -38,8 +38,6 @@ export class HeaderComponent {
           .get('courses', { search: term })
           .then(data => {
             this.courses = (data['courses'] as Course[]);
-            console.log(text);
-            console.log(this.courses);
-            return this.courses.map(c => c.name);
+            return this.courses.map(c => c.name).slice(0,10);
           }))
   }
