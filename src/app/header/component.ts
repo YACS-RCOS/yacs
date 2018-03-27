@@ -37,7 +37,9 @@ export class HeaderComponent {
         this.yacsService
           .get('courses', { search: term })
           .then(data => {
-            this.courses = (data['courses'] as Course[]);
-            return this.courses.map(c => c.name).slice(0,10);
+            if (term.length > 3) {
+              this.courses = (data['courses'] as Course[]);
+              return this.courses.map(c => c.name).slice(0, 10);
+            }
           }))
   }
