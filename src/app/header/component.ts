@@ -17,6 +17,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 export class HeaderComponent {
 
   courses: Course[] = [];
+  termID: number;
 
   constructor(
     private router: Router, 
@@ -31,15 +32,23 @@ export class HeaderComponent {
 
   searchAhead = (text: Observable<string>) =>
     text
-      .debounceTime(400)
+      .debounceTime(200)
       .distinctUntilChanged()
       .switchMap(term =>
         this.yacsService
           .get('courses', { search: term })
           .then(data => {
-            if (term.length > 3) {
+            if (term.length > 2) {
               this.courses = (data['courses'] as Course[]);
               return this.courses.map(c => c.name).slice(0, 10);
             }
           }))
+
+  selectedCourse(term: string) {
+    this.yacsService.get('courses', term).then(data => {
+      this.courses = (data['courses'] as Course[]);
+      this.termID = this.courses.map(c => c.id)[0];
+    })
+    this.router.navigate(['\courses?id=' + this.termID]);
   }
+}
