@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { YacsService } from '../services/yacs.service';
 import { Course } from '../models/course.model';
