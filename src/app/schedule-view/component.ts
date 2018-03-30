@@ -19,7 +19,7 @@ import * as domtoimage  from 'dom-to-image';
 
 export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren(ScheduleComponent)
-  public Grids: QueryList<ScheduleComponent>
+  public ScheduleList: QueryList<ScheduleComponent>
 
   isLoaded : boolean = false;
   courses : Course[] = [];
@@ -172,7 +172,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-      this.Grids.changes.subscribe((comps: QueryList <ScheduleComponent>) =>
+      this.ScheduleList.changes.subscribe((comps: QueryList <ScheduleComponent>) =>
         {
             this.scheduleNode = comps.first.scheduleNode;
         });
