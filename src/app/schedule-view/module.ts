@@ -14,12 +14,10 @@ import { CourseListModule } from '../course-list/module';
 //import { CourseComponent } from '../course-list/course/component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbdExportComponent } from './component';
 
 
 @NgModule({
   declarations: [
-    NgbdExportComponent,
     ScheduleViewComponent,
     ScheduleComponent,
     ScheduleEventComponent,
