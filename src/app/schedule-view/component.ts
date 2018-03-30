@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { YacsService } from '../services/yacs.service';
 import { Course } from '../models/course.model';
@@ -6,8 +6,10 @@ import { Section } from '../models/section.model';
 import { Schedule} from '../models/schedule.model';
 import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
+import { ScheduleComponent } from '../schedule-view/schedule/component';
 import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
+import * as domtoimage  from 'dom-to-image';
 
 @Component({
   selector: 'schedule-view',
@@ -15,20 +17,23 @@ import {Subject, Subscription} from 'rxjs/Rx';
   styleUrls: ['./component.scss']
 })
 
-export class ScheduleViewComponent implements OnInit, OnDestroy {
+export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChildren(ScheduleComponent)
+  public ScheduleList: QueryList<ScheduleComponent>
 
   isLoaded : boolean = false;
   courses : Course[] = [];
   schedules: Schedule[] = [];
   scheduleIndex: number = 0;
   isTemporary: boolean = false;
+  scheduleNode;
 
   private subscription;
 
   constructor (
     private yacsService : YacsService,
     private selectionService : SelectionService,
-    private activatedRoute: ActivatedRoute) { 
+    private activatedRoute: ActivatedRoute) {
 
     this.subscription = this.selectionService.subscribe(() => {
       this.getSchedules();
@@ -127,7 +132,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
       this.scheduleIndex = this.schedules.length - 1;
     }
   }
- 
+
   public nextSchedule () : void {
     if (this.scheduleIndex < this.schedules.length - 1) {
       ++this.scheduleIndex;
@@ -147,7 +152,30 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
     return this.schedules[this.scheduleIndex].statusText;
   }
 
+  public downloadImage () : void {
+      var node = this.scheduleNode;
+
+      domtoimage.toPng(node,{bgcolor:"white",quality:1.0})
+        .then(function (dataUrl) {
+            var link = document.createElement('a');
+            link.download = 'mySchedules.png';
+            link.href = dataUrl;
+            link.click();
+        })
+        .catch(function(error) {
+          console.error('oops, something went wrong!', error);
+        });
+  }
+
   public clear (): void {
     this.selectionService.clear();
   }
+
+  ngAfterViewInit() {
+      this.ScheduleList.changes.subscribe((comps: QueryList <ScheduleComponent>) =>
+        {
+            this.scheduleNode = comps.first.scheduleNode;
+        });
+  }
+
 }
