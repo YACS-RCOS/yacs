@@ -1,4 +1,4 @@
-<div class="schedule" [style.height.px] = "schedule.height" id="schedule-container">
+<div class="schedule" [style.height.px] = "schedule.height" #mySchedule>
   <div class="schedule-legend">
     <div class="hour-label" [style.height.%] = "getHourHeight" *ngFor="let hourNum of schedule.hourNums ; let i = index">
       <div *ngIf="(i != 0)">{{ hourName(hourNum) }}</div>

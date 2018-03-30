@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { YacsService } from '../services/yacs.service';
 import { Course } from '../models/course.model';
@@ -6,6 +6,7 @@ import { Section } from '../models/section.model';
 import { Schedule} from '../models/schedule.model';
 import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
+import { ScheduleComponent } from '../schedule-view/schedule/component';
 import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
@@ -16,13 +17,16 @@ import * as domtoimage  from 'dom-to-image';
   styleUrls: ['./component.scss']
 })
 
-export class ScheduleViewComponent implements OnInit, OnDestroy {
+export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChildren(ScheduleComponent)
+  public Grids: QueryList<ScheduleComponent>
 
   isLoaded : boolean = false;
   courses : Course[] = [];
   schedules: Schedule[] = [];
   scheduleIndex: number = 0;
   isTemporary: boolean = false;
+  scheduleNode;
 
   private subscription;
 
@@ -149,7 +153,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
   }
 
   public downloadImage () : void {
-      var node = document.getElementById('schedule-container');
+      var node = this.scheduleNode;
 
       domtoimage.toPng(node,{bgcolor:"white",quality:1.0})
         .then(function (dataUrl) {
@@ -166,11 +170,12 @@ export class ScheduleViewComponent implements OnInit, OnDestroy {
   public clear (): void {
     this.selectionService.clear();
   }
-}
 
-@Component({
-  selector: 'ngbd-export-component',
-  templateUrl: './component.html'
-})
-export class NgbdExportComponent {
+  ngAfterViewInit() {
+      this.Grids.changes.subscribe((comps: QueryList <ScheduleComponent>) =>
+        {
+            this.scheduleNode = comps.first.scheduleNode;
+        });
+  }
+
 }
