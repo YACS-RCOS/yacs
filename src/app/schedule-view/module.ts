@@ -13,6 +13,8 @@ import { ScheduleEventComponent } from './schedule-event/component';
 import { CourseListModule } from '../course-list/module';
 //import { CourseComponent } from '../course-list/course/component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { CourseListModule } from '../course-list/module';
     ScheduleEventComponent,
   ],
   imports: [
+    NgbModule,
     CommonModule,
     CourseListModule
     //CourseComponent

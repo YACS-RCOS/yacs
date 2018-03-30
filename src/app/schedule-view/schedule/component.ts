@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { ConstantsService } from '../../services/constants';
 import { ScheduleEvent } from '../../models/schedule-event.model';
 import { Schedule } from '../../models/schedule.model';
@@ -16,9 +16,12 @@ import { SelectionService } from '../../services/selection.service'
   ],
 })
 
-export class ScheduleComponent {
+export class ScheduleComponent implements AfterViewInit {
   @Input() schedule: Schedule;
   constants: ConstantsService;
+  @ViewChild('mySchedule')
+  public mySchedule:ElementRef
+  public scheduleNode;
 
   // this uses constants - inject the constants service
   constructor(constants: ConstantsService) {
@@ -78,5 +81,8 @@ export class ScheduleComponent {
     return Schedule.TEXT_COLORS[color];
   }
 
+  ngAfterViewInit() {
+      this.scheduleNode = this.mySchedule.nativeElement;
+  }
 
 }
