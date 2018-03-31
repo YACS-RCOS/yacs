@@ -7,7 +7,7 @@
         <span id="searchcontainer">
           <img id="searchglyph" src="assets/images/search.svg"/>
           <input #term id="searchbar" type="text" 
-          [ngbTypeahead]="searchAhead" (selectItem)="selectedCourse($event)"
+          [ngbTypeahead]="searchAhead" (selectItem)="selectedCourse($event.item)"
           placeholder="Search Fall 2017" (keyup.enter)="search(term.value)"/>
         </span>
       </td>
