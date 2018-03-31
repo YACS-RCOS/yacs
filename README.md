@@ -1,28 +1,25 @@
-# YacsWeb
+# Yacs Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+Yacs Web - The frontend for YACS!
 
-## Development server
+Yacs Web is written in Typescript using Angular 5. This application is configured to be run in a Docker container. For more information about developing and running Yacs, visit and clone the [yacs-orchestra](github.com/yacs-rcos/yacs-orchestra) repository.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+---
 
-## Code scaffolding
+## Contributing
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+We encourage you to create issues and contribute to Yacs! To contribute fork the repo, comment on an issue, and submit a pull request to the master branch. Build checks and code reviews are required before merging. Once checks have passed, a project owner will merge the changes.
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Code of Conduct
 
-## Running unit tests
+We strive to create and maintain an inclusive, welcoming and safe community for all. Please review our Code of Conduct in `CODE_OF_CONDUCT.md` before participating in the project.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+## License
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+Yacs Web is Open Source and is released under the MIT licnese. See `LICENSE.md` for details
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+---

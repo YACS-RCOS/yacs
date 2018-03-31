@@ -1,46 +1,78 @@
-# Contributor Covenant Code of Conduct
+# RCOS Community Code of Conduct
+In the interest of fostering an open and welcoming environment, RCOS pledges to be an inclusive and harassment-free experience for  all, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, educational background, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation. 
 
-## Our Pledge
+## General
+The General Code of Conduct applies to all RCOS activity and activity affiliated with any RCOS project online and offline.
 
-In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+### Guidelines
+#### Be respectful and inclusive
+* **Use inclusive language.**  This includes:
+  * using [gender-neutral or non-gendered language](http://geekfeminism.wikia.com/wiki/Nonsexist_language) where possible 
+  * when referring to community members, using their preferred pronouns 
+  * in general, avoiding any language that could be considered offensive towards marginalized groups
+* **Respect people's differences.** Examples include:
+  * Being welcoming towards new members
+  * Being open to opposing viewpoints
+  * Being understanding of cultural differences
+  * Making sure your project and any physical spaces your project team may meet are accessible to all members, including members with disabilities
 
-## Our Standards
+#### Give and be welcoming to constructive feedback
+* **Be constructive and respectful** when giving others feedback. This includes:
+  * Only giving feedback when solicited (e.g. mock presentation, questions section of presentation, request for code review, pull request, etc.)
+  * Keeping all feedback constructive, objective and impersonal
 
-Examples of behavior that contributes to creating a positive environment include:
 
-* Using welcoming and inclusive language
-* Being respectful of differing viewpoints and experiences
-* Gracefully accepting constructive criticism
-* Focusing on what is best for the community
-* Showing empathy towards other community members
+### Unacceptable Behaviors
 
-Examples of unacceptable behavior by participants include:
+Examples of unacceptable behaviors include:
 
 * The use of sexualized language or imagery and unwelcome sexual attention or advances
 * Trolling, insulting/derogatory comments, and personal or political attacks
 * Public or private harassment
-* Publishing others' private information, such as a physical or electronic address, without explicit permission
+* Publishing others’ private information, such as a physical or electronic address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a professional setting
 
-## Our Responsibilities
+### Reporting Incidents
 
-Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response to any instances of unacceptable behavior.
+At any point, you may report instances of CoC violations to RCOS faculty at <coordinators@rcos.io>. You, as well as any other witnesses, have the right to remain anonymous to the rest of the RCOS community.
 
-Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+### Project Maintainer Responsibilities
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. In the case of contributors external to RPI and/or RCOS, temporary or permanent bans may occur. RPI-specific policies are outlined below.
 
-## Scope
+## RPI-Specific Policies
 
-This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
+This section applies to RCOS meetings at RPI, including large group and small group meetings as well as bonus sessions, casual coding sessions, and any project meetings unless otherwise noted.
 
-## Enforcement
+### During Large Group
+During our large group sessions, we have the following policies.
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at yacsrpi@gmail.com. The project team will review and investigate all complaints, and will respond in a way that it deems appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
+#### Laptops/Mobile Devices
+RCOS likes to maintain a culture of freedom. If you choose to use your laptop or mobile device during large group presentations, you may do so as long as you are mindful of the people around you. This includes:
 
-Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
+* muting all audio
+* not participating in audio or video calls
+* ensuring any material that may be visible on your screen is SFW (safe for work)
+* keeping mobile devices on "Silent" or "Vibrate"
+* using your device's keyboard instead of a mechanical keyboard
 
-## Attribution
+In addition, some speakers may ask audience members to close all laptops and put away all mobile devices. If a speaker does so, please respect their request.
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
+If you absolutely must take a phone call, you can exit the lecture hall to make/take a phone call. If you need to call emergency services for any reason, you may remain in the room while you make the call.
 
-[homepage]: http://contributor-covenant.org
-[version]: http://contributor-covenant.org/version/1/4/
+If you use assistive technology due to a documented disability or injury, or you use a medical device that may make noise or looks similar in appearance to a mobile phone or laptop, **please touch base with a faculty member ASAP**. This will remain confidential.
+
+#### Noise
+An important part of RCOS is being able to hear from both fellow RCOS members and guest speakers. During presentations, we ask that you refrain from talking or making excessive noise as it can be disruptive to the speaker and to your peers.
+
+### Consequences of Code of Conduct Violations
+If you violate the RCOS Community Code of Conduct, appropriate consequences will follow at the discretion of faculty. These may include:
+
+* A verbal or Slack warning from a mentor or coordinator
+* A written warning from a faculty member
+* A request to edit or delete any blog posts, code, comments, issues, pull requests, milestones, wiki pages, social media posts, etc. that violate the Code of Conduct
+* If the violation occurred at an RCOS event or meeting, you may be removed from the event or meeting. This will be marked as an unexcused absence regardless of whether or not you already entered an attendance code, and you will not be able to make up this absence by attending a bonus session.
+* In severe and repeated violations, you may be removed from RCOS entirely. If you are taking RCOS for credit, you will receive a failing grade for the semester.
+
+## License and Attribution
+
+This Code of Conduct has been adapted with modifications from the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html) and the [Mozilla Community Participation Guidelines](https://www.mozilla.org/en-US/about/governance/policies/participation/). This Code of Conduct, like everything RCOS does, is open source and can be found in our [intro](https://github.com/rcos/intro) repository.
