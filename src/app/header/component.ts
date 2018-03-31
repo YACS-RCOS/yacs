@@ -16,16 +16,21 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 export class HeaderComponent {
 
+  dropDownSelected: boolean = false;                  //flag to stop keyup.enter from doing normal search when drop down is used
+
   constructor(
     private router: Router, 
     private yacsService: YacsService) {}
 
   //keyup.enter generic search
   search(term: string) {
-    this.router.navigate(['/courses'],
-      { queryParams: {
-        search: term
-      }});
+    if (!this.dropDownSelected) {
+      this.router.navigate(['/courses'],
+        { queryParams: {
+          search: term
+        }});
+    }
+    this.dropDownSelected = false;
   }
 
   //list of typeahead courses
@@ -38,7 +43,6 @@ export class HeaderComponent {
           .get('courses', { search: term })
           .then(data => {
             if (term.length > 2) {                      //only show results after 3 characters
-              console.log("searchAhead");
               let courses = (data['courses'] as Course[])
                 .map(c => c.name);
               return courses
@@ -50,11 +54,12 @@ export class HeaderComponent {
           }))
 
   //function for on-click typeahead bar
-  selectedCourse(term: string) {
+  selectedCourse($event: any) {
     this.router.navigate(['/courses'],
       { queryParams: {
-        name: term
+        name: $event.item
       }});
+    this.dropDownSelected = true;
   }
 
 }
