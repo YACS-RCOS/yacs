@@ -20,6 +20,7 @@ export class HeaderComponent {
     private router: Router, 
     private yacsService: YacsService) {}
 
+  //keyup.enter generic search
   search(term: string) {
     this.router.navigate(['/courses'],
       { queryParams: {
@@ -27,6 +28,7 @@ export class HeaderComponent {
       }});
   }
 
+  //list of typeahead courses
   searchAhead = (text: Observable<string>) =>
     text
       .debounceTime(200)
@@ -35,7 +37,8 @@ export class HeaderComponent {
         this.yacsService
           .get('courses', { search: term })
           .then(data => {
-            if (term.length > 2) {
+            if (term.length > 2) {                      //only show results after 3 characters
+              console.log("searchAhead");
               let courses = (data['courses'] as Course[])
                 .map(c => c.name);
               return courses
@@ -46,8 +49,8 @@ export class HeaderComponent {
             }
           }))
 
+  //function for on-click typeahead bar
   selectedCourse(term: string) {
-    console.log(term);
     this.router.navigate(['/courses'],
       { queryParams: {
         name: term
