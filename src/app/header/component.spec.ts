@@ -45,3 +45,8 @@ describe("Testing header component", function() {
     expect(element.textContent).toContain("Schedule");
   });
 });
+
+describe("TypeAhead Search Bar", function() {
+  let component: HeaderComponent;
+  
+});
