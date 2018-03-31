@@ -16,7 +16,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 export class HeaderComponent {
 
-  dropDownSelected: boolean = false;                  //flag to stop keyup.enter from doing normal search when drop down is used
+  //flag to stop keyup.enter from doing normal search when drop down is used
+  dropDownSelected: boolean = false;                  
 
   constructor(
     private router: Router, 
