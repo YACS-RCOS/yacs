@@ -18,6 +18,7 @@ services:
       - "443:443"
     links:
       - core
+      - users
     volumes:
       - ./ssl:/etc/ssl/yacs
       - dist-web:/usr/src/app/dist-web
@@ -71,9 +72,16 @@ services:
 
   users:
     image: yacsrcos/yacs-users
+    environment:
+      - RAILS_ENV
+      - SECRET_KEY_BASE
+      - SECRET_TOKEN
+    volumes:
+      - ./ssl:/etc/ssl/yacs
     depends_on:
       - postgres
       - redis
+    command: bundle exec puma -C config/puma.rb
     expose:
       - "4400"
 
