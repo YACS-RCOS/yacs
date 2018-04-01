@@ -48,5 +48,4 @@ describe("Testing header component", function() {
 
 describe("TypeAhead Search Bar", function() {
   let component: HeaderComponent;
-  
 });
