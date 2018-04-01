@@ -26,7 +26,7 @@ Running YACS on Windows may be possible, but it is not recommended and not suppo
   `cd yacs-orchestra`
 
 3. Run the one-time setup script
-  `bin/yacs-setup-development`
+  `bin/yacs-prepare-development`
 
 You can now use the following command to run YACS:
   `bin/yacs-start-development`
