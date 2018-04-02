@@ -57,7 +57,7 @@
 
 <header class="navbar navbar-light fixed-top navbar-expand-lg justify-content-center bg-light"> 
   <a class="navbar-brand" [routerLink]="['/']" (click)="navbarCollapsed = true">
-    YACS <span class="sub">beta</span>
+    YACS <span class="small">beta</span>
   </a>
 
   <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed" 
@@ -71,16 +71,27 @@
         <form class="form-inline">
           <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="search-addon">
-                  <img id="searchglyph" src="assets/images/search.svg"/>
-                </span>
-              </div>
-              <input type="text" class="form-control" placeholder="Search Yacs" aria-label="Search" aria-describedby="search-addon">
+              <span class="input-group-text" id="search-addon">
+                <img id="searchglyph" src="assets/images/search.svg"/>
+              </span>
             </div>
-          </form>
+            <input type="text" class="form-control" placeholder="Search Yacs" aria-label="Search" aria-describedby="search-addon">
+          </div>
+        </form>
       </li>
     </ul>
+    <ul class="nav navbar-nav">
+        <li class="nav-item">
+            <a [routerLink]="['/courses']" [queryParams]="{ tags: ['featured'] }">Topics<span class = "small">new!</span></a>
+        </li>
+        <li class="nav-item"><a [routerLink]="['/schedules']">Schedule</a></li>
+    </ul>
   </div>
+
+
+  <!-- <a class="navbar-text large text-truncate mt-1 w-100 text-right"><strong>Log In</strong></a>
+  <a class="navbar-text large text-truncate mt-1 w-100 text-right"><strong>Schedule</strong></a>
+   -->
   <!-- <div class="navbar-collapse collapse justify-content-between align-items-center w-100" [ngbCollapse]="navbarCollapsed" id="navbarContent">
       <ul class="navbar-nav mx-auto text-center">
           <li class="nav-item active">
