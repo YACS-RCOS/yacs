@@ -13,6 +13,9 @@ class Api::V5::CoursesController < Api::V5::ApiController
       filter :department_code do |q|
         q.joins(:department).where :"departments.code" => any(:department_code)
       end
+      filter :tags do |q|
+        q.where("tags @> ARRAY[?]::varchar[]", params[:tags]).order(:department_id)
+      end
       filter_any :id, :department_id, :name, :number, :min_credits, :max_credits
       query.includes! :sections if @show_sections
     end
@@ -42,6 +45,6 @@ class Api::V5::CoursesController < Api::V5::ApiController
 
   def course_params
     params.require(:course).permit(:name, :number, :min_credits, 
-    :max_credits, :description, :department_id)
+    :max_credits, :description, :department_id, :tags)
   end
 end
