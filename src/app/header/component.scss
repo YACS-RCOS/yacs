@@ -81,10 +81,43 @@
 //     }
 // }
 
+.theme-text {
+  text-decoration: none;
+  color: $yacs_bgs;
+}
+
+.theme-text-heavy {
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.navbar-brand {
+
+}
+
+form.searchbar {
+  input {
+    border-left: none;
+    border-color: $yacs_bgs;
+    box-shadow: none;
+  }
+
+  .input-group-prepend * {
+    border-right: none;
+    border-color: $yacs_bgs;
+  }
+}
+
+input::placeholder {
+  color: $yacs_bgs;
+  font-style: italic;
+  font-weight: lighter;
+}
+
 #searchglyph {
-    height: 1em;
-    vertical-align: sub;
-    padding: 0.1em;
+  height: 1.5em;
+  vertical-align: sub;
+  padding: 0.1em;
 }
 
 // #schedule-btn {

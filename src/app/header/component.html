@@ -1,63 +1,6 @@
-<!-- <nav id="headerbar">
-  <table id="navtable">
-    <tr>
-      <td class="sidelink" id="page-title">
-        <a [routerLink]="['/']">YACS <span class="sub">beta</span></a>
-      <td>
-        <span id="searchcontainer">
-          <img id="searchglyph" src="assets/images/search.svg"/>
-          <input #term id="searchbar" type="text" 
-          [ngbTypeahead]="searchAhead" (selectItem)="selectedCourse($event)"
-          placeholder="Search Fall 2017" (keyup.enter)="search(term.value)"
-          [focusFirst]="false"/>
-        </span>
-      </td>
-      <td class="sidelink" id="schedule-btn">
-        <a [routerLink]="['/courses']" [queryParams]="{ tags: ['featured'] }">Topics<span class = "tiny">&nbsp; new!</span></a>
-      </td>
-      <td class="sidelink" id="schedule-btn">
-        <a [routerLink]="['/schedules']">Schedule</a>
-      </td>
-    </tr>
-  </table>
-</nav> -->
-
-<!-- 
-<nav class="navbar navbar-light fixed-top">
-  <a class="navbar-brand" [routerLink]="['/']">
-    YACS <span class="sub">beta</span>
-  </a>
-  <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed"
-          [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="navbar-collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/getting-started']" (click)="navbarCollapsed = true">Getting Started</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/components']" (click)="navbarCollapsed = true">Components</a>
-      </li>
-      <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']">
-        <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a>
-      </li>
-    </ul>
-    <form class="form-inline">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="search-addon">Q</span>
-          </div>
-          <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon">
-        </div>
-      </form>
-  </div>
-</nav> -->
-
-<header class="navbar navbar-light fixed-top navbar-expand-lg justify-content-center bg-light"> 
-  <a class="navbar-brand" [routerLink]="['/']" (click)="navbarCollapsed = true">
-    YACS <span class="small">beta</span>
+<header class="navbar navbar-light fixed-top navbar-expand-lg justify-content-stretch bg-light"> 
+  <a class="navbar-brand yacs-link" [routerLink]="['/']" (click)="navbarCollapsed = true">
+    <span class="theme-text theme-text-heavy">Yacs</span>
   </a>
 
   <button class="navbar-toggler navbar-toggler-right" type="button" (click)="navbarCollapsed = !navbarCollapsed" 
@@ -65,71 +8,42 @@
     <span class="navbar-toggler-icon"></span> 
   </button> 
   
-  <div class="navbar-collapse collapse justify-content-between align-items-center w-100" [ngbCollapse]="navbarCollapsed" id="navbarContent"> 
+  <div class="navbar-collapse collapse align-items-center w-100" [ngbCollapse]="navbarCollapsed" id="navbarContent"> 
     <ul class="navbar-nav mr-auto mx-auto text-center"> 
       <li class="nav-item"> 
-        <form class="form-inline">
+        <form class="form-inline searchbar">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="search-addon">
                 <img id="searchglyph" src="assets/images/search.svg"/>
               </span>
             </div>
-            <input type="text" class="form-control" placeholder="Search Yacs" aria-label="Search" aria-describedby="search-addon">
+            <input type="text" class="form-control" placeholder="Search Yacs" aria-label="Search" aria-describedby="search-addon"
+                   [ngbTypeahead]="searchAhead" [focusFirst]="false" (selectItem)="selectedCourse($event)" #term
+                   (keyup.enter)="search(term.value)"/>
           </div>
         </form>
       </li>
     </ul>
+
     <ul class="nav navbar-nav">
-        <li class="nav-item">
-            <a [routerLink]="['/courses']" [queryParams]="{ tags: ['featured'] }">Topics<span class = "small">new!</span></a>
-        </li>
-        <li class="nav-item"><a [routerLink]="['/schedules']">Schedule</a></li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/courses']" [queryParams]="{ tags: ['featured'] }">
+          <span class="theme-text">Topics <span class = "small">new!</span></span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{userSignInPath()}}" class="nav-link" >
+          <span class="theme-text">Log In</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/schedules']">
+          <span class="theme-text theme-text-heavy">Schedule</span>
+        </a>
+      </li>
     </ul>
   </div>
-
-
-  <!-- <a class="navbar-text large text-truncate mt-1 w-100 text-right"><strong>Log In</strong></a>
-  <a class="navbar-text large text-truncate mt-1 w-100 text-right"><strong>Schedule</strong></a>
-   -->
-  <!-- <div class="navbar-collapse collapse justify-content-between align-items-center w-100" [ngbCollapse]="navbarCollapsed" id="navbarContent">
-      <ul class="navbar-nav mx-auto text-center">
-          <li class="nav-item active">
-              <a class="nav-link" href="#">Link <span class="sr-only">Home</span></a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="//codeply.com">Codeply</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#">Link</a> 
-          </li>
-      </ul>
-    </div> -->
-
-
-       <!-- <li class="nav-item" [routerLinkActive]="['active']"> 
-         <a class="nav-link" [routerLink]="['/components']" (click)="navbarCollapsed = true">Components</a> 
-       </li> 
-       <li class="nav-item d-lg-none" *ngFor="let component of components" [routerLinkActive]="['active']"> 
-         <a class="nav-link" [routerLink]="['/components', component.toLowerCase()]" (click)="navbarCollapsed = true">{{ component }}</a> 
-       </li> 
-     </ul> 
-  
-     <span class="github-buttons d-none d-lg-inline"> 
-       <a class="github-button" 
-          href="https://github.com/ng-bootstrap/ng-bootstrap" 
-          target="_blank" 
-          data-style="mega" 
-          data-count-href="/ng-bootstrap/ng-bootstrap/stargazers" 
-          data-count-api="/repos/ng-bootstrap/ng-bootstrap#stargazers_count" 
-          data-count-aria-label="# stargazers on GitHub" 
-          aria-label="Star ng-bootstrap/ng-bootstrap on GitHub">Star</a> 
-       <a href="https://twitter.com/intent/tweet?button_hashtag=ngbootstrap" 
-          class="twitter-hashtag-button" 
-          data-size="large" 
-          data-text="I&#39;m checking out ng-bootstrap, THE Angular UI framework for Bootstrap CSS" 
-          data-url="https://ng-bootstrap.github.io" 
-          data-show-count="true">Tweet #ngbootstrap</a> 
-     </span>  -->
-   <!-- </div>  -->
- </header> 
+</header>

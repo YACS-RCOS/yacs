@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./_vars.scss";
 
-
 body {
     color: #000;
     font-family: $font;
@@ -12,7 +11,6 @@ body {
 #content {
     padding: 60px 15px 0px 15px;    
 }
-
 
 #loading {
     position:absolute;
@@ -69,12 +67,15 @@ footer {
   from {transform:rotate(0deg);}
   to {transform:rotate(360deg);}
 }
-a {
-  text-decoration: none;
-  color: #993333;
-}
+
+/* Global Bootstrap overrides go here */
 
 div.alert {
-    border: none;
-    border-radius: 0;
+  border: none;
+  border-radius: 0;
 }
+
+// .form-control:focus {
+//   outline: 0 none;
+//   box-shadow: 0 none;
+// }
