@@ -48,8 +48,9 @@ Rails.application.configure do
   config.public_file_server.enabled = true
 
   config.assets.compile = true
+  config.log_level = :debug
 
-  config.assets.prefix='/users'
+  # config.assets.prefix='/users'
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

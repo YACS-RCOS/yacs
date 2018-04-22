@@ -45,6 +45,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'pry'
   gem 'pry-byebug'
+  gem 'pry-remote'
 end
 
 group :development do

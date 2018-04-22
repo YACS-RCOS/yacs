@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/YACS-RCOS/yacs-auth.git
-  revision: 7bb455c2a9137b16310cb19d97586f6915d1a3d9
+  revision: 9208d020d290ebd055cecef99071ac35e6e04f46
   branch: master
   specs:
     yacs-auth (0.1.2)
@@ -116,6 +116,9 @@ GEM
     pry-byebug (3.5.0)
       byebug (~> 9.1)
       pry (~> 0.10)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     public_suffix (3.0.0)
     puma (3.10.0)
     rack (2.0.3)
@@ -168,6 +171,7 @@ GEM
     selenium-webdriver (3.6.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
+    slop (3.6.0)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -217,6 +221,7 @@ DEPENDENCIES
   pg
   pry
   pry-byebug
+  pry-remote
   puma (~> 3.7)
   rails (~> 5.1.4)
   redis (~> 3.0)
@@ -231,4 +236,4 @@ DEPENDENCIES
   yacs-auth!
 
 BUNDLED WITH
-   1.15.4
+   1.16.1
