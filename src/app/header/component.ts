@@ -21,7 +21,7 @@ export class HeaderComponent {
   navbarCollapsed: boolean = true;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private yacsService: YacsService) {}
 
   //keyup.enter generic search
@@ -62,6 +62,10 @@ export class HeaderComponent {
         name: $event.item
       }});
     this.dropDownSelected = true;
+  }
+
+  userSignInPath (): string {
+    return `/users/sign_in?referer=${document.location}`;
   }
 
 }
