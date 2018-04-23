@@ -81,9 +81,13 @@
 //     }
 // }
 
+.navbar {
+  background-color: $yacs_bgs;
+}
+
 .theme-text {
   text-decoration: none;
-  color: $yacs_bgs;
+  color: #ffffff;
 }
 
 .theme-text-heavy {
@@ -105,6 +109,7 @@ form.searchbar {
   .input-group-prepend * {
     border-right: none;
     border-color: $yacs_bgs;
+    background-color: #ffffff;
   }
 }
 
