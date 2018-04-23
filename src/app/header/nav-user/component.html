@@ -1,0 +1,10 @@
+<span *ngIf="!isLoggedIn()">
+  <a href="{{userSignInPath()}}" class="nav-link">
+    <span class="theme-text">Log In</span>
+  </a>
+</span>
+<span *ngIf="isLoggedIn()">
+  <a href="{{userSignOutPath()}}" class="nav-link">
+    <span class="theme-text">Log Out</span>
+  </a>
+</span>
