@@ -4,7 +4,7 @@
   background-color: $yacs_bgs;
   padding-top: 0px;
   padding-bottom: 0px;
-  @media(min-width: 768px) {
+  @media(min-width: 576px) {
     height: $header_height;
   }
 
@@ -15,19 +15,6 @@
   .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1.0)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   }
-}
-
-.theme-text {
-  color: #ffffff;
-}
-
-.theme-text-heavy {
-  font-weight: bolder;
-  font-size: larger;
-}
-
-.navbar-brand {
-
 }
 
 .searchbar {
@@ -44,14 +31,6 @@
     border-color: $yacs_bgs;
     background-color: #ffffff;
   }
-}
-
-.dropdown-menu {
-  width: 100% !important;
-  left: 0px !important;
-  border-radius: 2px;
-  margin-top: 0px;
-  padding-top: 0px;
 }
 
 input::placeholder {

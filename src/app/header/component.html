@@ -1,15 +1,15 @@
-<nav class="navbar navbar-custom fixed-top navbar-expand-md flex-wrap2 flex-md-nowrap p-0">
+<nav class="navbar navbar-custom fixed-top navbar-expand-sm flex-wrap2 flex-md-nowrap p-0">
   <a class="navbar-brand col-auto mr-0 yacs-link" [routerLink]="['/']" (click)="navbarCollapsed = true">
     <span class="theme-text theme-text-heavy">Yacs</span>
   </a>
 
-  <button class="navbar-toggler d-md-none mt-1 mr-0" type="button" (click)="navbarCollapsed = !navbarCollapsed" 
+  <button class="navbar-toggler d-sm-none mt-1 mr-0" type="button" (click)="navbarCollapsed = !navbarCollapsed" 
           [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"> 
     <span class="navbar-toggler-icon"></span> 
   </button> 
 
   <div class="navbar-collapse collapse" [ngbCollapse]="navbarCollapsed" id="navbarContent">
-    <div class="input-group py-1 px-2 px-md-0 searchbar">
+    <div class="input-group py-1 px-2 px-sm-0 searchbar">
 <!--       <div class="input-group-prepend">
         <span class="input-group-text" id="search-addon">
           <img id="searchglyph" src="assets/images/search.svg"/>
@@ -28,9 +28,7 @@
         </a>
       </li>
       <li class="nav-item my-1">
-        <a href="{{userSignInPath()}}" class="nav-link" >
-          <span class="theme-text">Log In</span>
-        </a>
+        <nav-user></nav-user>
       </li>
       <li class="nav-item my-1">
         <a class="nav-link" [routerLink]="['/schedules']">

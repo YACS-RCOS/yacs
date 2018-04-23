@@ -63,9 +63,4 @@ export class HeaderComponent {
       }});
     this.dropDownSelected = true;
   }
-
-  userSignInPath (): string {
-    return `/users/sign_in?referer=${document.location}`;
-  }
-
 }
