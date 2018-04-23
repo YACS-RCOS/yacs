@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/component';
+import { NavUserComponent } from './header/nav-user/component';
 import { NoticeBarComponent } from './notice-bar/component';
 import { FooterComponent } from './footer/component';
 
@@ -19,6 +20,7 @@ import { ConstantsService } from './services/constants';
 import { SelectionService } from './services/selection.service';
 import { ConflictsService } from './services/conflicts.service';
 import { NoticeService } from './services/notice.service';
+import { UserService } from './services/user.service';
 
 import { AboutComponent } from './about/component';
 
@@ -39,13 +41,15 @@ import { AboutComponent } from './about/component';
     HeaderComponent,
     NoticeBarComponent,
     FooterComponent,
-    AboutComponent
+    AboutComponent,
+    NavUserComponent
   ],
   providers: [
     ConstantsService,
     SelectionService,
     ConflictsService,
-    NoticeService
+    NoticeService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
