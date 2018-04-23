@@ -38,12 +38,7 @@ export class NoticeBarComponent implements OnChanges {
     this.isShown = !this.isShown;
   }
 
-  start(event: AnimationEvent) {
-    console.warn('Animation started: ', event);
-  }
-
   done(event: AnimationEvent) {
-    console.warn('Animation done: ', event);
     if(!this.isShown && this.noticeService.hasNotice()) this.noticeService.dismiss();           //dismiss when animation is done
     this.isShown = this.noticeService.hasNotice();
   }
