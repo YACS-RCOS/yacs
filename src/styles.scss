@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./_vars.scss";
 
+*:focus {
+  text-decoration: none;
+}
+
 body {
     color: #000;
     font-family: $font;
@@ -79,3 +83,11 @@ div.alert {
 //   outline: 0 none;
 //   box-shadow: 0 none;
 // }
+
+.dropdown-menu {
+  width: 100% !important;
+  left: 0px !important;
+  border-radius: 2px;
+  margin-top: 0px;
+  padding-top: 0px;
+}
