@@ -11,11 +11,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     trigger('fadeOut', [
       state('true' , style({ opacity: 1 })),
       state('false', style({ opacity: 0 })),
-      state('void',  style({ opacity: 0 })),
       transition('false => true', animate('0.4s')),
-      transition('true => false', animate('1.2s')),
-      transition('* => void'    , animate('1.2s')),
-      transition('void => *'    , animate('1.2s'))
+      transition('true => false', animate('1.2s'))
     ])
   ]
 })
@@ -35,7 +32,7 @@ export class NoticeBarComponent implements OnChanges {
   }
 
   dismissNotice() : void {
-    this.isShown = !this.isShown;
+    this.isShown = false;
   }
 
   done(event: AnimationEvent) {
