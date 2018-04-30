@@ -11,10 +11,12 @@ class Users::SessionsController < Devise::SessionsController
 
   def create_token
     session[:token] = Yacs::Auth.sign_in resource
+    cookies[:"yacs.user"] = { id: resource.id, email: resource.email }.to_json
   end
 
   def destroy_token
     Yacs::Auth.sign_out current_user
-    session[:token] = nil
+    session.delete :token
+    cookies.delete :"yacs.user"
   end
 end
