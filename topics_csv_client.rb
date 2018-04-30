@@ -10,7 +10,7 @@ class TopicsCsvClient
   def courses
     content = open(@url).read
     csv = CSV.parse(content)
-    courses = csv[1..-1].map{|row| Hash[csv[0].zip(row)]}
+    courses = csv[1..-1].map{|row| Hash[csv[0].zip(row)]}.reject{|c| !c['department'] || !c['number']}
     courses.map! do |course|
       if course['prerequisites']
         course['description'] = "#{course['description']} Prerequisites: #{course['prerequisites']}"
