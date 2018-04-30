@@ -58,6 +58,8 @@ services:
       - "4400:4400"
     volumes:
       - "./develop/yacs-users:/usr/src/app"
+    tty: true
+    stdin_open: true
 
   malg:
     build: ./develop/yacs-malg

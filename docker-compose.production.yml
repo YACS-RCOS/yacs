@@ -14,10 +14,6 @@ services:
     restart: unless-stopped
     environment:
       - RAILS_ENV=production
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - SECRET_TOKEN=${SECRET_TOKEN}
-      - WEB_CONCURRENCY=${WEB_CONCURRENCY}
-      - MAX_THREADS=${MAX_THREADS}
 
   worker:
     restart: unless-stopped
@@ -32,6 +28,8 @@ services:
 
   users:
     restart: unless-stopped
+    environment:
+      - RAILS_ENV=production
 
   malg:
     restart: unless-stopped
