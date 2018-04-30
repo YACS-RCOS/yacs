@@ -28,3 +28,5 @@ services:
     restart: unless-stopped
     expose:
       - "4600"
+    environment:
+      - CSV_SOURCE=http://docs.google.com/spreadsheets/d/e/2PACX-1vThsxFovHKq-FpIx7keMhgvhPjBPS59EWOiMPEcFTKCi883GGmFLdKS4YFNbA8jfDzGciFYOZHZdE-x/pub?gid=0&single=true&output=csv
