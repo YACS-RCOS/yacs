@@ -8,6 +8,10 @@
     height: $header_height;
   }
 
+  .container {
+    max-width: 1200px;
+  }
+
   .navbar-nav {
     flex-wrap: nowrap;
   }
