@@ -17,10 +17,11 @@ import 'rxjs/add/operator/distinctUntilChanged';
 export class HeaderComponent {
 
   //flag to stop keyup.enter from doing normal search when drop down is used
-  dropDownSelected: boolean = false;                  
+  dropDownSelected: boolean = false;
+  navbarCollapsed: boolean = true;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private yacsService: YacsService) {}
 
   //keyup.enter generic search
@@ -62,5 +63,4 @@ export class HeaderComponent {
       }});
     this.dropDownSelected = true;
   }
-
 }
