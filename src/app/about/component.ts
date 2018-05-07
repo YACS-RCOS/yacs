@@ -11,12 +11,12 @@ export class AboutComponent {
       {
         'name': 'Cameron Root',
         'github': 'copperwater',
-        'years': 'Fall 2015 - Spring 2017'
+        'years': 'Fall 2015 - Spring 2018'
       },
       {
         'name': 'Richi Young',
         'github': 'Bad-Science',
-        'years': 'Fall 2015 - Spring 2017'
+        'years': 'Fall 2015 - Spring 2018'
       },
       {
         'name': 'Mark Robinson',
@@ -26,7 +26,7 @@ export class AboutComponent {
       {
         'name': 'Ryan Stillings',
         'github': 'rystills',
-        'years': 'Fall 2016 - Spring 2017'
+        'years': 'Fall 2016 - Spring 2018'
       },
       {
         'name': 'Ayushi Mishra',
@@ -36,7 +36,7 @@ export class AboutComponent {
       {
         'name': 'Kathleen Burkhardt',
         'github': 'kburk1997',
-        'years': 'Spring 2017'
+        'years': 'Spring 2017 - Spring 2018'
       },
       {
         'name': 'Rutvik Manohar',
@@ -57,6 +57,101 @@ export class AboutComponent {
         'name': 'Perri Adams',
         'github': 'perribus',
         'years': 'Summer 2017'
+      },
+      {
+        'name': 'Alex Zuckut',
+        'github': 'a-zuckut',
+        'years': 'Fall 2017'
+      },
+      {
+        'name': 'Yuze Ma',
+        'github': 'bobmayuze',
+        'years': 'Fall 2017 - Spring 2018'
+      },
+      {
+        'name': 'Cole Gregory',
+        'github': 'colegregory',
+        'years': ''
+      },
+      {
+        'name': 'Alisha',
+        'github': 'alishasonawalla',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Andres',
+        'github': 'guarner8',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Bradley',
+        'github': 'bradleybrecher',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Briana Griffin',
+        'github': 'esoterum',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Daniel Ackermans',
+        'github': 'marchdan',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Hao',
+        'github': 'hhyy233',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Haochang Caspar Qian',
+        'github': 'fakedestinyck',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Haoran Hu',
+        'github': 'h-h-r',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Huiming Cheng',
+        'github': 'HuimingCheng',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'James Milne',
+        'github': 'milnej',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Jody',
+        'github': 'jodz959',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Kelly Wang',
+        'github': 'wzq97',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'laurenforti',
+        'github': 'laurenforti',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Mahi',
+        'github': 'mahi-g',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Yifan Li',
+        'github': 'lyffreya',
+        'years': 'Spring 2018'
+      },
+      {
+        'name': 'Yuen Wook Kim',
+        'github': 'kimy17',
+        'years': 'Spring 2018'
       }
     ],
     'past_devs': [
