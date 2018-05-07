@@ -44,7 +44,8 @@ const FLAVORTEXTS: string[] = [
   'A painstakingly crafted',
   'A geothermal powered',
   'A mighty fine',
-  'A hydrophobic'
+  'A hydrophobic',
+  'A supercalifragilisticexpialidocious'
 ];
 
 @Component({
