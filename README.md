@@ -2,6 +2,7 @@
 [![Build Status](https://img.shields.io/travis/YACS-RCOS/yacs/master.svg)](https://travis-ci.org/YACS-RCOS/yacs)
 [![Coverage Status](https://img.shields.io/coveralls/YACS-RCOS/yacs.svg)](https://coveralls.io/github/YACS-RCOS/yacs?branch=master)
 [![Code Climate](https://img.shields.io/codeclimate/github/YACS-RCOS/yacs.svg)](https://codeclimate.com/github/YACS-RCOS/yacs)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs?ref=badge_shield)
 
 Simple, Sane Course Scheduling. To use YACS @ RPI, visit https://yacs.cs.rpi.edu.
 
@@ -77,3 +78,6 @@ YACS is intended to be a safe, welcoming space for collaboration, and contributo
 
 # License
 YACS is an open source project released under the terms of the [MIT License](https://opensource.org/licenses/MIT)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs?ref=badge_large)
