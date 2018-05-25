@@ -99,7 +99,7 @@ services:
     ports:
       - "2181:2181"
   kafka:
-    image: wurstmeister/kafka:latest
+    image: wurstmeister/kafka:1.0.0
     # ports:
     #  - target: 9094
     #    published: 9094
