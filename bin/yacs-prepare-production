@@ -12,5 +12,3 @@ if [ ! -f .env ]; then
 fi
 
 bin/yacs-build-production
-bin/yacs-compose-production run --rm core bundle exec rails db:create
-bin/yacs-compose-production run --rm core bundle exec rails db:migrate

@@ -5,6 +5,11 @@ services:
     image: postgres:9.5.6
     expose:
       - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:4-alpine
@@ -36,7 +41,7 @@ services:
     depends_on:
       - postgres
       - redis
-    command: bundle exec puma -C config/puma.rb
+    command: bin/start.sh
     expose:
       - "4100"
     extra_hosts:
@@ -50,8 +55,7 @@ services:
       - postgres
       - redis
       - kafka
-        #      - zookeeper
-    command: bundle exec karafka server
+    command: bin/start-consumer.sh
 
   web:
     image: yacsrcos/yacs-web
@@ -81,7 +85,7 @@ services:
     depends_on:
       - postgres
       - redis
-    command: bundle exec puma -C config/puma.rb
+    command: bin/start.sh
     expose:
       - "4400"
 
@@ -124,6 +128,8 @@ services:
       #KAFKA_CREATE_TOPICS: "create:1:1,update:1:1,delete:1:1"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper:2181 --list"]
 
 volumes:
   dist-web:

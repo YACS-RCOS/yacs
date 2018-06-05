@@ -4,5 +4,3 @@ cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
 bin/yacs-clone-all
 bin/yacs-generate-cert
 bin/yacs-build-development
-bin/yacs-compose-development run --rm core bundle exec rails db:create
-bin/yacs-compose-development run --rm core bundle exec rails db:migrate
