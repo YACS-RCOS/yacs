@@ -3,12 +3,11 @@ class Course < ActiveRecord::Base
   has_many   :sections, dependent: :destroy
   validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
-  after_save :respond_course
+  after_save :send_alert_to_kafka
 
 
-  def respond_course
-     # CoreProducer.new.call(course)
-     CoreResponder.new.call(self)
+  def send_alert_to_kafka
+     CourseResponder.new.call(self)
   end
 
   def self.get code, number
