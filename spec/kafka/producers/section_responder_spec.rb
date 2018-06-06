@@ -21,6 +21,7 @@ RSpec.describe EventResponders::SectionResponder do
             it 'expect to add builds to message buffer' do
                 responder.call(event)
                 expect(responder.message_buffer['section_change']).to eq accumulated_data
+            end
         end
     end
 end
