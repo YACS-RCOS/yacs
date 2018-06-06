@@ -1,7 +1,7 @@
 module EventResponders
 
     class CourseResponder < ApplicationResponder
-       topic :course_changee
+       topic :course_changee, required: true
 
         def respond(event)
             respond_to :course_change, event.to_json(:only => [:uuid,:department_id, :name, :number, :min_credits, :max_credits, :created_at , :updated_at, :description, :tags  ])
@@ -9,7 +9,7 @@ module EventResponders
     end
 
     class SectionResponder < ApplicationResponder
-       topic :section_change
+       topic :section_change, required: true
 
        def respond(event)
            respond_to :section_change , event.to_json(:only => [:uuid,:course_id, :name, :crn, :seats, :seats, :seats_taken, :created_at, :updated_at, :num_periods, :instructors, :conflicts ])
