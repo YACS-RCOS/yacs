@@ -5,24 +5,22 @@ RSpec.describe EventResponders::CoureseResponder do
 
     context 'produce message for topic' do
 
-        describe 'topics to speak to' do
+    it { expect(described_class.topcis.size).to eq 1 }
+
+        describe 'topic(s) to speak to' do
             let(:topic) { described_class.topics['course_change'] }
             it { expect(topic.name).to eq 'course_change' }
-            #(...)
         end
 
-        describe '.call' do
+        describe '#call' do
             let(:input_data) { { rand => rand } }
             let(:accumulated_data) do
-                [[input_data.to_json, { topic: 'section_change'}]]
+                [[event.to_json, { topic: 'section_change'}]]
             end
+
+            it 'expect to add builds to message buffer' do
+                responder.call(event)
+                expect(responder.messages_buffer['course_change']).to eq accumulated_data
         end
     end
-
-    context '...' do
-    end
-
-    context '...' do
-    end
-
 end
