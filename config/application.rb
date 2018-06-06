@@ -17,7 +17,6 @@ module Yacs
 
     # Autoload all lib files
     config.autoload_paths << Rails.root.join('lib')
-    config.autoload_paths << Rails.root.join('app/responders')
 
     # Load the cache sweepers
     # config.active_record.observers = %w{ CoursesSweeper DepartmentsSweeper }
