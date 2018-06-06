@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe SectionResponder do
+RSpec.describe EventResponders::SectionResponder do
     subject(:responder) {described_class.new}
 
     context 'produce message for topic' do
