@@ -1,7 +1,6 @@
 require "rails_helper"
 
-
-RSpec.describe CoureseResponder do
+RSpec.describe EventResponders::CoureseResponder do
     subject(:responder) {described_class.new}
 
     context 'produce message for topic' do

@@ -5,10 +5,10 @@ class Section < ActiveRecord::Base
   default_scope { order(name: :asc) }
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
-  after_save :send_alert_to_kafka
+  after_save :send_notification
 
-  def send_alert_to_kafka
-     ::SectionResponder.new.call(self)
+  def send_notification
+     EventResponders::SectionResponder.new.call(self)
   end
 
 
