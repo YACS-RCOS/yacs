@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20180323212743) do
     t.string "instructors", default: [], null: false, array: true
     t.integer "conflicts", default: [], null: false, array: true
     t.uuid "uuid", null: false
-    t.string "periods_location", default: [], null: false, array: true
+    t.string "periods_location", default: [], array: true
     t.index ["course_id", "name"], name: "index_sections_on_course_id_and_name", unique: true
     t.index ["course_id"], name: "index_sections_on_course_id"
     t.index ["uuid"], name: "index_sections_on_uuid"
