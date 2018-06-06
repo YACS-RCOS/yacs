@@ -21,6 +21,7 @@ RSpec.describe EventResponders::CoureseResponder do
             it 'expect to add builds to message buffer' do
                 responder.call(event)
                 expect(responder.messages_buffer['course_change']).to eq accumulated_data
+            end
         end
     end
 end
