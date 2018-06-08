@@ -5,6 +5,15 @@ RSpec.describe Course do
     before do
       @course = create(:course)
     end
+
+    context 'when a course is updated' do
+        context 'send message to Kafka topic' do
+           describe '#send_notification' do
+                it 'executes call method with self parameter' do
+                    expect(::SectionsResponder.new.call(self))
+            end
+        end
+
     context 'when there is a section' do
       before do
         @section = create(:section, course: @course)
@@ -20,7 +29,7 @@ end
 =begin
   context 'search' do
     context 'there are courses' do
-      before do 
+      before do
         name_tokens = %w{a b c d}
         names = []
         name_tokens.each do |n|
