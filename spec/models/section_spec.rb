@@ -2,17 +2,19 @@ require "rails_helper"
 
 RSpec.describe Section do
     context 'when a section is updated' do
-        context 'notify Kafka topic' do
+      context 'notify Kafka topic' do
          let(:param) { rand }
          subject(:responder) { ::SectionsResponder.new }
 
-            describe '#send_notification' do
+           describe '#send_notification' do
                  it 'executes call method with self parameter' do
                      expect(responder.call(self))
                  end
 
                  it 'cannot accept another parameter' do
-                     expect{ responder.call(param) }.to raise_error NotImplementedError
+                     while param != self do
+                        expect{ responder.call(param) }.to raise_error NotImplementedError
+                     end
                  end
              end
 
