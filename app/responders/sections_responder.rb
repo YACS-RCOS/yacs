@@ -1,4 +1,4 @@
-class SectionResponder < ApplicationResponder
+class SectionsResponder < ApplicationResponder
    topic :section_change, required: true
 
    def respond(event)
