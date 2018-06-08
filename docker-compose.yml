@@ -57,6 +57,13 @@ services:
       - kafka
     command: bin/start-consumer.sh
 
+  notifications:
+    image: yacsrcos/yacs-notifications
+    depends_on:
+      - kafka
+    expose: 
+      - "4700"
+
   web:
     image: yacsrcos/yacs-web
     volumes:
