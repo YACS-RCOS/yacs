@@ -8,7 +8,7 @@ RSpec.describe ::SectionsResponder do
     it { expect(described_class.topcis.size).to eq 1 }
 
         describe 'topic(s) to speak to' do
-            let(:topic) { described_class.topics['section_chage'] }
+            let(:topic) { described_class.topics['section_change'] }
             it { expect(topic.name).to eq 'section_change' }
          end
 

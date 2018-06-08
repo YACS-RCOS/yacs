@@ -12,7 +12,6 @@ class Section < ActiveRecord::Base
      ::SectionsResponder.new.call(self)
   end
 
-
   def self.compute_conflict_ids_for id
     find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
       (SELECT(unnest(conflict_ids(#{id.to_i})))) ORDER BY ID").map(&:id)
