@@ -11,7 +11,7 @@ RSpec.describe Course do
          let(:param) { rand }
          subject(:responder) { ::CoursesResponder.new }
 
-            describe '#send_notification' do
+           describe '#send_notification' do
                  it 'executes call method with self parameter' do
                      expect(responder.call(self))
                  end

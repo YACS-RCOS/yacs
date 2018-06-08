@@ -17,6 +17,7 @@ RSpec.describe Section do
                      end
                  end
              end
+        end
 
    context 'when period information is updated' do
       before do

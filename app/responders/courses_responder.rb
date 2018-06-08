@@ -1,4 +1,4 @@
-class CourseResponder < ApplicationResponder
+class CoursesResponder < ApplicationResponder
    topic :course_change, required: true
 
     def respond(event)
