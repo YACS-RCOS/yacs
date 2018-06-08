@@ -7,12 +7,18 @@ RSpec.describe Course do
     end
 
     context 'when a course is updated' do
-        context 'send message to Kafka topic' do
+      context 'notify Kafka topic' do
+         let(:param) { rand }
+         subject(:responder) { ::CoursesResponder.new }
            describe '#send_notification' do
-                it 'executes call method with self parameter' do
-                    expect(::SectionsResponder.new.call(self))
-            end
-        end
+                 it 'executes call method with self parameter' do
+                     expect(responder.call(self))
+                 end
+
+                 it 'cannot accept another parameter' do
+                     expect{ responder.call(param) }.to raise_error NotImplementedError
+                 end
+             end
 
     context 'when there is a section' do
       before do
