@@ -24,7 +24,7 @@ RSpec.describe CoursesResponder do
             it 'expect to add builds to message buffer' do
                 responder.call(event)
                 #course_change will be change to an environment variable
-                expect(responder.messages_buffer['course_change']).to eq accumulated_data
+                expect(responder.messages_buffer[topic_var]).to eq accumulated_data
             end
         end
     end
