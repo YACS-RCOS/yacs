@@ -5,9 +5,8 @@ class Course < ActiveRecord::Base
   default_scope { order(number: :asc) }
   after_save :send_notification
 
-
   def send_notification
-    ::CoursesResponder.new.call(self)
+    CoursesResponder.new.call(self)
   end
 
   def self.get code, number

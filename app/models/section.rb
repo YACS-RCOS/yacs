@@ -7,9 +7,8 @@ class Section < ActiveRecord::Base
   after_save :update_conflicts!, if: :periods_changed?
   after_save :send_notification
 
-
   def send_notification
-     ::SectionsResponder.new.call(self)
+    SectionsResponder.new.call(self)
   end
 
   def self.compute_conflict_ids_for id
