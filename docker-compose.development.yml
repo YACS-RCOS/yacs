@@ -41,6 +41,13 @@ services:
     volumes:
       - ./develop/yacs:/usr/src/app
 
+  notifications:
+    build: ./develop/yacs-notifications
+    ports:
+      - "4800:4800"
+    volumes:
+      - ./develop/yacs-notifications:/usr/src/app
+
   web:
     build: ./develop/yacs-web
     ports:
