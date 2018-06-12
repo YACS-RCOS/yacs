@@ -14,7 +14,6 @@ RSpec.describe Course do
         describe '#send_notification' do
           it 'executes call method with self parameter' do
             expect(@course).to receive(send_notification)
-            @course.save
           end
         end
       end
