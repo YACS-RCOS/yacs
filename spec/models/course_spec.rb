@@ -7,19 +7,14 @@ RSpec.describe Course do
     end
 
     context 'when a course is updated' do
-      context 'notify Kafka topic' do
-        let(:param) { rand }
-        subject(:responder) { CoursesResponder.new }
-
-        describe '#send_notification' do
-          it 'executes call method with self parameter' do
-            @section.save
-            expect(@course).to receive(:send_notification)
+      describe '#send_notification' do
+        it 'executes call method with self parameter' do
+          @section.save
+          expect(@course).to receive(:send_notification)
           end
         end
       end
     end
-  end
 
   context 'when there is a section' do
       before do
