@@ -8,6 +8,7 @@ yacs-admin
 yacs-users
 yacs-nginx
 yacs-malg
+yacs-notifications
 yacs-prereq-web
 yacs-prereq-data"
 
