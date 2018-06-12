@@ -1,23 +1,27 @@
 class Course < ActiveRecord::Base
-  belongs_to :department
-  has_many   :sections, dependent: :destroy
+  # a course is within a subject
+  belongs_to :subject
+  # now has many listings, each of which has many sections
+  has_many   :listings, dependent: :destroy
   validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
 
   def self.get code, number
-    joins(:department).where("departments.code = ? AND number = ?", code, number).first
+    # now uses shortname instead of code
+    joins(:department).where("departments.shortname = ? AND number = ?", shortname, number).first
   end
 
   def self.search params
+    # changed params to corresponding variables in new schema
     search_params = params.join(' & ')
     query = <<-SQL
       SELECT * FROM (
         SELECT DISTINCT
           courses.*,
-          to_tsvector(departments.name) ||
-          to_tsvector(departments.code) ||
+          to_tsvector(departments.longname) ||
+          to_tsvector(departments.shortname) ||
           to_tsvector(to_char(courses.number, '9999')) ||
-          to_tsvector(courses.name) ||
+          to_tsvector(listings.longname) ||
           to_tsvector(coalesce((string_agg(array_to_string(sections.instructors, ' '), ' ')), '')) ||
           to_tsvector(coalesce((string_agg(array_to_string(courses.tags, ' '), ' ')), ''))
         AS document FROM courses
@@ -32,9 +36,5 @@ class Course < ActiveRecord::Base
     courses = find_by_sql(query).uniq
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
     courses
-  end
-
-  def credits
-    min_credits == max_credits ? "#{min_credits}" : "#{min_credits}-#{max_credits}"
   end
 end
