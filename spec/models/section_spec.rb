@@ -10,12 +10,12 @@ RSpec.describe Section do
           periods_type: ['LAB', 'LEC', 'TEST', 'LEC', 'LEC'])
     end
 
-
     context 'when a section is updated' do
       context 'notify Kafka topic' do
         describe '#send_notification' do
           it 'executes call method with self parameter' do
-            expect(@section).to receive(send_notification)
+            @section.save
+            expect(@section).to receive(:send_notification)
           end
         end
       end
@@ -50,8 +50,6 @@ RSpec.describe Section do
         expect(@section.periods_end).to eq [1400, 900, 1800, 900, 1000]
         expect(@section.periods_type).to eq ['LAB', 'LEC', 'TEST', 'LEC', 'LEC']
       end
-     end
-    end 
-   end
-  end
+    end
+  end 
 end
