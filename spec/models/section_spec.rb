@@ -16,7 +16,6 @@ RSpec.describe Section do
         describe '#send_notification' do
           it 'executes call method with self parameter' do
             expect(@section).to receive(send_notification)
-            @section.save
           end
         end
       end
