@@ -11,12 +11,10 @@ RSpec.describe Section do
     end
 
     context 'when a section is updated' do
-      context 'notify Kafka topic' do
-        describe '#send_notification' do
-          it 'executes call method with self parameter' do
-            @section.save
-            expect(@section).to receive(:send_notification)
-          end
+      describe '#send_notification' do
+        it 'executes call method with self parameter' do
+          @section.save
+          expect(@section).to receive(:send_notification)
         end
       end
     end
