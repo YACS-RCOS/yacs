@@ -1,8 +1,13 @@
 class Section < ActiveRecord::Base
-  belongs_to :course
-  validates  :name, presence: true, uniqueness: { scope: :course_id }
+  # now belongs to a listing
+  belongs_to :listing
+  # now has many professors
+  has_many :professors, dependent: :destroy
+  # course_id changed to listing_id
+  # name is now shortname
+  validates  :shortname, presence: true, uniqueness: { scope: :listing_id }
   validates  :crn, presence: true, uniqueness: true
-  default_scope { order(name: :asc) }
+  default_scope { order(shortname: :asc) }
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
 
