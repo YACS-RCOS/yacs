@@ -4,10 +4,10 @@ RSpec.describe Section do
   context 'there is a section' do
     before do
       @section = create(:section, num_periods: 5,
-          periods_day: [3, 5, 2, 2, 4],
-          periods_start: [1200, 800, 1600, 800, 800],
-          periods_end: [1400, 900, 1800, 900, 1000],
-          periods_type: ['LAB', 'LEC', 'TEST', 'LEC', 'LEC'])
+        periods_day: [3, 5, 2, 2, 4],
+        periods_start: [1200, 800, 1600, 800, 800],
+        periods_end: [1400, 900, 1800, 900, 1000],
+        periods_type: ['LAB', 'LEC', 'TEST', 'LEC', 'LEC'])
     end
 
     context 'when a section is updated' do

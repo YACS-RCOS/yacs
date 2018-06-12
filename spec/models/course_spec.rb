@@ -15,11 +15,11 @@ RSpec.describe Course do
           it 'executes call method with self parameter' do
             @section.save
             expect(@course).to receive(:send_notification)
-            end
           end
         end
       end
     end
+  end
 
   context 'when there is a section' do
       before do
