@@ -31,8 +31,8 @@ services:
   core:
     image: yacsrcos/yacs
     environment:
-      - COURSES_TOPIC_NAME=courses_change     # Customize Kafka topic name for courses here 
-      - SECTIONS_TOPIC_NAME=sections_change   # Customize Kafka topic name for sections here 
+      - COURSES_TOPIC_NAME=course_change     # Customize Kafka topic name for courses here 
+      - SECTIONS_TOPIC_NAME=section_change   # Customize Kafka topic name for sections here 
       - RAILS_ENV
       - SECRET_KEY_BASE
       - SECRET_TOKEN
