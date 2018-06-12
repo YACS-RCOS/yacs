@@ -48,9 +48,9 @@ RSpec.configure do |config|
 require './karafka.rb'
 
 # Don't send messages in the test env
-WaterDrop.setup do |config|
-     config.deliver = false
-end
+  WaterDrop.setup do |config|
+    config.deliver = false
+  end
 
 #########################
 

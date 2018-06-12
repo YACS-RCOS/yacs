@@ -8,20 +8,18 @@ RSpec.describe Course do
 
     context 'when a course is updated' do
       context 'notify Kafka topic' do
-         let(:param) { rand }
-         subject(:responder) { ::CoursesResponder.new }
+        let(:param) { rand }
+        subject(:responder) { CoursesResponder.new }
 
-           describe '#send_notification' do
-                 it 'executes call method with self parameter' do
-                     expect(responder.call(self))
-                 end
-
-                 it 'cannot accept another parameter' do
-                     while param != self do
-                        expect{ responder.call(param) }.to raise_error NotImplementedError
-                     end
-                 end
-             end
+        describe '#send_notification' do
+          it 'executes call method with self parameter' do
+            expect(@course).to receive(send_notification)
+            @course.save
+          end
+        end
+      end
+    end
+  end
 
     context 'when there is a section' do
       before do
@@ -32,7 +30,6 @@ RSpec.describe Course do
         expect(@course.sections).to eq [@section]
       end
     end
-  end
 end
 
 =begin

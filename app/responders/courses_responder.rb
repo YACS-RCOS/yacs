@@ -1,7 +1,9 @@
 class CoursesResponder < ApplicationResponder
-   topic :course_change, required: true
+  @@courses_topic_name = ENV['COURSES_TOPIC_NAME']
 
-    def respond(event)
-        respond_to :course_change, event.to_json(:only => [:uuid,:department_id, :name, :number, :min_credits, :max_credits, :created_at , :updated_at, :description, :tags  ])
-    end
+  topic :"#{@@courses_topic_name}", required: true
+
+  def respond(event)
+    respond_to :"#{@@courses_topic_name}", event.to_json(:only => [:uuid,:department_id, :name, :number, :min_credits, :max_credits, :created_at , :updated_at, :description, :tags])
+  end
 end

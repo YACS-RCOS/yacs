@@ -1,34 +1,29 @@
 require "rails_helper"
 
 RSpec.describe Section do
-    context 'when a section is updated' do
-      context 'notify Kafka topic' do
-         let(:param) { rand }
-         subject(:responder) { ::SectionsResponder.new }
-
-           describe '#send_notification' do
-                 it 'executes call method with self parameter' do
-                     expect(responder.call(self))
-                 end
-
-                 it 'cannot accept another parameter' do
-                     while param != self do
-                        expect{ responder.call(param) }.to raise_error NotImplementedError
-                     end
-                 end
-             end
-        end
-
-   context 'when period information is updated' do
-      before do
-        @section = create(:section, num_periods: 5,
+  context 'there is a section' do
+    before do
+      @section = create(:section, num_periods: 5,
           periods_day: [3, 5, 2, 2, 4],
           periods_start: [1200, 800, 1600, 800, 800],
           periods_end: [1400, 900, 1800, 900, 1000],
           periods_type: ['LAB', 'LEC', 'TEST', 'LEC', 'LEC'])
-      end
+    end
 
-      it 'sorts periods by day, and then start time' do
+
+    context 'when a section is updated' do
+      context 'notify Kafka topic' do
+        describe '#send_notification' do
+          it 'executes call method with self parameter' do
+            expect(@section).to receive(send_notification)
+            @section.save
+          end
+        end
+      end
+    end
+
+    context 'when period information is updated' do
+     it 'sorts periods by day, and then start time' do
         expect(@section.num_periods).to eq 5
         expect(@section.periods_day).to eq [2, 2, 3, 4, 5]
         expect(@section.periods_start).to eq [800, 1600, 1200, 800, 800]
@@ -56,6 +51,8 @@ RSpec.describe Section do
         expect(@section.periods_end).to eq [1400, 900, 1800, 900, 1000]
         expect(@section.periods_type).to eq ['LAB', 'LEC', 'TEST', 'LEC', 'LEC']
       end
-    end
+     end
+    end 
+   end
   end
 end
