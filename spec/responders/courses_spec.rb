@@ -4,7 +4,6 @@ RSpec.describe CoursesResponder do
   subject(:responder) {described_class.new}
   let(:event) { Course.self }
   let(:topic_var) { ENV["COURSES_TOPIC_NAME"]}
-
   context 'produce message for topic' do
     it { expect(described_class.topcis.size).to eq 1 }
     describe 'topic(s) to speak to' do
