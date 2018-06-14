@@ -3,6 +3,11 @@ class Course < ActiveRecord::Base
   has_many   :sections, dependent: :destroy
   validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
+  after_save :send_notification
+
+  def send_notification
+    CoursesResponder.new.call(self)
+  end
 
   def self.get code, number
     joins(:department).where("departments.code = ? AND number = ?", code, number).first

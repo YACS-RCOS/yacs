@@ -40,6 +40,20 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+
+##########################
+
+#Added on 06/05/2018 for testing Karafka <<
+
+require './karafka.rb'
+
+# Don't send messages in the test env
+  WaterDrop.setup do |config|
+    config.deliver = false
+  end
+
+#########################
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
