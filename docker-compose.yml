@@ -67,8 +67,10 @@ services:
   notices:
     image: yacsrcos/yacs-notices
     depends_on:
+      - postgres
       - redis
-    expose: "4900"
+    expose:
+      - "4900"
 
   web:
     image: yacsrcos/yacs-web
