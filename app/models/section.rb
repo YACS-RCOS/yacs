@@ -5,6 +5,11 @@ class Section < ActiveRecord::Base
   default_scope { order(name: :asc) }
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
+  after_save :send_notification
+
+  def send_notification
+    SectionsResponder.new.call(self)
+  end
 
   def self.compute_conflict_ids_for id
     find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
@@ -47,7 +52,7 @@ class Section < ActiveRecord::Base
   def sort_periods
     periods_info = periods_day.zip periods_start, periods_end, periods_type, periods_location
     periods_info = periods_info.sort!.transpose
-    self.periods_day, self.periods_start, self.periods_end, self.periods_type, self.periods_location = periods_info 
+    self.periods_day, self.periods_start, self.periods_end, self.periods_type, self.periods_location = periods_info
   end
 
   def periods_changed?
