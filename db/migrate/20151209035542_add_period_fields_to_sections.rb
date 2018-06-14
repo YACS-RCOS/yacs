@@ -1,4 +1,4 @@
-class AddPeriodFieldsToSections < ActiveRecord::Migration
+class AddPeriodFieldsToSections < ActiveRecord::Migration[4.2]
   def change
     change_table :sections do |t|
       t.integer :num_periods,                default: 0,  null: false

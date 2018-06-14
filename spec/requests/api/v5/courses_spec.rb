@@ -1,6 +1,6 @@
 def json_validate_courses(courses=@courses, sections=false, periods=false)
   courses.each_with_index do |course, n|
-    ['id', 'name', 'number', 'min_credits', 'max_credits', 'description', 'department_id'].each do |field|
+    ['id', 'name', 'number', 'min_credits', 'max_credits', 'description', 'department_id', 'tags'].each do |field|
       expect(json['courses'][n][field]) .to eq course.attributes[field]
     end
     if sections
@@ -79,7 +79,8 @@ describe 'Courses API' do
           min_credits: 1,
           max_credits: 4,
           description: 'XXXXXX',
-          department_id: department.id
+          department_id: department.id,
+          tags: []
         }
       }
       post "/api/v5/courses/", course_params
@@ -91,8 +92,8 @@ describe 'Courses API' do
   end
 
   context 'There is a course to be updated' do
+    let(:course) { FactoryGirl.create(:course, max_credits: 4) }
     it 'updates the maximum number of credits for the course'do
-      course = FactoryGirl.create(:course, max_credits: 4)
       course_params={
         course: {
           max_credits: 7
@@ -116,6 +117,21 @@ describe 'Courses API' do
       expect(course.min_credits).to eq 2
       json_validate_courses([course])
     end
+
+    it 'updates the tag' do
+      course_params={
+        course: {
+          tags: ["featured"]
+        }
+      }
+
+      course = FactoryGirl.create(:course, tags: ["featured"])
+      put "/api/v5/courses/#{course.id}", course_params
+      course.reload
+      expect(course.tags).to eq ["featured"]
+      json_validate_courses([course])
+    end
+
     it 'deletes a course' do
       course = FactoryGirl.create(:course)
       delete "/api/v5/courses/#{course.id}"

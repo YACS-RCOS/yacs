@@ -1,14 +1,18 @@
 FactoryGirl.define do
   factory :school do
+    uuid SecureRandom.uuid
     sequence(:name) { |n| "School of Thing ##{n}" }
   end
 
   factory :department do
+    uuid SecureRandom.uuid
     sequence(:code) { |n| "DEPT#{n}" }
     sequence(:name) { |n| "Department #{n}" }
+    school
   end
 
   factory :course do
+    uuid SecureRandom.uuid
     sequence(:name)   { |n| "Course #{n}" }
     sequence(:number) { |n| 1000 + n }
     min_credits   4
@@ -60,6 +64,7 @@ should be zero.
 =end
 
   factory :section do
+    uuid SecureRandom.uuid
     sequence(:name) { |n| "#{n}" }
     sequence(:crn)  { |n| 87600 + n }
     seats       10

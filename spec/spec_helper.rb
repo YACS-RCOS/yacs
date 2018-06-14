@@ -40,6 +40,20 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+
+##########################
+
+#Added on 06/05/2018 for testing Karafka <<
+
+require './karafka.rb'
+
+# Don't send messages in the test env
+  WaterDrop.setup do |config|
+    config.deliver = false
+  end
+
+#########################
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
@@ -89,4 +103,24 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.before :each do |example|
+    extend(FixLegacyTestRequests) # to be removed at some point!
+  end
+end
+
+# https://stackoverflow.com/questions/43412951/rspec-request-specs-and-rails-5
+module FixLegacyTestRequests
+  def get(path, par = {}, hdr = {})
+    process(:get, path, params: par, headers: hdr)
+  end
+  def post(path, par = {}, hdr = {})
+    process(:post, path, params: par, headers: hdr)
+  end
+  def put(path, par = {}, hdr = {})
+    process(:put, path, params: par, headers: hdr)
+  end
+  def delete(path, par = {}, hdr = {})
+    process(:delete, path, params: par, headers: hdr)
+  end
 end

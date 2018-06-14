@@ -5,7 +5,18 @@ RSpec.describe Course do
     before do
       @course = create(:course)
     end
-    context 'when there is a section' do
+
+    context 'when a course is updated' do
+      describe '#send_notification' do
+        it 'executes call method with self parameter' do
+          @section.save
+          expect(@course).to receive(:send_notification)
+          end
+        end
+      end
+    end
+
+  context 'when there is a section' do
       before do
         @section = create(:section, course: @course)
       end
@@ -13,14 +24,13 @@ RSpec.describe Course do
       it 'has the section' do
         expect(@course.sections).to eq [@section]
       end
-    end
   end
 end
 
 =begin
   context 'search' do
     context 'there are courses' do
-      before do 
+      before do
         name_tokens = %w{a b c d}
         names = []
         name_tokens.each do |n|

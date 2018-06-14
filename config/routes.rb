@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       resources :sections,    only: [:index, :update, :destroy, :create, :show]
       resources :schedules,   only: [:index]
     end
-  end  
+  end
 
   get '/' => 'static#index'
   get '/about' => 'static#about'

@@ -3,6 +3,11 @@ class Course < ActiveRecord::Base
   has_many   :sections, dependent: :destroy
   validates  :number, presence: true, uniqueness: { scope: :department_id }
   default_scope { order(number: :asc) }
+  after_save :send_notification
+
+  def send_notification
+    CoursesResponder.new.call(self)
+  end
 
   def self.get code, number
     joins(:department).where("departments.code = ? AND number = ?", code, number).first
@@ -18,7 +23,8 @@ class Course < ActiveRecord::Base
           to_tsvector(departments.code) ||
           to_tsvector(to_char(courses.number, '9999')) ||
           to_tsvector(courses.name) ||
-          to_tsvector(coalesce((string_agg(array_to_string(sections.instructors, ' '), ' ')), ''))
+          to_tsvector(coalesce((string_agg(array_to_string(sections.instructors, ' '), ' ')), '')) ||
+          to_tsvector(coalesce((string_agg(array_to_string(courses.tags, ' '), ' ')), ''))
         AS document FROM courses
         JOIN sections on sections.course_id = courses.id
         JOIN departments on courses.department_id = departments.id
