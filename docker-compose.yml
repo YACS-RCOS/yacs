@@ -64,6 +64,12 @@ services:
     expose: 
       - "4700"
 
+  notices:
+    image: yacsrcos/yacs-notices
+    depends_on:
+      - redis
+    expose: "4900"
+
   web:
     image: yacsrcos/yacs-web
     volumes:
