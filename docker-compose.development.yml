@@ -22,6 +22,8 @@ services:
   core:
     build: ./develop/yacs
     environment:
+      - COURSE_TOPIC_NAME=course_change 
+      - SECTION_TOPIC_NAME=section_change
       - RAILS_ENV=development
       - SECRET_KEY_BASE=6ae504547712ae4faf35b9d6186322cf
       - SECRET_TOKEN=cc621dab5bb79f81057a7d17c8ceea42
