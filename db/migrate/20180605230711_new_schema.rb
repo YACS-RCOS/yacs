@@ -21,7 +21,7 @@ class NewSchema < ActiveRecord::Migration[5.1]
     remove_column :courses, :min_credits
     remove_column :courses, :max_credits
     remove_column :courses, :department_id
-    add_column    :courses, :subject_id
+    add_column    :courses, :subject_id, :integer, null: false
 
     # create sessions table
     create_table :sessions do |t|
