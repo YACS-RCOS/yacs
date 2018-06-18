@@ -1,10 +1,5 @@
 class Section < ActiveRecord::Base
-  # now belongs to a listing
-  belongs_to :listing
-  # now has many professors
-  has_many :professors, dependent: :destroy
-  # course_id changed to listing_id
-  # name is now shortname
+  has_and_belongs_to_many :instructor
   validates  :shortname, presence: true, uniqueness: { scope: :listing_id }
   validates  :crn, presence: true, uniqueness: true
   default_scope { order(shortname: :asc) }
