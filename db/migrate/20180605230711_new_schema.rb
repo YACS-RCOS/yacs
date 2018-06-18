@@ -1,15 +1,11 @@
 class NewSchema < ActiveRecord::Migration[5.1]
   def change
     # modify schools table
-    remove_column :schools, :name
-    add_column    :schools, :shortname, :string, null: false
-    add_column    :schools, :longname, :string, null: false
+    rename_column :schools, :name, :longname
 
     # modify departments table
-    remove_column :departments, :name
-    remove_column :departments, :code
-    add_column    :departments, :shortname, :string, null: false
-    add_column    :departments, :longname, :string, null: false
+    rename_column :departments, :name, :longname
+    rename_column :departments, :code, :shortname
 
     # create subjects table
     create_table :subjects do |t|
@@ -48,8 +44,12 @@ class NewSchema < ActiveRecord::Migration[5.1]
       t.timestamps                    null: false
     end
 
+    add_index :listings, :longname                              # search by name
+    add_index :listings, [:subject_id, :longname], unique: true # search by name within subject
+
     # modify sections table
-    remove_column :sections, :name
+    rename_column :sections, :conflicts, :conflict_ids
+    rename_column :sections, :name, :shortname
     remove_column :sections, :course_id
     remove_column :sections, :num_periods
     remove_column :sections, :periods_day
@@ -58,19 +58,12 @@ class NewSchema < ActiveRecord::Migration[5.1]
     remove_column :sections, :periods_type
     remove_column :sections, :periods_location
     remove_column :sections, :instructors
-    remove_column :sections, :conflicts
-    add_column    :sections, :shortname, :string, null: false
-    add_column    :sections, :conflict_ids, :integer, array: true, null: false, default: []
-    add_column    :sections, :instructor_ids, :integer, array: true, null: false, default: []
     add_column    :sections, :periods, :jsonb, null: false, default: '{}'
 
-    # create professors table
-    create_table :professors do |t|
+    # create instructors table
+    create_table :instructors do |t|
       t.string :longname,             null: false
       t.timestamps                    null: false
     end
-
-    add_index :listings, :longname                              # search by name
-    add_index :listings, [:subject_id, :longname], unique: true # search by name within subject
   end
 end
