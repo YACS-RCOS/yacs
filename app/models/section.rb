@@ -1,7 +1,7 @@
 class Section < ActiveRecord::Base
-  has_and_belongs_to_many :instructor
+  has_and_belongs_to_many :instructors
   validates  :shortname, presence: true, uniqueness: { scope: :listing_id }
-  validates  :crn, presence: true, uniqueness: true
+  validates  :crn, presence: true
   default_scope { order(shortname: :asc) }
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
