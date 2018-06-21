@@ -5,7 +5,7 @@ class Course < ActiveRecord::Base
   default_scope { order(number: :asc) }
 
   def self.get code, number
-    joins(:subject).where("departments.shortname = ? AND number = ?", shortname, number).first
+    joins(:subject).where("subjects.shortname = ? AND number = ?", shortname, number).first
   end
 
   def self.search params
