@@ -1,7 +1,7 @@
 class Course < ActiveRecord::Base
-  belongs_to :department
-  has_many   :sections, dependent: :destroy
-  validates  :number, presence: true, uniqueness: { scope: :department_id }
+  belongs_to :subject
+  has_many   :listings, dependent: :destroy
+  validates  :number, presence: true, uniqueness: { scope: :subject_id }
   default_scope { order(number: :asc) }
   after_save :send_notification
 
@@ -10,7 +10,7 @@ class Course < ActiveRecord::Base
   end
 
   def self.get code, number
-    joins(:department).where("departments.code = ? AND number = ?", code, number).first
+    joins(:subject).where("subjects.shortname = ? AND number = ?", shortname, number).first
   end
 
   def self.search params
@@ -19,16 +19,16 @@ class Course < ActiveRecord::Base
       SELECT * FROM (
         SELECT DISTINCT
           courses.*,
-          to_tsvector(departments.name) ||
-          to_tsvector(departments.code) ||
+          to_tsvector(subjects.longname) ||
+          to_tsvector(subjects.shortname) ||
           to_tsvector(to_char(courses.number, '9999')) ||
-          to_tsvector(courses.name) ||
+          to_tsvector(listings.longname) ||
           to_tsvector(coalesce((string_agg(array_to_string(sections.instructors, ' '), ' ')), '')) ||
           to_tsvector(coalesce((string_agg(array_to_string(courses.tags, ' '), ' ')), ''))
         AS document FROM courses
         JOIN sections on sections.course_id = courses.id
-        JOIN departments on courses.department_id = departments.id
-        GROUP BY courses.id, sections.id, departments.id
+        JOIN subjects on courses.subject_id = subjects.id
+        GROUP BY courses.id, sections.id, subjects.id
       ) c_search
       WHERE c_search.document @@ to_tsquery('#{search_params}')
       ORDER BY ts_rank(c_search.document, to_tsquery('#{search_params}')) DESC
@@ -37,9 +37,5 @@ class Course < ActiveRecord::Base
     courses = find_by_sql(query).uniq
     ActiveRecord::Associations::Preloader.new.preload(courses, :sections)
     courses
-  end
-
-  def credits
-    min_credits == max_credits ? "#{min_credits}" : "#{min_credits}-#{max_credits}"
   end
 end
