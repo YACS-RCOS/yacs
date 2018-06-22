@@ -4,6 +4,9 @@
 }
 
 .schedule-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-left: auto;
     margin-right: auto;
     font-weight: 500;
@@ -20,17 +23,6 @@
    clear: both;
 }
 
-.schedule-menu>.left {
-    float: left;
-}
-.schedule-menu>.right {
-    float: right;
-    height: 1em;
-}
-
-.switch {
-    float: left;
-}
 .schedule-switch {
     padding:5px;
     cursor:pointer;
@@ -58,8 +50,7 @@
 }
 
 .schedule-status {
-    float:right;
-    margin: 0 auto;
+    margin: 0;
     font-size: 90%;
     -moz-user-select:text;
     -webkit-user-select:text;
