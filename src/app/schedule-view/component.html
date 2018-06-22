@@ -1,28 +1,26 @@
 <div *ngIf="!isLoaded" class="loader"></div>
 <div class="schedule-view">
   <div class="schedule-menu">
-    <div class="left">
-      <div class="switch">
-        <span class="schedule-switch" (click) = "previousSchedule()">&#9664;</span>
-        <span class="schedule-index">{{scheduleIndex + 1}} / {{schedules.length}}</span>
-        <span class="schedule-switch" (click) = "nextSchedule()">&#9654;</span>
-      </div>
+    <div class="switch">
+      <span class="schedule-switch" (click) = "previousSchedule()">&#9664;</span>
+      <span class="schedule-index">{{scheduleIndex + 1}} / {{schedules.length}}</span>
+      <span class="schedule-switch" (click) = "nextSchedule()">&#9654;</span>
+    </div>
+    <div>
       <button class="schedule-button" (click) = "clear()">Clear</button>
       <div ngbDropdown class="d-inline-block">
-          <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
-            Share
-          </button>
-          <div ngbDropdownMenu>
-              <button class="schedule-button dropdown-item" (click) = "downloadImage()">Download Image</button>
-          </div>
+        <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
+          Share
+        </button>
+        <div ngbDropdownMenu>
+          <button class="schedule-button dropdown-item" (click) = "downloadImage()">Download Image</button>
+        </div>
       </div>
       <button class="schedule-button">Download ICS</button>
       <button class="schedule-button" [disabled]="isTemporary">Copy Schedule Link</button>
     </div>
-    <div class="right">
-      <div class="schedule-status">
-        {{ statusText() }}
-      </div>
+    <div class="schedule-status">
+      {{ statusText() }}
     </div>
   </div>
   <schedule [schedule]="schedules[scheduleIndex]" *ngIf="schedules.length > 0"></schedule>
