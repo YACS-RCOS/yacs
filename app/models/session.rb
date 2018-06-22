@@ -1,6 +1,5 @@
-class Department < ActiveRecord::Base
-  belongs_to :school
-  has_many   :subjects, dependent: :destroy
+class Session < ActiveRecord::Base
+  has_many   :listings, dependent: :destroy
   validates  :shortname, presence: true, uniqueness: true
   validates  :longname, presence: true, uniqueness: true
   default_scope { order(shortname: :asc) }
