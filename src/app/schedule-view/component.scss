@@ -41,22 +41,19 @@
 }
 
 .schedule-button {
-    border: solid;
-    border-radius: 1px;
-    border-width: 1px;
-    border-color: #c65353;
     color: #ffffff;
-    background-color: #d57f7f;
+    background-color: #c65353;
     font-size: 14px;
     outline: none;
+    border: none;
+    padding: 5px 15px;
 }
 
-.schedule-button:focus {
-    background-color: #c65353;
+.schedule-button:hover {
+    background-color: #d57f7f;
 }
 
 .schedule-button[disabled] {
-  border-color: #a88;
   background-color:#daa;
 }
 
