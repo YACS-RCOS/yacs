@@ -1,1 +1,3 @@
-puts 'Hello, World'
+require 'karafka'
+
+puts 'Hello world'

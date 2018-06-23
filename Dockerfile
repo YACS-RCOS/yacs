@@ -12,4 +12,4 @@ RUN bundle install
 
 COPY . $INSTALL_PATH
 
-CMD ["ruby", "app.rb"]
+CMD bundle exec karafka server
