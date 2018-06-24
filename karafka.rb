@@ -6,7 +6,7 @@ ENV['KARAFKA_ENV'] ||= ENV['RACK_ENV']
 require 'bundler/setup'
 Bundler.require(:default, ENV['KARAFKA_ENV'])
 Karafka::Loader.load(Karafka::App.root)
-require_relative 'app/consumers/userconsumer.rb'
+require_relative 'app/consumers/sectionconsumer.rb'
 
 # Ruby on Rails setup
 # Remove whole non-Rails setup that is above and uncomment the 4 lines below
@@ -29,9 +29,6 @@ class KarafkaApp < Karafka::App
  
 
   after_init do |config|
-    # Put here all the things you want to do after the Karafka framework
-    # initialization
-    #puts "Initialized"
   end
 
   Karafka.monitor.subscribe(Karafka::Instrumentation::Listener)
@@ -39,14 +36,10 @@ class KarafkaApp < Karafka::App
   KarafkaApp.consumer_groups.draw do
 	consumer_group :notifications do
 		topic :section_change do
-			consumer UserConsumer
-			#batch_consuming true
-		end
-		
-		#topic_group:course_changes do
-			#consumer UserConsmer
-    end
-  end
+			consumer SectionConsumer #Single message from section_change
+				end		
+			end
+	 end
 end
 KarafkaApp.boot!
 
