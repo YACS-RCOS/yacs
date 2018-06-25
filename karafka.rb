@@ -34,11 +34,11 @@ class KarafkaApp < Karafka::App
   Karafka.monitor.subscribe(Karafka::Instrumentation::Listener)
   
 	KarafkaApp.consumer_groups.draw do
-	consumer_group :notifications do
-		topic :section_change do
-			consumer SectionConsumer #Single message from section_change
+		consumer_group :notifications do
+			topic :section_change do
+				consumer SectionConsumer #Single message from section_change
 			end		
-	 end
+		end
 	end
 end
 KarafkaApp.boot!
