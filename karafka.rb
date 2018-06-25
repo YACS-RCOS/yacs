@@ -6,7 +6,7 @@ ENV['KARAFKA_ENV'] ||= ENV['RACK_ENV']
 require 'bundler/setup'
 Bundler.require(:default, ENV['KARAFKA_ENV'])
 Karafka::Loader.load(Karafka::App.root)
-require_relative 'app/consumers/sectionconsumer.rb'
+require_relative 'app/consumers/sections_consumer.rb'
 
 # Ruby on Rails setup
 # Remove whole non-Rails setup that is above and uncomment the 4 lines below
