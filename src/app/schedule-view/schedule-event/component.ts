@@ -18,7 +18,7 @@ import { ScheduleEvent } from '../../models/schedule-event.model';
 })
 
 export class ScheduleEventComponent {
-	@Input() scheduleEvent: ScheduleEvent;
+  @Input() scheduleEvent: ScheduleEvent;
   @Input() normalHeight: number;
 
   hover: boolean = false;
@@ -27,7 +27,7 @@ export class ScheduleEventComponent {
     this.hover = newHover;
   }
 
-  getHeight(): number {
+  getHeight(): string {
     return this.hover ? 'auto' : this.normalHeight + 'px';
   }
 }
