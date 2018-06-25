@@ -17,16 +17,18 @@ import { ScheduleEvent } from '../../models/schedule-event.model';
   },
 })
 
-export class ScheduleEventComponent{
+export class ScheduleEventComponent {
 	@Input() scheduleEvent: ScheduleEvent;
-    @Input() normalHeight: number;
+  @Input() normalHeight: number;
 
-    hover: boolean = false;
+  hover: boolean = false;
 
-    changeHover(newHover: boolean) {
-        this.hover = newHover;
-    }
-    getHeight() {
-        return this.hover ? 'auto' : this.normalHeight + 'px';
-    }
+  changeHover(newHover: boolean): void {
+    this.hover = newHover;
+  }
+
+  getHeight(): number {
+    return this.hover ? 'auto' : this.normalHeight + 'px';
+  }
 }
+
