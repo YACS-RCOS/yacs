@@ -43,6 +43,8 @@ gem 'karafka'
 gem 'rubyzip', '~> 1.2.1'
 gem 'listen'
 
+gem 'fast_jsonapi'
+
 group :development, :test do
   gem 'pry'
   gem 'pry-remote'
