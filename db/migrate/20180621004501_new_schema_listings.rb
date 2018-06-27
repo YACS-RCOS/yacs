@@ -14,6 +14,6 @@ class NewSchemaListings < ActiveRecord::Migration[5.1]
     end
 
     add_index :listings, :longname                              # search by name
-    add_index :listings, [:subject_id, :longname], unique: true # search by name within subject
+    # add_index :listings, [:subject_id, :longname], unique: true # search by name within subject
   end
 end
