@@ -10,8 +10,25 @@ import { ScheduleEvent } from '../../models/schedule-event.model';
   providers: [
     // ConstantsService,
   ],
+  host: {
+    '[style.height]': `getHeight()`,
+    '(mouseenter)': `changeHover(true)`,
+    '(mouseleave)': `changeHover(false)`
+  },
 })
 
-export class ScheduleEventComponent{
-	@Input() scheduleEvent: ScheduleEvent;
+export class ScheduleEventComponent {
+  @Input() scheduleEvent: ScheduleEvent;
+  @Input() normalHeight: number;
+
+  hover: boolean = false;
+
+  changeHover(newHover: boolean): void {
+    this.hover = newHover;
+  }
+
+  getHeight(): string {
+    return this.hover ? 'auto' : this.normalHeight + 'px';
+  }
 }
+
