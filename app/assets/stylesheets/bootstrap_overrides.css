@@ -1,0 +1,23 @@
+.form-control {
+  border: 1px solid #d57f7f;
+}
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid #d57f7f;
+}
+.btn-primary {
+  background-color: #c65353 !important;
+  border-color: #d57f7f !important;
+  box-shadow: none !important;
+}
+.btn-primary:hover, .btn-primary:active {
+  background-color: #d57f7f !important;
+  border-color: #d57f7f !important;
+}
+.card-link {
+  color: #d57f7f !important;
+}
+.container {
+  margin-top: 20px;
+}
+
