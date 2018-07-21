@@ -15,6 +15,7 @@ require_relative 'app/consumers/sections_consumer.rb'
 # require ::File.expand_path('../config/environment', __FILE__)
 # Rails.application.eager_load!
 require 'karafka'
+require 'app'
 
 class KarafkaApp < Karafka::App
   setup do |config|
@@ -28,7 +29,9 @@ class KarafkaApp < Karafka::App
   end
  
 
-  after_init do |config|
+  after_init do |configi|
+    run Plezi.app  #Eventsteam.boot! ?
+    # bundle exec iodine -t 16 -w 4 -www ./public
   end
 
   Karafka.monitor.subscribe(Karafka::Instrumentation::Listener)
@@ -38,7 +41,9 @@ class KarafkaApp < Karafka::App
         consumer SectionConsumer #Single message from section_change
         end
       end
+      topic :course_change do
+        consumer CourseConsumer
+      end
     end
 end
 KarafkaApp.boot!
-run Plezi.app #Eventsteam.boot! ?
