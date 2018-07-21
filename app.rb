@@ -1,5 +1,3 @@
-require 'karafka'
-
 # encoding: UTF-8
 
 ## Set environment, working directory, load gems and create logs
