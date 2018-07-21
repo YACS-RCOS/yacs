@@ -41,3 +41,4 @@ class KarafkaApp < Karafka::App
     end
 end
 KarafkaApp.boot!
+run Plezi.app #Eventsteam.boot! ?
