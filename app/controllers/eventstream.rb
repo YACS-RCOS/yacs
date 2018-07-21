@@ -12,43 +12,28 @@
 ##  The Websocket 
 ##  JSON Echo Server
 
+require 'plezi'
 ## TODO:
-## 1.AutoDispatch endpoint for JSON message sending 
-## 2.find the Karafka host
-##   --> kafka://kafka:9094
-
+#continue here http://www.plezi.io/docs/json-autodispatch
 class EventStream
-  TOPICS_CHANNEL = #
+  #TOPICS_CHANNEL = #
   ## considering the JSON communication channel
   @auto_dispatch = true
   protected
-
-  ###
-  # WebSockets
-  ###
-  #def re_connect 
-  #end 
   
   ## on initiializaion speak to the kafka server 
   def on_open
-    # 'kafka://kafka:9094'
-    TOPIC_CHANNEL_SECTIONS
-    subscribe #
-    write 'Opened the YACS-EventStream Websocket!'
-    # on open, the server needs to be communicating with the Kafka responders 
-     #subscribe to the kafka server, take in messages from the kafka consumers 
-
-    # Subscribe to messages from the consumer  
-    #subscribe KAFKA_CONSUMER
+    return close unless params['id']
+    @service = params['id']
+    #subscribe ''
+    publish message: "Connected to #{@service}"
+    puts 'Opened the YACS-EventStream Websocket!'
   end
 
-
-  ## When receiving a single message from 
-  def on_message(data)
-    ## Take in Kafka consumer data and parse it for the front it 
-    new_data = ERB::Util.html_escape data # parse_json(data)
-    publish new_data
-  end 
+  ## When receiving a single message from Consumer pusblish to socket
+  #def on_message(data)
+   # publish new_data message: "#{@name}: #{data}"
+  #end 
 
   ##What does this do?
   def on_close
@@ -56,5 +41,5 @@ class EventStream
 
 end 
 
-Plezi.route '*' , EventStream #to all route addreses 
+Plezi.route '/notifications' , EventStream #to all route addreses 
 
