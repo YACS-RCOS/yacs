@@ -8,11 +8,11 @@ class EventStream
 
   ## When receiving a single message from Consumer pusblish to socket
   def on_message(data)
-    write { notifications: :data }.to_json
+    unless write { notifications: :data }.to_json
+      write "no message sent"
+    end
   end 
 
   def on_close
   end
-end 
-
-Plezi.route '/' , EventStream
+end
