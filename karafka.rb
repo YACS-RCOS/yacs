@@ -29,9 +29,7 @@ class KarafkaApp < Karafka::App
   end
  
 
-  after_init do |configi|
-    run Plezi.app  #Eventsteam.boot! ?
-    # bundle exec iodine -t 16 -w 4 -www ./public
+  after_init do |config|
   end
 
   Karafka.monitor.subscribe(Karafka::Instrumentation::Listener)
