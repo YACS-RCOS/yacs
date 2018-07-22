@@ -1,64 +1,36 @@
-<!-- <script type="text/javascript">
-  console.log("Hello");
-</script>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
 
-<style>
-    body {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
+            <%= devise_error_messages! %>
+          <h2>Log in</h2>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {class: "form"}) do |f| %>
+            <div class="form-group">
+              <%= f.label :email %><br />
+              <%= f.email_field :email, autofocus: true, :class => "form-control" %>
+            </div>
 
-    main {
-      flex: 1 0 auto;
-    }
+            <div class="form-group">
+              <%= f.label :password %><br />
+              <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
+            </div>
 
-    body {
-      background: #fff;
-    }
-
-    .input-field input[type=date]:focus + label,
-    .input-field input[type=text]:focus + label,
-    .input-field input[type=email]:focus + label,
-    .input-field input[type=password]:focus + label {
-      color: #e91e63;
-    }
-
-    .input-field input[type=date]:focus,
-    .input-field input[type=text]:focus,
-    .input-field input[type=email]:focus,
-    .input-field input[type=password]:focus {
-      border-bottom: 2px solid #e91e63;
-      box-shadow: none;
-    }
-</style> -->
-
-<div class="center container">
-<h2 class="text-white">Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field text-white">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field text-white">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="fiel text-white">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+            <% if devise_mapping.rememberable? -%>
+              <div class="form-check">
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me, :class => "form-check-label" %>
+              </div>
+            <% end -%>
+            <%= f.submit "Log in", :class => "btn btn-primary btn-block mt-3" %>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
     </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
 </div>
 
-
-<%= render "devise/shared/links" %>
