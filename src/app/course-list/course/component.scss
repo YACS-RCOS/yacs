@@ -1,3 +1,20 @@
+.course {
+  border: .2em solid #d57f7f;
+  border-radius: 15px;
+  box-shadow: 0 5px 5px #cecece;
+  padding: 10px;
+  margin: 5px;
+}
+
+.menu {
+  background-color: white;
+  color: black;
+  border: .05em solid #cecece;
+  border-radius: 5px;
+  padding: 5px;
+  font-weight: 400;
+}
+
 .course-name {
     font-size: 130%;
     font-weight: 400;
@@ -30,6 +47,12 @@ section {
 section:not(.selected):hover {
     background-color: #d57f7f;
 }
+
+section:not(.selected) {
+    background-color: white;
+    color: black;
+}
+
 section.selected:hover {
     color: #efefef;
     background-color: #d57f7f;
@@ -44,4 +67,21 @@ section.selected {
 }
 section.closed, section.closed:hover {
     color: #888;
+}
+
+.highlight {
+    background-color:  #9b423e;
+    color: white;
+}
+
+.menuhighlight {
+    background-color: #c65353;
+}
+
+.interested {
+    padding: 5em 2em 4em 2em;
+    margin-right: 1em;
+    float: left;
+    border: .2em solid #d57f7f;
+    border-radius: 15px;
 }

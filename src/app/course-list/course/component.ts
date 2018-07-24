@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Course } from '../../models/course.model';
 import { Section } from '../../models/section.model';
 import { SelectionService } from '../../services/selection.service'
-import { ConflictsService } from '../../services/conflicts.service';
+import { ConflictsService } from '../../services/conflicts.service'
 
 @Component({
   selector: 'course',
@@ -16,6 +16,13 @@ export class CourseComponent {
   constructor(
     private selectionService : SelectionService,
     private conflictsService: ConflictsService) { }
+
+  public showingMenu;
+  
+  ngOnInit() {
+    this.showingMenu = false;
+  }
+
   /* A getter function for the range of credits based on the min and max.
    * When {{creditRange}} is used in the template, this function will be called. */
   public get creditRange() {
