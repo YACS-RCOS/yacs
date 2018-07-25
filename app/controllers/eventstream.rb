@@ -7,7 +7,7 @@ class EventStream
   end
 
   ## When receiving a single message from Consumer pusblish to socket
-  def on_message(data)
+  def on_message data
     unless write { notifications: :data }.to_json
       write "no message sent"
     end
