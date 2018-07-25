@@ -1,23 +1,24 @@
 require 'plezi'
 require 'iodine'
-require 'json'
 
 class EventStream
-  @auto_dispatch = true
+  #@auto_dispatch = true
   
   def on_open
-    puts 'Opened the YACS-EventStream Websocket!'
   end
 
-  #read in data from Kafka Consumers
   def notify(data)
     @event = data
     puts data
-  end 
+  end
   
-  #send data to websocket
-  def send_data
-    write @event
+  ##Update: Check changelog & documentation
+  #send data to websocket //  trying to use iodine
+  def on_message(client, data = @event) 
+    @notifications = data.to_sym
+    #transmit data to all websocket connections
+    client.publish @notifications
+    #client.publish @notifications
   end 
 
   def on_close
