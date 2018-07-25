@@ -1,14 +1,11 @@
 require 'karafka'
-require_relative 'application_consumer'
 require 'plezi'
+require 'iodine'
+require_relative 'application_consumer'
 
 class CourseConsumer < ApplicationConsumer
   def consume
-	if ( Object.const_defined?('EventStream') == false )
-	  puts "EventStream class not initialized" 
-	else 
-	  EventStream.on_message(params)
-	  puts "Consumer message sent to websocket"
-	end	
+	  EventStream.new.notify(params)
+	  puts "Consumer message sent to websocket"	
   end
 end

@@ -9,6 +9,7 @@ class EventStream
     puts 'Opened the YACS-EventStream Websocket!'
   end
 
+  #read in data from Kafka Consumers
   def notify(data)
     @event = data
     puts data
