@@ -43,9 +43,9 @@ class KarafkaApp < Karafka::App
         consumer SectionConsumer #Single message from section_change
         end
       end
-      topic :course_change do
-        consumer CourseConsumer
-      end
+      #topic :course_change do
+        #consumer CourseConsumer
+      #end
     end
 end
 KarafkaApp.boot!
