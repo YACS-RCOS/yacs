@@ -1,26 +1,41 @@
 require 'plezi'
 require 'iodine'
-
+require  'json'
+# Replace this sample with real code.
 class EventStream
-  #@auto_dispatch = true
+
+
+  # Websockets
   
-  def on_open
+   def index
+    # any String returned will be appended to the response. We return a String.CLIENT_AS_STRING
+    "CLIENT_AS_STRING"
   end
 
-  def notify(data)
-    @event = data
-    puts data
+  def on_open 
+    subscribe "notifications"
+    publish "notifications", "OPEN"
   end
   
-  ##Update: Check changelog & documentation
-  #send data to websocket //  trying to use iodine
-  def on_message(client, data = @event) 
-    @notifications = data.to_sym
-    #transmit data to all websocket connections
-    client.publish @notifications
-    #client.publish @notifications
+  def on_message(data = @event) #If no incoming information, send @event
+  publish "notifications",data
+  end
+
+  def on_close 
+    publish "notifications", "CLOSE"
   end 
-
-  def on_close
+  
+  def notify(data) 
+      @event = data
+      puts @event
+      self.on_message(@event)
   end
+
+  Plezi.route "/notifications",EventStream
+  exit
+  
 end
+
+ 
+
+#ttest location: ws://localhost:3000/notifications/
