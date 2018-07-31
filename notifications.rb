@@ -14,6 +14,11 @@ Bundler.require(:default, ENV['ENV'].to_s.to_sym)
 Dir[File.join '{controllers}', '**', '*.rb'].each { |file| load File.expand_path(file) }
 # Load all the code from a subfolder called 'lib'
 Dir[File.join '{lib}', '**', '*.rb'].each { |file| load File.expand_path(file) }
+
+
+#Setting the port
+#Iodine::DEFAULT_HTTP_ARGS[:port] = 4860
+
 ## Logging
 Iodine::DEFAULT_HTTP_ARGS[:log] = 1 if Iodine::DEFAULT_HTTP_ARGS[:log].nil?
 
@@ -31,3 +36,16 @@ ENV['PL_REDIS_URL'] ||= ENV['REDIS_URL'] ||
 
 # load routes.
 load Root.join('routes.rb').to_s
+puts "BUG1"
+
+App = Proc.new do |env|
+       if(env['rack.upgrade?'.freeze] == :websocket)
+           env['rack.upgrade'.freeze] = EventStream.new
+           [0, {}, []]
+       else
+          [200, {"Content-Length" => "12", "Content-Type" => "text/plain"}, ["Hello World!"]]
+      end
+  
+end
+puts "BUG2"
+
