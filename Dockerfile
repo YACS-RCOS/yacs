@@ -12,4 +12,8 @@ RUN bundle install
 
 COPY . $INSTALL_PATH
 
-CMD bundle exec karafka server
+
+#ENV ENTRY bundle exec iodine -p 3000 -t 1 -w 1 -www ./public && bundle exec karafka server
+#CMD $ENTRY
+
+CMD bundle exec iodine -p 3000 -t 1 -w 1 -www ./public 
