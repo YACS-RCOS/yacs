@@ -7,6 +7,7 @@ require 'bundler/setup'
 Bundler.require(:default, ENV['KARAFKA_ENV'])
 Karafka::Loader.load(Karafka::App.root)
 require_relative 'app/consumers/sections_consumer.rb'
+require_relative 'app/consumers/application_consumer.rb'
 
 
 # Ruby on Rails setup
@@ -21,6 +22,7 @@ require 'iodine'
 require_relative 'app/controllers/eventstream.rb'
 require_relative 'app.rb'
 
+
 class KarafkaApp < Karafka::App
   setup do |config|
     config.kafka.seed_brokers = %w(kafka://kafka:9094)
@@ -34,6 +36,7 @@ class KarafkaApp < Karafka::App
  
 
   after_init do |config|
+    #EventStream.run
   end
 
   Karafka.monitor.subscribe(Karafka::Instrumentation::Listener)
@@ -48,4 +51,8 @@ class KarafkaApp < Karafka::App
       #end
     end
 end
+
+
+
+
 KarafkaApp.boot!

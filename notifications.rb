@@ -10,12 +10,10 @@ Root ||= Pathname.new(File.dirname(__FILE__)).expand_path
 ## otherwise, use the original app's Gemfile and Plezi will automatically switch to Rack mode.
 require 'bundler'
 Bundler.require(:default, ENV['ENV'].to_s.to_sym)
-
 # Load all the code from a subfolder called 'app'
 Dir[File.join '{controllers}', '**', '*.rb'].each { |file| load File.expand_path(file) }
 # Load all the code from a subfolder called 'lib'
 Dir[File.join '{lib}', '**', '*.rb'].each { |file| load File.expand_path(file) }
-
 ## Logging
 Iodine::DEFAULT_HTTP_ARGS[:log] = 1 if Iodine::DEFAULT_HTTP_ARGS[:log].nil?
 
