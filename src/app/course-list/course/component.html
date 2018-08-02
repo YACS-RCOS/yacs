@@ -1,24 +1,20 @@
-<div class = "course" [class.highlight]="isCourseSelected()"><table><tr>
-	<!--Will be indicator that a section is selected from this course <td class = "interested" [class.highlight]="interest">
-	</td>-->
-	<td>
-		<div class="course-info" (click)="clickCourse(course)">
-		  <span class="course-name">{{course.name}}</span>
-		  <span class="dept-code">{{subjectCode()}}</span> <!-- api issues, so have to grab dept code by going into sections for now -->
-		  <span class="course-number">{{course.number}}</span>
-		  <span class="credit-range">{{creditRange}}</span>
-		  <div class="course-description">
-		    {{ course.description }}
-		  </div>
-		</div>
-		<div class="menu" (click)="showingMenu = !showingMenu" >
-			<span *ngIf="!showingMenu">Show Sections:</span>
-			<span *ngIf="showingMenu">Hide Sections:</span>
-		</div>
-	  <div *ngIf="showingMenu">
-		  <div *ngFor="let theSection of course.sections">
-			  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
-		  </div>
+<div class = "course" [class.highlight]="isCourseSelected()">
+	<div class="course-info" (click)="clickCourse(course)">
+	  <span class="course-name">{{course.name}}</span>
+	  <span class="dept-code">{{subjectCode()}}</span> <!-- api issues, so have to grab dept code by going into sections for now -->
+	  <span class="course-number">{{course.number}}</span>
+	  <span class="credit-range">{{creditRange}}</span>
+	  <div class="course-description">
+	    {{ course.description }}
 	  </div>
-</td>
-</tr></table></div>
+	</div>
+	<div class="menu" (click)="showingMenu = !showingMenu" >
+		<span *ngIf="!showingMenu"><span class = "padded">Click to select and deselect specific courses </span><i class="arrow down"></i></span>
+		<span *ngIf="showingMenu"><i class="arrow up"></i></span>
+	</div>
+  <div *ngIf="showingMenu">
+	  <div *ngFor="let theSection of course.sections">
+		  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
+	  </div>
+  </div>
+</div>

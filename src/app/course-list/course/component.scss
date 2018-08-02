@@ -1,87 +1,108 @@
+
 .course {
-  border: .2em solid #d57f7f;
-  border-radius: 15px;
+  border: .2em solid red;
   box-shadow: 0 5px 5px #cecece;
   padding: 10px;
   margin: 5px;
 }
 
 .menu {
-  background-color: white;
-  color: black;
-  border: .05em solid #cecece;
-  border-radius: 5px;
-  padding: 5px;
+  align: right;
+  color: #cecece;
+  padding: 0;
+  margin: .05em;
   font-weight: 400;
+  text-align: right;
+}
+
+.padded {
+  padding-right: 2em;
+}
+
+i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }
 
 .course-name {
-    font-size: 130%;
-    font-weight: 400;
+  font-size: 130%;
+  font-weight: 400;
 }
+
 .dept-code {
-    margin-left:1em;
+  margin-left:1em;
 }
+
 .credit-range {
-    margin-left:0.7em;
+  margin-left:0.7em;
 }
+
 .course-description {
-    display:block;
-    font-size:87%;
-    text-align: justify;
+  display:block;
+  font-size:87%;
+  text-align: justify;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
+
 :host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {
-    background-color: #d57f7f;
+  background-color: #d57f7f;
 }
+
 :host.selected>.course-info:hover ~ .section-list section.selected {
-    color: #efefef;
-    background-color: #d57f7f;
+  color: #efefef;
+  background-color: #d57f7f;
 }
+
 section {
-    display:block;
-    margin:0px 0px 0px 5px;
-    padding:4px 4px 4px 8px;
-    overflow:auto;
-    font-size: 90%;
+  display:block;
+  margin:0px 0px 0px 5px;
+  padding:4px 4px 4px 8px;
+  overflow:auto;
+  font-size: 90%;
 }
+
 section:not(.selected):hover {
-    background-color: #d57f7f;
+  background-color: #d57f7f;
 }
 
 section:not(.selected) {
-    background-color: white;
-    color: black;
+  background-color: white;
+  color: black;
 }
 
 section.selected:hover {
-    color: #efefef;
-    background-color: #d57f7f;
+  color: #efefef;
+  background-color: #d57f7f;
 }
+
 section.conflicts, section.conflicts:hover {
-    color: #aaa;
+  color: #aaa;
 }
 
 section.selected {
-    color: #efefef;
-    background-color: #c65353;
+  color: #efefef;
+  background-color: #c65353;
 }
+
 section.closed, section.closed:hover {
-    color: #888;
+  color: #888;
 }
 
 .highlight {
-    background-color:  #9b423e;
-    color: white;
-}
-
-.menuhighlight {
-    background-color: #c65353;
-}
-
-.interested {
-    padding: 5em 2em 4em 2em;
-    margin-right: 1em;
-    float: left;
-    border: .2em solid #d57f7f;
-    border-radius: 15px;
+  background-color: #999;
+  color: white;
+  border: .2em solid blue;
 }

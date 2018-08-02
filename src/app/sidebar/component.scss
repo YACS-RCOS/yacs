@@ -1,0 +1,15 @@
+@import "../../_vars.scss";
+
+#sidebar {
+    min-height: 100%;
+    background: red;
+}
+
+ul {
+
+  font-size: 18px;
+  line-height: 3;
+  font-weight: 400;
+  padding-top: 50px;
+  list-style: none;
+}

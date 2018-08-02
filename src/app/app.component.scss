@@ -23,6 +23,11 @@ img#loading {
   margin-left: -62.5px;
 }
 
+.sidebar-wrapper {
+  display: flex;
+  align-items: stretch;
+}
+
 footer {
   margin: 0px auto;
   max-width: 950px;

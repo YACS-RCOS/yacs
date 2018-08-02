@@ -1,11 +1,11 @@
 course {
     display: block;
-    margin: 0px 10%;
-    padding:15px;
+    margin: 10px;
+    padding: 0px;
     cursor: pointer;
     max-width: 950px;
+    align: center;
 }
 course:last-child {
-float: left;
     border: none;
 }

@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Course } from '../../models/course.model';
 import { Section } from '../../models/section.model';
+import { ScheduleEvent } from '../../models/schedule-event.model';
+import { Schedule } from '../../models/schedule.model';
 import { SelectionService } from '../../services/selection.service'
 import { ConflictsService } from '../../services/conflicts.service'
 
@@ -10,7 +12,7 @@ import { ConflictsService } from '../../services/conflicts.service'
   styleUrls: ['./component.scss'],
   host: { '[class.selected]': 'isCourseSelected()' }
 })
-export class CourseComponent {
+export class CourseComponent{
   @Input() course: Course;
 
   constructor(

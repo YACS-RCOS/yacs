@@ -1,7 +1,12 @@
 <header-bar></header-bar>
 <notice-bar></notice-bar>
+
+<div class="sidebar-wrapper">
+	<button class = "closed" (click) = "showingSidebar=!showingSidebar" *ngIf="!showingSidebar"></button>
+	<sidebar (click) = "showingSidebar=!showingSidebar" *ngIf="showingSidebar"></sidebar>
 <!-- if there is a notice content will move down -->
 <div id="content" [style.padding-top] = "hasNotice() ? '110px' : '60px'">
   <router-outlet></router-outlet>
+</div>
 </div>
 <footer></footer>
