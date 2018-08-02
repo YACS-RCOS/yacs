@@ -64,7 +64,7 @@ services:
     depends_on:
       - kafka
     expose: 
-      - "4700"
+      - "3000"
 
   notices:
     image: yacsrcos/yacs-notices
