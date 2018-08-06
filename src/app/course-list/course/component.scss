@@ -1,7 +1,7 @@
+@import "../../../_vars.scss";
 
 .course {
-  border: .2em solid red;
-  box-shadow: 0 5px 5px #cecece;
+  border: .4em solid $yacs_bgs;
   padding: 10px;
   margin: 5px;
 }
@@ -102,7 +102,7 @@ section.closed, section.closed:hover {
 }
 
 .highlight {
-  background-color: #999;
+  background-color: $yacs_acc;
   color: white;
-  border: .2em solid blue;
+  border: .4em solid $yacs_bgs;
 }

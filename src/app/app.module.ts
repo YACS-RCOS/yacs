@@ -12,8 +12,8 @@ import { HeaderComponent } from './header/component';
 import { NavUserComponent } from './header/nav-user/component';
 import { NoticeBarComponent } from './notice-bar/component';
 import { FooterComponent } from './footer/component';
-import { SidebarComponent } from './sidebar/component';
 
+import { SidebarModule } from './sidebar/module';
 import { SchoolViewModule } from './school-view/module';
 import { CourseViewModule } from './course-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
@@ -39,7 +39,8 @@ import { AboutComponent } from './about/component';
     SchoolViewModule,
     CourseViewModule,
     ScheduleViewModule,
-    CourseListModule
+    CourseListModule,
+    SidebarModule
   ],
   declarations: [
     AppComponent,
@@ -47,8 +48,7 @@ import { AboutComponent } from './about/component';
     NoticeBarComponent,
     FooterComponent,
     AboutComponent,
-    NavUserComponent,
-    SidebarComponent
+    NavUserComponent
   ],
   providers: [
     ConstantsService,

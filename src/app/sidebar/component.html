@@ -1,3 +1,7 @@
 <ul id="sidebar" mode="push">
-  <!--<course-list [courses]="courses"></course-list>-->
+	<select [(ngModel)]="selections">
+		<option value="Course Clipboard">Course Clipboard</option>
+		<option value="Notifications">Notifications</option>
+	</select>
+  <interested-courses *ngIf="selections=='Course Clipboard'"></interested-courses>
 </ul>

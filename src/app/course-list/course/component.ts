@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Course } from '../../models/course.model';
 import { Section } from '../../models/section.model';
 import { ScheduleEvent } from '../../models/schedule-event.model';
@@ -12,7 +12,7 @@ import { ConflictsService } from '../../services/conflicts.service'
   styleUrls: ['./component.scss'],
   host: { '[class.selected]': 'isCourseSelected()' }
 })
-export class CourseComponent{
+export class CourseComponent implements OnInit{
   @Input() course: Course;
 
   constructor(

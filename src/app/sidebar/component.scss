@@ -2,13 +2,18 @@
 
 #sidebar {
     min-height: 100%;
-    background: red;
+    background: #e8e8e8;
+    min-width: 300px;
+    max-width: 950px;
+    padding-top: 100px;
+    align-items: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 98%;
 }
 
 ul {
-
   font-size: 18px;
-  line-height: 3;
   font-weight: 400;
   padding-top: 50px;
   list-style: none;
