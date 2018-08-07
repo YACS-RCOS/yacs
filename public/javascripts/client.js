@@ -1,4 +1,4 @@
-var ws = new WebSocket("ws://localhost:4860/notify"); 
+var ws = new WebSocket("ws://localhost:4860/"); 
 
 ws.onmessage = function(e) {
                             console.log("Got message!"); 
