@@ -1,0 +1,20 @@
+* Listening on port 4860
+
+Server is running 2 workers X 2 threads, press ^C to stop
+Running Plezi version: 0.15.1
+
+Starting up Iodine HTTP Server on port 4860:
+ * Ruby v.2.5.1
+ * Iodine v.0.4.19 
+ * 1048576 max concurrent connections / open files
+ * Serving static files from ./public
+
+* 6 is running.
+* 14 is running.
+172.18.0.1 - - [Tue, 6 Aug 2018 03:14:14 GMT] "GET /notifications HTTP/1.1" 101 -- 300ms
+Iodine caught an unprotected exception - LocalJumpError: no block given
+/usr/src/app/app/controllers/eventstream.rb:12:in `subscribe'
+/usr/src/app/app/controllers/eventstream.rb:12:in `on_open'
+Iodine caught an unprotected exception - TypeError: wrong argument type String (expected Hash)
+/usr/src/app/app/controllers/eventstream.rb:26:in `publish'
+/usr/src/app/app/controllers/eventstream.rb:26:in `on_close'
