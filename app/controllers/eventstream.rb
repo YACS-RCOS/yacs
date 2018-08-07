@@ -3,24 +3,23 @@ require 'iodine'
 
 class EventStream
   #@auto_dispatch = true
-  
-  def on_open
+
+  def on_open client
+    puts "WS connection open"
+    ::Iodine::subscribe channel: "notifications"
   end
 
   def notify(data)
-    @event = data
-    puts data
+    @notification = data.to_s
+    ::Iodine::publish channel: "notifications", message: "#{@notification}"
   end
   
-  ##Update: Check changelog & documentation
-  #send data to websocket //  trying to use iodine
-  def on_message(client, data = @event) 
-    @notifications = data.to_sym
-    #transmit data to all websocket connections
-    client.publish @notifications
-    #client.publish @notifications
+  def on_message client, data 
+    ::Iodine::subscribe :notifications
+    ::Iodine::publish :notifications , "#{@data}"
   end 
 
   def on_close
   end
 end
+Plezi.route '/', EventStream
