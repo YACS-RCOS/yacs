@@ -2,7 +2,7 @@
 
 #sidebar {
     min-height: 100%;
-    background: #e8e8e8;
+    background: none;
     min-width: 300px;
     max-width: 950px;
     padding-top: 100px;
@@ -10,11 +10,17 @@
     padding-left: 10px;
     padding-right: 10px;
     font-size: 98%;
+    border-right: 2px solid #e8e8e8;
 }
 
 ul {
-  font-size: 18px;
   font-weight: 400;
   padding-top: 50px;
   list-style: none;
 }
+
+.tabs {
+  width: 100%;
+  font-weight: 400;
+}
+

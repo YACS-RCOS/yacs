@@ -1,9 +1,16 @@
 @import "../../../_vars.scss";
 
 .course {
-  border: .4em solid $yacs_bgs;
+  border: 2px solid $yacs_bgs;
+  border-radius: 0;
   padding: 10px;
   margin: 5px;
+}
+
+.selection-icon {
+  position: relative;
+  float: right;
+  margin: 10px;
 }
 
 .menu {
@@ -55,6 +62,10 @@ i {
   text-align: justify;
   margin-bottom: 0;
   padding-bottom: 0;
+  margin-left: 0;
+  margin-top: 0;
+  padding-top: 0;
+  padding-left: 0;
 }
 
 :host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {
@@ -75,7 +86,7 @@ section {
 }
 
 section:not(.selected):hover {
-  background-color: #d57f7f;
+  background-color: $yacs_acc;
 }
 
 section:not(.selected) {
@@ -85,7 +96,7 @@ section:not(.selected) {
 
 section.selected:hover {
   color: #efefef;
-  background-color: #d57f7f;
+  background-color: $yacs_acc;
 }
 
 section.conflicts, section.conflicts:hover {
@@ -94,15 +105,9 @@ section.conflicts, section.conflicts:hover {
 
 section.selected {
   color: #efefef;
-  background-color: #c65353;
+  background-color: $yacs_bgs;
 }
 
 section.closed, section.closed:hover {
   color: #888;
-}
-
-.highlight {
-  background-color: $yacs_acc;
-  color: white;
-  border: .4em solid $yacs_bgs;
 }

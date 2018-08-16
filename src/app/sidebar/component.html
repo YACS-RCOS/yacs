@@ -1,7 +1,14 @@
 <ul id="sidebar" mode="push">
-	<select [(ngModel)]="selections">
-		<option value="Course Clipboard">Course Clipboard</option>
-		<option value="Notifications">Notifications</option>
-	</select>
-  <interested-courses *ngIf="selections=='Course Clipboard'"></interested-courses>
+	<ngb-tabset class="tabs" name="sel">
+	  <ngb-tab title="Notifications">
+	  	<ng-template ngbTabContent>
+	  		<notifications></notifications>
+	  	</ng-template>
+	  </ngb-tab>
+	  <ngb-tab title="Clipboard">
+	  	<ng-template ngbTabContent>
+	  		<interested-courses></interested-courses>
+	  	</ng-template>
+	  </ngb-tab>
+	</ngb-tabset>
 </ul>

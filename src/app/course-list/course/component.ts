@@ -16,7 +16,7 @@ export class CourseComponent implements OnInit{
   @Input() course: Course;
 
   constructor(
-    private selectionService : SelectionService,
+    public selectionService : SelectionService,
     private conflictsService: ConflictsService) { }
 
   public showingMenu;

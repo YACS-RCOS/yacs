@@ -1,13 +1,7 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { YacsService } from '../../services/yacs.service';
-import { Course } from '../../models/course.model';
-import { Section } from '../../models/section.model';
-import { Schedule} from '../../models/schedule.model';
-import { Sidebar } from '../../models/sidebar.model';
-import { ScheduleEvent } from '../../models/schedule-event.model';
 import { SelectionService } from '../../services/selection.service';
-import { ScheduleComponent } from '../../schedule-view/schedule/component';
+import { Course } from '../../models/course.model';
 import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
@@ -23,11 +17,10 @@ export class InterestedCoursesComponent implements OnInit {
 
   courses : Course[] = [];
   isLoaded : boolean = false;
-  private subscription;
 
   constructor (
     private yacsService : YacsService,
-    private selectionService : SelectionService)
+    public selectionService : SelectionService)
     { }
 
   public getCourses () : void {
@@ -41,7 +34,7 @@ export class InterestedCoursesComponent implements OnInit {
     }
   }
 
-  ngOnInit () : void {
+  ngOnInit (){
     this.getCourses();
   }
  }

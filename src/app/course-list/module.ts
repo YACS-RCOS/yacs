@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CourseListComponent } from './component';
 import { CourseComponent } from './course/component';
-import { SectionComponent } from './section/component';
+import { SectionComponent } from './section/component'; 
 
 @NgModule({
   declarations: [
