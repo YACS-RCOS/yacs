@@ -44,6 +44,7 @@ gem 'rubyzip', '~> 1.2.1'
 gem 'listen'
 
 gem 'fast_jsonapi'
+gem 'jsonapi-resources'
 
 group :development, :test do
   gem 'pry'
