@@ -1,0 +1,47 @@
+:host.conflicts>.section-information {
+    text-decoration: line-through;
+}
+.section-name {
+    font-weight: 400;
+}
+.section-seats {
+    font-size: 80%;
+}
+.section-periods {
+    font-size:80%;
+    display:inline-block;
+    margin-left:0em;
+    float:right;
+    padding:0.15em 0;
+}
+.section-periods.noperiods {
+    font-weight: bold;
+}
+.period {
+    margin-left:1em;
+}
+.period-day {
+    font-weight: 400;
+}
+div.conflict-note {
+    margin-left:0.4em;
+    display:inline;
+    color:#000;
+}
+:host:not(.conflicts)>div.conflict-note {
+    display:none;
+}
+span.conflict-img-center {
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+img.conflict-img {
+    display:inline-block;
+    vertical-align:middle;
+    width: 0.9em;
+}
+span.conflict-text {
+    font-size:75%;
+    color: #cf2c2c;
+}

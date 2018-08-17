@@ -1,0 +1,17 @@
+<div class="course-info">
+	<img class = "selection-icon" (click)="clickCourse(course)" *ngIf="isCourseSelected()" src="assets/images/filled-star.svg" />
+	<img class = "selection-icon" (click)="clickCourse(course)" *ngIf="!isCourseSelected()" src="assets/images/unfilled-star.svg" />
+  <span class="course-name">{{course.name}}</span>
+  <button type="button" class="info-btn" placement="right" [popoverTitle]= "courseSubtitle" [ngbPopover]= "course.description">
+	  <img src="assets/images/info.svg" />
+	</button>
+	<div class="menu" (click)="showSections = !showSections" >
+		<span *ngIf="!showSections"><span class=" padded">Sections </span><i class="arrow down"></i></span>
+		<span *ngIf="showSections"><i class="arrow up"></i></span>
+	</div>
+	<div *ngIf="showSections">
+	  <div *ngFor="let theSection of course.sections">
+		  <clipboard-section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></clipboard-section>
+	  </div>
+	</div>
+</div>

@@ -1,0 +1,112 @@
+@import "../../../../_vars.scss";
+
+.info-btn {
+  background: none;
+  border: none;
+  float: right;
+  margin: .3em;
+}
+
+.selection-icon {
+  position: relative;
+  float: left;
+  margin: 1em;
+}
+
+.menu {
+  align: right;
+  color: #cecece;
+  padding: 0;
+  padding-right: 1em;
+  margin: .05em;
+  font-weight: 400;
+  text-align: right;
+}
+
+.padded {
+  padding-right: 2em;
+}
+
+i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.course-name {
+  font-size: 150%;
+  font-weight: 400;
+}
+
+.course-description {
+  display:block;
+  font-size:87%;
+  text-align: justify;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-left: 0;
+  margin-top: 0;
+  padding-top: 0;
+  padding-left: 0;
+}
+
+.course-info {
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+:host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {
+  background-color: #d57f7f;
+}
+
+:host.selected>.course-info:hover ~ .section-list section.selected {
+  color: #efefef;
+  background-color: #d57f7f;
+}
+
+section {
+  display:block;
+  margin:0px 0px 0px 5px;
+  padding:4px 4px 4px 8px;
+  overflow:auto;
+  font-size: 90%;
+}
+
+section:not(.selected):hover {
+  background-color: $yacs_acc;
+}
+
+section:not(.selected) {
+  background-color: white;
+  color: black;
+}
+
+section.selected:hover {
+  color: #efefef;
+  background-color: $yacs_acc;
+}
+
+section.conflicts, section.conflicts:hover {
+  color: #aaa;
+}
+
+section.selected {
+  color: #efefef;
+  background-color: $yacs_bgs;
+}
+
+section.closed, section.closed:hover {
+  color: #888;
+}
