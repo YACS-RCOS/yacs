@@ -5,8 +5,8 @@ class SourceManager
 
   attr_reader :sources
 
-  def initialize filename
-    @sources = SourceFactory.load_sources filename
+  def initialize sources
+    @sources = sources
   end
 
   def register_all graph

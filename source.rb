@@ -8,7 +8,9 @@ class Source
   include Observable
   attr_reader :name, :location, :polling_frequency, :data, :thread, :connection, :has_data
 
-  def initialize name, location, polling_frequency
+  def initialize uni_shortname, term_shortname, name, location, polling_frequency
+    @uni_shortname = uni_shortname
+    @term_shortname = term_shortname
     @name = name
     @location = location
     @polling_frequency = polling_frequency
@@ -28,7 +30,7 @@ class Source
   private
 
   def run
-    @connection = Faraday.new(url: @location)
+    @connection = Faraday.new(url: "#{@location}/#{@term_shortname}")
     loop do
       update
       sleep @polling_frequency
@@ -49,7 +51,7 @@ class Source
       end
     rescue Exception => msg
       STDERR.puts msg
-      STDERR.puts "Error: Unable to get data from source #{@name}"
+      STDERR.puts "ERROR: Unable to get data from source #{@name}"
       sleep 5
       update
     end
@@ -59,15 +61,19 @@ class Source
     @data = data
   end
 
+  def state_key
+    "#{@uni_shortname}/malg_state/term/#{@term_shortname}/source/#{@name}"
+  end
+
   def read_state
     begin
-      Oj.load Redis.current.get("malg_state/source/#{@name}")
+      Oj.load Redis.current.get state_key
     rescue
       nil
     end
   end
 
   def write_state
-    Redis.current.set "malg_state/source/#{@name}", @data.to_json
+    Redis.current.set state_key, @data.to_json
   end
 end
