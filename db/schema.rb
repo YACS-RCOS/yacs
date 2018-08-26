@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20180826023035) do
   end
 
   create_table "listings", force: :cascade do |t|
-    t.integer "session_id", null: false
+    t.integer "term_id", null: false
     t.integer "course_id", null: false
     t.string "longname", null: false
     t.text "description", null: false
@@ -95,15 +95,15 @@ ActiveRecord::Schema.define(version: 20180826023035) do
     t.index ["uuid"], name: "index_sections_on_uuid"
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "subjects", force: :cascade do |t|
+    t.integer "department_id", null: false
     t.string "shortname", null: false
     t.string "longname", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "subjects", force: :cascade do |t|
-    t.integer "department_id", null: false
+  create_table "terms", force: :cascade do |t|
     t.string "shortname", null: false
     t.string "longname", null: false
     t.datetime "created_at", null: false

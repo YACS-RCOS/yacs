@@ -1,7 +1,7 @@
 class NewSchemaListings < ActiveRecord::Migration[5.1]
   def change
     create_table :listings do |t|
-      t.integer :session_id,          null: false
+      t.integer :term_id,             null: false
       t.integer :course_id,           null: false
       t.string  :longname,            null: false
       t.text    :description,         null: false
