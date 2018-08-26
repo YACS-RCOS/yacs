@@ -8,10 +8,12 @@ set :port, 4600
 
 ENV['ACALOG_API_URI'] ||= "http://rpi.apis.acalog.com"
 ENV['ACALOG_API_KEY'] ||= "3eef8a28f26fb2bcc514e6f1938929a1f9317628"
+$acalog_clients = {}
 
-acalog_client = AcalogClient.new ENV['ACALOG_API_URI'], ENV['ACALOG_API_KEY']
-acalog_client.load_current_catalog
+def client_for term_shortname
+  $acalog_clients[term_shortname] ||= AcalogClient.new ENV['ACALOG_API_URI'], ENV['ACALOG_API_KEY'], term_shortname
+end
 
-get "/" do 
-  json acalog_client.courses_by_department
+get "/:term_shortname" do 
+  json client_for(params[:term_shortname]).courses_by_subject
 end

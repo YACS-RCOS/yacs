@@ -6,32 +6,32 @@ require 'pry'
 
 class AcalogClient
   ACALOG_FIELD_TYPES = {
-    description: 365,
-    department_code: 380,
-    number: 382,
-    name: 384
+    description: 'p',
+    subject_code: 'prefix',
+    number: 'code',
+    name: 'name'
   }.freeze
 
-  def initialize api_url, api_key
+  def initialize api_url, api_key, term_shortname
     @api_url = api_url
     @api_key = api_key
+    catalog_id = catalog_id_for term_shortname
+    load_catalog catalog_id
   end
 
-  def load_current_catalog
-    @courses = courses(current_catalog_id)
-    @departments = @courses.map { |k, v| { code: k, courses: v.values }}
-    @graph = { departments: @departments }
+  def load_catalog catalog_id
+    @courses = courses_from catalog_id
+    @subjects = @courses.map { |k, v| { code: k, courses: v.values }}
+    @graph = { subjects: @subjects }
   end
 
-  def find department_code, number
-    @courses.dig(department_code.to_s, number.to_s)
+  def find subject_code, number
+    @courses.dig(subject_code.to_s, number.to_s)
   end
 
-  def courses_by_department
+  def courses_by_subject
     @graph
   end
-
-  # private
 
   def course_ids catalog_id
     params = {
@@ -42,7 +42,7 @@ class AcalogClient
     request('search/courses', params).xpath('//result//id/text()').map(&:text)
   end
 
-  def courses catalog_id
+  def courses_from catalog_id
     params = {
       method: :getItems,
       type: :courses,
@@ -56,10 +56,11 @@ class AcalogClient
       response = request('content', params.merge(ids: ids))
       response.xpath('//course/content').each do |course_xml|
         course = ACALOG_FIELD_TYPES.map do |k, v|
-          [k, course_xml.css("field[type = \"acalog-field-#{v}\"]").text]
+          [k, course_xml.css(v).text]
         end.to_h
-        mapped_courses[course[:department_code]] ||= {}
-        mapped_courses[course[:department_code]][course[:number]] = course
+        course[:tags] = ['catalog']
+        mapped_courses[course[:subject_code]] ||= {}
+        mapped_courses[course[:subject_code]][course[:number]] = course
       end
     end
     mapped_courses
@@ -68,6 +69,15 @@ class AcalogClient
   def current_catalog_id
     node = request('content', method: :getCatalogs).
       xpath('//catalog[state/published = "Yes" and state/archived = "No"]/@id')
+    @catalog_id = /acalog-catalog-(?<id>\d+)/.match(node.text)[:id].to_i
+  end
+
+  def catalog_id_for term_shortname
+    year, month = /(\d{4})(\d{2})/.match(term_shortname).captures.map &:to_i
+    year -= 1 if month < 9
+    title = "Rensselaer Catalog #{year}-#{year + 1}"
+    node = request('content', method: :getCatalogs).
+      xpath("//catalog[title[contains(text(),\"#{title}\")]]/@id")
     @catalog_id = /acalog-catalog-(?<id>\d+)/.match(node.text)[:id].to_i
   end
 
