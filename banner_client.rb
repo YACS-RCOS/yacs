@@ -5,9 +5,9 @@ require 'active_support/core_ext'
 
 class BannerClient
 
-  def initialize courses_uri, sections_uri
-    @courses_uri = courses_uri
-    @sections_uri = sections_uri
+  def initialize term_shortname
+    @sections_uri = "https://sis.rpi.edu/reg/rocs/YACS_#{term_shortname}.xml"
+    @courses_uri = "https://sis.rpi.edu/reg/rocs/#{term_shortname}.xml"
     @http_client = HTTPClient.new
   end
 
@@ -28,7 +28,7 @@ class BannerClient
         when :credmax then [:max_credits, v]
         when :num     then [:number, v]
         when :name    then [:name, v.titleize]
-        when :dept    then [:department, { code: v }]
+        when :dept    then [:subject, { code: v }]
         else [nil, nil]
         end
       end.to_h.compact
@@ -37,14 +37,14 @@ class BannerClient
     end
   end
 
-  def courses_by_department
-    departments = {}
+  def courses_by_subject
+    subjects = {}
     courses.each do |course|
-      departments[course[:department][:code]] ||= []
-      departments[course[:department][:code]] << course
-      course.delete :department
+      subjects[course[:subject][:code]] ||= []
+      subjects[course[:subject][:code]] << course
+      course.delete :subject
     end
-    departments.map { |k, v| { code: k, courses: v } }
+    subjects.map { |k, v| { code: k, courses: v } }
   end
 
   private

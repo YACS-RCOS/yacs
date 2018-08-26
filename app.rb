@@ -1,21 +1,16 @@
 require 'sinatra'
 require 'sinatra/json'
 require 'oj'
-require './banner_client'
+require_relative 'banner_client'
+require 'pry'
 
 set :bind, '0.0.0.0'
 set :port, 4600
 
-ENV['SEMESTER'] ||= '201801'
-
-BANNER_SECTIONS_URI = "https://sis.rpi.edu/reg/rocs/YACS_#{ENV['SEMESTER']}.xml"
-BANNER_COURSES_URI = "https://sis.rpi.edu/reg/rocs/#{ENV['SEMESTER']}.xml"
-banner_client = BannerClient.new BANNER_COURSES_URI, BANNER_SECTIONS_URI
-
-get "/" do 
-  json departments: banner_client.courses_by_department
+get "/:term_shortname" do
+  json subjects: BannerClient.new(params[:term_shortname]).courses_by_subject
 end
 
-get "/seats" do
-  json sections: banner_client.sections
+get "/seats/:term_shortname" do
+  json sections: BannerClient.new(params[:term_shortname]).sections
 end
