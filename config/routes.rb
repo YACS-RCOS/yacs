@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       jsonapi_resources :departments
       jsonapi_resources :subjects
       jsonapi_resources :courses
-      jsonapi_resources :sessions
+      jsonapi_resources :terms
       jsonapi_resources :listings
       jsonapi_resources :sections
       jsonapi_resources :instructors
