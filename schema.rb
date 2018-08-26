@@ -4,11 +4,14 @@ require 'active_support'
 class Schema
   attr_reader :types
 
-  def initialize filename
-    @types = YAML.load_file(filename)['schema']['types']
+  def initialize config
+    @config = config
+    @types = config['types']
+    # puts @types
   end
 
   def child_type_for type
+    puts type unless @types[type]
     @types[type]['child_type']
   end
 

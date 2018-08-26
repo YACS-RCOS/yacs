@@ -9,9 +9,12 @@ require_relative 'event_transport'
 class Graph
   attr_reader :graph
 
-  def initialize priorities, schema
+  def initialize uni_shortname, term_shortname, priorities, schema, transport
+    @uni_shortname = uni_shortname
+    @term_shortname = term_shortname
     @priorities = priorities
     @schema = schema
+    @transport = transport
     @graph = empty_graph []
     @sources = {}
     @state = :uninitialized
@@ -122,7 +125,7 @@ class Graph
       new_record[parent_uuid_field] = parent['uuid']
       @sources[new_record['uuid']][parent_uuid_field] = Priorities::FIXED
     end
-    EventTransport.send_create(new_record, type)
+    @transport.dispatch 'create', new_record, type
     new_record
   end
 
@@ -142,7 +145,7 @@ class Graph
       end
     end
     if record_changed && !old_record['removed']
-      EventTransport.send_update(old_record, type)
+      @transport.dispatch 'update', old_record, type
     end
     old_record
   end
@@ -150,7 +153,7 @@ class Graph
   def remove_record record, type
     @graph[type].delete record
     child_type = @schema.child_type_for type
-    EventTransport.send_delete(record, type)
+    @transport.dispatch 'delete', record, type
     STDERR.puts "DEBUG: Removed #{type} #{record['uuid']}"
     record[child_type].each { |child| remove_record child, child_type } if record[child_type]
   end
@@ -235,13 +238,12 @@ class Graph
       STDERR.puts "Resolved #{v.count} #{k}"
     end
     STDERR.puts "Failed to resolve #{@unresolvable.count} records:"
-    # STDERR.puts @unresolvable
+    STDERR.puts @unresolvable
   end
 
   def read_state
     begin
-      # binding.pry
-      raw_state = Redis.current.get 'malg_state'
+      raw_state = Redis.current.get state_key
       state = Oj.load raw_state
 
       raise 'Invalid state error' unless state.present? \
@@ -256,8 +258,12 @@ class Graph
     end
   end
 
+  def state_key
+    "#{@uni_shortname}/malg_state/term/#{@term_shortname}/graph"
+  end
+
   def write_state
     # binding.pry
-    Redis.current.set 'malg_state', { graph: @graph, sources: @sources }.to_json
+    Redis.current.set state_key, { graph: @graph, sources: @sources }.to_json
   end
 end

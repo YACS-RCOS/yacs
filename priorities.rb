@@ -3,8 +3,8 @@ require 'yaml'
 class Priorities
   FIXED = '$'
 
-  def initialize filename
-    @config = YAML.load_file(filename)['priorities']
+  def initialize config
+    @config = config
     @existence = @config.map do |k, v|
       [k, v['existence']] if v['existence'] && k != 'default'
     end.compact!.to_h
