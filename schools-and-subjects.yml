@@ -1,6 +1,6 @@
 schools:
   - name: Humanities, Arts and Social Sciences
-    departments:
+    subjects:
       - code: ARTS
         name: Arts
       - code: COGS
@@ -28,7 +28,7 @@ schools:
       - code: WRIT
         name: Writing
   - name: Engineering
-    departments:
+    subjects:
       - code: BMED
         name: Biomedical Engineering
       - code: CHME
@@ -52,7 +52,7 @@ schools:
       - code: EPOW
         name: Electric Power Engineering
   - name: Science
-    departments:
+    subjects:
       - code: BCBP
         name: Biochemistry and Biophysics
       - code: CSCI
@@ -78,17 +78,17 @@ schools:
       - code: ITWS
         name: Information Technology and Web Science
   - name: Architecture
-    departments:  
+    subjects:  
       - code: ARCH
         name: Architecture
       - code: LGHT
         name: Lighting
   - name: Business Management
-    departments:
+    subjects:
       - code: MGMT
         name: Management
   - name: Other
-    departments:
+    subjects:
       - code: ADMN
         name: Administrative Courses
       - code: USAF
