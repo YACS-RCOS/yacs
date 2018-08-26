@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       jsonapi_resources :schools
       jsonapi_resources :departments
       jsonapi_resources :subjects
+      jsonapi_resources :courses
       jsonapi_resources :sessions
       jsonapi_resources :listings
       jsonapi_resources :sections
