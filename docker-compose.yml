@@ -114,6 +114,9 @@ services:
       - redis
     expose:
       - "4500"
+    environment:
+      - UNI_SHORTNAME
+      - TERM_SHORTNAME
 
   zookeeper:
     image: wurstmeister/zookeeper
