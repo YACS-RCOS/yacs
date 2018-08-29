@@ -1,11 +1,12 @@
 class ApplicationConsumer < Karafka::BaseController
-  ALLOWED_TYPES = %w(school department course section).freeze
+  ALLOWED_TYPES = %w(school subject listing section).freeze
   ALLOWED_METHODS = %w(create update delete).freeze
   ALLOWED_PARAMS = {
-    school: %i(name uuid),
-    department: %i(name code uuid school_uuid),
-    course: %i(name number description min_credits max_credits uuid department_uuid tags),
-    section: %i(name crn seats seats_taken uuid course_uuid) << { periods: %i(day start end type location) }
+    school: %i(longname, uuid),
+    # department: %i(shortname, longname, uuid, school_uuid)
+    subject: %i(shortname longname uuid school_uuid),
+    listing: %i(name number description min_credits max_credits uuid subject_uuid tags),
+    section: %i(shortname crn seats seats_taken uuid listing_uuid) << { periods: %i(day start end type location) }
   }.with_indifferent_access.freeze
 
   include Karafka::Controllers::Callbacks
@@ -59,20 +60,20 @@ class ApplicationConsumer < Karafka::BaseController
   def transform_school
   end
 
-  def transform_department
+  def transform_subject
     @data[:school_id] = School.find_by!(uuid: @data[:school_uuid]).id
     @data.delete :school_uuid
   end
 
-  def transform_course
-    @data[:department_id] = Department.find_by!(uuid: @data[:department_uuid]).id
-    @data.delete :department_uuid
+  def transform_listing
+    @data[:subject_id] = Subject.find_by!(uuid: @data[:subject_uuid]).id
+    @data.delete :subject_uuid
   end
 
   def transform_section
-    @data[:course_id] = Course.find_by!(uuid: @data[:course_uuid]).id
+    @data[:listing_id] = Listing.find_by!(uuid: @data[:listing_uuid]).id
     @data.merge! Section.periods_hash_to_array @data[:periods]
-    @data.delete :course_uuid
+    @data.delete :listing_uuid
     @data.delete :periods
   end
 end

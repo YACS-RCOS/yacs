@@ -21,10 +21,13 @@ class ConsumerApp < Karafka::App
     config.batch_consuming = false
     config.kafka.seed_brokers = %w(kafka://kafka:9094)
   end
-end  
+end
+
+active_terms = Term.map
 
 ConsumerApp.consumer_groups.draw do
   consumer_group :core do
+
     topic :full_transport do
       controller ApplicationConsumer
     end
