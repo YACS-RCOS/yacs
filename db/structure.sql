@@ -19,12 +19,12 @@
  */
 
 /* @1/3/18 - Function to compute all conflicting sections
- * @author Richie Young
+ * @author Ada Young
  * @param section_id [integer] id of the section in question
  * @return [integer[]] an array containing the ids of any sections that confict
  *   with the section given by `section_id`
  */
-CREATE OR REPLACE FUNCTION CONFLICT_IDS (section_id INTEGER) RETURNS INTEGER ARRAY AS $$
+CREATE OR REPLACE FUNCTION COMPUTE_CONFLICT_IDS (section_id INTEGER) RETURNS INTEGER ARRAY AS $$
 DECLARE
   i INTEGER := 0;
   j INTEGER := 0;

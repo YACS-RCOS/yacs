@@ -11,64 +11,29 @@ class Section < ActiveRecord::Base
     SectionsResponder.new.call(self)
   end
 
-  def self.compute_conflict_ids_for id
-    find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
-      (SELECT(unnest(conflict_ids(#{id.to_i})))) ORDER BY ID").map(&:id)
-  end
-
   def conflicts_with(section)
-    # TODO: should check the list of conflicts first
-    i = 0
-    while i < num_periods
-      j = 0
-      while j < section.num_periods
-        if (periods_day[i] == section.periods_day[j] \
-            && ((periods_start[i].to_i <= section.periods_start[j].to_i && periods_end[i].to_i >= section.periods_start[j].to_i) \
-            || (periods_start[i].to_i >= section.periods_start[j].to_i && periods_start[i].to_i <= section.periods_end[j].to_i)))
-          return true
-        end
-        j += 1
-      end
-      i += 1
-    end
-    false
+    seld.conflict_ids.include? section.id
   end
 
   def update_conflicts!
-    new_conflict_ids = self.class.compute_conflict_ids_for(self.id)
-    old_conflicts = Section.where(id: self.conflicts)
+    new_conflict_ids = compute_conflict_ids
+    old_conflicts = Section.where(id: self.conflicts_ids)
     new_conflicts = Section.where(id: new_conflict_ids)
     Section.transaction do
       (old_conflicts - new_conflicts).each do |old_conflict|
-        old_conflict.update_column :conflicts, old_conflict.conflicts - [self.id]
+        old_conflict.update_column :conflicts_ids, old_conflict.conflicts_ids - [self.id]
       end
       (new_conflicts - old_conflicts).each do |new_conflict|
-        new_conflict.update_column :conflicts, (new_conflict.conflicts | [self.id]).sort!
+        new_conflict.update_column :conflicts_ids, (new_conflict.conflicts_ids | [self.id]).sort!
       end
-      self.update_column :conflicts, new_conflict_ids
+      self.update_column :conflicts_ids, new_conflict_ids
     end
   end
 
-  def sort_periods
-    periods_info = periods_day.zip periods_start, periods_end, periods_type, periods_location
-    periods_info = periods_info.sort!.transpose
-    self.periods_day, self.periods_start, self.periods_end, self.periods_type, self.periods_location = periods_info
-  end
+  private
 
-  def periods_changed?
-    (self.changed & %w(periods_start periods_end periods_day periods_type periods_location)).any?
-  end
-
-  def self.periods_hash_to_array periods
-    periods_array = { periods_day: [], periods_start: [], periods_end: [], periods_type: [], periods_location: [] }
-    periods.each do |period|
-      periods_array[:periods_day]      << period[:day]
-      periods_array[:periods_start]    << period[:start]
-      periods_array[:periods_end]      << period[:end]
-      periods_array[:periods_type]     << period[:type]
-      periods_array[:periods_location] << period[:location]
-    end
-    periods_array[:num_periods] = periods.count
-    periods_array
+  def compute_conflict_ids
+    Section.find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
+      (SELECT(unnest(COMPUTE_CONFLICT_IDS(#{self.id})))) ORDER BY ID").map(&:id)
   end
 end

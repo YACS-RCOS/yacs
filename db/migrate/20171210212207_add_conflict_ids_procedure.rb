@@ -1,7 +1,7 @@
 class AddConflictIdsProcedure < ActiveRecord::Migration[5.1]
   def up
     execute <<-SQL
-      CREATE OR REPLACE FUNCTION CONFLICT_IDS (section_id INTEGER) RETURNS INTEGER ARRAY AS $$
+      CREATE OR REPLACE FUNCTION COMPUTE_CONFLICT_IDS (section_id INTEGER) RETURNS INTEGER ARRAY AS $$
       DECLARE
         i INTEGER := 0;
         j INTEGER := 0;
@@ -38,7 +38,7 @@ class AddConflictIdsProcedure < ActiveRecord::Migration[5.1]
 
   def down
     execute <<-SQL
-      DROP FUNCTION IF EXISTS CONFLICT_IDS (INTEGER)
+      DROP FUNCTION IF EXISTS COMPUTE_CONFLICT_IDS (INTEGER)
     SQL
   end
 end
