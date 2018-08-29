@@ -11,7 +11,11 @@ yacs-malg
 yacs-notifications
 yacs-notice-service
 yacs-prereq-web
-yacs-prereq-data"
+yacs-prereq-data
+adapter-acalog-rpi
+adapter-banner-rpi
+adapter-yaml-rpi
+adapter-csv-rpi"
 
 for repo in $REPOS; do
   uri="git@github.com:YACS-RCOS/$repo.git"
