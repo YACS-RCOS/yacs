@@ -1,11 +1,14 @@
 class Section < ActiveRecord::Base
-  has_and_belongs_to_many :instructors
   validates  :shortname, presence: true, uniqueness: { scope: :listing_id }
   validates  :crn, presence: true
   default_scope { order(shortname: :asc) }
   before_save :sort_periods, if: :periods_changed?
   after_save :update_conflicts!, if: :periods_changed?
   after_save :send_notification
+
+  def instructors
+    Instructor.where 'instructor_ids && ARRAY[?]', self.instructor_ids
+  end
 
   def send_notification
     SectionsResponder.new.call(self)
@@ -14,6 +17,8 @@ class Section < ActiveRecord::Base
   def conflicts_with(section)
     seld.conflict_ids.include? section.id
   end
+
+  private
 
   def update_conflicts!
     new_conflict_ids = compute_conflict_ids
@@ -30,10 +35,12 @@ class Section < ActiveRecord::Base
     end
   end
 
-  private
-
   def compute_conflict_ids
     Section.find_by_sql("SELECT sections.id FROM sections WHERE sections.id IN
       (SELECT(unnest(COMPUTE_CONFLICT_IDS(#{self.id})))) ORDER BY ID").map(&:id)
+  end
+
+  def sort_periods
+    periods.sort_by! { |p| [p[:day], p[:start], p[:end], p[:type]] }
   end
 end
