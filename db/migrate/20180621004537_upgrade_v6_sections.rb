@@ -1,7 +1,6 @@
-class NewSchemaSections < ActiveRecord::Migration[5.1]
-  def change
+class UpgradeV6Sections < ActiveRecord::Migration[5.1]
+  def up
     rename_column :sections, :conflicts, :conflict_ids
-    # change_column :sections, :conflict_ids, 'integer[] USING ARRAY[conflict_ids]::INTEGER[]', array: true, null: false, default: []
     rename_column :sections, :name, :shortname
     remove_column :sections, :course_id
     remove_column :sections, :num_periods
@@ -13,6 +12,11 @@ class NewSchemaSections < ActiveRecord::Migration[5.1]
     remove_column :sections, :instructors
     change_column :sections, :crn, :string
     add_column    :sections, :listing_id, :integer, null: false
-    add_column    :sections, :periods, :jsonb, null: false, default: '{}'
+    add_column    :sections, :periods, :jsonb, null: false, default: '[]'
+    add_column    :sections, :instructor_ids, :integer, null: false, default: [], array: true
+  end
+
+  def down
+    raise ActiveRecord::IrreversibleMigration
   end
 end
