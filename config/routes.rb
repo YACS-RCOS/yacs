@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v6 do
       jsonapi_resources :schools
-      jsonapi_resources :departments
       jsonapi_resources :subjects
       jsonapi_resources :courses
       jsonapi_resources :terms
