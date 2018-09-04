@@ -43,8 +43,11 @@ gem 'karafka'
 gem 'rubyzip', '~> 1.2.1'
 gem 'listen'
 
-gem 'fast_jsonapi'
-gem 'jsonapi-resources'
+gem 'jsonapi_suite', '~> 0.7'
+gem 'jsonapi-rails', '~> 0.3.0'
+gem 'jsonapi_swagger_helpers', '~> 0.6', require: false
+gem 'jsonapi_spec_helpers', '~> 0.4', require: false
+gem 'kaminari', '~> 1.0'
 
 group :development, :test do
   gem 'pry'
@@ -52,12 +55,15 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'pry-byebug', '~> 1.3.3'
   gem 'railroady'
+  gem 'swagger-diff'
 end
 
 group :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'pickle'
+  gem 'faker'
   # gem 'webrat'
   gem 'database_cleaner'
   gem "capybara"

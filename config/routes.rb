@@ -4,13 +4,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v6 do
-      jsonapi_resources :schools
-      jsonapi_resources :subjects
-      jsonapi_resources :courses
-      jsonapi_resources :terms
-      jsonapi_resources :listings
-      jsonapi_resources :sections
-      jsonapi_resources :instructors
+      resources :terms
+      resources :schools
+      resources :subjects
+      resources :courses
+      resources :listings
+      resources :sections
+      resources :instructors
     end
   end
 
@@ -26,4 +26,8 @@ Rails.application.routes.draw do
 
   get '/' => 'static#index'
   get '/about' => 'static#about'
+
+  scope path: '/api' do
+    resources :docs, only: [:index], path: '/swagger'
+  end
 end
