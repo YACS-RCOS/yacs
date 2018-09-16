@@ -2,11 +2,11 @@ class ApplicationConsumer < Karafka::BaseController
   ALLOWED_TYPES = %w(school subject listing section).freeze
   ALLOWED_METHODS = %w(create update delete).freeze
   ALLOWED_PARAMS = {
-    school: %i(longname, uuid),
+    school: %i(longname uuid),
     # department: %i(shortname, longname, uuid, school_uuid)
     subject: %i(shortname longname uuid school_uuid),
-    listing: %i(name number description min_credits max_credits uuid subject_uuid tags),
-    section: %i(shortname crn seats seats_taken uuid listing_uuid) << { periods: %i(day start end type location) }
+    listing: %i(shortname longname description min_credits max_credits uuid subject_uuid tags),
+    section: %i(shortname crn seats seats_taken uuid listing_uuid instructors) << { periods: %i(day start end type location) }
   }.with_indifferent_access.freeze
 
   include Karafka::Controllers::Callbacks
@@ -26,28 +26,50 @@ class ApplicationConsumer < Karafka::BaseController
   def consume
     begin
       send "transform_#{@type}"
-      send "consume_#{@method}"
+      send "consume_#{@type}"
     rescue Exception => e
       File.open('errors.txt', 'a+b') do |file|
         file.puts({ error: e, params: params }.to_json)
       end
+      # binding.pry
+      puts @data
     end
   end
 
   protected
 
-  def consume_create
-    @type.capitalize.constantize.create! @data
+  # def consume_create
+  #   @type.capitalize.constantize.create! @data
+  # end
+
+  # def consume_update
+  #   record = @type.capitalize.constantize.find_by! uuid: @data[:uuid]
+  #   record.update! @data
+  # end
+
+  # def consume_delete
+  #   record = @type.capitalize.constantize.find_by! uuid: @data[:uuid]
+  #   record.destroy!
+  # end
+
+  def consume_school
+    school = School.find_by uuid: @data[:uuid]
+    school.present? ? school.update!(@data) : School.create!(@data)
   end
 
-  def consume_update
-    record = @type.capitalize.constantize.find_by! uuid: @data[:uuid]
-    record.update! @data
+  def consume_subject
+    subject = Subject.find_by uuid: @data[:uuid]
+    subject.present? ? subject.update!(@data) : Subject.create!(@data)
   end
 
-  def consume_delete
-    record = @type.capitalize.constantize.find_by! uuid: @data[:uuid]
-    record.destroy!
+  def consume_listing
+    listing = Listing.find_by uuid: @data[:uuid]
+    listing.present? ? listing.update!(@data) : Listing.create!(@data)
+  end
+
+  def consume_section
+    section = Section.find_by uuid: @data[:uuid]
+    section.present? ? section.update!(@data) : Section.create!(@data)
   end
 
   private
@@ -66,14 +88,21 @@ class ApplicationConsumer < Karafka::BaseController
   end
 
   def transform_listing
-    @data[:subject_id] = Subject.find_by!(uuid: @data[:subject_uuid]).id
+    # @data[:subject_id] = Subject.find_by!(uuid: @data[:subject_uuid]).id
+    # @data.delete :subject_uuid
+    # subject = Subject.find_by!(uuid: @data[:subject_uuid])
+    # @data[:course_id] = subject.courses.where(shortname: @data[:shortname]).first_or_create!.id
+    course = Course.joins(:subject).where(shortname: @data[:shortname], subject: { uuid: @data[:subject_uuid] })
+    @data[:course_id] = course.first_or_create!.id
+    @data[:term_id] = topic.consumer_group.name
     @data.delete :subject_uuid
   end
 
   def transform_section
     @data[:listing_id] = Listing.find_by!(uuid: @data[:listing_uuid]).id
-    @data.merge! Section.periods_hash_to_array @data[:periods]
     @data.delete :listing_uuid
-    @data.delete :periods
+    # @data.merge! Section.periods_hash_to_array @data[:periods]
+    # @data.delete :listing_uuid
+    # @data.delete :periods
   end
 end

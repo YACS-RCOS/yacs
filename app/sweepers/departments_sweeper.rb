@@ -1,5 +1,5 @@
 class DepartmentsSweeper < BaseSweeper
-  observe School, Department
+  observe School, Subject
 
   def expire_data record
     super record

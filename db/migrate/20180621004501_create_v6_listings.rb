@@ -3,6 +3,7 @@ class CreateV6Listings < ActiveRecord::Migration[5.1]
     create_table :listings do |t|
       t.integer :term_id,             null: false
       t.integer :course_id,           null: false
+      t.uuid    :uuid,                null: false
       t.string  :longname,            null: false
       t.text    :description,         null: false
       t.integer :min_credits,         null: false

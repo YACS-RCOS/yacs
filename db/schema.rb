@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20180621004610) do
   create_table "listings", force: :cascade do |t|
     t.integer "term_id", null: false
     t.integer "course_id", null: false
+    t.uuid "uuid", null: false
     t.string "longname", null: false
     t.text "description", null: false
     t.integer "min_credits", null: false

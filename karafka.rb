@@ -23,13 +23,15 @@ class ConsumerApp < Karafka::App
   end
 end
 
-active_terms = Term.map
+active_terms = ENV['TERM_SHORTNAME'].split ','
+uni_shortname = ENV['UNI_SHORTNAME']
 
 ConsumerApp.consumer_groups.draw do
-  consumer_group :core do
-
-    topic :full_transport do
-      controller ApplicationConsumer
+  active_terms.each do |term_shortname|
+    consumer_group term_shortname do
+      topic "#{uni_shortname}.raw_records.#{term_shortname}" do
+        controller ApplicationConsumer
+      end
     end
   end
 end
