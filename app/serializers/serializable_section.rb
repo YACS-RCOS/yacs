@@ -21,5 +21,5 @@ class SerializableSection < JSONAPI::Serializable::Resource
   attribute :uuid
   attribute :periods
   attribute :instructor_ids
-  aatribute :listing_id
+  attribute :listing_id
 end
