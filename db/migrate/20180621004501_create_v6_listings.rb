@@ -5,7 +5,7 @@ class CreateV6Listings < ActiveRecord::Migration[5.1]
       t.integer :course_id,           null: false
       t.uuid    :uuid,                null: false
       t.string  :longname,            null: false
-      t.text    :description,         null: false
+      t.text    :description
       t.integer :min_credits,         null: false
       t.integer :max_credits,         null: false
       t.boolean :active,              null: false, default: false

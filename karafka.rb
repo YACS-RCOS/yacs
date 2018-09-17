@@ -27,9 +27,9 @@ active_terms = ENV['TERM_SHORTNAME'].split ','
 uni_shortname = ENV['UNI_SHORTNAME']
 
 ConsumerApp.consumer_groups.draw do
-  active_terms.each do |term_shortname|
-    consumer_group term_shortname do
-      topic "#{uni_shortname}.raw_records.#{term_shortname}" do
+  Term.find_each do |term|
+    consumer_group term.shortname do
+      topic "#{uni_shortname}.raw_records.#{term.shortname}" do
         controller ApplicationConsumer
       end
     end

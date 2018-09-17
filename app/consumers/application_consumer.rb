@@ -31,8 +31,7 @@ class ApplicationConsumer < Karafka::BaseController
       File.open('errors.txt', 'a+b') do |file|
         file.puts({ error: e, params: params }.to_json)
       end
-      # binding.pry
-      puts @data
+      raise e
     end
   end
 
@@ -88,14 +87,12 @@ class ApplicationConsumer < Karafka::BaseController
   end
 
   def transform_listing
-    # @data[:subject_id] = Subject.find_by!(uuid: @data[:subject_uuid]).id
-    # @data.delete :subject_uuid
-    # subject = Subject.find_by!(uuid: @data[:subject_uuid])
-    # @data[:course_id] = subject.courses.where(shortname: @data[:shortname]).first_or_create!.id
-    course = Course.joins(:subject).where(shortname: @data[:shortname], subject: { uuid: @data[:subject_uuid] })
-    @data[:course_id] = course.first_or_create!.id
-    @data[:term_id] = topic.consumer_group.name
+    subject = Subject.find_by!(uuid: @data[:subject_uuid]).id
+    course = Course.where(subject: subject, shortname: @data[:shortname]).first_or_create
+    @data[:course_id] = course.id
+    @data[:term_id] = Term.find_by(shortname: topic.consumer_group.name).id
     @data.delete :subject_uuid
+    @data.delete :shortname
   end
 
   def transform_section

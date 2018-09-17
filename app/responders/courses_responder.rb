@@ -1,5 +1,5 @@
 class CoursesResponder < ApplicationResponder
-  @@topic_name = ENV['COURSES_TOPIC_NAME'].to_sym
+  @@topic_name = "#{ENV['UNI_SHORTNAME']}.final_records"
 
   topic @@topic_name, required: true
 

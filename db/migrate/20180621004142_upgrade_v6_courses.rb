@@ -5,6 +5,7 @@ class UpgradeV6Courses < ActiveRecord::Migration[5.1]
     remove_column :courses, :min_credits
     remove_column :courses, :max_credits
     remove_column :courses, :tags
+    rename_column :courses, :number, :shortname
     rename_column :courses, :department_id, :subject_id
   end
 
