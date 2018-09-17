@@ -40,4 +40,9 @@ class Api::V6::ListingResource < ApplicationResource
   # def resolve(scope)
   #   ... code ...
   # end
+
+  has_many :sections,
+    scope: -> { Section.all },
+    resource: SectionResource,
+    foreign_key: :listing_id
 end

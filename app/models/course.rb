@@ -1,13 +1,15 @@
 class Course < ActiveRecord::Base
   belongs_to :subject
   has_many   :listings, dependent: :destroy
-  validates  :number, presence: true, uniqueness: { scope: :subject_id }
-  default_scope { order(number: :asc) }
-  after_save :send_notification
+  # validates  :number, presence: true, uniqueness: { scope: :subject_id }
+  default_scope { order(shortname: :asc) }
+  # after_save :send_notification
 
-  def send_notification
-    CoursesResponder.new.call(self)
-  end
+  before_create { self.uuid ||= SecureRandom.uuid }
+
+  # def send_notification
+  #   CoursesResponder.new.call(self)
+  # end
 
   def self.get code, number
     joins(:subject).where("subjects.shortname = ? AND number = ?", shortname, number).first

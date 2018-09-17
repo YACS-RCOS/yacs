@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 20180621004610) do
 
   create_table "courses", id: :serial, force: :cascade do |t|
     t.integer "subject_id", null: false
-    t.integer "number", null: false
+    t.integer "shortname", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "uuid", null: false
-    t.index ["subject_id", "number"], name: "index_courses_on_subject_id_and_number", unique: true
+    t.index ["subject_id", "shortname"], name: "index_courses_on_subject_id_and_shortname", unique: true
     t.index ["uuid"], name: "index_courses_on_uuid"
   end
 
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180621004610) do
     t.integer "course_id", null: false
     t.uuid "uuid", null: false
     t.string "longname", null: false
-    t.text "description", null: false
+    t.text "description"
     t.integer "min_credits", null: false
     t.integer "max_credits", null: false
     t.boolean "active", default: false, null: false

@@ -22,16 +22,16 @@ class Section < ActiveRecord::Base
 
   def update_conflicts!
     new_conflict_ids = compute_conflict_ids
-    old_conflicts = Section.where(id: self.conflicts_ids)
+    old_conflicts = Section.where(id: self.conflict_ids)
     new_conflicts = Section.where(id: new_conflict_ids)
     Section.transaction do
       (old_conflicts - new_conflicts).each do |old_conflict|
-        old_conflict.update_column :conflicts_ids, old_conflict.conflicts_ids - [self.id]
+        old_conflict.update_column :conflict_ids, old_conflict.conflict_ids - [self.id]
       end
       (new_conflicts - old_conflicts).each do |new_conflict|
-        new_conflict.update_column :conflicts_ids, (new_conflict.conflicts_ids | [self.id]).sort!
+        new_conflict.update_column :conflict_ids, (new_conflict.conflict_ids | [self.id]).sort!
       end
-      self.update_column :conflicts_ids, new_conflict_ids
+      self.update_column :conflict_ids, new_conflict_ids
     end
   end
 
