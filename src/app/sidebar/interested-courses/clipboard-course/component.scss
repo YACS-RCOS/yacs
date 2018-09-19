@@ -64,7 +64,6 @@ i {
 .course-info {
   margin-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #e8e8e8;
 }
 
 :host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {

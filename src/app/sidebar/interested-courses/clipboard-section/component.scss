@@ -11,8 +11,10 @@
     font-size:80%;
     display:inline-block;
     margin-left:0em;
-    float:right;
     padding:0.15em 0;
+}
+.border {
+    border-bottom: 1px solid #e8e8e8;
 }
 .section-periods.noperiods {
     font-weight: bold;

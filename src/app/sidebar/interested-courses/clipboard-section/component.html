@@ -13,9 +13,12 @@
     Conflicts with selected sections
   </span>
 </div>
+
+<div class = "border">
 <div class="section-periods">
   <span class="period" *ngFor="let period of section.periods">
     <span class="period-day">{{ getDay(period) }}</span>
     <span class="period-time">{{ getHours(period) }}</span>
   </span>
+</div>
 </div>

@@ -1,16 +1,31 @@
 @import "../../_vars.scss";
 
-#sidebar {
-    min-height: 100%;
+@media (max-width: 570px) {
+  #sidebar {
+  min-height: 100%;
     background: none;
-    min-width: 300px;
-    max-width: 950px;
     padding-top: 100px;
     align-items: left;
     padding-left: 10px;
     padding-right: 10px;
     font-size: 98%;
     border-right: 2px solid #e8e8e8;
+    width: %100;
+  }
+}
+
+@media (min-width: 570px) {
+  #sidebar {
+    min-height: 100%;
+    background: none;
+    padding-top: 100px;
+    align-items: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 98%;
+    border-right: 2px solid #e8e8e8;
+    width: 500px;
+  }
 }
 
 ul {
