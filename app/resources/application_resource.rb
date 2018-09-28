@@ -1,10 +1,11 @@
 # ApplicationResource is similar to ApplicationRecord - a base class that
 # holds configuration/methods for subclasses.
 # All Resources should inherit from ApplicationResource.
-# Resource documentation: https://jsonapi-suite.github.io/jsonapi_compliable/JsonapiCompliable/Resource.html
-class ApplicationResource < JsonapiCompliable::Resource
+class ApplicationResource < Graphiti::Resource
   # Use the ActiveRecord Adapter for all subclasses.
   # Subclasses can still override this default.
-  # More on adapters: https://jsonapi-suite.github.io/jsonapi_compliable/JsonapiCompliable/Adapters/Abstract.html
-  use_adapter JsonapiCompliable::Adapters::ActiveRecord
+  self.abstract_class = true
+  self.adapter = Graphiti::Adapters::ActiveRecord
+  self.base_url = Rails.application.routes.default_url_options[:host]
+  self.endpoint_namespace = '/api/v6'
 end

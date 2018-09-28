@@ -4,9 +4,9 @@ ruby '2.4.2'
 
 gem 'puma', '3.11.0'
 
-gem 'rails', '5.1.4'
+gem 'rails', '5.1.5'
 gem 'pg'
-gem 'sass-rails', '~> 5.0'
+# gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'handlebars_assets'
@@ -43,11 +43,8 @@ gem 'karafka'
 gem 'rubyzip', '~> 1.2.1'
 gem 'listen'
 
-gem 'jsonapi_suite', '~> 0.7'
-gem 'jsonapi-rails', '~> 0.3.0'
-gem 'jsonapi_swagger_helpers', '~> 0.6', require: false
-gem 'jsonapi_spec_helpers', '~> 0.4', require: false
-gem 'kaminari', '~> 1.0'
+gem 'graphiti'
+gem 'kaminari'
 
 group :development, :test do
   gem 'pry'
@@ -56,14 +53,15 @@ group :development, :test do
   gem 'pry-byebug', '~> 1.3.3'
   gem 'railroady'
   gem 'swagger-diff'
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  # gem 'factory_girl_rails'  
+  gem 'faker'
+  gem 'graphiti_spec_helpers'
 end
 
 group :test do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-  gem 'factory_bot_rails'
   gem 'pickle'
-  gem 'faker'
   # gem 'webrat'
   gem 'database_cleaner'
   gem "capybara"

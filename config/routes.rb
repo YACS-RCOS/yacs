@@ -2,16 +2,14 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  namespace :api, defaults: { format: :json } do
-    namespace :v6 do
-      resources :terms
-      resources :schools
-      resources :subjects
-      resources :courses
-      resources :listings
-      resources :sections
-      resources :instructors
-    end
+  scope path: ApplicationResource.endpoint_namespace, defaults: { format: :jsonapi } do
+    resources :terms
+    resources :schools
+    resources :subjects
+    resources :courses
+    resources :listings
+    resources :sections
+    resources :instructors
   end
 
   namespace :api, defaults: { format: :json } do
