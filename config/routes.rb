@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
+  scope path: ApplicationResource.endpoint_namespace, defaults: { format: :jsonapi } do
+    # your routes go here
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   scope path: ApplicationResource.endpoint_namespace, defaults: { format: :jsonapi } do
+    resources :terms
     resources :schools
     resources :subjects
     resources :courses
