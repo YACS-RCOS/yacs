@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :school do
     uuid SecureRandom.uuid
     sequence(:name) { |n| "School of Thing ##{n}" }

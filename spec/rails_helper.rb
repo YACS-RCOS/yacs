@@ -6,7 +6,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'jsonapi_spec_helpers'
+require 'graphiti_spec_helpers/rspec'
 
 require 'coveralls'
 Coveralls.wear_merged!
@@ -77,11 +77,13 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.before :each do
-    JsonapiErrorable.disable!
-  end
-
-  config.include JsonapiSpecHelpers
-
+  # Graphiti setup
   config.include FactoryBot::Syntax::Methods
+  config.include GraphitiSpecHelpers::RSpec
+  config.include GraphitiSpecHelpers::Sugar
+
+  # Raise errors during tests by default
+  config.before :each do
+    GraphitiErrors.disable!
+  end
 end
