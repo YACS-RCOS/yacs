@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   scope path: ApplicationResource.endpoint_namespace, defaults: { format: :jsonapi } do
-    resources :terms
     resources :schools
     resources :subjects
     resources :courses
