@@ -1,4 +1,4 @@
-class SchoolsController < ApplicationController
+class Api::V6::SchoolsController < Api::V6::ApiController
   def index
     schools = SchoolResource.all(params)
     respond_with(schools)

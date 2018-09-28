@@ -1,4 +1,4 @@
-class CoursesController < ApplicationController
+class Api::V6::CoursesController < Api::V6::ApiController
   def index
     courses = CourseResource.all(params)
     respond_with(courses)

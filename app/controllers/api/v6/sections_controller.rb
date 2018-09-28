@@ -1,4 +1,4 @@
-class SectionsController < ApplicationController
+class Api::V6::SectionsController < Api::V6::ApiController
   def index
     sections = SectionResource.all(params)
     respond_with(sections)

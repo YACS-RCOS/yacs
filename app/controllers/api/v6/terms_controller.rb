@@ -1,4 +1,4 @@
-class TermsController < ApplicationController
+class Api::V6::TermsController < Api::V6::ApiController
   def index
     terms = TermResource.all(params)
     respond_with(terms)
