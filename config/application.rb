@@ -8,6 +8,7 @@ Bundler.require(*Rails.groups)
 
 module Yacs
   class Application < Rails::Application
+    routes.default_url_options[:host] = ENV.fetch('HOST', 'http://localhost:3000')
     routes.default_url_options[:host] = ENV.fetch('HOST', 'https://localhost')
 
     # Initialize configuration defaults for originally generated Rails version.

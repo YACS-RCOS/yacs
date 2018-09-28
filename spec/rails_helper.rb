@@ -87,3 +87,5 @@ RSpec.configure do |config|
     GraphitiErrors.disable!
   end
 end
+
+GraphitiSpecHelpers::RSpec.schema!
