@@ -1,4 +1,4 @@
-class ListingsController < ApplicationController
+class Api::V6::ListingsController < Api::V6::ApiController
   def index
     listings = ListingResource.all(params)
     respond_with(listings)

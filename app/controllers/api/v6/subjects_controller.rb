@@ -1,4 +1,4 @@
-class SubjectsController < ApplicationController
+class Api::V6::SubjectsController < Api::V6::ApiController
   def index
     subjects = SubjectResource.all(params)
     respond_with(subjects)
