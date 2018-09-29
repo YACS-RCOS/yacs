@@ -9494,3 +9494,23 @@
 [2018-09-29 21:01:37 +0000 de610c9a68c3 (16)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
 [2018-09-29 21:01:48 +0000 b4abc7677983 (25)] INFO : Unable to send metric_data data, will try again later. Error: 
 [2018-09-29 21:01:48 +0000 b4abc7677983 (25)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:02:37 +0000 de610c9a68c3 (16)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:02:37 +0000 de610c9a68c3 (16)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:02:48 +0000 b4abc7677983 (25)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:02:48 +0000 b4abc7677983 (25)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:03:37 +0000 de610c9a68c3 (16)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:03:37 +0000 de610c9a68c3 (16)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:03:48 +0000 b4abc7677983 (25)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:03:48 +0000 b4abc7677983 (25)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:04:37 +0000 de610c9a68c3 (16)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:04:37 +0000 de610c9a68c3 (16)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:04:48 +0000 b4abc7677983 (25)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:04:48 +0000 b4abc7677983 (25)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:05:37 +0000 de610c9a68c3 (16)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:05:37 +0000 de610c9a68c3 (16)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:05:48 +0000 b4abc7677983 (25)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:05:48 +0000 b4abc7677983 (25)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:06:37 +0000 de610c9a68c3 (16)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:06:37 +0000 de610c9a68c3 (16)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
+[2018-09-29 21:06:48 +0000 b4abc7677983 (25)] INFO : Unable to send metric_data data, will try again later. Error: 
+[2018-09-29 21:06:48 +0000 b4abc7677983 (25)] INFO : NewRelic::Agent::LicenseException: Invalid license key, please visit support.newrelic.com
