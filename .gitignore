@@ -31,6 +31,7 @@
 **/*.pem
 **/*.key
 
+
 #### Web ####
 
 # Web - compiled output
@@ -72,3 +73,24 @@
 
 # todo: check this in when the build can handle it
 /web/package-lock.json
+
+
+#### Users ####
+
+# Ignore bundler config.
+/users/.bundle
+
+# Ignore the default SQLite database.
+/users/db/*.sqlite3
+/users/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/users/log/*
+/users/tmp/*
+!/users/log/.keep
+!/users/tmp/.keep
+
+/users/node_modules
+/users/yarn-error.log
+
+/users/.byebug_history
