@@ -1,0 +1,111 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./_vars.scss";
+
+*:focus {
+  text-decoration: none;
+}
+
+body {
+    color: #000;
+    font-family: $font;
+    margin: 0;
+    font-weight: 300;
+}
+
+#content {
+    padding: 60px 15px 0px 15px;    
+}
+
+.theme-text {
+  color: #ffffff;
+}
+
+.theme-text-heavy {
+  font-weight: bolder;
+  font-size: larger;
+}
+
+#loading {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    /* browsers handle fractional pixel values differently, but the worst that
+       can happen is that it's 1/2 pixel off center. So it's best to use the
+       real values (half of the image width and height) here. */
+    margin-top: -4.5px;
+    margin-left: -62.5px;       
+}
+
+footer {
+    margin: 0px auto;
+    max-width: 950px;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  border-color: #f3f3f3;
+  border-top-color: #555;
+  border-style: solid;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: -25px 0 0 -25px;
+  border-width: 5px;
+}
+
+@-moz-keyframes spin {
+  from { -moz-transform: rotate(0deg); }
+  to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+}
+
+/* Global Bootstrap overrides go here */
+
+div.alert {
+  border: none;
+  border-radius: 0;
+}
+
+// .form-control:focus {
+//   outline: 0 none;
+//   box-shadow: 0 none;
+// }
+
+.dropdown-menu {
+  width: 100% !important;
+  left: 0px !important;
+  border-radius: 2px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+
+.dropdown-item {
+  padding: .25rem .75rem !important;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #d57f7f !important;
+}
