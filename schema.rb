@@ -7,11 +7,9 @@ class Schema
   def initialize config
     @config = config
     @types = config['types']
-    # puts @types
   end
 
   def child_type_for type
-    puts type unless @types[type]
     @types[type]['child_type']
   end
 

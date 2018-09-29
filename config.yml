@@ -3,21 +3,21 @@ version: '1'
 schema:
   types:
     schools:
-      identifier: name
+      identifier: longname
       child_type: subjects
       parent_type: null
     subjects:
-      identifier: code
-      child_type: courses
+      identifier: shortname
+      child_type: listings
       parent_type: schools
-    courses:
-      identifier: number
+    listings:
+      identifier: shortname
       child_type: sections
       parent_type: subjects
     sections:
       identifier: crn
       child_type: null
-      parent_type: courses
+      parent_type: listings
 
 sources:
   sources:
@@ -60,10 +60,10 @@ priorities:
     existence: yaml-schools
   subjects:
     existence: yaml-schools
-  courses:
+  listings:
     existence: banner
     fields:
-      name:
+      longname:
         # - admin
         - csv-topics
         - acalog
