@@ -1,0 +1,8 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
+
+(>&2 echo "ERROR: This script is depcreated")
+exit 1
+
+docker-compose run core rake assets:precompile && rm -f public/index.html
+chmod -f a+r public/* || :

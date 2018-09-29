@@ -1,0 +1,9 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
+
+bin/yacs-compose-development run --rm core rails db:reset db:structure:load
+bin/yacs-compose-development stop kafka zookeeper redis core-consumer
+bin/yacs-compose-development rm -vf kafka
+bin/yacs-compose-development rm -vf zookeeper
+bin/yacs-compose-development rm -vf redis
+echo "Term.create(shortname: \"201809\", longname: \"Fall 2018\")" | bin/yacs-compose-development run --rm core rails c

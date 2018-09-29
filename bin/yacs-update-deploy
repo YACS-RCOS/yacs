@@ -1,0 +1,12 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
+
+(>&2 echo "ERROR: This script is depcreated")
+exit 1
+
+bin/yacs-update
+bin/yacs-build
+bin/yacs-dbsetup
+bin/yacs-stop
+bin/yacs-assets
+bin/yacs-startd

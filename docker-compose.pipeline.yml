@@ -1,0 +1,32 @@
+version: '3.2'
+
+services:
+  malg:
+    links:
+      - adapter-acalog
+      - adapter-banner
+      - adapter-yaml
+      - adapter-csv
+
+  adapter-acalog:
+    image: yacsrcos/adapter-acalog-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
+  adapter-banner:
+    image: yacsrcos/adapter-banner-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
+  adapter-yaml:
+    image: yacsrcos/adapter-yaml-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
+  adapter-csv:
+    image: yacsrcos/adapter-csv-rpi
+    restart: unless-stopped
+    expose:
+      - "4600"
+    environment:
+      - CSV_SOURCE_201809=https://docs.google.com/spreadsheets/d/e/2PACX-1vThsxFovHKq-FpIx7keMhgvhPjBPS59EWOiMPEcFTKCi883GGmFLdKS4YFNbA8jfDzGciFYOZHZdE-x/pub?gid=0&single=true&output=csv

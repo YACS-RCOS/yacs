@@ -1,0 +1,14 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
+
+if ! [[ -f ssl/cert.pem && -f ssl/chain.pem && -f ssl/fullchain.pem && -f ssl/privkey.pem ]]; then
+	(>&2 echo "ERROR: Certificates are missing. Place your certificates (cert.pem, chain.pem, fullchain.pem, privkey.pem) in the ssl folder before continuing, or run \`bin/yacs-generate-cert\` to generate dummy certificates.")
+	exit 1
+fi
+
+if [ ! -f .env ]; then
+  (>&2 echo "ERROR: Please configure your environment before continuing.")
+  exit 1
+fi
+
+bin/yacs-build-production

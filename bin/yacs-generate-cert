@@ -1,0 +1,7 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../ssl
+
+openssl req -x509 -nodes -days 730 -newkey rsa:2048 -keyout privkey.pem -out cert.pem -subj '/CN=localhost'
+
+cp cert.pem chain.pem
+cp chain.pem fullchain.pem
