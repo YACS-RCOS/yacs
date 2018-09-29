@@ -1,0 +1,85 @@
+version: '1'
+
+schema:
+  types:
+    schools:
+      identifier: longname
+      child_type: subjects
+      parent_type: null
+    subjects:
+      identifier: shortname
+      child_type: listings
+      parent_type: schools
+    listings:
+      identifier: shortname
+      child_type: sections
+      parent_type: subjects
+    sections:
+      identifier: crn
+      child_type: null
+      parent_type: listings
+
+sources:
+  sources:
+    acalog:
+      location: http://adapter-acalog:4600
+      poll: 86400 # 1 day
+      root: subjects
+    banner:
+      location: http://adapter-banner:4600
+      poll: 43200 # 12 hours
+      root: subjects
+    banner-seats:
+      location: http://adapter-banner:4600/seats
+      poll: 300 # 5 minutes
+      root: sections
+    yaml-schools:
+      location: http://adapter-yaml:4600
+      poll: 86400 # 1 day
+      # poll: 60
+      root: schools
+    csv-topics:
+      location: http://adapter-csv:4600
+      poll: 600 # 10 minutes
+      root: subjects
+    # admin:
+    #   location: admin
+    #   poll: 60 # 1 minute
+    #   root: schools
+
+priorities:
+  default:
+    fields:
+      # - admin
+      - banner-seats
+      - csv-topics
+      - acalog
+      - banner
+      - yaml-schools
+  schools:
+    existence: yaml-schools
+  subjects:
+    existence: yaml-schools
+  listings:
+    existence: banner
+    fields:
+      longname:
+        # - admin
+        - csv-topics
+        - acalog
+        - banner
+      description:
+        - csv-topics
+        - admin
+        - acalog
+  sections:
+    existence: banner
+    fields:
+      seats:
+        # - admin
+        - banner-seats
+        - banner
+      seats_available:
+        # - admin
+        - banner-seats
+        - banner
