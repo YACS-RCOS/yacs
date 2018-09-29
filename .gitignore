@@ -8,9 +8,9 @@
 /core/.bundle
 
 # Ignore all logfiles and tempfiles.
-core/log/*
+/core/log/*
 !/log/.keep
-core/tmp
+/core/tmp
 
 # Ignore .vagrant files
 /.vagrant/
@@ -20,7 +20,7 @@ core/tmp
 .DS_Store
 
 # Ignore compiled assets
-core/public/assets/*
+/core/public/assets/*
 
 # Ignore caches pages
 /core/public/index.html
