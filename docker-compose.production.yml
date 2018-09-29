@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  postgres:
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
+
+  nginx:
+    restart: unless-stopped
+
+  core:
+    restart: unless-stopped
+    environment:
+      - RAILS_ENV=production
+
+  worker:
+    restart: unless-stopped
+    environment:
+      - RAILS_ENV=production
+
+  web:
+    restart: unless-stopped
+
+  # admin:
+  #   restart: unless-stopped
+
+  users:
+    restart: unless-stopped
+    environment:
+      - RAILS_ENV=production
+
+  malg:
+    restart: unless-stopped
