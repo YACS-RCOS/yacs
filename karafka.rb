@@ -8,12 +8,16 @@
 
 # Ruby on Rails setup
 # Remove whole non-Rails setup that is above and uncomment the 4 lines below
+
+require 'forwardable'
+require 'karafka'
 ENV['RAILS_ENV'] ||= 'development'
 ENV['KARAFKA_ENV'] = ENV['RAILS_ENV']
 require ::File.expand_path('../config/environment', __FILE__)
 Rails.application.eager_load!
+# Karafka::Loader.load(Karafka::App.root)
 
-class ConsumerApp < Karafka::App
+class App < Karafka::App
   setup do |config|
     config.client_id = 'core'
     config.backend = :inline
@@ -23,17 +27,16 @@ class ConsumerApp < Karafka::App
   end
 end
 
-active_terms = ENV['TERM_SHORTNAME'].split ','
 uni_shortname = ENV['UNI_SHORTNAME']
 
-ConsumerApp.consumer_groups.draw do
+App.consumer_groups.draw do
   Term.find_each do |term|
     consumer_group term.shortname do
       topic "#{uni_shortname}.raw_records.#{term.shortname}" do
-        controller ApplicationConsumer
+        consumer ApplicationConsumer
       end
     end
   end
 end
 
-ConsumerApp.boot!
+App.boot!

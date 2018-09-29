@@ -13,7 +13,7 @@ class Api::V5::ApiController < ActionController::Metal
   
   append_view_path "#{Rails.root}/app/views"
 
-  self.page_cache_directory = Rails.public_path
+  # self.page_cache_directory = Rails.public_path
   self.perform_caching = true
   self.cache_store = :redis_store, 'redis://redis:6379/0/cache'
   
