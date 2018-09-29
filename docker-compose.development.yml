@@ -33,13 +33,19 @@ services:
       - "4100:4100"
     volumes:
       - ./develop/yacs:/usr/src/app
+    tty: true
+    stdin_open: true
 
   core-consumer:
     build: ./develop/yacs
     environment:
       - RAILS_ENV=development
+      - TERM_SHORTNAME=201809
+      - UNI_SHORTNAME=RPI
     volumes:
       - ./develop/yacs:/usr/src/app
+    tty: true
+    stdin_open: true
 
   notifications:
     build: ./develop/yacs-notifications
@@ -83,6 +89,9 @@ services:
       - "4500:4500"
     volumes:
       - "./develop/yacs-malg:/usr/src/app"
+    environment:
+      - TERM_SHORTNAME=201809
+      - UNI_SHORTNAME=RPI
 
 #  kafka-manager:
 #    image: sheepkiller/kafka-manager:latest

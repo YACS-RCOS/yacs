@@ -129,8 +129,9 @@ services:
     #    published: 9094
     #    protocol: tcp
     #    mode: host
-    #ports:
-    #  - "9094:9094"
+    ports:
+     - "9094:9094"
+     - "9092:9092"
     depends_on:
       - zookeeper
     expose:
