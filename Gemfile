@@ -4,10 +4,9 @@ ruby '2.4.2'
 
 gem 'puma', '3.11.0'
 
-gem 'rails', '5.1.5'
-gem 'pg'
+gem 'rails', '5.1.4'
+gem 'pg', '~> 0.21'
 # gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
 
 gem 'handlebars_assets'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
@@ -20,12 +19,12 @@ gem 'rails-observers'
 gem 'therubyracer', platforms: :ruby
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'responders', '~> 2.0'
+gem 'responders'
 
 gem 'crono'
 gem 'httpclient'
@@ -39,6 +38,7 @@ gem 'redis-rails'
 gem 'redis-store', '~> 1.4.0'
 
 gem 'karafka'
+gem 'ruby-kafka'
 
 gem 'rubyzip', '~> 1.2.1'
 gem 'listen'

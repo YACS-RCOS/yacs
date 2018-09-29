@@ -1,4 +1,4 @@
-class ApplicationConsumer < Karafka::BaseController
+class ApplicationConsumer < Karafka::BaseConsumer
   ALLOWED_TYPES = %w(school subject listing section).freeze
   ALLOWED_METHODS = %w(create update delete).freeze
   ALLOWED_PARAMS = {
@@ -9,12 +9,13 @@ class ApplicationConsumer < Karafka::BaseController
     section: %i(shortname crn seats seats_taken uuid listing_uuid instructors) << { periods: %i(day start end type location) }
   }.with_indifferent_access.freeze
 
-  include Karafka::Controllers::Callbacks
+  include Karafka::Consumers::Callbacks
 
-  after_fetched do
-    @type = params[:type]
-    @method = params[:method]
+  after_fetch do
+    @type = params['type']
+    @method = params['method']
     unless ALLOWED_TYPES.include? @type
+      STDERR.puts params
       throw "ERROR: Disallowed Type: #{@type}"
     end
     unless ALLOWED_METHODS.include? @method
@@ -31,7 +32,7 @@ class ApplicationConsumer < Karafka::BaseController
       File.open('errors.txt', 'a+b') do |file|
         file.puts({ error: e, params: params }.to_json)
       end
-      raise e
+      # raise e
     end
   end
 
