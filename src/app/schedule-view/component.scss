@@ -1,0 +1,52 @@
+.schedule-view {
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.schedule-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 500;
+    margin: 5px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+}
+
+.schedule-switch {
+    padding:5px;
+    cursor:pointer;
+}
+.schedule-switch.disabled {
+    color: #999;
+    cursor: default;
+}
+
+.schedule-button {
+    color: #ffffff;
+    background-color: #c65353;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    padding: 5px 15px;
+}
+
+.schedule-button:hover {
+    background-color: #d57f7f;
+}
+
+.schedule-button[disabled] {
+  background-color:#daa;
+}
+
+.schedule-status {
+    margin: 0;
+    font-size: 90%;
+    -moz-user-select:text;
+    -webkit-user-select:text;
+    -ms-user-select:text;
+}
+

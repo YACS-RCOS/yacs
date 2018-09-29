@@ -1,0 +1,12 @@
+course {
+    display: block;
+    margin: 0px 20px;
+    padding:15px;
+    border-bottom: 1px #bbb solid;
+    cursor: pointer;
+    max-width: 950px;
+    margin: 0 auto;
+}
+course:last-child {
+    border: none;
+}
