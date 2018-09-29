@@ -5,16 +5,12 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/.bundle
-
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
+/core/.bundle
 
 # Ignore all logfiles and tempfiles.
-/log/*
+core/log/*
 !/log/.keep
-/tmp
+core/tmp
 
 # Ignore .vagrant files
 /.vagrant/
@@ -24,17 +20,17 @@
 .DS_Store
 
 # Ignore compiled assets
-/public/assets/*
+core/public/assets/*
 
 # Ignore caches pages
-/public/index.html
-/public/api/*
+/core/public/index.html
+/core/public/api/*
 
 # Ignore tern files
 /.tern-port
 
-/coverage/
-/data/**/
+/core/coverage/
+/core/data/**/
 
 .env
-errors.txt
+/core/errors.txt
