@@ -7,8 +7,8 @@ require 'pry'
 class AcalogClient
   ACALOG_FIELD_TYPES = {
     description: 'p',
-    subject_code: 'prefix',
-    number: 'code',
+    subject_shortname: 'prefix',
+    shortname: 'code',
     name: 'name'
   }.freeze
 
@@ -21,15 +21,15 @@ class AcalogClient
 
   def load_catalog catalog_id
     @courses = courses_from catalog_id
-    @subjects = @courses.map { |k, v| { code: k, courses: v.values }}
+    @subjects = @courses.map { |k, v| { shortname: k, listings: v.values }}
     @graph = { subjects: @subjects }
   end
 
-  def find subject_code, number
-    @courses.dig(subject_code.to_s, number.to_s)
+  def find subject_shortname, shortname
+    @courses.dig(subject_shortname.to_s, shortname.to_s)
   end
 
-  def courses_by_subject
+  def listings_by_subject
     @graph
   end
 
@@ -59,8 +59,8 @@ class AcalogClient
           [k, course_xml.css(v).text]
         end.to_h
         course[:tags] = ['catalog']
-        mapped_courses[course[:subject_code]] ||= {}
-        mapped_courses[course[:subject_code]][course[:number]] = course
+        mapped_courses[course[:subject_shortname]] ||= {}
+        mapped_courses[course[:subject_shortname]][course[:shortname]] = course
       end
     end
     mapped_courses
