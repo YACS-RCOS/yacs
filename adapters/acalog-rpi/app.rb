@@ -15,5 +15,5 @@ def client_for term_shortname
 end
 
 get "/:term_shortname" do 
-  json client_for(params[:term_shortname]).courses_by_subject
+  json client_for(params[:term_shortname]).listings_by_subject
 end
