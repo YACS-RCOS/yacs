@@ -1,0 +1,99 @@
+schools:
+  - name: Humanities, Arts and Social Sciences
+    subjects:
+      - code: ARTS
+        name: Arts
+      - code: COGS
+        name: Cognitive Science
+      - code: STSH
+        name: Science and Technology Studies - Humanities
+      - code: STSS
+        name: Science and Technology Studies - Social Sciences
+      - code: COMM
+        name: Communication
+      - code: ECON
+        name: Economics
+      - code: GSAS
+        name: Games and Simulations Arts and Sciences
+      - code: IHSS
+        name: Interdisciplinary H&SS
+      - code: LANG
+        name: Languages
+      - code: LITR
+        name: Literature
+      - code: PHIL
+        name: Philosophy
+      - code: PSYC
+        name: Psychology
+      - code: WRIT
+        name: Writing
+  - name: Engineering
+    subjects:
+      - code: BMED
+        name: Biomedical Engineering
+      - code: CHME
+        name: Chemical Engineering
+      - code: ECSE
+        name: Electrical and Computer Systems Engineering
+      - code: ENVE
+        name: Environmental and Energy Engineering
+      - code: MANE
+        name: Mechanical, Aerospace, and Nuclear Engineering
+      - code: MTLE
+        name: Materials Science and Engineering
+      - code: CIVL
+        name: Civil Engineering
+      - code: ENGR
+        name: Core Engineering
+      # - code: ESCI
+      #   name: Engineering Science
+      - code: ISYE
+        name: Industrial and Systems Engineering
+      - code: EPOW
+        name: Electric Power Engineering
+  - name: Science
+    subjects:
+      - code: BCBP
+        name: Biochemistry and Biophysics
+      - code: CSCI
+        name: Computer Science
+      - code: ERTH
+        name: Earth and Environmental Science
+      - code: IENV
+        name: Interdisciplinary Environmental
+      - code: ISCI
+        name: Interdisciplinary Science
+      - code: MATP
+        name: Math Programming, Probability, and Statistics
+      - code: PHYS
+        name: Physics
+      - code: ASTR
+        name: Astronomy
+      - code: BIOL
+        name: Biology
+      - code: CHEM
+        name: Chemistry
+      - code: MATH
+        name: Mathematics
+      - code: ITWS
+        name: Information Technology and Web Science
+  - name: Architecture
+    subjects:  
+      - code: ARCH
+        name: Architecture
+      - code: LGHT
+        name: Lighting
+  - name: Business Management
+    subjects:
+      - code: MGMT
+        name: Management
+  - name: Other
+    subjects:
+      - code: ADMN
+        name: Administrative Courses
+      - code: USAF
+        name: Aerospace Studies (Air Force ROTC)
+      - code: USNA
+        name: Naval Science (Navy ROTC)
+      - code: USAR
+        name: Military Science (Army ROTC)
