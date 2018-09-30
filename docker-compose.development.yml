@@ -12,7 +12,7 @@ services:
       - "6379"
 
   nginx:
-    build: ./develop/yacs-nginx
+    build: ./nginx
     ports:
       - "80:80"
       - "443:443"
@@ -20,7 +20,7 @@ services:
       - core
 
   core:
-    build: ./develop/yacs
+    build: ./core
     environment:
       - COURSE_TOPIC_NAME=course_change 
       - SECTION_TOPIC_NAME=section_change
@@ -32,63 +32,63 @@ services:
     ports:
       - "4100:4100"
     volumes:
-      - ./develop/yacs:/usr/src/app
+      - ./core:/usr/src/app
     tty: true
     stdin_open: true
 
   core-consumer:
-    build: ./develop/yacs
+    build: ./core
     environment:
       - RAILS_ENV=development
       - TERM_SHORTNAME=201809
       - UNI_SHORTNAME=RPI
     volumes:
-      - ./develop/yacs:/usr/src/app
+      - ./core:/usr/src/app
     tty: true
     stdin_open: true
 
   notifications:
-    build: ./develop/yacs-notifications
+    build: ./notifications
     ports:
       - "3000:3000"
     volumes:
-      - ./develop/yacs-notifications:/usr/src/app
+      - ./notifications:/usr/src/app
 
-  notices:
-    build: ./develop/yacs-notice-service
-    ports:
-      - "4900:4900"
-    volumes:
-      - ./develop/yacs-notice-service:/usr/src/app
+  # notices:
+  #   build: ./notice-service
+  #   ports:
+  #     - "4900:4900"
+  #   volumes:
+  #     - ./notice-service:/usr/src/app
 
   web:
-    build: ./develop/yacs-web
+    build: ./web
     ports:
       - "4200:4200"
     volumes:
-      - "./develop/yacs-web/src:/usr/src/app/src"
+      - "./web/src:/usr/src/app/src"
     command: "ng build --watch"
 
   # admin:
-  #   build: ./develop/yacs-admin
+  #   build: ./admin
   #   ports:
   #     - "4300:4300"
 
   users:
-    build: ./develop/yacs-users
+    build: ./users
     ports:
       - "4400:4400"
     volumes:
-      - "./develop/yacs-users:/usr/src/app"
+      - "./users:/usr/src/app"
     tty: true
     stdin_open: true
 
   malg:
-    build: ./develop/yacs-malg
+    build: ./malg
     ports:
       - "4500:4500"
     volumes:
-      - "./develop/yacs-malg:/usr/src/app"
+      - "./malg:/usr/src/app"
     environment:
       - TERM_SHORTNAME=201809
       - UNI_SHORTNAME=RPI
@@ -107,17 +107,17 @@ services:
 
   # Planner Stuff!
 #  planner-web:
-#    build: ./develop/yacs-prereq-web
+#    build: ./prereq-web
 #    depends_on:
 #      - planner-data
 #    ports:
 #      - "4700:4200"
 #    volumes:
-#      - ./develop/yacs-prereq-web/src:/usr/src/app/src
+#      - ./prereq-web/src:/usr/src/app/src
 #    command: "ng serve --host 0.0.0.0 --disable-host-check"
 
 #  planner-data:
-#    build: ./develop/yacs-prereq-data
+#    build: ./prereq-data
 #    ports:
 #      - "4600:3100"
 #    expose:

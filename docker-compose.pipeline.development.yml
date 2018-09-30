@@ -9,40 +9,40 @@ services:
       - adapter-csv
 
   adapter-acalog:
-    build: ./develop/adapter-acalog-rpi
+    build: ./acalog-rpi
     expose:
       - "4600"
     ports:
       - "4601:4600"
     volumes:
-      - ./develop/adapter-acalog-rpi:/usr/src/app
+      - ./acalog-rpi:/usr/src/app
     tty: true
     stdin_open: true
   adapter-banner:
-    build: ./develop/adapter-banner-rpi
+    build: ./banner-rpi
     expose:
       - "4600"
     ports:
       - "4602:4600"
     volumes:
-      - ./develop/adapter-banner-rpi:/usr/src/app
+      - ./banner-rpi:/usr/src/app
     tty: true
     stdin_open: true
   adapter-yaml:
-    build: ./develop/adapter-yaml-rpi
+    build: ./yaml-rpi
     expose:
       - "4600"
     ports:
       - "4603:4600"
     volumes:
-      - ./develop/adapter-yaml-rpi:/usr/src/app
+      - ./yaml-rpi:/usr/src/app
   adapter-csv:
-    build: ./develop/adapter-csv-rpi
+    build: ./csv-rpi
     expose:
       - "4600"
     ports:
       - "4604:4600"
     volumes:
-      - ./develop/adapter-csv-rpi:/usr/src/app
+      - ./csv-rpi:/usr/src/app
     environment:
       - CSV_SOURCE_201809=https://docs.google.com/spreadsheets/d/e/2PACX-1vThsxFovHKq-FpIx7keMhgvhPjBPS59EWOiMPEcFTKCi883GGmFLdKS4YFNbA8jfDzGciFYOZHZdE-x/pub?gid=0&single=true&output=csv
