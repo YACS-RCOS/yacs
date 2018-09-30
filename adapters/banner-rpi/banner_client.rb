@@ -7,7 +7,7 @@ class BannerClient
 
   def initialize term_shortname
     @sections_uri = "https://sis.rpi.edu/reg/rocs/YACS_#{term_shortname}.xml"
-    @courses_uri = "https://sis.rpi.edu/reg/rocs/#{term_shortname}.xml"
+    @listings_uri = "https://sis.rpi.edu/reg/rocs/#{term_shortname}.xml"
     @http_client = HTTPClient.new
   end
 
@@ -19,32 +19,32 @@ class BannerClient
     end
   end
 
-  def courses
-    courses = get_xml(@courses_uri).xpath('//COURSE')
-    courses.map do |xml|
-      course = xml.to_h.symbolize_keys.map do |k, v|
+  def listings
+    listings = get_xml(@listings_uri).xpath('//COURSE')
+    listings.map do |xml|
+      listing = xml.to_h.symbolize_keys.map do |k, v|
         case k
         when :credmin then [:min_credits, v]
         when :credmax then [:max_credits, v]
-        when :num     then [:number, v]
-        when :name    then [:name, v.titleize]
-        when :dept    then [:subject, { code: v }]
+        when :num     then [:shortname, v]
+        when :name    then [:longname, v.titleize]
+        when :dept    then [:subject, { shortname: v }]
         else [nil, nil]
         end
       end.to_h.compact
-      course[:sections] = extract_sections xml
-      course
+      listing[:sections] = extract_sections xml
+      listing
     end
   end
 
-  def courses_by_subject
+  def listings_by_subject
     subjects = {}
-    courses.each do |course|
-      subjects[course[:subject][:code]] ||= []
-      subjects[course[:subject][:code]] << course
-      course.delete :subject
+    listings.each do |listing|
+      subjects[listing[:subject][:shortname]] ||= []
+      subjects[listing[:subject][:shortname]] << listing
+      listing.delete :subject
     end
-    subjects.map { |k, v| { code: k, courses: v } }
+    subjects.map { |k, v| { shortname: k, listings: v } }
   end
 
   private
@@ -53,11 +53,11 @@ class BannerClient
     Nokogiri::XML(@http_client.get(uri).body)
   end
 
-  def extract_sections course
-    course.xpath('SECTION').map do |xml|
+  def extract_sections listing
+    listing.xpath('SECTION').map do |xml|
       section = xml.to_h.symbolize_keys.map do |k, v|
         case k
-        when :num       then [:name, v]
+        when :num       then [:shortname, v]
         when :crn       then [:crn, v]
         when :seats     then [:seats, v]
         when :students  then [:seats_taken, v]
