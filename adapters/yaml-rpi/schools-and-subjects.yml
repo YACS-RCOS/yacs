@@ -1,99 +1,99 @@
 schools:
-  - name: Humanities, Arts and Social Sciences
+  - longname: Humanities, Arts and Social Sciences
     subjects:
-      - code: ARTS
-        name: Arts
-      - code: COGS
-        name: Cognitive Science
-      - code: STSH
-        name: Science and Technology Studies - Humanities
-      - code: STSS
-        name: Science and Technology Studies - Social Sciences
-      - code: COMM
-        name: Communication
-      - code: ECON
-        name: Economics
-      - code: GSAS
-        name: Games and Simulations Arts and Sciences
-      - code: IHSS
-        name: Interdisciplinary H&SS
-      - code: LANG
-        name: Languages
-      - code: LITR
-        name: Literature
-      - code: PHIL
-        name: Philosophy
-      - code: PSYC
-        name: Psychology
-      - code: WRIT
-        name: Writing
-  - name: Engineering
+      - shortname: ARTS
+        longname: Arts
+      - shortname: COGS
+        longname: Cognitive Science
+      - shortname: STSH
+        longname: Science and Technology Studies - Humanities
+      - shortname: STSS
+        longname: Science and Technology Studies - Social Sciences
+      - shortname: COMM
+        longname: Communication
+      - shortname: ECON
+        longname: Economics
+      - shortname: GSAS
+        longname: Games and Simulations Arts and Sciences
+      - shortname: IHSS
+        longname: Interdisciplinary H&SS
+      - shortname: LANG
+        longname: Languages
+      - shortname: LITR
+        longname: Literature
+      - shortname: PHIL
+        longname: Philosophy
+      - shortname: PSYC
+        longname: Psychology
+      - shortname: WRIT
+        longname: Writing
+  - longname: Engineering
     subjects:
-      - code: BMED
-        name: Biomedical Engineering
-      - code: CHME
-        name: Chemical Engineering
-      - code: ECSE
-        name: Electrical and Computer Systems Engineering
-      - code: ENVE
-        name: Environmental and Energy Engineering
-      - code: MANE
-        name: Mechanical, Aerospace, and Nuclear Engineering
-      - code: MTLE
-        name: Materials Science and Engineering
-      - code: CIVL
-        name: Civil Engineering
-      - code: ENGR
-        name: Core Engineering
-      # - code: ESCI
-      #   name: Engineering Science
-      - code: ISYE
-        name: Industrial and Systems Engineering
-      - code: EPOW
-        name: Electric Power Engineering
-  - name: Science
+      - shortname: BMED
+        longname: Biomedical Engineering
+      - shortname: CHME
+        longname: Chemical Engineering
+      - shortname: ECSE
+        longname: Electrical and Computer Systems Engineering
+      - shortname: ENVE
+        longname: Environmental and Energy Engineering
+      - shortname: MANE
+        longname: Mechanical, Aerospace, and Nuclear Engineering
+      - shortname: MTLE
+        longname: Materials Science and Engineering
+      - shortname: CIVL
+        longname: Civil Engineering
+      - shortname: ENGR
+        longname: Core Engineering
+      # - shortname: ESCI
+      #   longname: Engineering Science
+      - shortname: ISYE
+        longname: Industrial and Systems Engineering
+      - shortname: EPOW
+        longname: Electric Power Engineering
+  - longname: Science
     subjects:
-      - code: BCBP
-        name: Biochemistry and Biophysics
-      - code: CSCI
-        name: Computer Science
-      - code: ERTH
-        name: Earth and Environmental Science
-      - code: IENV
-        name: Interdisciplinary Environmental
-      - code: ISCI
-        name: Interdisciplinary Science
-      - code: MATP
-        name: Math Programming, Probability, and Statistics
-      - code: PHYS
-        name: Physics
-      - code: ASTR
-        name: Astronomy
-      - code: BIOL
-        name: Biology
-      - code: CHEM
-        name: Chemistry
-      - code: MATH
-        name: Mathematics
-      - code: ITWS
-        name: Information Technology and Web Science
-  - name: Architecture
+      - shortname: BCBP
+        longname: Biochemistry and Biophysics
+      - shortname: CSCI
+        longname: Computer Science
+      - shortname: ERTH
+        longname: Earth and Environmental Science
+      - shortname: IENV
+        longname: Interdisciplinary Environmental
+      - shortname: ISCI
+        longname: Interdisciplinary Science
+      - shortname: MATP
+        longname: Math Programming, Probability, and Statistics
+      - shortname: PHYS
+        longname: Physics
+      - shortname: ASTR
+        longname: Astronomy
+      - shortname: BIOL
+        longname: Biology
+      - shortname: CHEM
+        longname: Chemistry
+      - shortname: MATH
+        longname: Mathematics
+      - shortname: ITWS
+        longname: Information Technology and Web Science
+  - longname: Architecture
     subjects:  
-      - code: ARCH
-        name: Architecture
-      - code: LGHT
-        name: Lighting
-  - name: Business Management
+      - shortname: ARCH
+        longname: Architecture
+      - shortname: LGHT
+        longname: Lighting
+  - longname: Business Management
     subjects:
-      - code: MGMT
-        name: Management
-  - name: Other
+      - shortname: MGMT
+        longname: Management
+  - longname: Other
     subjects:
-      - code: ADMN
-        name: Administrative Courses
-      - code: USAF
-        name: Aerospace Studies (Air Force ROTC)
-      - code: USNA
-        name: Naval Science (Navy ROTC)
-      - code: USAR
-        name: Military Science (Army ROTC)
+      - shortname: ADMN
+        longname: Administrative Courses
+      - shortname: USAF
+        longname: Aerospace Studies (Air Force ROTC)
+      - shortname: USNA
+        longname: Naval Science (Navy ROTC)
+      - shortname: USAR
+        longname: Military Science (Army ROTC)
