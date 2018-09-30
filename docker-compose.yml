@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   postgres:
-    image: postgres:9.5.6
+    image: postgres:10.5-alpine
     expose:
       - "5432"
     healthcheck:
@@ -12,7 +12,7 @@ services:
       retries: 3
 
   redis:
-    image: redis:4-alpine
+    image: redis:5.0-rc-alpine
     expose:
       - "6379"
 
