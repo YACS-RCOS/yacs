@@ -1,4 +1,6 @@
 class SectionResource < ApplicationResource
+	belongs_to :listing
+
   attribute :shortname, :string
   attribute :crn, :string
   attribute :seats, :integer
@@ -7,5 +9,5 @@ class SectionResource < ApplicationResource
   attribute :periods, :array
   attribute :uuid, :string
   attribute :instructor_ids, :array
-  attribute :listing_id, :integer
+  attribute :listing_id, :integer, only: [:filterable]
 end

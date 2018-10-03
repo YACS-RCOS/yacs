@@ -1,4 +1,5 @@
 class Section < ActiveRecord::Base
+  belongs_to :listing
   validates  :shortname, presence: true, uniqueness: { scope: :listing_id }
   validates  :crn, presence: true
   default_scope { order(shortname: :asc) }

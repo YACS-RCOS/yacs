@@ -8,4 +8,5 @@ class ApplicationResource < Graphiti::Resource
   self.adapter = Graphiti::Adapters::ActiveRecord
   self.base_url = Rails.application.routes.default_url_options[:host]
   self.endpoint_namespace = '/api/v6'
+  self.attributes_writable_by_default = false
 end
