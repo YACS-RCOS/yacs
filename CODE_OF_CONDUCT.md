@@ -1,49 +1,44 @@
-# Contributor Code of Conduct
+# Yacs Code of Conduct
+In the interest of fostering an open and welcoming environment, Yacs pledges to be an inclusive and harassment-free experience for  all, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, educational background, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-As contributors and maintainers of this project, and in the interest of
-fostering an open and welcoming community, we pledge to respect all people who
-contribute through reporting issues, posting feature requests, updating
-documentation, submitting pull requests or patches, and other activities.
+This Code of Conduct applies to all Yacs-affiliated activity online and offline.
 
-We are committed to making participation in this project a harassment-free
-experience for everyone, regardless of level of experience, gender, gender
-identity and expression, sexual orientation, disability, personal appearance,
-body size, race, ethnicity, age, religion, or nationality.
+## Guidelines
+### Be respectful and inclusive
+* **Use inclusive language.**  This includes:
+  * using [gender-neutral or non-gendered language](http://geekfeminism.wikia.com/wiki/Nonsexist_language) where possible
+  * when referring to community members, using their preferred pronouns
+  * in general, avoiding any language that could be considered offensive towards marginalized groups
+* **Respect people's differences.** Examples include:
+  * Being welcoming towards new members
+  * Being open to opposing viewpoints
+  * Being understanding of cultural differences
+  * Making sure your project and any physical spaces your project team may meet are accessible to all members, including members with disabilities
 
-Examples of unacceptable behavior by participants include:
+### Give and be welcoming to constructive feedback
+* **Be constructive and respectful** when giving others feedback. This includes:
+  * Only giving feedback when solicited (e.g. mock presentation, questions section of presentation, request for code review, pull request, etc.)
+  * Keeping all feedback constructive, objective and impersonal
 
-* The use of sexualized language or imagery
-* Personal attacks
-* Trolling or insulting/derogatory comments
-* Public or private harassment
-* Publishing other's private information, such as physical or electronic
-  addresses, without explicit permission
-* Other unethical or unprofessional conduct
+## Unacceptable Behaviors
 
-Project maintainers have the right and responsibility to remove, edit, or
-reject comments, commits, code, wiki edits, issues, and other contributions
-that are not aligned to this Code of Conduct, or to ban temporarily or
-permanently any contributor for other behaviors that they deem inappropriate,
-threatening, offensive, or harmful.
+Examples of unacceptable behaviors include:
 
-By adopting this Code of Conduct, project maintainers commit themselves to
-fairly and consistently applying these principles to every aspect of managing
-this project. Project maintainers who do not follow or enforce the Code of
-Conduct may be permanently removed from the project team.
+* The use of sexualized language or imagery and unwelcome sexual attention or advances
+* Trolling, insulting/derogatory comments, and personal or political attacks
+* Public or private harassment as defined [here](https://rcos.github.io/rcos-handbook/#/community/harassment_guidelines)
+* Publishing others’ private information, such as a physical or electronic address, without explicit permission
+* Other conduct which could reasonably be considered inappropriate in a professional setting
 
-This code of conduct applies both within project spaces and in public spaces
-when an individual is representing the project or its community.
+## Reporting Incidents
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting a project maintainer at richiejoeyoung@gmail.com. All
-complaints will be reviewed and investigated and will result in a response that
-is deemed necessary and appropriate to the circumstances. Maintainers are
-obligated to maintain confidentiality with regard to the reporter of an
-incident.
+This project is affiliated with [Rensselaer Center for Open Source](http://rcos.io) (RCOS). At any point, you may report instances of CoC violations to the RCOS [coordinators](https://rcos.github.io/rcos-handbook/#/coordinating/README) and [faculty advisors](https://handbook.rcos.io/#/coordinating/faculty) at <coordinators@rcos.io>. You, as well as any other witnesses, have the right to remain anonymous to the rest of the RCOS community.
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 1.3.0, available at
-[http://contributor-covenant.org/version/1/3/0/][version]
+If you are uncomfortable reporting to the coordinators for any reason, you may reach out to a faculty advisor directly via the RCOS [Slack](https://rcos.slack.com/).
 
-[homepage]: http://contributor-covenant.org
-[version]: http://contributor-covenant.org/version/1/3/0/
+## Project Maintainer Responsibilities
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. In the case of contributors external to RPI and/or RCOS, temporary or permanent bans may occur. RPI-specific policies are outlined in the RCOS [Bylaws](https://rcos.github.io/rcos-handbook/#/community/bylaws).
+
+## License and Attribution
+
+This Code of Conduct has been adapted from the [RCOS Community Code of Conduct](https://rcos.github.io/rcos-handbook/#/community/CODE_OF_CONDUCT).
