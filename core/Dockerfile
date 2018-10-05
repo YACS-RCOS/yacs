@@ -1,6 +1,6 @@
 FROM ruby:2.4.2
 
-MAINTAINER Richie Young <richiejoeyoung@gmail.com>
+MAINTAINER Ada Young <ada@adadoes.io>
 
 RUN apt-get update && apt-get install -qq -y build-essential nodejs wget postgresql-client --fix-missing --no-install-recommends
 
