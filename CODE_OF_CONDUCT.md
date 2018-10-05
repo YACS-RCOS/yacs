@@ -1,10 +1,13 @@
 # Yacs Code of Conduct
+
 In the interest of fostering an open and welcoming environment, Yacs pledges to be an inclusive and harassment-free experience for  all, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, educational background, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 This Code of Conduct applies to all Yacs-affiliated activity online and offline.
 
 ## Guidelines
+
 ### Be respectful and inclusive
+
 * **Use inclusive language.**  This includes:
   * using [gender-neutral or non-gendered language](http://geekfeminism.wikia.com/wiki/Nonsexist_language) where possible
   * when referring to community members, using their preferred pronouns
@@ -16,6 +19,7 @@ This Code of Conduct applies to all Yacs-affiliated activity online and offline.
   * Making sure your project and any physical spaces your project team may meet are accessible to all members, including members with disabilities
 
 ### Give and be welcoming to constructive feedback
+
 * **Be constructive and respectful** when giving others feedback. This includes:
   * Only giving feedback when solicited (e.g. mock presentation, questions section of presentation, request for code review, pull request, etc.)
   * Keeping all feedback constructive, objective and impersonal
@@ -37,6 +41,7 @@ This project is affiliated with [Rensselaer Center for Open Source](http://rcos.
 If you are uncomfortable reporting to the coordinators for any reason, you may reach out to a faculty advisor directly via the RCOS [Slack](https://rcos.slack.com/).
 
 ## Project Maintainer Responsibilities
+
 Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. In the case of contributors external to RPI and/or RCOS, temporary or permanent bans may occur. RPI-specific policies are outlined in the RCOS [Bylaws](https://rcos.github.io/rcos-handbook/#/community/bylaws).
 
 ## License and Attribution
