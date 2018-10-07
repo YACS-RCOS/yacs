@@ -126,6 +126,15 @@
         "plugin",
         "talk"
       ]
+    },
+    {
+      "login": "jzblee",
+      "name": "Jason Lee",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12802389?v=4",
+      "profile": "https://github.com/jzblee",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
