@@ -51,7 +51,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars3.githubusercontent.com/u/11791361?v=4" width="100px;"/><br /><sub><b>David</b></sub>](https://github.com/undefined)<br />[💬](#question-undefined "Answering Questions") |
+| [<img src="https://avatars1.githubusercontent.com/u/787225?v=4" width="100px;"/><br /><sub><b>Ada Young</b></sub>](https://github.com/Bad-Science)<br />[💬](#question-Bad-Science "Answering Questions") [📝](#blog-Bad-Science "Blogposts") [🐛](https://github.com/yacs-rcos/yacs/issues?q=author%3ABad-Science "Bug reports") [💻](https://github.com/yacs-rcos/yacs/commits?author=Bad-Science "Code") [🎨](#design-Bad-Science "Design") [📖](https://github.com/yacs-rcos/yacs/commits?author=Bad-Science "Documentation") [📋](#eventOrganizing-Bad-Science "Event Organizing") [💡](#example-Bad-Science "Examples") [🤔](#ideas-Bad-Science "Ideas, Planning, & Feedback") [🚇](#infra-Bad-Science "Infrastructure (Hosting, Build-Tools, etc)") [📦](#platform-Bad-Science "Packaging/porting to new platform") [👀](#review-Bad-Science "Reviewed Pull Requests") [📢](#talk-Bad-Science "Talks") [🔧](#tool-Bad-Science "Tools") |
 | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

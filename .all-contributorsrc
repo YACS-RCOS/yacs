@@ -10,12 +10,25 @@
   "commit": true,
   "contributors": [
     {
-      "login": "undefined",
-      "name": "David",
-      "avatar_url": "https://avatars3.githubusercontent.com/u/11791361?v=4",
-      "profile": "https://github.com/undefined",
+      "login": "Bad-Science",
+      "name": "Ada Young",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/787225?v=4",
+      "profile": "https://github.com/Bad-Science",
       "contributions": [
-        "question"
+        "question",
+        "blog",
+        "bug",
+        "code",
+        "design",
+        "doc",
+        "eventOrganizing",
+        "example",
+        "ideas",
+        "infra",
+        "platform",
+        "review",
+        "talk",
+        "tool"
       ]
     }
   ]
