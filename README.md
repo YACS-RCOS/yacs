@@ -1,4 +1,5 @@
 # YACS - Yet Another Course Scheduler
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors)
 [![Build Status](https://img.shields.io/travis/YACS-RCOS/yacs/master.svg)](https://travis-ci.org/YACS-RCOS/yacs)
 [![Coverage Status](https://img.shields.io/coveralls/YACS-RCOS/yacs.svg)](https://coveralls.io/github/YACS-RCOS/yacs?branch=master)
 [![Code Climate](https://img.shields.io/codeclimate/github/YACS-RCOS/yacs.svg)](https://codeclimate.com/github/YACS-RCOS/yacs)
@@ -44,3 +45,12 @@ To this end, the Yacs community adheres to the [RCOS Code of Conduct](CODE_OF_CO
 Yacs is and always will be Free and Open Source software, released under the [AGPL License](LICENSE.md).
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs?ref=badge_large)
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
