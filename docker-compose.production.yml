@@ -1,6 +1,34 @@
 version: '3.2'
 
+# Yacs primary services
+# Overrides for production
 services:
+  # Application services
+  core:
+    restart: unless-stopped
+    environment:
+      - RAILS_ENV=production
+
+  core-consumer:
+    restart: unless-stopped
+    environment:
+      - RAILS_ENV=production
+
+  web:
+    restart: unless-stopped
+
+  malg:
+    restart: unless-stopped
+
+  notifications:
+    restart: unless-stopped
+
+  users:
+    restart: unless-stopped
+    environment:
+      - RAILS_ENV=production
+
+  # Dependency services
   postgres:
     restart: unless-stopped
 
@@ -10,26 +38,6 @@ services:
   nginx:
     restart: unless-stopped
 
-  core:
-    restart: unless-stopped
-    environment:
-      - RAILS_ENV=production
-
-  worker:
-    restart: unless-stopped
-    environment:
-      - RAILS_ENV=production
-
-  web:
-    restart: unless-stopped
-
+  # Future/abandoned services
   # admin:
   #   restart: unless-stopped
-
-  users:
-    restart: unless-stopped
-    environment:
-      - RAILS_ENV=production
-
-  malg:
-    restart: unless-stopped

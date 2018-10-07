@@ -1,22 +1,9 @@
 version: '3.2'
 
+# Yacs primary services
+# Overrides for development
 services:
-  postgres:
-    expose:
-      - "5432"
-
-  redis:
-    expose:
-      - "6379"
-
-  nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    links:
-      - core
-
+  # Application services
   core:
     build: ./core
     environment:
@@ -45,20 +32,6 @@ services:
     tty: true
     stdin_open: true
 
-  notifications:
-    build: ./notifications
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./notifications:/usr/src/app
-
-  # notices:
-  #   build: ./notice-service
-  #   ports:
-  #     - "4900:4900"
-  #   volumes:
-  #     - ./notice-service:/usr/src/app
-
   web:
     build: ./web
     ports:
@@ -66,20 +39,6 @@ services:
     volumes:
       - "./web/src:/usr/src/app/src"
     command: "ng build --watch"
-
-  # admin:
-  #   build: ./admin
-  #   ports:
-  #     - "4300:4300"
-
-  users:
-    build: ./users
-    ports:
-      - "4400:4400"
-    volumes:
-      - "./users:/usr/src/app"
-    tty: true
-    stdin_open: true
 
   malg:
     build: ./malg
@@ -91,32 +50,85 @@ services:
       - TERM_SHORTNAME=201809
       - UNI_SHORTNAME=RPI
 
-#  kafka-manager:
-#    image: sheepkiller/kafka-manager:latest
-#    ports:
-#      - "9000:9000"
-#    links:
-#      - zookeeper
-#      - kafka
-#    environment:
-#      ZK_HOSTS: zookeeper:2181
-#      KM_ARGS: -Djava.net.preferIPv4Stack=true
+  notifications:
+    build: ./notifications
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./notifications:/usr/src/app
 
+  users:
+    build: ./users
+    ports:
+      - "4400:4400"
+    volumes:
+      - "./users:/usr/src/app"
+    tty: true
+    stdin_open: true
 
-  # Planner Stuff!
-#  planner-web:
-#    build: ./prereq-web
-#    depends_on:
-#      - planner-data
-#    ports:
-#      - "4700:4200"
-#    volumes:
-#      - ./prereq-web/src:/usr/src/app/src
-#    command: "ng serve --host 0.0.0.0 --disable-host-check"
+  # Dependency services
+  postgres:
+    ports:
+      - "5432:5432"
 
-#  planner-data:
-#    build: ./prereq-data
-#    ports:
-#      - "4600:3100"
-#    expose:
-#      - "3100"
+  redis:
+    ports:
+      - "6379:6379"
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - core
+
+  zookeeper:
+    ports:
+      - "2181:2181"
+
+  kafka:
+    ports:
+     - "9094:9094"
+     - "9092:9092"
+
+  # Future/abandoned services
+  # admin:
+  #   build: ./admin
+  #   ports:
+  #     - "4300:4300"
+
+  # notices:
+  #   build: ./notice-service
+  #   ports:
+  #     - "4900:4900"
+  #   volumes:
+  #     - ./notice-service:/usr/src/app
+
+  # kafka-manager:
+  #   image: sheepkiller/kafka-manager:latest
+  #   ports:
+  #     - "9000:9000"
+  #   links:
+  #     - zookeeper
+  #     - kafka
+  #   environment:
+  #     ZK_HOSTS: zookeeper:2181
+  #     KM_ARGS: -Djava.net.preferIPv4Stack=true
+ 
+  # planner-web:
+  #   build: ./prereq-web
+  #   depends_on:
+  #     - planner-data
+  #   ports:
+  #     - "4700:4200"
+  #   volumes:
+  #     - ./prereq-web/src:/usr/src/app/src
+  #   command: "ng serve --host 0.0.0.0 --disable-host-check"
+ 
+  # planner-data:
+  #   build: ./prereq-data
+  #   ports:
+  #     - "4600:3100"
+  #   expose:
+  #     - "3100"

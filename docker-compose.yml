@@ -1,6 +1,84 @@
 version: '3.2'
 
+# Yacs primary services
+# Defaults for all environments
 services:
+  # Application services
+  core:
+    image: yacsrcos/yacs
+    environment:
+      - RAILS_ENV
+      - SECRET_KEY_BASE
+      - SECRET_TOKEN
+      - WEB_CONCURRENCY
+      - MAX_THREADS
+    volumes:
+      - ./ssl:/etc/ssl/yacs
+    depends_on:
+      - postgres
+      - redis
+    command: bin/start.sh
+    expose:
+      - "4100"
+    extra_hosts:
+      - "kafka-server:138.197.2.46"
+
+  core-consumer:
+    image: yacsrcos/yacs
+    environment:
+      - RAILS_ENV
+      - COURSES_TOPIC_NAME=course_change     # Customize Kafka topic name for courses here 
+      - SECTIONS_TOPIC_NAME=section_change   # Customize Kafka topic name for sections here 
+    depends_on:
+      - postgres
+      - redis
+      - kafka
+    command: bin/start-consumer.sh
+
+  web:
+    image: yacsrcos/yacs-web
+    volumes:
+      - dist-web:/usr/src/app/dist-web
+    depends_on:
+      - core
+    expose:
+      - "4200"
+
+  malg:
+    image: yacsrcos/yacs-malg
+    depends_on:
+      - kafka
+      - zookeeper
+      - redis
+    expose:
+      - "4500"
+    environment:
+      - UNI_SHORTNAME
+      - TERM_SHORTNAME
+
+  notifications:
+    image: yacsrcos/yacs-notifications
+    depends_on:
+      - kafka
+    expose: 
+      - "3000"
+
+  users:
+    image: yacsrcos/yacs-users
+    environment:
+      - RAILS_ENV
+      - SECRET_KEY_BASE
+      - SECRET_TOKEN
+    volumes:
+      - ./ssl:/etc/ssl/yacs
+    depends_on:
+      - postgres
+      - redis
+    command: bin/start.sh
+    expose:
+      - "4400"
+
+  # Dependency services
   postgres:
     image: postgres:10.5-alpine
     expose:
@@ -28,100 +106,10 @@ services:
       - ./ssl:/etc/ssl/yacs
       - dist-web:/usr/src/app/dist-web
 
-  core:
-    image: yacsrcos/yacs
-    environment:
-      - RAILS_ENV
-      - SECRET_KEY_BASE
-      - SECRET_TOKEN
-      - WEB_CONCURRENCY
-      - MAX_THREADS
-    volumes:
-      - ./ssl:/etc/ssl/yacs
-    depends_on:
-      - postgres
-      - redis
-    command: bin/start.sh
-    expose:
-      - "4100"
-    extra_hosts:
-      - "kafka-server:138.197.2.46"
-   
-  core-consumer:
-    image: yacsrcos/yacs
-    environment:
-      - RAILS_ENV
-      - COURSES_TOPIC_NAME=course_change     # Customize Kafka topic name for courses here 
-      - SECTIONS_TOPIC_NAME=section_change   # Customize Kafka topic name for sections here 
-    depends_on:
-      - postgres
-      - redis
-      - kafka
-    command: bin/start-consumer.sh
-
-  notifications:
-    image: yacsrcos/yacs-notifications
-    depends_on:
-      - kafka
-    expose: 
-      - "3000"
-
-  # notices:
-  #   image: yacsrcos/yacs-notices
-  #   depends_on:
-  #     - postgres
-  #     - redis
-  #   expose:
-  #     - "4900"
-
-  web:
-    image: yacsrcos/yacs-web
-    volumes:
-      - dist-web:/usr/src/app/dist-web
-    depends_on:
-      - core
-    expose:
-      - "4200"
-
-
-  # admin:
-  #   image: yacsrcos/yacs-admin
-  #   depends_on:
-  #     - core
-  #   expose:
-  #     - "4300"
-
-  users:
-    image: yacsrcos/yacs-users
-    environment:
-      - RAILS_ENV
-      - SECRET_KEY_BASE
-      - SECRET_TOKEN
-    volumes:
-      - ./ssl:/etc/ssl/yacs
-    depends_on:
-      - postgres
-      - redis
-    command: bin/start.sh
-    expose:
-      - "4400"
-
-  malg:
-    image: yacsrcos/yacs-malg
-    depends_on:
-      - kafka
-      - zookeeper
-      - redis
-    expose:
-      - "4500"
-    environment:
-      - UNI_SHORTNAME
-      - TERM_SHORTNAME
-
   zookeeper:
     image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
+    expose:
+      - "2181"
   kafka:
     image: wurstmeister/kafka:1.0.0
     # ports:
@@ -129,9 +117,6 @@ services:
     #    published: 9094
     #    protocol: tcp
     #    mode: host
-    ports:
-     - "9094:9094"
-     - "9092:9092"
     depends_on:
       - zookeeper
     expose:
@@ -151,6 +136,22 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     healthcheck:
       test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper:2181 --list"]
+
+  # Future/abandoned services
+  # admin:
+  #   image: yacsrcos/yacs-admin
+  #   depends_on:
+  #     - core
+  #   expose:
+  #     - "4300"
+
+  # notices:
+  #   image: yacsrcos/yacs-notices
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   expose:
+  #     - "4900"
 
 volumes:
   dist-web:
