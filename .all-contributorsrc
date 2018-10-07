@@ -52,6 +52,23 @@
         "code",
         "design"
       ]
+    },
+    {
+      "login": "kburk1997",
+      "name": "Kathleen Burkhardt",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/11298269?v=4",
+      "profile": "http://kburk.me",
+      "contributions": [
+        "question",
+        "blog",
+        "bug",
+        "code",
+        "design",
+        "doc",
+        "eventOrganizing",
+        "review",
+        "talk"
+      ]
     }
   ]
 }
