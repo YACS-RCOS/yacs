@@ -1,5 +1,5 @@
 # YACS - Yet Another Course Scheduler
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![Build Status](https://img.shields.io/travis/YACS-RCOS/yacs/master.svg)](https://travis-ci.org/YACS-RCOS/yacs)
 [![Coverage Status](https://img.shields.io/coveralls/YACS-RCOS/yacs.svg)](https://coveralls.io/github/YACS-RCOS/yacs?branch=master)
 [![Code Climate](https://img.shields.io/codeclimate/github/YACS-RCOS/yacs.svg)](https://codeclimate.com/github/YACS-RCOS/yacs)
@@ -51,6 +51,8 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
+| [<img src="https://avatars3.githubusercontent.com/u/11791361?v=4" width="100px;"/><br /><sub><b>David</b></sub>](https://github.com/undefined)<br />[💬](#question-undefined "Answering Questions") |
+| :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
