@@ -69,6 +69,17 @@
         "review",
         "talk"
       ]
+    },
+    {
+      "login": "robinm8",
+      "name": "Mark Robinson",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6090509?v=4",
+      "profile": "https://robinm8.github.io",
+      "contributions": [
+        "code",
+        "infra",
+        "platform"
+      ]
     }
   ]
 }
