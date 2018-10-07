@@ -90,6 +90,16 @@
         "code",
         "tool"
       ]
+    },
+    {
+      "login": "digitalninja",
+      "name": "Arijit Deb",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/808569?v=4",
+      "profile": "https://github.com/digitalninja",
+      "contributions": [
+        "code",
+        "infra"
+      ]
     }
   ]
 }
