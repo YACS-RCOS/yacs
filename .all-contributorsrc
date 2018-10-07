@@ -111,6 +111,21 @@
         "code",
         "design"
       ]
+    },
+    {
+      "login": "rystills",
+      "name": "Ryan Stillings",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1652623?v=4",
+      "profile": "http://imryans.com",
+      "contributions": [
+        "blog",
+        "code",
+        "design",
+        "doc",
+        "ideas",
+        "plugin",
+        "talk"
+      ]
     }
   ]
 }
