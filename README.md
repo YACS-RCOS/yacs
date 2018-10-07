@@ -42,3 +42,5 @@ To this end, the Yacs community adheres to the [RCOS Code of Conduct](CODE_OF_CO
 # License
 
 Yacs is and always will be Free and Open Source software, released under the [AGPL License](LICENSE.md).
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs?ref=badge_large)
