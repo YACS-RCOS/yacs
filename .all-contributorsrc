@@ -286,6 +286,18 @@
         "design",
         "ideas"
       ]
+    },
+    {
+      "login": "darrendlin",
+      "name": "Darren Lin",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3653692?v=4",
+      "profile": "https://github.com/darrendlin",
+      "contributions": [
+        "code",
+        "design",
+        "ideas",
+        "test"
+      ]
     }
   ]
 }
