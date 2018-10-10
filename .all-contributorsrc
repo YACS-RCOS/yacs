@@ -162,6 +162,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "marchdan",
+      "name": "Daniel Ackermans",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/35609442?v=4",
+      "profile": "https://github.com/marchdan",
+      "contributions": [
+        "blog",
+        "code",
+        "test"
+      ]
     }
   ]
 }
