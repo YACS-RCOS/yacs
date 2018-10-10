@@ -1,0 +1,14 @@
+bundler: failed to load command: iodine (/usr/local/bundle/bin/iodine)
+Bundler::GemNotFound: Could not find i18n-1.0.1 in any of the sources
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/spec_set.rb:91:in `block in materialize'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/spec_set.rb:85:in `map!'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/spec_set.rb:85:in `materialize'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/definition.rb:171:in `specs'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/definition.rb:238:in `specs_for'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/definition.rb:227:in `requested_specs'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/runtime.rb:108:in `block in definition_method'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/runtime.rb:20:in `setup'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler.rb:107:in `setup'
+  /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.3/lib/bundler/setup.rb:20:in `<top (required)>'
+  /usr/local/lib/ruby/site_ruby/2.5.0/rubygems/core_ext/kernel_require.rb:59:in `require'
+  /usr/local/lib/ruby/site_ruby/2.5.0/rubygems/core_ext/kernel_require.rb:59:in `require'

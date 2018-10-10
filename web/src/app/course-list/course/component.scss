@@ -1,0 +1,47 @@
+.course-name {
+    font-size: 130%;
+    font-weight: 400;
+}
+.dept-code {
+    margin-left:1em;
+}
+.credit-range {
+    margin-left:0.7em;
+}
+.course-description {
+    display:block;
+    font-size:87%;
+    text-align: justify;
+}
+:host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {
+    background-color: #d57f7f;
+}
+:host.selected>.course-info:hover ~ .section-list section.selected {
+    color: #efefef;
+    background-color: #d57f7f;
+}
+section {
+    display:block;
+    margin:0px 0px 0px 5px;
+    padding:4px 4px 4px 8px;
+    overflow:auto;
+    font-size: 90%;
+}
+section:not(.selected):hover {
+    background-color: #d57f7f;
+}
+section.selected:hover {
+    color: #efefef;
+    background-color: #d57f7f;
+}
+section.conflicts, section.conflicts:hover {
+    color: #aaa;
+}
+
+section.selected {
+    color: #efefef;
+    background-color: #c65353;
+}
+section.closed, section.closed:hover {
+    color: #888;
+}

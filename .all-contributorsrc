@@ -1,0 +1,167 @@
+{
+  "projectName": "yacs",
+  "projectOwner": "yacs-rcos",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "Bad-Science",
+      "name": "Ada Young",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/787225?v=4",
+      "profile": "https://github.com/Bad-Science",
+      "contributions": [
+        "question",
+        "blog",
+        "bug",
+        "code",
+        "design",
+        "doc",
+        "eventOrganizing",
+        "example",
+        "ideas",
+        "infra",
+        "platform",
+        "review",
+        "talk",
+        "tool"
+      ]
+    },
+    {
+      "login": "copperwater",
+      "name": "copperwater",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8742183?v=4",
+      "profile": "https://github.com/copperwater",
+      "contributions": [
+        "blog",
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "YushYush",
+      "name": "Ayushi Mishra",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12902777?v=4",
+      "profile": "https://github.com/YushYush",
+      "contributions": [
+        "blog",
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "kburk1997",
+      "name": "Kathleen Burkhardt",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/11298269?v=4",
+      "profile": "http://kburk.me",
+      "contributions": [
+        "question",
+        "blog",
+        "bug",
+        "code",
+        "design",
+        "doc",
+        "eventOrganizing",
+        "review",
+        "talk"
+      ]
+    },
+    {
+      "login": "robinm8",
+      "name": "Mark Robinson",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6090509?v=4",
+      "profile": "https://robinm8.github.io",
+      "contributions": [
+        "code",
+        "infra",
+        "platform"
+      ]
+    },
+    {
+      "login": "HaoxinLuo",
+      "name": "HaoxinLuo",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5081926?v=4",
+      "profile": "https://github.com/HaoxinLuo",
+      "contributions": [
+        "code",
+        "tool"
+      ]
+    },
+    {
+      "login": "digitalninja",
+      "name": "Arijit Deb",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/808569?v=4",
+      "profile": "https://github.com/digitalninja",
+      "contributions": [
+        "code",
+        "infra"
+      ]
+    },
+    {
+      "login": "JGrippo",
+      "name": "James Grippo",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/10825114?v=4",
+      "profile": "https://github.com/JGrippo",
+      "contributions": [
+        "blog",
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "rystills",
+      "name": "Ryan Stillings",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1652623?v=4",
+      "profile": "http://imryans.com",
+      "contributions": [
+        "blog",
+        "code",
+        "design",
+        "doc",
+        "ideas",
+        "plugin",
+        "talk"
+      ]
+    },
+    {
+      "login": "jzblee",
+      "name": "Jason Lee",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12802389?v=4",
+      "profile": "https://github.com/jzblee",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "elizabethfinedev",
+      "name": "Elizabeth Fine",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16389223?v=4",
+      "profile": "http://fine.net",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "elihschiff",
+      "name": "Eli Schiff",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/18558130?v=4",
+      "profile": "https://github.com/elihschiff",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "shaynajrosado",
+      "name": "Shay Rosado",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/25712694?v=4",
+      "profile": "https://github.com/shaynajrosado",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+<div id="noticebar">
+  <div *ngIf="hasNotice()"
+  	[@fadeOut] = "isShown"
+  	(@fadeOut.done) = "done($event)">
+	    <ngb-alert [type]="getNotice().type" (close)="dismissNotice()">
+	      {{ getNotice().message }}
+	    </ngb-alert>
+  </div>
+</div>

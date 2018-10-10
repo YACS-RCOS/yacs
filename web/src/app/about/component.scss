@@ -1,0 +1,57 @@
+article#about {
+    text-align:left;
+    width: 60%;
+    min-width:400px;
+    margin: 0 auto;
+}
+article#about h1 {
+    text-align:center;
+    padding:15px 0;
+    font-size:35px;
+}
+article#about p {
+    text-align:left;
+    margin: 0 auto 20px;
+}
+article#about h2 {
+    font-size: 25px;
+    padding:10px 0;
+    margin-bottom:8px;
+}
+article#about .bottomrule {
+    border-bottom:1px #b0b0b0 solid;
+}
+article#about h3 {
+    text-align:left;
+    font-size:20px;
+}
+article#about ul {
+    list-style-type:none;
+    padding:0;
+    column-count: 2;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+}
+article#about ul li {
+    display:block;
+    margin-bottom: 0.5em;
+}
+article#about ul li .developer {
+    display: table-row;
+}
+article#about img.devavatar {
+    display:table-cell;
+    border:3px #000 solid;
+    width:5em;
+}
+article#about div.devsummary {
+    display:table-cell;
+    padding-left:0.8em;
+    vertical-align:middle;
+}
+article#about p {
+    margin-bottom:auto;
+}
+article#about p.years {
+    font-style: italic;
+}

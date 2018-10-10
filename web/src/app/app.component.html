@@ -1,0 +1,7 @@
+<header-bar></header-bar>
+<notice-bar></notice-bar>
+<!-- if there is a notice content will move down -->
+<div id="content" [style.padding-top] = "hasNotice() ? '110px' : '60px'">
+  <router-outlet></router-outlet>
+</div>
+<footer></footer>

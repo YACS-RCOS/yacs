@@ -1,0 +1,50 @@
+@import "../../_vars.scss";
+
+.navbar-custom {
+  background-color: $yacs_bgs;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  @media(min-width: 576px) {
+    height: $header_height;
+  }
+
+  .container {
+    max-width: 1200px;
+  }
+
+  .navbar-nav {
+    flex-wrap: nowrap;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1.0)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+}
+
+.searchbar {
+  input {
+    /*border-left: none;*/
+    border-radius: 2px;
+    border-color: #d57f7f;
+    box-shadow: none;
+
+  }
+
+  .input-group-prepend * {
+    border-right: none;
+    border-color: $yacs_bgs;
+    background-color: #ffffff;
+  }
+}
+
+input::placeholder {
+  color: $yacs_bgs;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+#searchglyph {
+  height: 1.5em;
+  vertical-align: sub;
+  padding: 0.1em;
+}

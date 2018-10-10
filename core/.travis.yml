@@ -1,0 +1,33 @@
+sudo: required
+
+language: ruby
+
+rvm:
+  - 2.4.2
+
+services:
+  - npm
+  - postgresql
+  - redis
+
+addons:
+  hosts:
+    - postgres
+    - redis
+
+env:
+  global:
+    - RAILS_ENV=test
+    - SECRET_KEY_BASE=gyq3dgq378dhqd8qdqudbdq3d
+    - SECRET_TOKEN=d2huqdwhq8dq23d8qhd2389
+
+install:
+  - npm install -g eslint
+  - bundle install
+  - rails db:create
+  - rails db:schema:load
+  - rails db:structure:load
+
+script:
+  - eslint app/assets/javascripts/ vendor/assets/javascripts/schedule --config config/eslint.json --max-warnings 12
+  - rails spec

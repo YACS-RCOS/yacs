@@ -1,0 +1,26 @@
+<div class="schedule" [style.height.px] = "schedule.height" #mySchedule>
+  <div class="schedule-legend">
+    <div class="hour-label" [style.height.%] = "getHourHeight" *ngFor="let hourNum of schedule.hourNums ; let i = index">
+      <div *ngIf="(i != 0)">{{ hourName(hourNum) }}</div>
+    </div>
+  </div>
+
+  <div class="schedule-grid">
+    <div class="grid-day"  [style.width.%] = "getDayWidth" *ngFor="let dayNum of schedule.dayNums">
+      <div class="day-label">{{ longDayName(dayNum) }}</div>
+      <ng-container >
+          <schedule-event *ngFor="let p of periodsOnDay(dayNum)"
+            [style.margin-top.px] = "eventPosition(p.startTime)"
+            [style.backgroundColor] = "getBackgroundColor(p.color)"
+            [normalHeight] = "eventHeight(p.endTime - p.startTime)"
+            [style.borderColor] = "getBorderColor(p.color)"
+            [style.color] = "getTextColor(p.color)"
+            [scheduleEvent] = "p">
+          </schedule-event>
+        <div class="grid-hour" *ngFor="let hourNum of schedule.hourNums"
+          [style.height.%] = "getHourHeight" >
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

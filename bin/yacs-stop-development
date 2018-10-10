@@ -1,0 +1,4 @@
+#!/bin/bash
+cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
+
+bin/yacs-compose-development stop
