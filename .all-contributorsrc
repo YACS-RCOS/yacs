@@ -298,6 +298,21 @@
         "ideas",
         "test"
       ]
+    },
+    {
+      "login": "bdieu178",
+      "name": "Bryan Dieudonne",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16531429?v=4",
+      "profile": "https://www.linkedin.com/in/bryandieu/",
+      "contributions": [
+        "blog",
+        "code",
+        "design",
+        "financial",
+        "ideas",
+        "infra",
+        "tool"
+      ]
     }
   ]
 }
