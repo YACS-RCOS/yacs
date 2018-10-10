@@ -173,6 +173,24 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "bobmayuze",
+      "name": "Yuze Ma",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/14257524?v=4",
+      "profile": "http://bobmayuze.github.io",
+      "contributions": [
+        "question",
+        "blog",
+        "code",
+        "design",
+        "doc",
+        "eventOrganizing",
+        "ideas",
+        "infra",
+        "talk",
+        "tool"
+      ]
     }
   ]
 }
