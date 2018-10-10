@@ -274,6 +274,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "milnej",
+      "name": "James Milne",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/22731609?v=4",
+      "profile": "https://github.com/milnej",
+      "contributions": [
+        "blog",
+        "code",
+        "design",
+        "ideas"
+      ]
     }
   ]
 }
