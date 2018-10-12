@@ -23,7 +23,11 @@
   text-align: right;
 }
 
-.padded {
+.align-menu {
+  padding-top: 4em;
+}
+
+.collapsed-sections {
   padding-right: 2em;
 }
 
@@ -45,8 +49,20 @@ i {
 }
 
 .course-name {
-  font-size: 150%;
-  font-weight: 400;
+  margin-top: 10px;
+  font-size: 100%;
+  font-weight: 600;
+}
+
+.course-details {
+  float: left;
+  padding-top: 2.1em;
+  color: #969696;
+  font-size: 90%;
+}
+
+.info-button {
+  width: 100%;
 }
 
 .course-description {
@@ -63,7 +79,8 @@ i {
 
 .course-info {
   margin-top: 10px;
-  padding-bottom: 10px;
+  box-shadow: 2px 2px 5px 2px #efefef;
+  height: 7em;
 }
 
 :host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {
@@ -108,4 +125,10 @@ section.selected {
 
 section.closed, section.closed:hover {
   color: #888;
+}
+
+.indicator {
+  background: $yacs_bgs;
+  height: 7em;
+  width: 1.2em;
 }
