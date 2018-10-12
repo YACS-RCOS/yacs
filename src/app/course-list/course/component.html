@@ -1,7 +1,5 @@
-<div class = "course" [class.highlight]="isCourseSelected()">
+<div class = "course" [class.border-red]="isCourseSelected()">
 	<div class="course-info" (click)="clickCourse(course)">
-		<img class = "selection-icon" (click)="clickCourse(course)" *ngIf="isCourseSelected()" src="assets/images/filled-star.svg" />
-		<img class = "selection-icon" (click)="clickCourse(course)" *ngIf="!isCourseSelected()" src="assets/images/unfilled-star.svg" />
 	  <span class="course-name">{{course.name}}</span>
 	  <span class="dept-code">{{subjectCode()}}</span> <!-- api issues, so have to grab dept code by going into sections for now -->
 	  <span class="course-number">{{course.number}}</span>

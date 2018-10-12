@@ -1,10 +1,14 @@
 @import "../../../_vars.scss";
 
 .course {
-  border: 2px solid $yacs_bgs;
+  border: 2px solid #efefef;
   border-radius: 0;
   padding: 10px;
   margin: 5px;
+}
+
+.border-red {
+  border: 2px solid $yacs_bgs;
 }
 
 .selection-icon {
