@@ -2,24 +2,26 @@ require 'nokogiri'
 require 'httpclient'
 require 'active_support'
 require 'active_support/core_ext'
-require_relative 'efollet_client'
 
-class TextbookClient < Struct.new :term_shortname, :bookstore_id
+class TextbookClient
 
-  def initialize
+  def initialize efollet_client, term_shortname
     @http_client = HTTPClient.new
-    @efollet_client = EfolletClient.new @bookstore_id
+    @efollet_client = efollet_client
+    @term_shortname = term_shortname
   end
 
-  def listings_by_subject_with_textbooks term_shortname
-    banner_listings_by_subject(term_shortname).map do |subject|
+  def listings_by_subject_with_textbooks
+    @data ||= banner_listings_by_subject(@term_shortname).map do |subject|
       listings = []
       subject['listings'].each do |listing|
         if listing['sections'].present?
           crn = listing['sections'].first['crn']
+          textbooks = get_textbooks_for_crn crn
           listings << {
-            shortnane: listing['shortname'],
-            textbooks: get_textbooks_for_crn(crn)
+            shortname: listing['shortname'],
+            required_textbooks: textbooks[:required],
+            recommended_textbooks: textbooks[:recommended]
           }
         end
       end
@@ -30,11 +32,11 @@ class TextbookClient < Struct.new :term_shortname, :bookstore_id
   private
   
   def banner_listings_by_subject term_shortname
-    subjects = get_json("adapter-banner/#{term_shortname}")['subjects'] || []
+    subjects = get_json("http://adapter-banner:4600/#{term_shortname}")['subjects'] || []
   end
 
   def get_textbooks_for_crn crn
-    @efollet_client.get_required_textbook_isbns crn
+    @efollet_client.get_textbook_isbns @term_shortname, crn
   end
 
   def get_json uri
