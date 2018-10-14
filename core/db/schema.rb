@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20181014011011) do
     t.string "tags", default: [], null: false, array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "required_textbooks", default: [], null: false, array: true
-    t.integer "recommended_textbooks", default: [], null: false, array: true
+    t.bigint "required_textbooks", default: [], null: false, array: true
+    t.bigint "recommended_textbooks", default: [], null: false, array: true
     t.index ["longname"], name: "index_listings_on_longname"
     t.index ["tags"], name: "index_listings_on_tags"
   end
