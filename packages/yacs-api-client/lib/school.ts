@@ -4,7 +4,6 @@ import {
   Attr,
   BelongsTo,
   HasMany
-  // etc
 } from "spraypaint"
 
 import { ApplicationRecord } from "./application-record";
