@@ -9,10 +9,17 @@ class TextbookClient
     @http_client = HTTPClient.new
     @efollet_client = efollet_client
     @term_shortname = term_shortname
+    load_textbooks
   end
 
   def listings_by_subject_with_textbooks
-    @data ||= banner_listings_by_subject(@term_shortname).map do |subject|
+    @graph
+  end
+
+  private
+
+  def load_textbooks
+    subjects = banner_listings_by_subject(@term_shortname).map do |subject|
       listings = []
       subject['listings'].each do |listing|
         if listing['sections'].present?
@@ -27,9 +34,8 @@ class TextbookClient
       end
       { shortname: subject['shortname'], listings: listings }
     end
+    @graph = { subjects: subjects }
   end
-
-  private
   
   def banner_listings_by_subject term_shortname
     subjects = get_json("http://adapter-banner:4600/#{term_shortname}")['subjects'] || []

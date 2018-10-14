@@ -6,6 +6,7 @@ require_relative 'efollet_client'
 
 set :bind, '0.0.0.0'
 set :port, 4600
+enable :lock
 
 efollet_bookstore_id = ENV['EFOLLET_BOOKSTORE_ID'] || 1461
 $efollet_client = EfolletClient.new efollet_bookstore_id
@@ -16,5 +17,5 @@ def client_for term_shortname
 end
 
 get "/:term_shortname" do
-  json subjects: client_for(params[:term_shortname]).listings_by_subject_with_textbooks
+  json client_for(params[:term_shortname]).listings_by_subject_with_textbooks
 end

@@ -31,8 +31,7 @@ class EfolletClient
         text_attribute.text[/hardcover|softcover/i]
       end
     end.map do |textbook_detail|
-      isbn = textbook_detail.css('span#materialISBN').text[/\d{13}/]
-      isbn.to_i if isbn
+      textbook_detail.css('span#materialISBN').text[/\d{13}/]
     end.compact
   end
 
