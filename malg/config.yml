@@ -58,6 +58,7 @@ priorities:
       - banner-seats
       - csv-topics
       - acalog
+      - textbooks
       - banner
       - yaml-schools
   schools:

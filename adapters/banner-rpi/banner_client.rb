@@ -21,7 +21,8 @@ class BannerClient
         when :seats then [:seats, v]
         when :students then [:seats_taken, v]
         else [nil, nil]
-      end
+        end
+      end.to_h.compact
     end
   end
 
