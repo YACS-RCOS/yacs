@@ -3,6 +3,7 @@ class CreateV6Terms < ActiveRecord::Migration[5.1]
     create_table :terms do |t|
       t.string :shortname,            null: false
       t.string :longname,             null: false
+      t.uuid   :uuid,                 null: false
       t.timestamps                    null: false
     end
   end

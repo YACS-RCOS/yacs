@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20181014011011) do
   create_table "terms", force: :cascade do |t|
     t.string "shortname", null: false
     t.string "longname", null: false
+    t.uuid "uuid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
