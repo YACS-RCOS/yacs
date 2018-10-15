@@ -24,9 +24,6 @@ class ApplicationConsumer < Karafka::BaseConsumer
       throw "ERROR: Disallowed Method: #{@method}"
     end
     @data = safe_params
-    if @data[:required_textbooks].present?
-      STDERR.puts @data
-    end
   end
 
   def consume
