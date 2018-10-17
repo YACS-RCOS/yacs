@@ -8,10 +8,11 @@ import {
 
 import { ApplicationRecord } from "./application-record";
 
-export class School extends ApplicationRecord {
-	static jsonapiType = "schools";
+export class Course extends ApplicationRecord {
+	static jsonapiType = "courses";
 
+	@Attr() tags: string[]
 	@Attr() shortname: string
-	@Attr() longname: string
 	@Attr() uuid: string
+	@Attr() id: number
 }
