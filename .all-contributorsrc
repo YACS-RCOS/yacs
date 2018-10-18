@@ -313,6 +313,15 @@
         "infra",
         "tool"
       ]
+  	},
+	{
+      "login": "a1liu",
+      "name": "Albert Liu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3584830?s=460&v=4",
+      "profile": "https://github.com/a1liu",
+      "contributions": [
+		  "doc"
+      ]
     }
   ]
 }
