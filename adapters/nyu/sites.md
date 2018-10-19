@@ -17,10 +17,12 @@ This document contains some useful links to things like tutorials and cheatsheet
 * [virtualenv][virtualenv] - If you plan on using python, you should make a habit of using this to manage your packages
 * [numpy][numpy] - The go-to package when working with large numerical datasets
 * [json][json] - Native Python package to work with JSON
+
+<!--
 * [linktext][linkname] - desc
 * [linktext][linkname] - desc
 * [linktext][linkname] - desc
-* [linktext][linkname] - desc
+* [linktext][linkname] - desc -->
 
 [virtualenv]: https://virtualenv.pypa.io/en/stable/
 [numpy]: http://www.numpy.org/
