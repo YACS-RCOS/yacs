@@ -1,24 +1,5 @@
 version: '1'
 
-schema:
-  types:
-    schools:
-      identifier: longname
-      child_type: subjects
-      parent_type: null
-    subjects:
-      identifier: shortname
-      child_type: listings
-      parent_type: schools
-    listings:
-      identifier: shortname
-      child_type: sections
-      parent_type: subjects
-    sections:
-      identifier: crn
-      child_type: null
-      parent_type: listings
-
 sources:
   sources:
     acalog:

@@ -1,4 +1,5 @@
 #!/bin/bash
 cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
 
-docker-compose -f docker-compose.yml -f docker-compose.pipeline.development.yml -f docker-compose.development.yml $@
+export UNI_SHORTNAME=${UNI_SHORTNAME:-rpi}
+docker-compose -f docker-compose.yml -f pipelines/$UNI_SHORTNAME/docker-compose.pipeline.development.yml -f docker-compose.development.yml $@
