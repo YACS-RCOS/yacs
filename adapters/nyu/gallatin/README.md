@@ -1,5 +1,5 @@
 # NYU Gallatin Adapter
-This is the Yacs adapter for the Gallatin Course Search API. It queries the Gallatin Course Database at `https://gallatin.nyu.edu/academics/courses/jcr:content/content/search.json` in pieces and pipes the information to the amalgamator.
+This is the Yacs adapter for the Gallatin Course Search API. It queries the Gallatin Course Database at [`https://gallatin.nyu.edu/academics/courses/jcr:content/content/search.json`][gallatin-api] in pieces and pipes the information to the amalgamator.
 
 ## How the Gallatin API Works
 
@@ -35,3 +35,5 @@ becomes
 ### Query Keywords
 
 	TODO: Both figure this out and explain this
+
+[gallatin-api]: https://gallatin.nyu.edu/academics/courses/jcr:content/content/search.json
