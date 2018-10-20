@@ -23,6 +23,10 @@ sources:
       location: http://adapter-csv:4600
       poll: 600 # 10 minutes
       root: subjects
+    textbooks:
+      location: http://adapter-textbooks:4600
+      poll: 86400
+      root: subjects
     # admin:
     #   location: admin
     #   poll: 60 # 1 minute
@@ -35,6 +39,7 @@ priorities:
       - banner-seats
       - csv-topics
       - acalog
+      - textbooks
       - banner
       - yaml-schools
   schools:
