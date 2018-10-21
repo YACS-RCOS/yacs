@@ -17,19 +17,20 @@
     </div>
     <div class ="col-auto">
       <table class = "section-periods">
-        <tr>
-          <span *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']; let i = index">
-            <td class = "period-time">
-              <div class = "col-12">
-                <span *ngFor="let period of section.periods">
-                  <div class = "row" [class.grey]="i%2==0" *ngIf="getDay(period)==day">
-                    <span>{{ getHours(period) }}</span>
+        <span>
+          <tr *ngFor="let week of periods">
+            <span *ngFor="let period of week; let i = index">
+              <td class = "period-time">
+                <div class = "col-12">
+                  <div class="row" [class.grey]="i%2==0">
+                    <span *ngIf="period">{{ getHours(period) }}</span>
+                    <span *ngIf="!period">&nbsp;</span>
                   </div>
-                </span>
-              </div>
-            </td>
-          </span>
-        </tr>
+                </div>
+              </td>
+            </span>
+          </tr>
+        </span>
       </table>
     </div>  
   </div>
