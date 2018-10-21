@@ -5,13 +5,13 @@
 	  </div>
 	  <div class="col-11 padded" (click)="clickCourse(course)">
 		  <table class="full-width">
-		  	<tr>
+		  	<tr (click)="clickCourse(course)">
 		    	<div class="course-name">{{course.name}}</div>
 		  	</tr>
-	  	  <tr>
+	  	  <tr (click)="clickCourse(course)">
 	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>
 	      </tr>
-		    <tr>
+		    <tr (click)="clickCourse(course)">
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
 				<tr class="menu" (click)="showingMenu = !showingMenu" >
