@@ -1,31 +1,29 @@
-<!--<div class = "course" [class.border-red]="isCourseSelected()">-->
 <div class = "course" [class.fixed-height]="!showingMenu" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
 	<div class="row">
 	  <div class="col-sm-1" (click)="clickCourse(course)">
 	  	<div [class.indicator-selected]="isCourseSelected()" [class.indicator]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
 	  </div>
-	  <div class="col-sm-11" (click)="clickCourse(course)">
-	    <div class="course-name">{{course.name}}</div>
-	    <div class= "course-details">
-	  	  <div><span>{{subjectCode()}}</span> 
-	      <span>{{course.number}}</span></div>
-	      <div class="credit-range">{{creditRange}}</div>
-	    </div>
-	  </div>
-	</div>
-  <div class = "container">
-	  <div class="row" [class.height]="!showingMenu">
-		  <div class="col-sm-11">
-				<div class="menu" (click)="showingMenu = !showingMenu" >
+	  <div class="col-sm-11 padded" (click)="clickCourse(course)">
+		  <table class="full-width">
+		  	<tr>
+		    	<div class="course-name">{{course.name}}</div>
+		  	</tr>
+	  	  <tr>
+	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>
+	      </tr>
+		    <tr>
+		    	<div class="course-details">{{creditRange}}</div>
+		    </tr>
+				<tr class="menu" (click)="showingMenu = !showingMenu" >
 					<span *ngIf="!showingMenu"><span class = "padded">Choose sections</span><i class="arrow down"></i></span>
 					<span *ngIf="showingMenu"><i class="arrow up"></i></span>
-				</div>
-			</div>
-		</div>
-	</div>
-  <div class = "container" *ngIf="showingMenu">
-	  <div class = "row full-width" *ngFor="let theSection of course.sections">
-		  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
+				</tr>
+			</table>
 	  </div>
   </div>
+  <div *ngIf="showingMenu">
+	  <div *ngFor="let theSection of course.sections">
+		  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
+	  </div>
+	</div>
 </div>
