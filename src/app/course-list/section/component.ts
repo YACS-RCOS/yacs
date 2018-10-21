@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Section } from '../../models/section.model';
 import { Period } from '../../models/period.model';
@@ -13,8 +13,13 @@ const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 })
 export class SectionComponent {
   @Input() section: Section;
+  periods: Period[][];
 
   constructor(private conflictsService: ConflictsService) { }
+
+  ngOnInit(): void {
+    this.periods = this.constructPeriodsArray();
+  }
 
   public getDay(period: Period) : string {
     return SHORT_DAYS[period.day];
@@ -56,13 +61,13 @@ export class SectionComponent {
     return this.conflictsService.doesConflict(secId);
   }
 
-  public getPeriods() {
+  private constructPeriodsArray(): Period[][] {
     const periodsByDay = [Array(5)];
     this.section.periods.forEach(period => {
-      if (periodsByDay.slice(-1)[0][period.day]) {
+      if (periodsByDay.slice(-1)[0][period.day-1]) {
         periodsByDay.push(Array(5));
       }
-      periodsByDay.slice(-1)[0][period.day] = period;
+      periodsByDay.slice(-1)[0][period.day-1] = period;
     });
     return periodsByDay;
   }

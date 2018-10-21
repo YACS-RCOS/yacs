@@ -17,20 +17,20 @@
     </div>
     <div class ="col-auto">
       <table class = "section-periods">
-        <tr>
-          <span *ngFor="let week of getPeriods()">
+        <span>
+          <tr *ngFor="let week of periods">
             <span *ngFor="let period of week; let i = index">
               <td class = "period-time">
                 <div class = "col-12">
-                  <div class = "row" [class.grey]="i%2==0">
+                  <div class="row" [class.grey]="i%2==0">
                     <span *ngIf="period">{{ getHours(period) }}</span>
                     <span *ngIf="!period">&nbsp;</span>
                   </div>
                 </div>
               </td>
             </span>
-          </span>
-        </tr>
+          </tr>
+        </span>
       </table>
     </div>  
   </div>
