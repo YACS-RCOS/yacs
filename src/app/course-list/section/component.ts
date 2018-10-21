@@ -55,4 +55,15 @@ export class SectionComponent {
   public doesConflict(secId: number) {
     return this.conflictsService.doesConflict(secId);
   }
+
+  public getPeriods() {
+    const periodsByDay = [Array(5)];
+    this.section.periods.forEach(period => {
+      if (periodsByDay.slice(-1)[0][period.day]) {
+        periodsByDay.push(Array(5));
+      }
+      periodsByDay.slice(-1)[0][period.day] = period;
+    });
+    return periodsByDay;
+  }
 }
