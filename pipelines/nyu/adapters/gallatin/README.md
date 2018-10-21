@@ -2,6 +2,7 @@
 This is the Yacs adapter for the Gallatin Course Search API. It queries the Gallatin Course Database at [`https://gallatin.nyu.edu/academics/courses/jcr:content/content/search.json`][gallatin-api] in pieces and pipes the information to the amalgamator.
 
 ## How the Gallatin API Works
+The Gallatin API uses the [elasticsearch system][elastic-search-api] and returns data in JSON format.
 
 ### A Basic Example
 The Gallatin API works by using terms in the URL as conditions, similar to the parts of a `WHERE` clause in SQL. For example, if the URL is:
@@ -88,3 +89,4 @@ This returns all the undergraduate courses in 2018.
 Certain words are reserved as special keywords - for example, the value of `limit` sets the explicit maximum number of results to return - without the keyword the results are limited by an implicit limit of 50.
 
 [gallatin-api]: https://gallatin.nyu.edu/academics/courses/jcr:content/content/search.json
+[elastic-search-api]: https://www.elastic.co/guide/en/elasticsearch/reference/current/_the_search_api.html
