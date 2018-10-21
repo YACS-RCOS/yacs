@@ -1,10 +1,8 @@
 @import "../../../_vars.scss";
 
 .course {
-  border: 2px solid #efefef;
-  border-radius: 0;
-  padding: 10px;
   margin: 5px;
+  box-shadow: 2px 2px 5px 2px #efefef;
 }
 
 .border-red {
@@ -47,6 +45,10 @@ i {
   -webkit-transform: rotate(45deg);
 }
 
+.height {
+  height:2em;
+}
+
 .course-name {
   font-size: 130%;
   font-weight: 400;
@@ -83,8 +85,8 @@ i {
 
 section {
   display:block;
-  margin:0px 0px 0px 5px;
-  padding:4px 4px 4px 8px;
+  margin:0;
+  padding:0;
   overflow:auto;
   font-size: 90%;
 }
@@ -98,20 +100,39 @@ section:not(.selected) {
   color: black;
 }
 
-section.selected:hover {
-  color: #efefef;
-  background-color: $yacs_acc;
-}
-
 section.conflicts, section.conflicts:hover {
   color: #aaa;
 }
 
-section.selected {
-  color: #efefef;
-  background-color: $yacs_bgs;
-}
-
 section.closed, section.closed:hover {
   color: #888;
+}
+
+.indicator-selected {
+  background: $yacs_bgs;
+  height: 100%;
+  width: 1.2em;
+}
+
+.indicator {
+  background: #efefef;
+  height: 100%;
+  width: 1.2em;
+}
+
+.menuindicator-selected {
+  background: $yacs_bgs;
+  height: 32px;
+  width: 1.2em;
+}
+
+.menuindicator {
+  background: #efefef;
+  height: 32px;
+  width: 1.2em;
+}
+
+.zero-margins {
+  padding:0 !important;
+  margin:0 !important;
 }

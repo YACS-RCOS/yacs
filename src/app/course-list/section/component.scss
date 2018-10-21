@@ -1,12 +1,20 @@
+@import "../../../_vars.scss";
+
 :host.conflicts>.section-information {
     text-decoration: line-through;
 }
 .section-name {
     font-weight: 400;
+    width: 1.2em;
+    text-align: right;
+    font-size: 90%;
 }
-.section-seats {
-    font-size: 80%;
+
+.section-details {
+    text-align: center;
+    font-size: 90%;
 }
+
 .section-periods {
     font-size:80%;
     display:inline-block;
@@ -44,4 +52,14 @@ img.conflict-img {
 span.conflict-text {
     font-size:75%;
     color: #cf2c2c;
+}
+
+.highlight {
+    height:1.3em;
+    width: 1.3em;
+    background: #efefef;
+}
+
+.highlight-selected {
+    background: $yacs_bgs;
 }

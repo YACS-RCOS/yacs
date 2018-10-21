@@ -1,13 +1,12 @@
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <span class="section-information">
-        <span class="section-name">{{section.name}}</span>
-        <span class="section-crn">{{section.crn}}</span>
-        <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
-        <span class="section-seats-available">
-          {{ section.seats-section.seats_taken }}<span class="section-seats">/{{ section.seats }} seats</span>
-        </span>
+<div class="full-width right">
+<table>
+  <tr>
+    <td class="section-name"><div class="highlight" >{{section.name}}</div></td>
+    <td class="section-details">
+      <span class="section-crn">{{section.crn}}</span>
+      <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
+      <span class="section-seats-available">
+        {{ section.seats-section.seats_taken }}<span class="section-seats">/{{ section.seats }} seats</span>
       </span>
       <div *ngIf="doesConflict(section?.id)" class="conflict-note">
         <span class="conflict-img-center"></span>
@@ -16,22 +15,24 @@
           Conflicts with selected sections
         </span>
       </div>
-    </div>
-    <div class = "col-sm-8">
-      <div class = "container">
-        <div class = "row align-right">
+    </td>
+    <td class ="full-width right">
+      <table class = "section-periods right">
+        <tr>
           <span *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']">
-            <div class = "col ml-3">
-              <span class = "period-day">{{day}}</span>
-              <span *ngFor="let period of section.periods">
-                <div class = "row" *ngIf="getDay(period)==day">
-                  <span class="period-time">{{ getHours(period) }}</span>
-                </div>
-              </span>
-            </div>
+            <td>
+              <div class = "col-12">
+                <span *ngFor="let period of section.periods">
+                  <div class = "row" *ngIf="getDay(period)==day">
+                    <span class="period-time">{{ getHours(period) }}</span>
+                  </div>
+                </span>
+              </div>
+            </td>
           </span>
-        </div>
-      </div>
-    </div>
-  </div>
+        </tr>
+      </table>
+    </td>  
+  </tr>
+</table>
 </div>

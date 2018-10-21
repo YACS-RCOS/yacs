@@ -1,16 +1,18 @@
-<div class="course-info">
+<div class="course-info container">
   <div class="row">
-  <div class="col-sm-1">
-  	<div class= "indicator"></div>
-  </div>
-  <div class="col-sm-5">
-    <div class="course-name">{{course.name}}</div>
-    <div class= "course-details">
-  	  <div><span>{{subjectCode()}}</span> 
-      <span>{{course.number}}</span></div>
-      <div class="credit-range">{{creditRange}}</div>
+    <div (click)="clickCourse(course)">
+      <div class="col-sm-1">
+      	<div class= "indicator"></div>
+      </div>
+      <div class="col-sm-5">
+        <div class="course-name">{{course.name}}</div>
+        <div class= "course-details">
+      	  <div><span>{{subjectCode()}}</span> 
+          <span>{{course.number}}</span></div>
+          <div class="credit-range">{{creditRange}}</div>
+        </div>
+      </div>
     </div>
-  </div>
   <div class="col-sm-6">
 
     <div class= "info-button"><button type="button" class="info-btn" placement="right" [popoverTitle]= "courseSubtitle" [ngbPopover]= "course.description">

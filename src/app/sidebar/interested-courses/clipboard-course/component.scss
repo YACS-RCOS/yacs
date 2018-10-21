@@ -85,6 +85,7 @@ i {
 
 .align-right {
   text-align: right;
+  flex-wrap: nowrap !important;
 }
 
 :host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {
@@ -98,8 +99,6 @@ i {
 
 section {
   display:block;
-  margin:0px 0px 0px 5px;
-  padding:4px 4px 4px 8px;
   overflow:auto;
   font-size: 90%;
 }
@@ -138,8 +137,21 @@ section.closed, section.closed:hover {
 }
 
 .section-periods {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
+  font-size: 70%;
+  text-align: center;
+}
+
+.right {
+  float: right;
+  right: 0px;
+  align-items: right;
+}
+
+.full-width {
+  width: 100%;
+}
+
+table,tbody,tr{
+  table-layout: fixed;
+  width:100%;
 }
