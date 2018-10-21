@@ -1,16 +1,16 @@
 <div class = "container full-width">
   <div class = "row">
     <div class="col-xs-1 align-center section-name"><div class="highlight" [class.highlight-selected]="isSelected()">{{section.name}}</div></div>
-    <div class="col-xs-3 section-details">
-      <span class="section-crn">{{section.crn}}</span>
-      <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
-      <span class="section-seats-available">
-        {{ section.seats-section.seats_taken }}<span class="section-seats">/{{ section.seats }} seats</span>
-      </span>
-      <div *ngIf="doesConflict(section?.id)" class="conflict-note">
-        <span class="conflict-img-center"></span>
-        <img class="conflict-img" src="assets/images/red_exclamation.svg" />
-      </div>
+    <div class="col-xs-3 align-center section-details">
+      <table>
+        <tr class="section-crn">{{section.crn}}</tr>
+        <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
+        <tr class="section-seats-available">
+          {{ section.seats-section.seats_taken }}
+          <span class="section-seats">/{{ section.seats }} seats</span>
+          <img *ngIf="doesConflict(section.id)" class="conflict-img" src="assets/images/red_exclamation.svg" />
+        </tr>
+      </table>
     </div>
     <div class ="col align-self-end">
       <table class = "section-periods">
