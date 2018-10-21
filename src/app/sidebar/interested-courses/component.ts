@@ -16,7 +16,7 @@ export class InterestedCoursesComponent implements OnInit {
 
   courses : Course[] = [];
   isLoaded : boolean = false;
-  private courseIds : Set<number>;
+  private courseIds : Set<string>;
   private subscription;
 
   constructor (
@@ -28,7 +28,7 @@ export class InterestedCoursesComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.courseIds = new Set<number>();
+    this.courseIds = new Set<string>();
     this.getCourses();
   }
 

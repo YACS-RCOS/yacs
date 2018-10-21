@@ -93,7 +93,7 @@ export class SelectionService {
     return sectionIds;
   }
 
-  public getSelectedCourseIds () : number[] {
+  public getSelectedCourseIds () {
     return Object.keys(this.getSelections());
   }
 
