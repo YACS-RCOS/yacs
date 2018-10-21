@@ -61,8 +61,17 @@ span.conflict-text {
     background: #efefef;
 }
 
+.highlight:hover {
+    background: $yacs_acc;
+}
+
 .highlight-selected {
     background: $yacs_bgs;
+    color: white;
+}
+
+.highlight-selected:hover {
+    background: $yacs_acc;
 }
 
 .zero-margins {

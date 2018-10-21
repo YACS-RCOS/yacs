@@ -109,3 +109,7 @@ div.alert {
 .dropdown-item.active, .dropdown-item:active {
   background-color: #d57f7f !important;
 }
+
+.row {
+  flex-wrap: nowrap !important;
+}

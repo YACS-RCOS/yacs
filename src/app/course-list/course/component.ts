@@ -20,9 +20,11 @@ export class CourseComponent implements OnInit{
     private conflictsService: ConflictsService) { }
 
   public showingMenu;
+  public hovered;
   
   ngOnInit() {
     this.showingMenu = false;
+    this.hovered = false;
   }
 
   /* A getter function for the range of credits based on the min and max.

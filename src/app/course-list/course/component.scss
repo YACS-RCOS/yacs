@@ -4,16 +4,7 @@
   margin: 5px;
   padding-bottom: 5px;
   box-shadow: 2px 2px 5px 2px #efefef;
-}
-
-.border-red {
-  border: 2px solid $yacs_bgs;
-}
-
-.selection-icon {
-  position: relative;
-  float: right;
-  margin: 10px;
+  height: 100%;
 }
 
 .menu {
@@ -46,8 +37,8 @@ i {
   -webkit-transform: rotate(45deg);
 }
 
-.height {
-  height:2em;
+.fixed-height {
+  height: 7em;
 }
 
 .course-name {
@@ -82,15 +73,6 @@ i {
   padding-left: 0;
 }
 
-:host:not(.selected)>.course-info:hover ~ .section-list section:not(.selected):not(.closed) {
-  background-color: #d57f7f;
-}
-
-:host.selected>.course-info:hover ~ .section-list section.selected {
-  color: #efefef;
-  background-color: #d57f7f;
-}
-
 section {
   display:block;
   margin:0;
@@ -115,26 +97,18 @@ section.closed, section.closed:hover {
 
 .indicator-selected {
   background: $yacs_bgs;
-  height: 100%;
+  height: 7em;
   width: 1.2em;
 }
 
 .indicator {
   background: #efefef;
-  height: 100%;
+  height: 7em;
   width: 1.2em;
 }
 
-.menuindicator-selected {
-  background: $yacs_bgs;
-  height: 32px;
-  width: 1.2em;
-}
-
-.menuindicator {
-  background: #efefef;
-  height: 32px;
-  width: 1.2em;
+.indicator-hover {
+  background: $yacs_acc;
 }
 
 .zero-margins {

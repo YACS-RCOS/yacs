@@ -1,8 +1,8 @@
 <!--<div class = "course" [class.border-red]="isCourseSelected()">-->
-<div class = "course">
-	<div class="row fixed-height">
+<div class = "course" [class.fixed-height]="!showingMenu" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
+	<div class="row">
 	  <div class="col-sm-1" (click)="clickCourse(course)">
-	  	<div [class.indicator-selected]="isCourseSelected()" [class.indicator]="!isCourseSelected()"></div>
+	  	<div [class.indicator-selected]="isCourseSelected()" [class.indicator]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
 	  </div>
 	  <div class="col-sm-11" (click)="clickCourse(course)">
 	    <div class="course-name">{{course.name}}</div>
@@ -15,9 +15,6 @@
 	</div>
   <div class = "container">
 	  <div class="row" [class.height]="!showingMenu">
-	  	<div class="col-sm-1 zero-margins">
-		  	<div [class.menuindicator-selected]="isCourseSelected()" [class.menuindicator]="!isCourseSelected()"></div>
-		  </div>
 		  <div class="col-sm-11">
 				<div class="menu" (click)="showingMenu = !showingMenu" >
 					<span *ngIf="!showingMenu"><span class = "padded">Choose sections</span><i class="arrow down"></i></span>

@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Section } from '../../models/section.model';
 import { Period } from '../../models/period.model';
 import { ConflictsService } from '../../services/conflicts.service';
+import { SelectionService } from '../../services/selection.service';
 
 const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -14,7 +15,7 @@ const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export class SectionComponent {
   @Input() section: Section;
 
-  constructor(private conflictsService: ConflictsService) { }
+  constructor(private conflictsService: ConflictsService, private selectionService: SelectionService) { }
 
   public getDay(period: Period) : string {
     return SHORT_DAYS[period.day];
@@ -54,5 +55,9 @@ export class SectionComponent {
 
   public doesConflict(secId: number) {
     return this.conflictsService.doesConflict(secId);
+  }
+
+  public isSelected() {
+    return this.selectionService.isSectionSelected(this.section);
   }
 }
