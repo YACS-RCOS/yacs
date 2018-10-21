@@ -17,11 +17,19 @@ export class InterestedCoursesComponent implements OnInit {
 
   courses : Course[] = [];
   isLoaded : boolean = false;
+  private subscription;
 
   constructor (
-    private yacsService : YacsService,
-    public selectionService : SelectionService)
-    { }
+      private yacsService : YacsService,
+      public selectionService : SelectionService) {
+    this.subscription = this.selectionService.subscribe(() => {
+      this.getCourses();
+    });
+  }
+
+  ngOnInit () {
+    this.getCourses();
+  }
 
   public getCourses () : void {
     const courseIds = this.selectionService.getSelectedCourseIds();
@@ -33,8 +41,4 @@ export class InterestedCoursesComponent implements OnInit {
         });
     }
   }
-
-  ngOnInit (){
-    this.getCourses();
-  }
- }
+}
