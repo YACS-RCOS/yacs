@@ -69,10 +69,12 @@ export class SectionComponent {
   private constructPeriodsArray(): Period[][] {
     const periodsByDay = [Array(5)];
     this.section.periods.forEach(period => {
-      if (periodsByDay.slice(-1)[0][period.day-1]) {
-        periodsByDay.push(Array(5));
+      if (period.day >= 1 || period.day <= 6) {
+        if (periodsByDay.slice(-1)[0][period.day-1]) {
+          periodsByDay.push(Array(5));
+        }
+        periodsByDay.slice(-1)[0][period.day-1] = period;
       }
-      periodsByDay.slice(-1)[0][period.day-1] = period;
     });
     return periodsByDay;
   }
