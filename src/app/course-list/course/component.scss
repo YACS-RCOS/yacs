@@ -1,7 +1,9 @@
 @import "../../../_vars.scss";
 
 .course {
+  width: 600px;
   margin: 5px;
+  padding-bottom: 5px;
   box-shadow: 2px 2px 5px 2px #efefef;
 }
 
@@ -50,8 +52,15 @@ i {
 }
 
 .course-name {
-  font-size: 130%;
-  font-weight: 400;
+  margin-top: 10px;
+  font-size: 100%;
+  font-weight: 600;
+}
+
+.course-details {
+  float: left;
+  color: #969696;
+  font-size: 90%;
 }
 
 .dept-code {
@@ -89,10 +98,7 @@ section {
   padding:0;
   overflow:auto;
   font-size: 90%;
-}
-
-section:not(.selected):hover {
-  background-color: $yacs_acc;
+  width: 100%;
 }
 
 section:not(.selected) {
@@ -135,4 +141,8 @@ section.closed, section.closed:hover {
 .zero-margins {
   padding:0 !important;
   margin:0 !important;
+}
+
+.full-width {
+  width: 100%;
 }

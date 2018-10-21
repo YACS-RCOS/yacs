@@ -1,6 +1,5 @@
 <div class="course-info container">
-  <div class="row">
-    <div (click)="clickCourse(course)">
+  <div class="row height">
       <div class="col-sm-1">
       	<div class= "indicator"></div>
       </div>
@@ -12,7 +11,6 @@
           <div class="credit-range">{{creditRange}}</div>
         </div>
       </div>
-    </div>
   <div class="col-sm-6">
 
     <div class= "info-button"><button type="button" class="info-btn" placement="right" [popoverTitle]= "courseSubtitle" [ngbPopover]= "course.description">

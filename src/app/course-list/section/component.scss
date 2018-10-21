@@ -13,6 +13,8 @@
 .section-details {
     text-align: center;
     font-size: 90%;
+    width: 9em;
+    padding: 3px;
 }
 
 .section-periods {
@@ -20,13 +22,12 @@
     display:inline-block;
     margin-left:0em;
     float:right;
-    padding:0.15em 0;
+    height:100%;
 }
-.section-periods.noperiods {
-    font-weight: bold;
-}
-.period {
-    margin-left:1em;
+
+.period-time {
+    font-size: 90%;
+    width: 6em;
 }
 .period-day {
     font-weight: 400;
@@ -62,4 +63,28 @@ span.conflict-text {
 
 .highlight-selected {
     background: $yacs_bgs;
+}
+
+.zero-margins {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.grey {
+    background: #efefef;
+    height: 100%;
+    border-right: #9b9b9b solid 1px;
+    border-left: #9b9b9b solid 1px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.align-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

@@ -56,7 +56,6 @@ i {
 
 .course-details {
   float: left;
-  padding-top: 2.1em;
   color: #969696;
   font-size: 90%;
 }
@@ -154,4 +153,8 @@ section.closed, section.closed:hover {
 table,tbody,tr{
   table-layout: fixed;
   width:100%;
+}
+
+.height {
+  height: 7em;
 }

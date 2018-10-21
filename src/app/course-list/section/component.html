@@ -1,8 +1,7 @@
-<div class="full-width right">
-<table>
-  <tr>
-    <td class="section-name"><div class="highlight" >{{section.name}}</div></td>
-    <td class="section-details">
+<div class = "container full-width">
+  <div class = "row">
+    <div class="col-xs-1 align-center section-name"><div class="highlight" >{{section.name}}</div></div>
+    <div class="col-xs-3 section-details">
       <span class="section-crn">{{section.crn}}</span>
       <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
       <span class="section-seats-available">
@@ -15,16 +14,16 @@
           Conflicts with selected sections
         </span>
       </div>
-    </td>
-    <td class ="full-width right">
-      <table class = "section-periods right">
+    </div>
+    <div class ="col-auto">
+      <table class = "section-periods">
         <tr>
-          <span *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']">
-            <td>
+          <span *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']; let i = index">
+            <td class = "period-time">
               <div class = "col-12">
                 <span *ngFor="let period of section.periods">
-                  <div class = "row" *ngIf="getDay(period)==day">
-                    <span class="period-time">{{ getHours(period) }}</span>
+                  <div class = "row" [class.grey]="i%2==0" *ngIf="getDay(period)==day">
+                    <span>{{ getHours(period) }}</span>
                   </div>
                 </span>
               </div>
@@ -32,7 +31,6 @@
           </span>
         </tr>
       </table>
-    </td>  
-  </tr>
-</table>
+    </div>  
+  </div>
 </div>

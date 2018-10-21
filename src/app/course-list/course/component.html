@@ -27,7 +27,7 @@
 		</div>
 	</div>
   <div class = "container" *ngIf="showingMenu">
-	  <div class = "row" *ngFor="let theSection of course.sections">
+	  <div class = "row full-width" *ngFor="let theSection of course.sections">
 		  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
 	  </div>
   </div>
