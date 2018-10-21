@@ -6,7 +6,7 @@
   box-shadow: 2px 2px 5px 2px #efefef;
   height: 100%;
   min-width: 490px;
-  max-width: 900px;
+  max-width: 950px;
 }
 
 .menu {
@@ -19,6 +19,7 @@
 }
 
 .padded {
+  padding-left: 0;
   padding-right: 2em;
 }
 
@@ -97,16 +98,22 @@ section.closed, section.closed:hover {
   color: #888;
 }
 
-.indicator-selected {
-  background: $yacs_bgs;
+.indicator {
   height: 7em;
   width: 1.2em;
 }
 
-.indicator {
+.indicator-selected {
+  background: $yacs_bgs;
+}
+
+.indicator-unselected {
   background: #efefef;
-  height: 7em;
-  width: 1.2em;
+}
+
+.indicator-container {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .indicator-hover {
