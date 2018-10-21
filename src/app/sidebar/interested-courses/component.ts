@@ -6,7 +6,6 @@ import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
 
-
 @Component({
   selector: 'interested-courses',
   templateUrl: './component.html',
@@ -17,6 +16,7 @@ export class InterestedCoursesComponent implements OnInit {
 
   courses : Course[] = [];
   isLoaded : boolean = false;
+  private courseIds : Set<number>;
   private subscription;
 
   constructor (
@@ -28,14 +28,16 @@ export class InterestedCoursesComponent implements OnInit {
   }
 
   ngOnInit () {
+    this.courseIds = new Set<number>();
     this.getCourses();
   }
 
   public getCourses () : void {
-    const courseIds = this.selectionService.getSelectedCourseIds();
-    if (courseIds.length > 0) {
+    this.selectionService.getSelectedCourseIds().forEach(this.courseIds.add, this.courseIds);
+
+    if (this.courseIds.size > 0) {
       this.yacsService
-        .get('courses', { id: courseIds.join(','), show_sections: true, show_periods: true })
+        .get('courses', { id: Array.from(this.courseIds).join(','), show_sections: true, show_periods: true })
         .then((data) => {
           this.courses = data['courses'] as Course[];
         });
