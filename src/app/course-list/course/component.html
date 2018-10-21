@@ -3,15 +3,15 @@
 	  <div class="col-sm-1" (click)="clickCourse(course)">
 	  	<div [class.indicator-selected]="isCourseSelected()" [class.indicator]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
 	  </div>
-	  <div class="col-sm-11 padded" (click)="clickCourse(course)">
+	  <div class="col-sm-11 padded">
 		  <table class="full-width">
-		  	<tr>
+		  	<tr (click)="clickCourse(course)">
 		    	<div class="course-name">{{course.name}}</div>
 		  	</tr>
-	  	  <tr>
+	  	  <tr (click)="clickCourse(course)">
 	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>
 	      </tr>
-		    <tr>
+		    <tr (click)="clickCourse(course)">
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
 				<tr class="menu" (click)="showingMenu = !showingMenu" >
