@@ -1,9 +1,9 @@
 <div class = "course" [class.fixed-height]="!showingMenu" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
 	<div class="row">
-	  <div class="col-1" (click)="clickCourse(course)">
-	  	<div [class.indicator-selected]="isCourseSelected()" [class.indicator]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
+	  <div class="indicator-container" (click)="clickCourse(course)">
+	  	<div class="indicator" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
 	  </div>
-	  <div class="col-11 padded" (click)="clickCourse(course)">
+	  <div class="w-100 padded">
 		  <table class="full-width">
 		  	<tr (click)="clickCourse(course)">
 		    	<div class="course-name">{{course.name}}</div>

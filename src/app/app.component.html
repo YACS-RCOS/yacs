@@ -6,7 +6,7 @@
   </button> 
   <sidebar [hidden]="showingSidebar"></sidebar>
   <!-- if there is a notice content will move down -->
-  <div id="content" [style.padding-top] = "hasNotice() ? '110px' : '60px'">
+  <div id="content" class="w-100" [style.padding-top] = "hasNotice() ? '110px' : '60px'">
     <router-outlet></router-outlet>
   </div>
 </div>
