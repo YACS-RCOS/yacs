@@ -48,3 +48,15 @@ services:
       - ./pipelines/${UNI_SHORTNAME}/adapters/csv-rpi:/usr/src/app
     environment:
       - CSV_SOURCE_201809=https://docs.google.com/spreadsheets/d/e/2PACX-1vThsxFovHKq-FpIx7keMhgvhPjBPS59EWOiMPEcFTKCi883GGmFLdKS4YFNbA8jfDzGciFYOZHZdE-x/pub?gid=0&single=true&output=csv
+  adapter-textbooks:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/textbooks-rpi
+    depends_on:
+      - adapter-banner
+    expose:
+      - "4600"
+    ports:
+      - "4605:4600"
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/adapters/textbooks-rpi:/usr/src/app
+    environment:
+      - EFOLLET_BOOKSTORE_ID=1461

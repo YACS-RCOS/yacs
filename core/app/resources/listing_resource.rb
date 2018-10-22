@@ -12,6 +12,8 @@ class ListingResource < ApplicationResource
   # attribute :auto_attributes, :hash
   # attribute :override_attributes, :hash
   attribute :uuid, :string
+  attribute :required_textbooks, :array
+  attribute :recommended_textbooks, :array
   attribute :course_id, :integer, only: [:filterable]
   attribute :term_id, :integer, only: [:filterable]
 end
