@@ -20,7 +20,7 @@ class TopicsCsvClient
       listing['tags'] = ['topics']
       listing.compact!
       listing_numbers = listing['number'].split('/')
-      listing_numbers.map{|number| listing.merge({'number' => number})}
+      listing_numbers.map{|number| listing.merge({'shortname' => number})}
     end
     listings.flatten!
   end
@@ -32,6 +32,6 @@ class TopicsCsvClient
       subjects[listing['subject']] << listing
       listing.delete 'subject'
     end
-    subjects.map { |k, v| { code: k, listings: v } }
+    subjects.map { |k, v| { shortname: k, listings: v } }
   end
 end
