@@ -5,10 +5,12 @@ This repository holds python scripts for the Yacs NYU Adapters while it is still
 
 ```
 .
-├── README.md 	- This document; make sure to read the whole thing!
-├── gallatin	- Folder that holds all the scripts for the Gallatin Course Search API adapter
-│   └── main.py	- Placeholder script
-└── sites.md	- This has some useful sites, like tutorials and cheatsheets
+├── README.md 		- This document; make sure to read the whole thing!
+├── gallatin		- Folder that holds all the scripts for the Gallatin Course Search API adapter
+│   ├── README.md	- README file
+│   ├── main.py		- Entrypoint for the program
+│	└── ...			- more scripts
+└── sites.md		- This has some useful sites, like tutorials and cheatsheets
 
 TODO: Figure out how we're going to organize the eventual python executable. Depending on what we run the file on, we might want to concatenate all our source files into a single document, or make a python package and import it into a main script.
 ```
