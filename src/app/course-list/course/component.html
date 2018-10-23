@@ -6,7 +6,11 @@
 	  <div class="w-100 padded">
 		  <table class="full-width">
 		  	<tr (click)="clickCourse(course)">
-		    	<div class="course-name">{{course.name}}</div>
+		    	<div class="course-name">{{course.name}} 
+		    		<span class="float-right" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
+							<img src="assets/images/info.svg" />
+						</span>
+					</div>
 		  	</tr>
 	  	  <tr (click)="clickCourse(course)">
 	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>
@@ -14,7 +18,7 @@
 		    <tr (click)="clickCourse(course)">
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
-				<tr class="menu" (click)="showingMenu = !showingMenu" >
+				<tr class="menu" (click)="showingMenu=!showingMenu">
 					<span *ngIf="!showingMenu"><span class = "padded">Choose sections</span><i class="arrow down"></i></span>
 					<span *ngIf="showingMenu"><i class="arrow up"></i></span>
 				</tr>

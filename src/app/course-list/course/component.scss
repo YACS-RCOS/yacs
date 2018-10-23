@@ -56,6 +56,10 @@ i {
   font-size: 90%;
 }
 
+.course-description {
+  height: 3.6em; /* exactly three lines */
+  text-overflow: -o-ellipsis-lastline;
+}
 .dept-code {
   margin-left:1em;
 }

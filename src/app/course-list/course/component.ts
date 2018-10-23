@@ -21,10 +21,12 @@ export class CourseComponent implements OnInit{
 
   public showingMenu;
   public hovered;
+  public showDescription;
   
   ngOnInit() {
     this.showingMenu = false;
     this.hovered = false;
+    this.showDescription = false;
   }
 
   /* A getter function for the range of credits based on the min and max.
