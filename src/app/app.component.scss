@@ -8,10 +8,6 @@
 //   white-space: nowrap;
 // }
 
-div#content {
-  padding: 60px 15px 0px 15px;
-}
-
 img#loading {
   position:absolute;
   top: 50%;
@@ -23,11 +19,24 @@ img#loading {
   margin-left: -62.5px;
 }
 
-.sidebar-wrapper {
+.wrapper {
   display: flex;
   align-items: stretch center;
   position: relative;
 }
+
+@media (max-width: 570px) {
+  #sidebar {
+
+  }
+}
+
+@media (min-width: 570px) {
+  #sidebar {
+
+  }
+}
+
 
 .leftmargin {
   margin-left: 400px;
@@ -35,7 +44,6 @@ img#loading {
 
 button {
   max-height: 35px;
-  margin-top: 70px;
   background: none;
   border: none;
   border-shadow: none;

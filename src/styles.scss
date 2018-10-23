@@ -12,10 +12,6 @@ body {
     font-weight: 300;
 }
 
-#content {
-    padding: 60px 15px 0px 15px;    
-}
-
 .theme-text {
   color: #ffffff;
 }
@@ -110,6 +106,6 @@ div.alert {
   background-color: #d57f7f !important;
 }
 
-.row {
+.course .row {
   flex-wrap: nowrap !important;
 }
