@@ -68,7 +68,9 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   processSchedules (rawSchedules: Object[]): Schedule[] {
     if (rawSchedules.length == 0) {
-      return [new Schedule([], 480, 1200, "Try selecting some courses :)")];
+      const statusText = this.selectionService.getSelectedSectionIds().length == 0 ?
+        "Try selecting some courses :)" : "No possible schedules :(";
+      return [new Schedule([], 480, 1200, statusText)];
     }
 
     const allScheduleEvents: ScheduleEvent[][] = [];
