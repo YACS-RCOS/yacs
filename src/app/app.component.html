@@ -2,7 +2,7 @@
 <notice-bar></notice-bar>
 <div class="wrapper" [style.padding-top] = "hasNotice() ? '110px' : '60px'"> 
   <button (click)="showingSidebar = !showingSidebar">
-    <i [class.right]="!showingSidebar" [class.left]="showingSidebar"></i>
+    <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
   </button> 
   <sidebar [hidden]="showingSidebar"></sidebar>
   <!-- if there is a notice content will move down -->
