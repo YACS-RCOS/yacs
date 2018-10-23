@@ -105,7 +105,7 @@ Certain words are reserved as special keywords - for example, the value of `limi
 
 Query Name | Description
 :---       | :--
-limit      | Sets the explicit maximum number of results to return. Max: ~1495
+limit      | Sets the explicit maximum number of results to return. Max: ~1496
 query      | Returns all courses with a given search term or terms
 foundation | Returns all courses that require a certain foundation
 netid      | Returns all courses by a specific instructor's netid
