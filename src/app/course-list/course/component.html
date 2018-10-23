@@ -28,6 +28,7 @@
   <div *ngIf="showingMenu">
 	  <div *ngFor="let theSection of course.sections">
 		  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
+		  <div class="align-center"><div class="separator"></div></div>
 	  </div>
 	</div>
 </div>

@@ -80,6 +80,20 @@ i {
   padding-left: 0;
 }
 
+.separator {
+  background: #efefef;
+  height: 1px;
+  width: 80%;
+  padding:0;
+  margin:0;
+}
+
+.align-center {
+  width: 100%;
+  align-items: center;
+  align-content: center;
+}
+
 section {
   display:block;
   margin:0;

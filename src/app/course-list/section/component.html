@@ -3,13 +3,13 @@
     <div class="col-1 align-center section-name"><div class="highlight" [class.highlight-selected]="isSelected()">{{section.name}}</div></div>
     <div class="col-2 align-center section-details">
       <div>
-        <span *ngIf="doesConflict(section.id)" placement="top" ngbPopover="Section Conflicts" triggers="mouseenter:mouseleave"><img class="conflict-img" src="assets/images/red_exclamation.svg" /></span>
+        <span *ngIf="doesConflict(section.id)" placement="top" triggers="mouseenter:mouseleave" title="Section Conflicts"><img class="conflict-img" src="assets/images/red_exclamation.svg" /></span>
         <span class="section-crn">{{section.crn}}</span>
         <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
-        <span class="section-seats">
+        <div class="section-seats">
           {{ section.seats-section.seats_taken }}
           <span>/{{ section.seats }} seats</span>
-        </span>
+        </div>
       </div>
     </div>
     <div class ="col-9">
@@ -19,7 +19,7 @@
             <span *ngFor="let period of week; let i = index">
               <td class = "period-time">
                 <div class = "col-12">
-                  <div class="row" [class.grey]="i%2==0">
+                  <div class="row">
                     <span *ngIf="period">{{ getHours(period) }}</span>
                     <span *ngIf="!period">&nbsp;</span>
                   </div>
