@@ -14,5 +14,5 @@ export class Course extends ApplicationRecord {
 	@Attr() tags: string[]
 	@Attr() shortname: string
 	@Attr() uuid: string
-	@Attr() id: number
+	//@Attr() id: number
 }

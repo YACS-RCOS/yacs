@@ -13,5 +13,5 @@ export class School extends ApplicationRecord {
 
 	@Attr() longname: string
 	@Attr() uuid: string
-	@Attr() id: number
+	//@Attr() id: number
 }

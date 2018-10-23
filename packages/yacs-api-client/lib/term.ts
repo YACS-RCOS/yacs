@@ -14,5 +14,5 @@ export class Term extends ApplicationRecord {
 	@Attr() longname: string
 	@Attr() shortname: string
 	@Attr() uuid: string
-	@Attr() id: number
+	//@Attr() id: number
 }
