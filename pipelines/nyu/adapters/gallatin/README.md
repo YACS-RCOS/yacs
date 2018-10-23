@@ -15,13 +15,13 @@ This adapter uses the following file structure:
 ```
 .
 ├── README.md		- README file
-├── gallatin api.md - Explanation/documentation of Gallation Course Search API
+├── gallatin api.md     - Explanation/documentation of Gallation Course Search API
 ├── reqhandler.py	- Server request-handling module
 ├── apitrans.py		- API comprehension module
 ├── galreq.py		- Sending requests module
 ├── jsontrans.py	- Translating to Yacs format module
 ├── globals.py		- Holds global variables
-└── main.py			- main entry-point to python script
+└── main.py             - main entry-point to python script
 ```
 
 ### Functions
