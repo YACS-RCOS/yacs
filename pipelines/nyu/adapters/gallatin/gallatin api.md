@@ -14,23 +14,24 @@ then the api will return 10 course objects - here's an example with just one:
 ``` JSON
 {
     "totalMatches":"4587",
-	"1":{
-		"course":"IDSEM-UG1752",
-		"title":"This Mediated Life: An Introduction to the Study of Mass Media",
-		"credit":"4",
-		"foundation-libarts":"HUM",
-		"level":"U",
-		"term":"WI",
-		"type":"Interdisciplinary Seminars (IDSEM-UG)",
-		"year":"2019",
-		"section":"001",
-		"description":"The actual description is really long so this is a placeholder for it",
-		"days":"Mon Tue Wed Thu ",
-		"times":"10:00 AM - 1:30 PM",
-		"days2":"",
-		"instructors":[{"Julian Cornell":"/content/gallatin/en/people/faculty/jc266"}],
-		"notes":""
-	}
+	 "1": {
+       "course":"IDSEM-UG1624",
+       "title":"There and Back Again: Travelers and Traveling through the Middle Ages and Beyond",
+       "credit":"4",
+       "foundation-libarts":"HUM",
+       "foundation-histcult":"PREMOD or EARLY",
+       "level":"U",
+       "term":"SP",
+       "type":"Interdisciplinary Seminars (IDSEM-UG)",
+       "year":"2019",
+       "section":"001",
+       "description":"The image of the medieval world as dark, backward, and stagnant has for too long held sway over our modern popular conceptions of the era. In this course, we will investigate the ways in which the Middle Ages were actually a period of vast movement, migration, and pilgrimage. We will study the \u201cdiscovery\u201d of North America by Scandinavian sailors five centuries before Columbus. We will explore the colonization of the New World by European powers in the fifteenth and sixteenth centuries. And throughout, we will ask how we can better understand the history of identity formation, orientalism, and imperialism in the pre-modern era. We will delve into the questions, the conflicts, and the painful changes that these travels and encounters fomented both within European society and without. Readings may include the  <em>Confession of St. Patrick<\/em> , Bede\u2019s  <em>Ecclesiastical History of the English People<\/em> ,  <em>The Thousand and One Nights<\/em> , the  <em>Saga of Eirik the Red<\/em> , Marco Polo\u2019s  <em>Division of the World<\/em> , Mandeville\u2019s  <em>Travels<\/em> , Dante\u2019s  <em>Divine Comedy<\/em> , Chaucer\u2019s  <em>Canterbury Tales<\/em> , Christine de Pizan\u2019s <em> Book of the City of Ladies<\/em> , More\u2019s  <em>Utopia<\/em> , Bartolomé de las Casas\u2019  <em>Short Account of the Destruction of the Indies<\/em> , and Françoise de Graffigny\u2019s  <em>Letters from a Peruvian Woman<\/em> .\n\n",
+       "days":"Mon Wed ",
+       "times":"3:30 PM - 4:45 PM",
+       "days2":"",
+       "instructors":[{"Andrew Romig":"/content/gallatin/en/people/faculty/ajr6"}],
+       "notes":""
+    }
 }
 ```
 
@@ -56,23 +57,24 @@ Where `attribute` is the name of an attribute that courses can have, and value i
 ##### Database Attributes
 The following is a list of the attributes that courses have:
 
-Attribute Name		| Values       | Description
-:---			       	| :---		     | :---
-Course  	     		| String	     |  Course ID
-Title  		     		| String       |  Course name
-Credit *	     		| Integer	     |  Number of credits (1, 2, 4, 6, 8)
-foundation-libarts| String	     |  ? <!-- Site describes it as requirement but I have no clue what that means -->
-level *		       	| String	     |  Code for whether it's undergrad or grad (U or G)
-term *  			   	| String	     |  The term the course is offered in (SP, FA, SU, WI)
-type * 			    	| String	     |  Type of course (i.e. department)
-year *			     	| Integer	     |  Year offered
-section  		     	| Integer	     |  Section #
-description  	  	| String	     |  Course description
-days  			     	| String     	 |  Days section is offered
-times  			    	| String	     |  Times section is offered
-days2  			    	| String    	 |  ?
-instructors  	  	| String Array | List of instructors for the course
-notes  				    | String	     |  ?
+Attribute Name	  	| Values       | Description
+:---			        	| :---		     | :---
+Course  	       		| String	     |  Course ID
+Title  		     	   	| String       |  Course name
+Credit *	     	  	| Integer	     |  Number of credits (1, 2, 4, 6, 8)
+foundation-libarts  | String	     |  ? <!-- Site describes it as requirement but I have no clue what that means -->
+foundation-histcult | String       |  ? 
+level *		       	  | String	     |  Code for whether it's undergrad or grad (U or G)
+term *  			   	  | String	     |  The term the course is offered in (SP, FA, SU, WI)
+type * 			    	  | String	     |  Type of course (i.e. department)
+year *			     	  | Integer	     |  Year offered
+section  		     	  | Integer	     |  Section #
+description  	    	| String	     |  Course description
+days  			     	  | String     	 |  Days section is offered
+times  			      	| String	     |  Times section is offered
+days2  			    	  | String    	 |  ?
+instructors  	    	| String Array | List of instructors for the course
+notes  				      | String	     |  ?
 
 ###### Note: Attributes with an  *  are also query keywords.
 
