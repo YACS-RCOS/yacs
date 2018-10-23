@@ -35,7 +35,7 @@ This document contains some useful links to things like tutorials and cheatsheet
 [numpy]: http://www.numpy.org/
 [json]: https://docs.python.org/3/library/json.html
 [requests]: http://docs.python-requests.org/en/master/
-[socketserver]: https://docs.python.org/2/library/cgi.html
+[socketserver]: https://docs.python.org/3/library/socketserver.html
 [http]: https://docs.python.org/3/library/http.html
 [http-client]: https://docs.python.org/3/library/http.client.html#module-http.client
 [http-server]: https://docs.python.org/3/library/http.server.html#module-http.server
