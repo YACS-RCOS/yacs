@@ -19,14 +19,18 @@ This adapter uses the following file structure:
 ├── reqhandler.py	- Server request-handling module
 ├── apitrans.py		- API comprehension module
 ├── galreq.py		- Sending requests module
-├── jsontrans.py	-Translating to Yacs format module
+├── jsontrans.py	- Translating to Yacs format module
+├── globals.py		- Holds global variables
 └── main.py			- main entry-point to python script
 ```
 
 ### Functions
-To make it easier to coordinate, we're going to use the following standard names for public functions:
+To make it easier to coordinate, we're going to use the following standard names for public functions and variables:
 
 ```python
+
+API_URL = "URL_OF_THE_GALLATIN_API"
+
 # Task 2
 def get_query(term_shortname):
 	# This function takes in the term_shortname as a string
