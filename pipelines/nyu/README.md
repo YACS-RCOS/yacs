@@ -11,8 +11,6 @@ This repository holds python scripts for the Yacs NYU Adapters while it is still
 │   ├── main.py		- Entrypoint for the program
 │	└── ...			- more files
 └── sites.md		- This has some useful sites, like tutorials and cheatsheets
-
-TODO: Figure out how we're going to organize the eventual python executable. Depending on what we run the file on, we might want to concatenate all our source files into a single document, or make a python package and import it into a main script.
 ```
 
 ### Contributing
