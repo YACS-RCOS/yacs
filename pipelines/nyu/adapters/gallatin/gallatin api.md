@@ -67,7 +67,7 @@ foundation-histcult | String       |  ?
 level *		       	  | String	     |  Code for whether it's undergrad or grad (U or G)
 term *  			   	  | String	     |  The term the course is offered in (SP, FA, SU, WI)
 type * 			    	  | String	     |  Type of course (i.e. department)
-year *			     	  | Integer	     |  Year offered
+year *			     	  | Integer	     |  Year offered (2003-Present)
 section  		     	  | Integer	     |  Section #
 description  	    	| String	     |  Course description
 days  			     	  | String     	 |  Days section is offered

@@ -15,7 +15,7 @@ This adapter uses the following file structure:
 ```
 .
 ├── README.md		- README file
-├── gallatin api.md - Explanation/documentation of Gallation Course Search API
+├── gallatin api.md     - Explanation/documentation of Gallation Course Search API
 ├── reqhandler.py	- Server request-handling module
 ├── apitrans.py		- API comprehension module
 ├── galreq.py		- Sending requests module
@@ -24,7 +24,6 @@ This adapter uses the following file structure:
 ├── main.py			- Main entry-point to python script
 ├── get_data.py		- Generate test data
 └── test.py			- Test file to check if different parts of the script are working
-
 ```
 
 ### Functions
