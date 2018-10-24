@@ -6,11 +6,11 @@
 	  <div class="w-100 padded">
 		  <table class="full-width">
 		  	<tr (click)="clickCourse(course)">
-		    	<div class="course-name">{{course.name}} 
+		    	<td class="course-name">{{course.name}} 
 		    		<span class="float-right" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
 							<img src="assets/images/info.svg" />
 						</span>
-					</div>
+					</td>
 		  	</tr>
 	  	  <tr (click)="clickCourse(course)">
 	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>

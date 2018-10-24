@@ -14,20 +14,18 @@
     </div>
     <div class ="col-9">
       <table class = "section-periods">
-        <span>
-          <tr *ngFor="let week of periods">
-            <span *ngFor="let period of week; let i = index">
-              <td class = "period-time">
-                <div class = "col-12">
-                  <div class="row">
-                    <span *ngIf="period">{{ getHours(period) }}</span>
-                    <span *ngIf="!period">&nbsp;</span>
-                  </div>
+        <tr *ngFor="let week of periods">
+          <span *ngFor="let period of week; let i = index">
+            <td class = "period-time">
+              <div class = "col-12">
+                <div class="row">
+                  <span *ngIf="period">{{ getHours(period) }}</span>
+                  <span *ngIf="!period">&nbsp;</span>
                 </div>
-              </td>
-            </span>
-          </tr>
-        </span>
+              </div>
+            </td>
+          </span>
+        </tr>
       </table>
     </div>  
   </div>
