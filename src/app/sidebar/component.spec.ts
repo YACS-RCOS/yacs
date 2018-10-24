@@ -27,4 +27,4 @@ describe("Testing sidebar component", function() {
   it("should have a component", function() {
     expect(component).toBeDefined();
   });
-
+});

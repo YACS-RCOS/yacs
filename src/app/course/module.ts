@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 
-import { CourseListComponent } from './component';
-import { CourseComponent } from './course/component';
+import { CourseComponent } from './component';
 import { SectionComponent } from './section/component'; 
 
 @NgModule({
   declarations: [
-    CourseListComponent,
     CourseComponent,
     SectionComponent
   ],
@@ -17,7 +15,7 @@ import { SectionComponent } from './section/component';
     NgbModule
   ],
   exports: [
-    CourseListComponent
+    CourseComponent
   ]
 })
-export class CourseListModule { }
+export class CourseModule { }

@@ -17,7 +17,7 @@ import { SidebarModule } from './sidebar/module';
 import { SchoolViewModule } from './school-view/module';
 import { CourseViewModule } from './course-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
-import { CourseListModule } from './course-list/module';
+import { CourseModule } from './course/module';
 
 import { ConstantsService } from './services/constants';
 import { SelectionService } from './services/selection.service';
@@ -39,7 +39,7 @@ import { AboutComponent } from './about/component';
     SchoolViewModule,
     CourseViewModule,
     ScheduleViewModule,
-    CourseListModule,
+    CourseModule,
     SidebarModule
   ],
   declarations: [

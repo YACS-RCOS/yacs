@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Course } from '../../models/course.model';
-import { Section } from '../../models/section.model';
-import { ScheduleEvent } from '../../models/schedule-event.model';
-import { Schedule } from '../../models/schedule.model';
-import { SelectionService } from '../../services/selection.service'
-import { ConflictsService } from '../../services/conflicts.service'
+import { Course } from '../models/course.model';
+import { Section } from '../models/section.model';
+import { ScheduleEvent } from '../models/schedule-event.model';
+import { Schedule } from '../models/schedule.model';
+import { SelectionService } from '../services/selection.service'
+import { ConflictsService } from '../services/conflicts.service'
 
 @Component({
   selector: 'course',
@@ -14,6 +14,8 @@ import { ConflictsService } from '../../services/conflicts.service'
 })
 export class CourseComponent implements OnInit{
   @Input() course: Course;
+  @Input() showDescriptionTooltip: boolean = false;
+  @Input() showDescription: boolean = false;
 
   constructor(
     public selectionService : SelectionService,
@@ -21,12 +23,10 @@ export class CourseComponent implements OnInit{
 
   public showingMenu;
   public hovered;
-  public showDescription;
   
   ngOnInit() {
     this.showingMenu = false;
     this.hovered = false;
-    this.showDescription = false;
   }
 
   /* A getter function for the range of credits based on the min and max.

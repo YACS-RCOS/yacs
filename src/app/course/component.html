@@ -7,7 +7,7 @@
 		  <table class="full-width">
 		  	<tr (click)="clickCourse(course)">
 		    	<div class="course-name">{{course.name}} 
-		    		<span class="float-right" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
+		    		<span *ngIf="showDescriptionTooltip" class="float-right" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
 							<img src="assets/images/info.svg" />
 						</span>
 					</div>
