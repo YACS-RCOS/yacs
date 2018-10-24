@@ -7,7 +7,7 @@ The python script will be divided into 4 tasks:
 1. Server request-handling - the script needs act as a server, responding to `GET` requests from Yacs with course information. This task involves making a web server to respond to these `GET` requests
 2. API comprehension - the script needs to understand the NYU API enough to write a correctly formatted `GET` request to send to Gallatin's API server
 3. Sending requests - Once we have a formatted `GET` request, we need to establish a connection to the Gallatin Course Search API server and save the information it sends us
-4. Translating to Yacs format - The JSON objects we get from the API aren't formatted correctly - Yacs can't understand it until we reformat the information to be more aligned with the Yacs schema
+4. Translating to Yacs format - The JSON objects we get from the API aren't formatted correctly - Yacs can't understand it until we reformat the information to be more aligned with the Yacs schema. This will also involve filtering the data a bit, as the Gallatin API doesn't have very powerful filtering options.
 
 ### File Structure
 This adapter uses the following file structure:
@@ -21,7 +21,9 @@ This adapter uses the following file structure:
 ├── galreq.py		- Sending requests module
 ├── jsontrans.py	- Translating to Yacs format module
 ├── globals.py		- Holds global variables
-└── main.py             - main entry-point to python script
+├── main.py			- Main entry-point to python script
+├── get_data.py		- Generate test data
+└── test.py			- Test file to check if different parts of the script are working
 ```
 
 ### Functions

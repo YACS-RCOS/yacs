@@ -8,4 +8,4 @@ PATH = ''
 
 # Send a request to the server and print it
 r = requests.get("{}:{}/{}".format(SERVER_URL,PORT,PATH))
-print(r)
+print(r.text)
