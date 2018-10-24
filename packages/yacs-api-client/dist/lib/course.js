@@ -36,6 +36,12 @@ var Course = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.Attr()
     ], Course.prototype, "uuid", void 0);
+    __decorate([
+        spraypaint_1.BelongsTo()
+    ], Course.prototype, "subjects", void 0);
+    __decorate([
+        spraypaint_1.HasMany()
+    ], Course.prototype, "listings", void 0);
     return Course;
 }(application_record_1.ApplicationRecord));
 exports.Course = Course;

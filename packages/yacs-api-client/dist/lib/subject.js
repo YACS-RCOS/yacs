@@ -36,6 +36,12 @@ var Subject = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.Attr()
     ], Subject.prototype, "uuid", void 0);
+    __decorate([
+        spraypaint_1.BelongsTo()
+    ], Subject.prototype, "schools", void 0);
+    __decorate([
+        spraypaint_1.HasMany()
+    ], Subject.prototype, "courses", void 0);
     return Subject;
 }(application_record_1.ApplicationRecord));
 exports.Subject = Subject;

@@ -7,6 +7,8 @@ import {
 } from "spraypaint"
 
 import { ApplicationRecord } from "./application-record";
+import { Subject } from "./subject";
+import { Listing } from "./listing";
 
 export class Course extends ApplicationRecord {
 	static jsonapiType = "courses";
@@ -15,4 +17,7 @@ export class Course extends ApplicationRecord {
 	@Attr() shortname: string
 	@Attr() uuid: string
 	//@Attr() id: number
+
+	@BelongsTo() subjects: Subject[]
+	@HasMany() listings: Listing[] 
 }
