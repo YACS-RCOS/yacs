@@ -16,4 +16,16 @@ class ListingResource < ApplicationResource
   attribute :recommended_textbooks, :array
   attribute :course_id, :integer, only: [:filterable]
   attribute :term_id, :integer, only: [:filterable]
+
+  attribute :course_shortname, :string do
+    @object.course.shortname
+  end
+
+  attribute :subject_shortname, :string do
+    @object.course.subject.shortname
+  end
+
+  def base_scope
+    Listing.eager_load({ course: :subject })
+  end
 end
