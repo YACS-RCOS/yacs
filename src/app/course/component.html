@@ -1,5 +1,5 @@
 <div class = "course" [class.fixed-height]="!showingMenu" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
-	<div class="row">
+	<div class="row flex-nowrap">
 	  <div class="indicator-container" (click)="clickCourse(course)">
 	  	<div class="indicator" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
 	  </div>
