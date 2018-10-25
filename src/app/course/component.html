@@ -1,15 +1,12 @@
 <div class = "course" [class.fixed-height]="!showingMenu" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
 	<div class="row flex-nowrap">
 	  <div class="indicator-container" (click)="clickCourse(course)">
-	  	<div class="indicator" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
+	  	<div class="indicator fixed-height" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
 	  </div>
-	  <div class="w-100">
+	  <div class="w-100 course-content position-relative">
 		  <table class="w-100">
 		  	<tr (click)="clickCourse(course)">
 		    	<div class="course-name">{{course.name}} 
-		    		<span *ngIf="showDescriptionTooltip" class="float-right" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
-							<img src="assets/images/info.svg" />
-						</span>
 					</div>
 		  	</tr>
 	  	  <tr (click)="clickCourse(course)">
@@ -18,16 +15,24 @@
 		    <tr (click)="clickCourse(course)">
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
-				<tr class="menu float-right" (click)="showingMenu=!showingMenu">
-					<span *ngIf="!showingMenu"><span class = "padded">Choose sections</span><i class="arrow down"></i></span>
-					<span *ngIf="showingMenu"><i class="arrow up"></i></span>
-				</tr>
 				<tr>
           <td *ngFor="let day of [Mon,Tues,Wed,Thurs,Fri]">
             <span>{{day}}</span>
           </td>
         </tr>
 			</table>
+				<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
+					<img src="assets/images/info.svg" />
+				</span>
+			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
+				<span *ngIf="!showingMenu">
+					<span>Choose Sections</span>
+					<i class="arrow down"></i>
+				</span>
+				<span *ngIf="showingMenu">
+					<i class="arrow up"></i>
+				</span>
+			</div>
 	  </div>
   </div>
   <div *ngIf="showingMenu">

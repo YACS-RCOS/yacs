@@ -10,7 +10,10 @@
 @media (min-width: 576px) {
 	.course {
 	  min-width: 485px;
-	  /*max-width: 950px;*/
+		/*max-width: 950px;*/
+	}
+	.fixed-height {
+	  height: 9em;
 	}
 }
 
@@ -18,6 +21,14 @@
 	.course {
 		min-width: 345px;
 	}
+	.fixed-height {
+	  height: 7em;
+	}
+}
+
+.description-tooltip {
+	top: 0.8em;
+	right: 27px;
 }
 
 .menu {
@@ -27,6 +38,8 @@
   margin: .05em;
   font-weight: 400;
   text-align: right;
+  bottom: 0.8em;
+  right: 35px;
 }
 
 .padded {
@@ -41,6 +54,10 @@ i {
     padding: 3px;
 }
 
+.arrow {
+    margin-left: 1em;
+}
+
 .up {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
@@ -51,8 +68,8 @@ i {
   -webkit-transform: rotate(45deg);
 }
 
-.fixed-height {
-  height: 9em;
+.course-content {
+	padding-right: 35px;
 }
 
 .course-name {
@@ -121,7 +138,6 @@ section.closed, section.closed:hover {
 }
 
 .indicator {
-  height: 9em;
   width: 1.2em;
 }
 

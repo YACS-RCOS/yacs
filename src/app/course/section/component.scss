@@ -1,5 +1,11 @@
 @import "../../../_vars.scss";
 
+// @media (max-width: 575.98px) {
+//     section {
+//         flrx-wrap:
+//     }
+// }
+
 :host.conflicts>.section-information {
     text-decoration: line-through;
 }
@@ -23,6 +29,7 @@
     margin-left:0em;
     float:right;
     height:100%;
+    white-space: nowrap;
 }
 
 .section-seats {
