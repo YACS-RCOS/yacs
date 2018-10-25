@@ -10,7 +10,7 @@
 		    		<span *ngIf="showDescriptionTooltip" class="float-right" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
 							<img src="assets/images/info.svg" />
 						</span>
-					</td>
+					</div>
 		  	</tr>
 	  	  <tr (click)="clickCourse(course)">
 	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>
@@ -18,10 +18,15 @@
 		    <tr (click)="clickCourse(course)">
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
-				<tr class="menu" (click)="showingMenu=!showingMenu">
+				<tr class="menu float-right" (click)="showingMenu=!showingMenu">
 					<span *ngIf="!showingMenu"><span class = "padded">Choose sections</span><i class="arrow down"></i></span>
 					<span *ngIf="showingMenu"><i class="arrow up"></i></span>
 				</tr>
+				<tr>
+          <td *ngFor="let day of [Mon,Tues,Wed,Thurs,Fri]">
+            <span>{{day}}</span>
+          </td>
+        </tr>
 			</table>
 	  </div>
   </div>
@@ -29,7 +34,6 @@
 	  <div *ngFor="let theSection of course.sections; let i=index">
 	  	<div class="container" *ngIf="i!=0"><div class="col-auto separator"></div></div>
 		  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
-		  
 	  </div>
 	</div>
 </div>
