@@ -3,8 +3,8 @@
 	  <div class="indicator-container" (click)="clickCourse(course)">
 	  	<div class="indicator" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
 	  </div>
-	  <div class="w-100 padded">
-		  <table class="full-width">
+	  <div class="w-100">
+		  <table class="w-100">
 		  	<tr (click)="clickCourse(course)">
 		    	<div class="course-name">{{course.name}} 
 		    		<span *ngIf="showDescriptionTooltip" class="float-right" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
