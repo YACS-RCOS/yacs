@@ -1,6 +1,7 @@
 from http.server import HTTPServer
 from apitrans import get_query
 from reqhandler import ReqHandler
+from galreq import gallatin_data
 
 
 def run():
