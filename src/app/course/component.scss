@@ -46,9 +46,21 @@
   right: 35px;
 }
 
+.period-days {
+  display: box;
+  text-align: right;
+  padding-right: 3em;
+  font-size: 78%;
+  font-weight: 600;
+  padding-bottom: 2px;
+
+}
+
 .padded {
   padding-left: 0;
-  padding-right: 2em;
+  padding-right: 1.6em;
+  padding-left: 1.6em;
+  border-bottom: solid 1px #efefef;
 }
 
 i {

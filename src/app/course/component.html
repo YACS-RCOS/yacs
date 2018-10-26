@@ -33,6 +33,12 @@
 	  </div>
   </div>
   <div *ngIf="showingMenu">
+  	<span class="period-days float-right">
+  		<span class="padded">Mon</span>
+  		<span class="padded">Tues</span>
+  		<span class="padded">Wed</span>
+  		<span class="padded">Thurs</span>
+  		<span class="padded">Fri</span></span>
 	  <div *ngFor="let theSection of course.sections; let i=index">
 	  	<div class="container" *ngIf="i!=0"><div class="col-auto separator"></div></div>
 		  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
