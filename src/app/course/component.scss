@@ -123,11 +123,19 @@ i {
   margin-left:0.7em;
 }
 
+.course-name:hover {
+  cursor: pointer;
+}
+
+.course-details:hover {
+  cursor: pointer;
+}
+
 .hideDescription {
   display:flex;
   font-size:87%;
   text-align: justify;
-  color: #cecece;
+  color: #969696;
   margin-top: -3.2em;
   margin-left: 8em;
   margin-right: 2em;
@@ -136,11 +144,16 @@ i {
   height: 3.5em;
 }
 
+.hideDescription:hover {
+  cursor: pointer;
+  color: black;
+}
+
 .showDescription {
   display:flex;
   font-size:87%;
   text-align: justify;
-  color: #cecece;
+  color: black;
   margin-top: -3.2em;
   margin-left: 8em;
   margin-right: 2em;
@@ -148,6 +161,11 @@ i {
   padding-bottom: 1em;
   height: auto;
   min-height: 7em;
+}
+
+.showDescription:hover {
+  cursor: pointer;
+
 }
 
 .separator {
