@@ -68,9 +68,12 @@ span.conflict-text {
 }
 
 .highlight {
-    height:1.3em;
     width: 1.3em;
     background: #efefef;
+    width: 19.19px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 2px;
 }
 
 .highlight:hover {
@@ -80,6 +83,9 @@ span.conflict-text {
 .highlight-selected {
     background: $yacs_bgs;
     color: white;
+    width: 19.19px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .highlight-selected:hover {
