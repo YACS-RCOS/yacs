@@ -42,8 +42,19 @@ class ReqHandler(BaseHTTPRequestHandler):
 
 		# Get the term name
 		# self.path should hold the '/:term_shortname' part of the GET request
+                self.path = self.path[1:]
+
+                # Send the edited self.path containing the correct format of term name
+                query = get_query(self.path)
+
+                # Send query to get JSON data from the API
+                data = gallatin_data(query)
+
+                # Format the data recieved into Yacs format
+                formatted_data = format_data(data)
 
 		# Send message back to client
-		message = self.path
+		message = formatted_data
+		
 		# Write content as utf-8 data
 		self.write_message(message)
