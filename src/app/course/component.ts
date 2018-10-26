@@ -22,11 +22,12 @@ export class CourseComponent implements OnInit{
     private conflictsService: ConflictsService) { }
 
   public showingMenu;
+  public showingDescription;
   public hovered;
   
   ngOnInit() {
     this.showingMenu = false;
-    this.hovered = false;
+    this.showingDescription = false;
   }
 
   /* A getter function for the range of credits based on the min and max.
@@ -75,5 +76,10 @@ export class CourseComponent implements OnInit{
 
   public doesConflict(secId: number) {
     return this.conflictsService.doesConflict(secId);
+  }
+
+  public descriptionClick(course : Course) {
+    this.selectionService.toggleCourse(course);
+    this.showingDescription= !(this.showingDescription);
   }
 }

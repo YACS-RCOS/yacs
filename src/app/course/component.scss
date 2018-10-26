@@ -2,7 +2,7 @@
 
 .course {
   margin: 10px;
-  padding-bottom: 5px;
+  padding: 0;
   box-shadow: 2px 2px 5px 2px #efefef;
   height: 100%;
 }
@@ -10,8 +10,12 @@
 @media (min-width: 576px) {
 	.course {
 	  min-width: 485px;
+    min-height: 9em;
 		/*max-width: 950px;*/
 	}
+  .min-height {
+    min-height: 9em;
+  }
 	.fixed-height {
 	  height: 9em;
 	}
@@ -80,14 +84,10 @@ i {
 
 .course-details {
   float: left;
-  color: #969696;
+  color: #3d3d3d;
   font-size: 90%;
 }
 
-.course-description {
-  height: 3.6em; /* exactly three lines */
-  text-overflow: -o-ellipsis-lastline;
-}
 .dept-code {
   margin-left:1em;
 }
@@ -96,16 +96,53 @@ i {
   margin-left:0.7em;
 }
 
-.course-description {
+.hideDescription {
   display:block;
   font-size:87%;
   text-align: justify;
-  margin-bottom: 0;
-  padding-bottom: 0;
-  margin-left: 0;
-  margin-top: 0;
-  padding-top: 0;
-  padding-left: 0;
+  color: #cecece;
+  margin-top: -3em;
+  margin-left: 6em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical; 
+}
+
+.showDescription {
+  display:block;
+  font-size:87%;
+  text-align: justify;
+  color: #cecece;
+  margin-top: -3em;
+  margin-left: 6em;
+  padding-bottom: 1em;
+  height: auto;
+  min-height: 7em;
+}
+
+.expandDescription {
+  z-index: 1;
+  width: 2em;
+  height: 1.3em;
+  right: 2.2em;
+  padding-left: .1em;
+  bottom: 2em;
+  max-height: none;
+  color: #969696;
+}
+
+.collapseDescription {
+  z-index: 1;
+  height: 1.3em;
+  right: 2.2em;
+  padding-left: .1em;
+  bottom: 2em;
+  max-height: none;
+  color: #969696;
+  font-weight: 700;
+  padding-left: 1em;
+  text-align: right;
 }
 
 .separator {

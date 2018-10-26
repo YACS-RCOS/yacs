@@ -1,32 +1,29 @@
-<div class = "course" [class.fixed-height]="!showingMenu" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
-	<div class="row flex-nowrap">
+<div class = "course" [class.fixed-height]="!showingMenu && !showingDescription" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
+	<div class="row flex-nowrap h-100 min-height">
 	  <div class="indicator-container" (click)="clickCourse(course)">
-	  	<div class="indicator fixed-height" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered"></div>
+	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered" ></div>
 	  </div>
-	  <div class="w-100 course-content position-relative">
-		  <table class="w-100">
-		  	<tr (click)="clickCourse(course)">
+	  <div class="w-100 h-100 course-content position-relative min-height">
+		  <table (click)="clickCourse(course)" class="w-100">
+		  	<tr>
 		    	<div class="course-name">{{course.name}} 
 					</div>
 		  	</tr>
-	  	  <tr (click)="clickCourse(course)">
+	  	  <tr>
 	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>
 	      </tr>
-		    <tr (click)="clickCourse(course)">
+		    <tr>
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
-				<tr>
-          <td *ngFor="let day of [Mon,Tues,Wed,Thurs,Fri]">
-            <span>{{day}}</span>
-          </td>
-        </tr>
 			</table>
-				<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
-					<img src="assets/images/info.svg" />
-				</span>
+			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
+				<img src="assets/images/info.svg" />
+			</span>
+			<span (click)="descriptionClick(course)" *ngIf="!showDescriptionTooltip" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription">
+				{{course.description}}
+			</span>
 			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
 				<span *ngIf="!showingMenu">
-					<span>Choose Sections</span>
 					<i class="arrow down"></i>
 				</span>
 				<span *ngIf="showingMenu">
