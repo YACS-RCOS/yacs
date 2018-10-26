@@ -17,7 +17,12 @@ This repository holds python scripts for the Yacs NYU Adapters while it is still
 We're going to use Slack and issues to coordinate division of labor, and pull requests to add code to the codebase. Try to keep other people updated when you start working on an issue or new file - we want to try to minimize repetition of work as much as possible.
 
 #### Slack
-Please use the *#dataAdapter* Slack channel to keep everyone updated when you start working on a feature or fixing a bug. If you're working on an issue, be sure to comment on it saying that you're working on it. Communication is key!
+Please use the *#dataadapter* Slack channel to keep everyone updated when you start working on a feature or fixing a bug. If you're working on an issue, be sure to comment on it saying that you're working on it. Communication is key!
 
 #### Issues
-All of the issues related to NYU adapters will have both the **service:adapter** and **university:nyu** tags. Other useful tags are **class:bug** and **class:testing**. If you find a bug or a problem, please make an issue before starting to work on it - that way if problems arise in other parts of the adapter, we'll know where to look first.
+You should check the issues tab first if you don't know where to start. All of the issues related to NYU adapters will have both the **service:adapter** and **university:nyu** tags. Other useful tags are **class:bug** and **class:testing**. If you find a bug or a problem, please make an issue before starting to work on it - that way if problems arise in other parts of the adapter, we'll know where to look first.
+
+#### Getting Help
+If you're having trouble figuring out how to work with Git, pull requests, or just confused in general, I'd suggest first checking out [this guide][open-source-guide]; it has a bunch of useful guides on contributing to open source in general, including where to start learning things like Git and how to write pull requests. In addition, the [`sites.md`](pipelines/nyu/sites.md) file has quite a few useful sites for learning Python, Git, JSON ... if you're new to a system we're using to build the adapters, that file is a good starting point to learn it. Finally, if you have questions about Yacs or the adapter specifically, or are just having trouble figuring something out, don't hesitate to ask on the Slack! You can ask questions in the *#dataadapter* channel, or just privately message `@ada`, `@Bradley Brecher`, or `@Albert Liu`.
+
+[open-source-guide]: https://medium.com/clarifai-champions/99-pr-oblems-a-beginners-guide-to-open-source-abc1b867385a
