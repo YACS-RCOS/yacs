@@ -19,7 +19,7 @@
 			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/info.svg" />
 			</span>
-			<span (click)="descriptionClick(course)" *ngIf="!showDescriptionTooltip" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription">
+			<span (click)="descriptionClick(course)" *ngIf="!showDescriptionTooltip" class="course-description" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription">
 				{{course.description}}
 			</span>
 			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
