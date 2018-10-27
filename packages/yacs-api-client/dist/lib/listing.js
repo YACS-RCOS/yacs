@@ -50,10 +50,13 @@ var Listing = /** @class */ (function (_super) {
     ], Listing.prototype, "uuid", void 0);
     __decorate([
         spraypaint_1.BelongsTo()
-    ], Listing.prototype, "courses", void 0);
+    ], Listing.prototype, "course", void 0);
     __decorate([
         spraypaint_1.BelongsTo()
-    ], Listing.prototype, "terms", void 0);
+    ], Listing.prototype, "term", void 0);
+    __decorate([
+        spraypaint_1.HasMany()
+    ], Listing.prototype, "sections", void 0);
     return Listing;
 }(application_record_1.ApplicationRecord));
 exports.Listing = Listing;

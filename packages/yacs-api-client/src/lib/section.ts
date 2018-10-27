@@ -7,11 +7,10 @@ import {
 } from "spraypaint"
 
 import { ApplicationRecord } from "./application-record";
-import { Course } from "./course";
-import { Term } from "./term";
+import { Listing } from "./listing";
 
-export class Listing extends ApplicationRecord {
-	static jsonapiType = "listings";
+export class Section extends ApplicationRecord {
+	static jsonapiType = "sections";
 
 	@Attr() tags: string[]
 	@Attr() active: boolean
@@ -20,8 +19,6 @@ export class Listing extends ApplicationRecord {
 	@Attr() description: string
 	@Attr() longname: string
 	@Attr() uuid: string
-	//@Attr() id: number
 
-	@BelongsTo() courses: Course[]
-	@BelongsTo() terms: Term[]
+	@BelongsTo() listing: Listing
 }

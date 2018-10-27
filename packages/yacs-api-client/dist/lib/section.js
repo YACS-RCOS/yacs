@@ -21,24 +21,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var spraypaint_1 = require("spraypaint");
 var application_record_1 = require("./application-record");
-var Course = /** @class */ (function (_super) {
-    __extends(Course, _super);
-    function Course() {
+var Section = /** @class */ (function (_super) {
+    __extends(Section, _super);
+    function Section() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Course.jsonapiType = "courses";
+    Section.jsonapiType = "sections";
     __decorate([
         spraypaint_1.Attr()
-    ], Course.prototype, "shortname", void 0);
+    ], Section.prototype, "tags", void 0);
     __decorate([
         spraypaint_1.Attr()
-    ], Course.prototype, "uuid", void 0);
+    ], Section.prototype, "active", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "max_credits", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "min_credits", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "description", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "longname", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "uuid", void 0);
     __decorate([
         spraypaint_1.BelongsTo()
-    ], Course.prototype, "subject", void 0);
-    __decorate([
-        spraypaint_1.HasMany()
-    ], Course.prototype, "listings", void 0);
-    return Course;
+    ], Section.prototype, "listing", void 0);
+    return Section;
 }(application_record_1.ApplicationRecord));
-exports.Course = Course;
+exports.Section = Section;

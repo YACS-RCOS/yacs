@@ -38,7 +38,7 @@ var Subject = /** @class */ (function (_super) {
     ], Subject.prototype, "uuid", void 0);
     __decorate([
         spraypaint_1.BelongsTo()
-    ], Subject.prototype, "schools", void 0);
+    ], Subject.prototype, "school", void 0);
     __decorate([
         spraypaint_1.HasMany()
     ], Subject.prototype, "courses", void 0);

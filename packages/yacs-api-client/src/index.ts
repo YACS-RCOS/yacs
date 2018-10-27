@@ -1,5 +1,6 @@
-export { School } from "./lib/school";
-export { Course	} from "./lib/course";
-export { Subject } from "./lib/subject";
-export { Listing } from "./lib/listing";
 export { Term } from "./lib/term";
+export { School } from "./lib/school";
+export { Subject } from "./lib/subject";
+export { Course	} from "./lib/course";
+export { Listing } from "./lib/listing";
+export { Section } from "./lib/section";

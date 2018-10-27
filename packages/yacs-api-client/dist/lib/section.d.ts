@@ -1,8 +1,6 @@
 import { ApplicationRecord } from "./application-record";
-import { Course } from "./course";
-import { Term } from "./term";
-import { Section } from "./section";
-export declare class Listing extends ApplicationRecord {
+import { Listing } from "./listing";
+export declare class Section extends ApplicationRecord {
     static jsonapiType: string;
     tags: string[];
     active: boolean;
@@ -11,7 +9,5 @@ export declare class Listing extends ApplicationRecord {
     description: string;
     longname: string;
     uuid: string;
-    course: Course;
-    term: Term;
-    sections: Section[];
+    listing: Listing;
 }

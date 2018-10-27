@@ -6,6 +6,6 @@ export declare class Subject extends ApplicationRecord {
     longname: string;
     shortname: string;
     uuid: string;
-    schools: School[];
+    school: School;
     courses: Course[];
 }

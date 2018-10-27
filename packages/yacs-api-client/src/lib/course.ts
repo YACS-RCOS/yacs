@@ -13,11 +13,9 @@ import { Listing } from "./listing";
 export class Course extends ApplicationRecord {
 	static jsonapiType = "courses";
 
-	@Attr() tags: string[]
 	@Attr() shortname: string
 	@Attr() uuid: string
-	//@Attr() id: number
 
-	@BelongsTo() subjects: Subject[]
-	@HasMany() listings: Listing[] 
+	@BelongsTo() subject: Subject
+	@HasMany() listings: Listing[]
 }

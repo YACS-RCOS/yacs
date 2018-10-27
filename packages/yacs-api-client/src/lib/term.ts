@@ -7,14 +7,14 @@ import {
 } from "spraypaint"
 
 import { ApplicationRecord } from "./application-record";
-import { Subject } from "./subject";
+import { Listing } from "./listing";
 
-export class School extends ApplicationRecord {
-	static jsonapiType = "schools";
+export class Term extends ApplicationRecord {
+	static jsonapiType = "terms";
 
 	@Attr() longname: string
+	@Attr() shortname: string
 	@Attr() uuid: string
-	//@Attr() id: number
 
-	@HasMany() subjects: Subject[]
+	@HasMany() listings: Listing[]
 }
