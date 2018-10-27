@@ -4,6 +4,10 @@ class Listing < ActiveRecord::Base
   has_many   :sections, dependent: :destroy
   validates  :longname, presence: true
 
+  scope :latest, ->(value) {
+    joins(:term).where('terms.shortname = (SELECT MAX(terms.shortname) FROM terms WHERE listings.term_id = terms.id AND listings.active = true)')
+  }
+
   def credits
     min_credits == max_credits ? "#{min_credits}" : "#{min_credits}-#{max_credits}"
   end
