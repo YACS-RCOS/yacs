@@ -28,6 +28,10 @@
 	.fixed-height {
 	  height: 7em;
 	}
+
+	.course-description {
+		display: none !important;
+	}
 }
 
 .description-tooltip {
@@ -123,11 +127,19 @@ i {
   margin-left:0.7em;
 }
 
+.course-name:hover {
+  cursor: pointer;
+}
+
+.course-details:hover {
+  cursor: pointer;
+}
+
 .hideDescription {
   display:flex;
   font-size:87%;
   text-align: justify;
-  color: #cecece;
+  color: #969696;
   margin-top: -3.2em;
   margin-left: 8em;
   margin-right: 2em;
@@ -136,18 +148,31 @@ i {
   height: 3.5em;
 }
 
+.hideDescription:hover {
+  cursor: pointer;
+  color: black;
+}
+
 .showDescription {
   display:flex;
   font-size:87%;
   text-align: justify;
-  color: #cecece;
   margin-top: -3.2em;
   margin-left: 8em;
   margin-right: 2em;
   line-height: 1.7em;
-  padding-bottom: 1em;
+  bottom: 1em;
   height: auto;
-  min-height: 7em;
+  min-height: 3.5em;
+}
+
+.showDescription:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.selectedDescription {
+  color: black;
 }
 
 .separator {
