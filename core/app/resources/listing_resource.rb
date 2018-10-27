@@ -25,6 +25,12 @@ class ListingResource < ApplicationResource
     @object.course.subject.shortname
   end
 
+  filter :latest, :boolean do
+    eq do |scope, value|
+      scope.joins(:term).where('terms.shortname = (SELECT MAX(terms.shortname) FROM terms WHERE listings.term_id = terms.id AND listings.active = true)')
+    end
+  end
+
   def base_scope
     Listing.eager_load({ course: :subject })
   end
