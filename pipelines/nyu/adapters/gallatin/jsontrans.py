@@ -14,7 +14,11 @@ def format_data(unformatted_json):
 	return "FORMATTED_JSON_STRING"
 
 def rename_attributes(unformatted_json):
+	# This will use exclusively the json package
 	return "correctly named attributes"
 
 def filter_results(unfiltered_json):
+	# This will use exclusively the pandas package
+	# if this can be done more efficiently with json,
+	# it will use that instead.
 	return "filtered JSON"
