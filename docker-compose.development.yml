@@ -26,7 +26,7 @@ services:
     environment:
       - RAILS_ENV=development
       - TERM_SHORTNAME=201809
-      - UNI_SHORTNAME=RPI
+      - UNI_SHORTNAME
     volumes:
       - ./core:/usr/src/app
     tty: true
@@ -47,8 +47,8 @@ services:
     volumes:
       - "./malg:/usr/src/app"
     environment:
-      - TERM_SHORTNAME=201809
-      - UNI_SHORTNAME=RPI
+      - TERM_SHORTNAME=201809,201901
+      - UNI_SHORTNAME
 
   notifications:
     build: ./notifications

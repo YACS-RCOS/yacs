@@ -9,4 +9,6 @@ class ApplicationResource < Graphiti::Resource
   self.base_url = Rails.application.routes.default_url_options[:host]
   self.endpoint_namespace = '/api/v6'
   self.attributes_writable_by_default = false
+  self.default_page_size = 5000
+  self.max_page_size = 5000
 end

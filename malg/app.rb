@@ -16,14 +16,13 @@ WaterDrop.setup do |config|
   config.kafka.seed_brokers = %w(kafka://kafka:9094)
 end
 
-config_file = ENV['CONFIG_FILE'] || 'config.yml'
 uni_shortname = ENV['UNI_SHORTNAME']
 term_shortnames = ENV['TERM_SHORTNAME'].split ','
 STDERR.puts "SHORTNAMES: #{term_shortnames}"
-config = YAML.load_file config_file
-schema_config = config['schema']
-priorities_config = config['priorities']
-sources_config = config['sources']
+
+schema_config = YAML.load_file('config/schema.yml')['schema']
+sources_config = YAML.load_file('config/sources.yml')['sources']
+priorities_config = YAML.load_file('config/sources.yml')['priorities']
 
 instances = term_shortnames.map do |term_shortname|
   [term_shortname, Instance.new(schema_config, priorities_config, sources_config, uni_shortname, term_shortname)]

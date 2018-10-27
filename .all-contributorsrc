@@ -313,6 +313,38 @@
         "infra",
         "tool"
       ]
+    },
+    {
+      "login": "a1liu",
+      "name": "Albert Liu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3584830?s=460&v=4",
+      "profile": "https://github.com/a1liu",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "bradleybrecher",
+      "name": "bradleybrecher    ",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/32805182?v=4",
+      "profile": "https://github.com/bradleybrecher",
+      "contributions": [
+        "blog",
+        "doc",
+        "eventOrganizing",
+        "ideas"
+      ]
+    },
+    {
+      "login": "esoterum",
+      "name": "Briana Griffin",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/35976740?v=4",
+      "profile": "https://github.com/esoterum",
+      "contributions": [
+        "code",
+        "design",
+        "ideas"
+      ]
     }
   ]
 }

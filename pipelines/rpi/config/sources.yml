@@ -1,24 +1,5 @@
 version: '1'
 
-schema:
-  types:
-    schools:
-      identifier: longname
-      child_type: subjects
-      parent_type: null
-    subjects:
-      identifier: shortname
-      child_type: listings
-      parent_type: schools
-    listings:
-      identifier: shortname
-      child_type: sections
-      parent_type: subjects
-    sections:
-      identifier: crn
-      child_type: null
-      parent_type: listings
-
 sources:
   sources:
     acalog:
@@ -42,6 +23,10 @@ sources:
       location: http://adapter-csv:4600
       poll: 600 # 10 minutes
       root: subjects
+    textbooks:
+      location: http://adapter-textbooks:4600
+      poll: 86400
+      root: subjects
     # admin:
     #   location: admin
     #   poll: 60 # 1 minute
@@ -54,6 +39,7 @@ priorities:
       - banner-seats
       - csv-topics
       - acalog
+      - textbooks
       - banner
       - yaml-schools
   schools:

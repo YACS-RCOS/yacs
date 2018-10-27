@@ -12,6 +12,24 @@ class ListingResource < ApplicationResource
   # attribute :auto_attributes, :hash
   # attribute :override_attributes, :hash
   attribute :uuid, :string
+  attribute :required_textbooks, :array
+  attribute :recommended_textbooks, :array
   attribute :course_id, :integer, only: [:filterable]
   attribute :term_id, :integer, only: [:filterable]
+
+  attribute :course_shortname, :string do
+    @object.course.shortname
+  end
+
+  attribute :subject_shortname, :string do
+    @object.course.subject.shortname
+  end
+
+  filter :latest, :boolean do
+    eq { |scope, value| scope.latest(value) }
+  end
+
+  def base_scope
+    Listing.eager_load({ course: :subject })
+  end
 end

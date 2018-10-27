@@ -14,8 +14,15 @@ class BannerClient
   def sections
     sections = get_xml(@sections_uri).xpath('//CourseDB/SECTION')
     sections.map do |xml|
-      section = xml.to_h.select!{|s| %w(crn num students seats).include?(s)}
-      section.map{|k, v| [k == 'students' ? 'seats_taken' : k, v]}.to_h
+      xml.to_h.symbolize_keys.map do |k, v|
+        case k
+        when :crn then [:crn, v]
+        when :num then [:shortname, v]
+        when :seats then [:seats, v]
+        when :students then [:seats_taken, v]
+        else [nil, nil]
+        end
+      end.to_h.compact
     end
   end
 
