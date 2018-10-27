@@ -1,4 +1,5 @@
 import requests
+import os
 from apitrans import get_query
 from galreq import gallatin_data
 from globals import *
@@ -24,5 +25,7 @@ def r(filename):
 	with open(filename,"r") as f:
 		txt = f.read()
 	return txt
+
+os.chdir('src')
 
 print('test.py was run successfully')
