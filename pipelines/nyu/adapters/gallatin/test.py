@@ -6,9 +6,8 @@ from globals import *
 SERVER_URL = '127.0.0.1'
 PORT = 8080
 PATH = ''
-JSTRANS = 'jsontrans.py'
-
-
+JST = 'jsontrans.py'
+e = exec
 
 # Test script to make sure that everything is running according to plan
 
@@ -19,18 +18,11 @@ def try_connect():
 
 # Get test data as if you had connected to the Gallatin API
 def get_test_data():
-	with open("data/data.json","r") as f:
-		data = f.read()
-	return data
+	return r('data/data.json')
 
-def read_file(filename):
-	f = open(filename, 'r')
-	txt = f.read()
-	f.close()
+def r(filename):
+	with open(filename,"r") as f:
+		txt = f.read()
 	return txt
 
-def e(filename, *args, **kwargs):
-	print('opening file...')
-	txt = read_file(filename)
-	print('running file...')
-	return exec(txt, *args, **kwargs)
+print('test.py was run successfully')
