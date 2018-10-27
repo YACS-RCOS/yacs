@@ -1,8 +1,14 @@
 import requests
 import os
+
+os.chdir('src')
+
 from apitrans import get_query
 from galreq import gallatin_data
 from globals import *
+from jsontrans import format_data
+from main import run
+
 
 SERVER_URL = '127.0.0.1'
 PORT = 8080
@@ -25,7 +31,5 @@ def r(filename):
 	with open(filename,"r") as f:
 		txt = f.read()
 	return txt
-
-os.chdir('src')
 
 print('test.py was run successfully')
