@@ -23,7 +23,7 @@ This document contains some useful links to things like tutorials and cheatsheet
 * [requests][requests] - Package for sending HTTP requests
 * [socketserver][socketserver] - Package for making a server
 * [http][http] - General package for working with HTTP
-* [selenium][selenium] - Package for interacting with webpages
+<!-- * [selenium][selenium] - Package for interacting with webpages -->
 * [pandas][pandas] - Package for general large-data operations
 
 [virtualenv]: https://virtualenv.pypa.io/en/stable/
@@ -42,7 +42,7 @@ This document contains some useful links to things like tutorials and cheatsheet
 * [Example `http.server` Project][servers2] - Example code
 * [Getting Started with `pandas`][pandas-guide] - Short guide to `pandas`, good place to start
 * [Tutorials by `pandas`][pandas-tutorials] - Tutorials listed by the `pandas` documentation site
-* [Starting with `selenium`][selenium-guide] - Getting started with `selenium`. Not the easiest to read if you're not familiar with shell and python
+<!-- * [Starting with `selenium`][selenium-guide] - Getting started with `selenium`. Not the easiest to read if you're not familiar with shell and python -->
 * [Quickstart with `requests`][requests-quickstart] - Quickstart guide to `requests`
 	- [HTTP Requests Guide][http-requests] - The `requests` package assumes you know what HTTP requests are. If you don't try reading this guide for a basic rundown
 
