@@ -6,7 +6,7 @@ The python script will be divided into 4 tasks:
 
 Task| Name				| Package(s)		| Description
 :---| :---				| :---				| :---
-1	| Webpage Parsing	| `selenium`		| Connecting to and navigating the site using a selenium webdriver
+1	| Webpage Parsing	| `requests`		| Connecting to and querying the site
 2 	| HTML Parsing		| `bs4`,`json`		| Converting the HTML into usable JSON using Beautiful Soup
 3 	| JSON Conversion	| `json`,`pandas`	| Converting JSON into a Yacs-readable format
 4 	| Sending JSON		| `http`			| Sending formatted JSON to Yacs

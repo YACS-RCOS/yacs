@@ -3,7 +3,7 @@ Building our web-scraper will involve the following tasks:
 
 Task| Name				| Package(s)		| Description
 :---| :---				| :---				| :---
-1	| Webpage Parsing	| `selenium`		| Connecting to and navigating the site using a selenium webdriver
+1	| Webpage Parsing	| `requests`		| Connecting to and querying the site
 2 	| HTML Parsing		| `bs4`,`json`		| Converting the HTML into usable JSON using Beautiful Soup
 3 	| JSON Conversion	| `json`,`pandas`	| Converting JSON into a Yacs-readable format
 4 	| Serving JSON		| `http`,`pandas`	| Sending formatted JSON to Yacs
@@ -11,11 +11,8 @@ Task| Name				| Package(s)		| Description
 For help on these packages, please look in the [`sites.md`](pipelines/nyu/sites.md)
 
 ### Webpage Parsing
-This part of the project involves using `selenium` to interact with the course search site to gain access to HTML pages with course listings. Since the site doesn't use URL queries as far as we can tell, we can't just use something like `requests` - we would only ever get the intro site. Thus, we need to use a web driver to first interact with the links on the site, then pull the data out piece by piece.
+We're going to be first inspecting the architecture of the javascript that the site uses, then trying to emulate the GET requests that it generates in order to reduce the amount of requests necessary to get all the course information we want.
 
-```
-WARNING: This is probably the hardest part of the script. I would not suggest working on this. Selenium isn't fun to learn, or very applicable. This package presupposes a strong understanding of Python, HTML, CSS, and essentially the internet - it's pretty much impossible to learn without experience in either Python or web development. Again, this won't be fun. Would not recommend.
-```
 ### HTML Parsing
 HTML parsing will involve taking HTML from the course search website and formatting it into JSON. This will involve 2 packages: `bs4` (Beautiful Soup) and `json`.
 
