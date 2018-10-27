@@ -1,0 +1,52 @@
+<div class = "course" [class.fixed-height]="!showingMenu && !showingDescription" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
+	<div class="row flex-nowrap h-100 min-height">
+	  <div class="indicator-container" (click)="clickCourse(course)">
+	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered" ></div>
+	  </div>
+	  <div class="w-100 h-100 course-content position-relative min-height">
+		  <table (click)="clickCourse(course)" class="w-100">
+		  	<tr>
+		    	<div class="course-name">{{course.name}} 
+					</div>
+		  	</tr>
+	  	  <tr>
+	  	  	<div class= "course-details">{{subjectCode()}}   {{course.number}}</div>
+	      </tr>
+		    <tr >
+		    	<div class="course-details">{{creditRange}}</div>
+		    </tr>
+			</table>
+			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" placement="right" [ngbPopover]="course.description" container="body" triggers="mouseenter:mouseleave">
+				<img src="assets/images/info.svg" />
+			</span>
+			<span (click)="descriptionClick(course)" *ngIf="!showDescriptionTooltip" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription">
+				{{course.description}}
+			</span>
+			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
+				<span *ngIf="!showingMenu">
+					<i class="arrow down"></i>
+				</span>
+				<span *ngIf="showingMenu">
+					<i class="arrow up"></i>
+				</span>
+			</div>
+	  </div>
+  </div>
+  <div *ngIf="showingMenu" class = "position-relative">
+		<span class="period-days float-right">
+			<span class="padded">Mon</span>
+			<span class="padded">Tues</span>
+			<span class="padded">Wed</span>
+			<span class="padded">Thurs</span>
+			<span class="padded">Fri</span>
+		</span>
+		<div class = "position-relative">
+		<span class = "vertical-separators position-absolute tues"></span>
+  	<span class = "vertical-separators position-absolute thurs"></span>
+		  <div *ngFor="let theSection of course.sections; let i=index">
+		  	<div class="container" *ngIf="i!=0"><div class="col-auto separator"></div></div>
+			  <section [ngClass]="{ 'selected': isSectionSelected(theSection), 'closed': theSection.seats_taken >= theSection.seats, 'conflicts': doesConflict(theSection.id) }" [section]="theSection" (click)="clickSection(theSection)"></section>
+		  </div>
+		</div>
+	</div>
+</div>

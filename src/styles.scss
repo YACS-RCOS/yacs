@@ -12,10 +12,6 @@ body {
     font-weight: 300;
 }
 
-#content {
-    padding: 60px 15px 0px 15px;    
-}
-
 .theme-text {
   color: #ffffff;
 }
@@ -109,3 +105,7 @@ div.alert {
 .dropdown-item.active, .dropdown-item:active {
   background-color: #d57f7f !important;
 }
+
+// .course .row {
+//   flex-wrap: nowrap !important;
+// }

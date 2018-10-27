@@ -1,0 +1,117 @@
+@import "../../../_vars.scss";
+
+// @media (max-width: 575.98px) {
+//     section {
+//         flrx-wrap:
+//     }
+// }
+
+:host.conflicts>.section-information {
+    text-decoration: line-through;
+}
+.section-name {
+    font-weight: 400;
+    width: 1.2em;
+    text-align: right;
+    font-size: 90%;
+}
+
+.section-details {
+    text-align: center;
+    font-size: 90%;
+    width: 9em;
+    padding: 3px;
+}
+
+.section-periods {
+    font-size:80%;
+    display:inline-block;
+    margin-left:0em;
+    float:right;
+    height:100%;
+    white-space: nowrap;
+}
+
+.section-seats {
+    white-space: nowrap;
+}
+
+.period-time {
+    font-size: 90%;
+    width: 6em;
+}
+.period-day {
+    font-weight: 400;
+}
+
+div.conflict-note {
+    margin-left:0.4em;
+    display:inline;
+    color:#000;
+}
+:host:not(.conflicts)>div.conflict-note {
+    display:none;
+}
+span.conflict-img-center {
+    display:inline-block;
+    height:100%;
+    vertical-align:middle;
+}
+img.conflict-img {
+    display:inline-block;
+    vertical-align:middle;
+    width: 0.9em;
+}
+span.conflict-text {
+    font-size:75%;
+    color: #cf2c2c;
+}
+
+.highlight {
+    width: 1.3em;
+    background: #efefef;
+    width: 19.19px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 2px;
+}
+
+.highlight:hover {
+    background: $yacs_acc;
+}
+
+.highlight-selected {
+    background: $yacs_bgs;
+    color: white;
+    width: 19.19px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.highlight-selected:hover {
+    background: $yacs_acc;
+}
+
+.zero-margins {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.grey {
+    background: #efefef;
+    height: 100%;
+    border-right: #9b9b9b solid 1px;
+    border-left: #9b9b9b solid 1px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.align-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

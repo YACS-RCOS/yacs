@@ -1,2 +1,4 @@
 <div *ngIf="!isLoaded" class="loader"></div>
-<course-list [courses]="courses"></course-list>
+<div class="container">
+	<course *ngFor="let theCourse of courses" [course]="theCourse" [showDescription]="true"></course>
+</div>

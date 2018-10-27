@@ -1,42 +1,8 @@
 #### Core ####
 
-# Ignore bundler config.
-/core/.bundle
-
-# Ignore all logfiles and tempfiles.
-/core/log/*
-!/log/.keep
-/core/tmp
-
-# Ignore mac files
-**/.DS_Store
-.DS_Store
-
-# Ignore compiled assets
-/core/public/assets/*
-
-# Ignore caches pages
-/core/public/index.html
-/core/public/api/*
-
-# Ignore tern files
-/.tern-port
-
-/core/coverage/
-/core/data/**/
-
-/core/.env
-/core/errors.txt
-
-**/*.pem
-**/*.key
-
-
-#### Web ####
-
-# Web - compiled output
-/web/dist/core
-/web/tmp
+# compiled output
+/dist/core
+/tmp
 /out-tsc
 
 # dependencies
@@ -71,26 +37,9 @@
 /web/e2e/*.js
 /web/e2e/*.map
 
+# System Files
+.DS_Store
+Thumbs.db
+
 # todo: check this in when the build can handle it
-/web/package-lock.json
-
-
-#### Users ####
-
-# Ignore bundler config.
-/users/.bundle
-
-# Ignore the default SQLite database.
-/users/db/*.sqlite3
-/users/db/*.sqlite3-journal
-
-# Ignore all logfiles and tempfiles.
-/users/log/*
-/users/tmp/*
-!/users/log/.keep
-!/users/tmp/.keep
-
-/users/node_modules
-/users/yarn-error.log
-
-/users/.byebug_history
+package-lock.json

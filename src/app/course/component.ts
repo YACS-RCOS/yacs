@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
-import { Course } from '../../models/course.model';
-import { Section } from '../../models/section.model';
-import { SelectionService } from '../../services/selection.service'
-import { ConflictsService } from '../../services/conflicts.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Course } from '../models/course.model';
+import { Section } from '../models/section.model';
+import { ScheduleEvent } from '../models/schedule-event.model';
+import { Schedule } from '../models/schedule.model';
+import { SelectionService } from '../services/selection.service'
+import { ConflictsService } from '../services/conflicts.service'
 
 @Component({
   selector: 'course',
@@ -10,12 +12,24 @@ import { ConflictsService } from '../../services/conflicts.service';
   styleUrls: ['./component.scss'],
   host: { '[class.selected]': 'isCourseSelected()' }
 })
-export class CourseComponent {
+export class CourseComponent implements OnInit{
   @Input() course: Course;
+  @Input() showDescriptionTooltip: boolean = false;
+  @Input() showDescription: boolean = false;
 
   constructor(
-    private selectionService : SelectionService,
+    public selectionService : SelectionService,
     private conflictsService: ConflictsService) { }
+
+  public showingMenu;
+  public showingDescription;
+  public hovered;
+  
+  ngOnInit() {
+    this.showingMenu = false;
+    this.showingDescription = false;
+  }
+
   /* A getter function for the range of credits based on the min and max.
    * When {{creditRange}} is used in the template, this function will be called. */
   public get creditRange() {
@@ -62,5 +76,10 @@ export class CourseComponent {
 
   public doesConflict(secId: number) {
     return this.conflictsService.doesConflict(secId);
+  }
+
+  public descriptionClick(course : Course) {
+    this.selectionService.toggleCourse(course);
+    this.showingDescription= !(this.showingDescription);
   }
 }

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,9 +13,11 @@ import { NavUserComponent } from './header/nav-user/component';
 import { NoticeBarComponent } from './notice-bar/component';
 import { FooterComponent } from './footer/component';
 
+import { SidebarModule } from './sidebar/module';
 import { SchoolViewModule } from './school-view/module';
 import { CourseViewModule } from './course-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
+import { CourseModule } from './course/module';
 
 import { ConstantsService } from './services/constants';
 import { SelectionService } from './services/selection.service';
@@ -36,7 +38,9 @@ import { AboutComponent } from './about/component';
     NgbModule.forRoot(),
     SchoolViewModule,
     CourseViewModule,
-    ScheduleViewModule
+    ScheduleViewModule,
+    CourseModule,
+    SidebarModule
   ],
   declarations: [
     AppComponent,
