@@ -46,6 +46,6 @@ from galreq import gallatin_data
 from globals import *
 from jsontrans import format_data
 from main import run
-from data import get_data,fetch_data
+from get_new_data import get_data,fetch_data
 
 print('test.py was run successfully')
