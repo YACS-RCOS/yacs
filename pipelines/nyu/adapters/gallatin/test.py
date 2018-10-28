@@ -5,11 +5,23 @@ import warnings
 
 # Test script to make sure that everything is running according to plan
 
+# Getting/setting path vars
+try:
+	path = os.path.abspath(__file__) # Run the first time using python -i test.py
+except:
+	pass # if __file__ is undefined, then the script is being run in interpreter -
+	# 'path' should already be defined then
+dirname = os.path.dirname(path)
+src = os.path.join(dirname,'src')
+sys.path.append(src)
+
+# Setting convenience Global vars
+jst = os.path.join(src,'jsontrans.py') # shorthand for jsontrans module
+
 # Setting useful Global vars
 SERVER_URL = '127.0.0.1'
 PORT = 8080
 INDEX = ''
-JST = 'jsontrans.py'
 e = exec
 
 # Useful Utility Functions
@@ -27,15 +39,6 @@ def r(filename):
 	with open(filename,"r") as f:
 		txt = f.read()
 	return txt
-
-# Getting/setting path vars
-try:
-	path = os.path.abspath(__file__) # Run the first time using python -i test.py
-except:
-	pass # if __file__ is undefined, then the script is being run in interpreter -
-	# 'path' should already be defined then
-dirname = os.path.dirname(path)
-sys.path.append(os.path.join(dirname,'src'))
 
 # Getting Cython to chill out
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
