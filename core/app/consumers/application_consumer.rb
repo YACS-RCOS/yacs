@@ -1,3 +1,11 @@
+class Consumers
+  def self.consumer_for _term_shortname
+    dynamic_name = "ApplicationConsumer#{_term_shortname}"
+    Object.const_set(dynamic_name, Class.new(ApplicationConsumer))
+    eval("#{dynamic_name}")
+  end
+end
+
 class ApplicationConsumer < Karafka::BaseConsumer
   ALLOWED_TYPES = %w(school subject listing section).freeze
   ALLOWED_METHODS = %w(create update delete).freeze
@@ -5,7 +13,7 @@ class ApplicationConsumer < Karafka::BaseConsumer
     school: %i(longname uuid),
     # department: %i(shortname, longname, uuid, school_uuid)
     subject: %i(shortname longname uuid school_uuid),
-    listing: %i(shortname longname description min_credits max_credits uuid subject_uuid) <<
+    listing: %i(shortname longname description min_credits max_credits uuid subject_uuid subject_shortname) <<
       { required_textbooks: [], recommended_textbooks: [], tags: [] },
     section: %i(shortname crn seats seats_taken uuid listing_uuid instructors) <<
       { periods: %i(day start end type location) }
@@ -66,6 +74,7 @@ class ApplicationConsumer < Karafka::BaseConsumer
 
   def consume_listing
     listing = Listing.find_by uuid: @data[:uuid]
+    listing ||= Listing.find_by(term_id: @data[:term_id], course_id: @data[:course_id])
     listing.present? ? listing.update!(@data) : Listing.create!(@data)
   end
 
@@ -81,6 +90,11 @@ class ApplicationConsumer < Karafka::BaseConsumer
     safe_params.require(@type).permit(*ALLOWED_PARAMS[@type])
   end
 
+  def term_shortname
+    # self.class.name.match(/\d{6}/)[0]
+    topic.consumer_group.name
+  end
+
   def transform_school
   end
 
@@ -90,12 +104,13 @@ class ApplicationConsumer < Karafka::BaseConsumer
   end
 
   def transform_listing
-    subject = Subject.find_by!(uuid: @data[:subject_uuid]).id
+    subject = Subject.find_by!(shortname: @data[:subject_shortname]).id
     course = Course.where(subject: subject, shortname: @data[:shortname]).first_or_create
     @data[:course_id] = course.id
-    @data[:term_id] = Term.find_by(shortname: topic.consumer_group.name).id
+    @data[:term_id] = Term.find_by(shortname: term_shortname).id
     @data.delete :subject_uuid
     @data.delete :shortname
+    @data.delete :subject_shortname
   end
 
   def transform_section

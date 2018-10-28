@@ -11,12 +11,12 @@ class CourseResource < ApplicationResource
   end
 
   has_one :latest_listing, resource: ListingResource do
-    params do |hash|
-      hash[:filter][:latest] = true
-    end
+  	params do |hash|
+  		hash[:filter][:latest] = true
+  	end
   end
 
   def base_scope
-    Course.eager_load(:subject)
+  	Course.eager_load(:subject)
   end
 end
