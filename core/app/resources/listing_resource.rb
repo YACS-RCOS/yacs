@@ -25,6 +25,10 @@ class ListingResource < ApplicationResource
     @object.course.subject.shortname
   end
 
+  filter :latest, :boolean do
+    eq { |scope, value| scope.latest(value) }
+  end
+
   def base_scope
     Listing.eager_load({ course: :subject })
   end

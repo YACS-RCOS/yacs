@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181014011011) do
+ActiveRecord::Schema.define(version: 20181027185738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20181014011011) do
     t.text "description"
     t.integer "min_credits", null: false
     t.integer "max_credits", null: false
-    t.boolean "active", default: false, null: false
+    t.boolean "active", default: true, null: false
     t.jsonb "auto_attributes", default: "{}", null: false
     t.jsonb "override_attributes", default: "{}", null: false
     t.string "tags", default: [], null: false, array: true

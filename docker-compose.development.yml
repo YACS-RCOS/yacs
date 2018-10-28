@@ -47,7 +47,7 @@ services:
     volumes:
       - "./malg:/usr/src/app"
     environment:
-      - TERM_SHORTNAME=201809
+      - TERM_SHORTNAME=201809,201901
       - UNI_SHORTNAME
 
   notifications:
