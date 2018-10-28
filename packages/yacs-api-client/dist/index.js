@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var application_record_1 = require("./lib/application-record");
+exports.ApplicationRecord = application_record_1.ApplicationRecord;
 var term_1 = require("./lib/term");
 exports.Term = term_1.Term;
 var school_1 = require("./lib/school");
