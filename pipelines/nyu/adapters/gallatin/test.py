@@ -8,12 +8,13 @@ import warnings
 # Getting/setting path vars
 try:
 	path = os.path.abspath(__file__) # Run the first time using python -i test.py
+	dirname = os.path.dirname(path)
+	src = os.path.join(dirname,'src')
+	sys.path.append(src)
 except:
 	pass # if __file__ is undefined, then the script is being run in interpreter -
 	# 'path' should already be defined then
-dirname = os.path.dirname(path)
-src = os.path.join(dirname,'src')
-sys.path.append(src)
+
 
 # Setting convenience Global vars
 jst = os.path.join(src,'jsontrans.py') # shorthand for jsontrans module
@@ -46,6 +47,8 @@ from galreq import gallatin_data
 from globals import *
 from jsontrans import format_data
 from main import run
-from get_new_data import get_data,fetch_data
+import get_new_data
+from get_new_data import fetch_data,get_data
+get_new_data.dirname = dirname
 
 print('test.py was run successfully')
