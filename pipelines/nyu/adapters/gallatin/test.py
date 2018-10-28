@@ -31,10 +31,6 @@ def try_connect():
 	r = requests.get("{}:{}/{}".format(SERVER_URL,PORT,INDEX))
 	print(r.text)
 
-# Get test data as if you had connected to the Gallatin API
-def get_test_data():
-	return r('data/data.json')
-
 def r(filename):
 	with open(filename,"r") as f:
 		txt = f.read()
@@ -50,5 +46,6 @@ from galreq import gallatin_data
 from globals import *
 from jsontrans import format_data
 from main import run
+from data import get_data,fetch_data
 
 print('test.py was run successfully')
