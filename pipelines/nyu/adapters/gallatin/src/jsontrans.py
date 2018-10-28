@@ -8,10 +8,15 @@ def format_data(unformatted_json):
 	# TODO Figure out how to divide work
 	# between into pandas and json effectively
 	data = json.loads(unformatted_json)
+	data = to_list(data)
 
 	df = pd.from_json(unformatted_json)
 
 	return "FORMATTED_JSON_STRING"
+
+def to_list(raw_json):
+
+	return "json as a list of objects"
 
 def rename_attributes(unformatted_json):
 	# This will use exclusively the json package
