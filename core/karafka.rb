@@ -33,7 +33,7 @@ App.consumer_groups.draw do
   Term.find_each do |term|
     consumer_group term.shortname do
       topic "#{uni_shortname}.raw_records.#{term.shortname}" do
-        consumer Consumers.consumer_for(term.shortname)
+        consumer ApplicationConsumer
       end
     end
   end
