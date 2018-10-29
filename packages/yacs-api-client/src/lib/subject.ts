@@ -10,6 +10,7 @@ import { ApplicationRecord } from "./application-record";
 import { School } from "./school";
 import { Course } from "./course";
 
+@Model()
 export class Subject extends ApplicationRecord {
 	static jsonapiType = "subjects";
 

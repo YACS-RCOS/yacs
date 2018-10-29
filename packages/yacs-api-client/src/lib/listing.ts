@@ -11,6 +11,7 @@ import { Course } from "./course";
 import { Term } from "./term";
 import { Section } from "./section";
 
+@Model()
 export class Listing extends ApplicationRecord {
 	static jsonapiType = "listings";
 

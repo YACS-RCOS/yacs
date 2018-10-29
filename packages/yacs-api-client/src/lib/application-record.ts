@@ -6,7 +6,8 @@ import {
   HasMany
 } from "spraypaint"
 
+@Model()
 export class ApplicationRecord extends SpraypaintBase {
-  static baseUrl = "https://nightly.yacs.io"
+  static baseUrl = ""
   static apiNamespace = "/api/v6"
 }

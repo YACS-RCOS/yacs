@@ -9,6 +9,7 @@ import {
 import { ApplicationRecord } from "./application-record";
 import { Listing } from "./listing";
 
+@Model()
 export class Section extends ApplicationRecord {
 	static jsonapiType = "sections";
 
