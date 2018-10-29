@@ -51,6 +51,9 @@ var Section = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.BelongsTo()
     ], Section.prototype, "listing", void 0);
+    Section = __decorate([
+        spraypaint_1.Model()
+    ], Section);
     return Section;
 }(application_record_1.ApplicationRecord));
 exports.Section = Section;

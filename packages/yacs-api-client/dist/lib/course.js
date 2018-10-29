@@ -39,6 +39,9 @@ var Course = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.HasMany()
     ], Course.prototype, "listings", void 0);
+    Course = __decorate([
+        spraypaint_1.Model()
+    ], Course);
     return Course;
 }(application_record_1.ApplicationRecord));
 exports.Course = Course;

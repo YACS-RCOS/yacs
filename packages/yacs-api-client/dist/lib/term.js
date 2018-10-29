@@ -39,6 +39,9 @@ var Term = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.HasMany()
     ], Term.prototype, "listings", void 0);
+    Term = __decorate([
+        spraypaint_1.Model()
+    ], Term);
     return Term;
 }(application_record_1.ApplicationRecord));
 exports.Term = Term;

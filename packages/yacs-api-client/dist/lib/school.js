@@ -36,6 +36,9 @@ var School = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.HasMany()
     ], School.prototype, "subjects", void 0);
+    School = __decorate([
+        spraypaint_1.Model()
+    ], School);
     return School;
 }(application_record_1.ApplicationRecord));
 exports.School = School;

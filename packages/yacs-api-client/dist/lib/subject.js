@@ -42,6 +42,9 @@ var Subject = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.HasMany()
     ], Subject.prototype, "courses", void 0);
+    Subject = __decorate([
+        spraypaint_1.Model()
+    ], Subject);
     return Subject;
 }(application_record_1.ApplicationRecord));
 exports.Subject = Subject;

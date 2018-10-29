@@ -57,6 +57,9 @@ var Listing = /** @class */ (function (_super) {
     __decorate([
         spraypaint_1.HasMany()
     ], Listing.prototype, "sections", void 0);
+    Listing = __decorate([
+        spraypaint_1.Model()
+    ], Listing);
     return Listing;
 }(application_record_1.ApplicationRecord));
 exports.Listing = Listing;
