@@ -2,6 +2,11 @@ import requests # Python Packages
 import os
 import sys
 import warnings
+
+# Getting Cython to chill out
+warnings.filterwarnings("ignore", message="numpy.dtype size changed")
+warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
+
 import pandas as pd
 
 # Test script to make sure that everything is running according to plan
@@ -56,10 +61,6 @@ def pd_settings(max_cols = 0,max_rows = None,disp_width = None):
 
 def pd_reset():
 	return pd_settings(*PD_DEFAULTS)
-
-# Getting Cython to chill out
-warnings.filterwarnings("ignore", message="numpy.dtype size changed")
-warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
 
 # importing resources from local modules in file system
 print('Reloading packages...')
