@@ -7,10 +7,6 @@ class Section < ActiveRecord::Base
   after_save :update_conflicts!, if: :periods_changed?
   after_save :send_notification
 
-  def instructors
-    Instructor.where 'instructor_ids && ARRAY[?]', self.instructor_ids
-  end
-
   def send_notification
     SectionsResponder.new.call(self)
   end

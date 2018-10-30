@@ -26,6 +26,16 @@ class ListingResource < ApplicationResource
     @object.course.subject.shortname
   end
 
+  sort :course_shortname, :string do |scope, direction|
+    scope.order('courses.shortname asc')
+  end
+
+  filter :subject_id, :integer do
+    eq do |scope, value|
+      scope.where({ courses: { subject_id: value } })
+    end
+  end
+
   filter :latest, :boolean do
     eq { |scope, value| scope.latest(value) }
   end
