@@ -35,10 +35,10 @@ var Listing = /** @class */ (function (_super) {
     ], Listing.prototype, "active", void 0);
     __decorate([
         spraypaint_1.Attr()
-    ], Listing.prototype, "max_credits", void 0);
+    ], Listing.prototype, "maxCredits", void 0);
     __decorate([
         spraypaint_1.Attr()
-    ], Listing.prototype, "min_credits", void 0);
+    ], Listing.prototype, "minCredits", void 0);
     __decorate([
         spraypaint_1.Attr()
     ], Listing.prototype, "description", void 0);

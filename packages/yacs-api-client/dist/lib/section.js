@@ -21,6 +21,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var spraypaint_1 = require("spraypaint");
 var application_record_1 = require("./application-record");
+var Period = /** @class */ (function () {
+    function Period() {
+    }
+    return Period;
+}());
+exports.Period = Period;
 var Section = /** @class */ (function (_super) {
     __extends(Section, _super);
     function Section() {
@@ -29,25 +35,31 @@ var Section = /** @class */ (function (_super) {
     Section.jsonapiType = "sections";
     __decorate([
         spraypaint_1.Attr()
-    ], Section.prototype, "tags", void 0);
-    __decorate([
-        spraypaint_1.Attr()
     ], Section.prototype, "active", void 0);
     __decorate([
         spraypaint_1.Attr()
-    ], Section.prototype, "max_credits", void 0);
+    ], Section.prototype, "shortname", void 0);
     __decorate([
         spraypaint_1.Attr()
-    ], Section.prototype, "min_credits", void 0);
+    ], Section.prototype, "crn", void 0);
     __decorate([
         spraypaint_1.Attr()
-    ], Section.prototype, "description", void 0);
+    ], Section.prototype, "instructors", void 0);
     __decorate([
         spraypaint_1.Attr()
-    ], Section.prototype, "longname", void 0);
+    ], Section.prototype, "seats", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "seatsTaken", void 0);
     __decorate([
         spraypaint_1.Attr()
     ], Section.prototype, "uuid", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "periods", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Section.prototype, "conflictIds", void 0);
     __decorate([
         spraypaint_1.BelongsTo()
     ], Section.prototype, "listing", void 0);

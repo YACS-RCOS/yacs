@@ -14,3 +14,4 @@ var listing_1 = require("./lib/listing");
 exports.Listing = listing_1.Listing;
 var section_1 = require("./lib/section");
 exports.Section = section_1.Section;
+exports.Period = section_1.Period;

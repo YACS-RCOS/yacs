@@ -4,4 +4,4 @@ export { School } from "./lib/school";
 export { Subject } from "./lib/subject";
 export { Course	} from "./lib/course";
 export { Listing } from "./lib/listing";
-export { Section } from "./lib/section";
+export { Section, Period } from "./lib/section";

@@ -17,8 +17,8 @@ export class Listing extends ApplicationRecord {
 
 	@Attr() tags: string[]
 	@Attr() active: boolean
-	@Attr() max_credits: number
-	@Attr() min_credits: number
+	@Attr() maxCredits: number
+	@Attr() minCredits: number
 	@Attr() description: string
 	@Attr() longname: string
 	@Attr() uuid: string
