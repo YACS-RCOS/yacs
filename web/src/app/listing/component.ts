@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Course } from '../models/course.model';
-import { Section } from '../models/section.model';
+// import { Course } from '../models/course.model';
+import { Listing } from 'yacs-api-client';
+import { Section } from 'yacs-api-client';
 import { ScheduleEvent } from '../models/schedule-event.model';
 import { Schedule } from '../models/schedule.model';
 import { SelectionService } from '../services/selection.service'
@@ -12,12 +13,12 @@ import { ConflictsService } from '../services/conflicts.service'
   styleUrls: ['./component.scss'],
   host: { '[class.selected]': 'isCourseSelected()' }
 })
-export class CourseComponent implements OnInit{
-  @Input() course: Course;
+export class ListingComponent implements OnInit{
+  @Input() listing: Listing;
   @Input() showDescriptionTooltip: boolean = false;
   @Input() showDescription: boolean = false;
 
-  constructor(
+  constructor (
     public selectionService : SelectionService,
     private conflictsService: ConflictsService) { }
 
@@ -25,18 +26,15 @@ export class CourseComponent implements OnInit{
   public showingDescription;
   public hovered;
   
-  ngOnInit() {
+  ngOnInit () {
     this.showingMenu = false;
     this.showingDescription = false;
   }
 
-  /* A getter function for the range of credits based on the min and max.
-   * When {{creditRange}} is used in the template, this function will be called. */
-  public get creditRange() {
-    let minCredits = this.course.min_credits;
-    let maxCredits = this.course.max_credits;
+  public get creditRange () {
+    const minCredits = this.listing.minCredits;
+    const maxCredits = this.listing.maxCredits;
     let outstr = '';
-    let plural = true;
     if(minCredits !== maxCredits) {
       outstr = minCredits + '-' + maxCredits + ' credits';
     } else {
@@ -48,38 +46,28 @@ export class CourseComponent implements OnInit{
     return outstr;
   }
 
-  // TODO: This should just return course.department_code.
-  // That field needs to be added to the API
-  public subjectCode() {
-    if (this.course.sections && this.course.sections[0]) {
-      return this.course.sections[0].department_code;
-    } else {
-      return "";
-    }
+  public clickCourse () {
+    this.selectionService.toggleCourse(this.listing);
   }
 
-  public clickCourse(course : Course) {
-    this.selectionService.toggleCourse(course);
+  public isCourseSelected () {
+    return this.selectionService.hasSelectedSection(this.listing);
   }
 
-  public isCourseSelected() {
-    return this.selectionService.hasSelectedSection(this.course);
-  }
-
-  public isSectionSelected(section : Section) : boolean {
+  public isSectionSelected (section: Section): boolean {
     return this.selectionService.isSectionSelected(section);
   }
 
-  public clickSection(section : Section) {
+  public clickSection (section: Section): void {
     this.selectionService.toggleSection(section);
   }
 
-  public doesConflict(secId: number) {
-    return this.conflictsService.doesConflict(secId);
+  public doesConflict (section: Section): boolean {
+    return this.conflictsService.doesConflict(parseInt(section.id));
   }
 
-  public descriptionClick(course : Course) {
-    this.selectionService.toggleCourse(course);
+  public descriptionClick (): void {
+    // this.selectionService.toggleCourse(this.listing);
     this.showingDescription= !(this.showingDescription);
   }
 }

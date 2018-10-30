@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "keyofStringsOnly": true,
     "target": "es5",
     "types": [
       "jasmine"
@@ -15,10 +16,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "lib": [
-      "es2016",
-      "dom"
-    ],
+    "lib": ["es2017", "es7", "es6", "dom"],
     "module": "es2015"
   }
 }

@@ -15,9 +15,9 @@ import { FooterComponent } from './footer/component';
 
 import { SidebarModule } from './sidebar/module';
 import { SchoolViewModule } from './school-view/module';
-import { CourseViewModule } from './course-view/module';
+import { ListingViewModule } from './listing-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
-import { CourseModule } from './course/module';
+import { ListingModule } from './listing/module';
 
 import { ConstantsService } from './services/constants';
 import { SelectionService } from './services/selection.service';
@@ -37,9 +37,9 @@ import { AboutComponent } from './about/component';
     AppRouterModule,
     NgbModule.forRoot(),
     SchoolViewModule,
-    CourseViewModule,
+    ListingViewModule,
     ScheduleViewModule,
-    CourseModule,
+    ListingModule,
     SidebarModule
   ],
   declarations: [

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { YacsService } from '../../services/yacs.service';
 import { SelectionService } from '../../services/selection.service';
-import { Course } from '../../models/course.model';
+// import { Course } from '../../models/course.model';
+import { Term, Listing } from 'yacs-api-client';
 import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
@@ -14,9 +15,9 @@ import * as domtoimage  from 'dom-to-image';
 
 export class InterestedCoursesComponent implements OnInit {
 
-  courses : Course[] = [];
-  isLoaded : boolean = false;
-  private courseIds : Set<string>;
+  listings: Listing[] = [];
+  isLoaded: boolean = false;
+  private listingIds: Set<string>;
   private subscription;
 
   constructor (
@@ -28,19 +29,32 @@ export class InterestedCoursesComponent implements OnInit {
   }
 
   ngOnInit () {
-    this.courseIds = new Set<string>();
+    this.listingIds = new Set<string>();
     this.getCourses();
   }
 
-  public getCourses () : void {
-    this.selectionService.getSelectedCourseIds().forEach(this.courseIds.add, this.courseIds);
+  async getCourses (): Promise<void> {
+    this.selectionService.getSelectedCourseIds().forEach(this.listingIds.add, this.listingIds);
 
-    if (this.courseIds.size > 0) {
-      this.yacsService
-        .get('courses', { id: Array.from(this.courseIds).join(','), show_sections: true, show_periods: true })
-        .then((data) => {
-          this.courses = data['courses'] as Course[];
+    if (this.listingIds.size > 0) {
+      this.isLoaded = false;
+      const term = await Term.first();
+      Listing
+        .where({ id: Array.from(this.listingIds) })
+        .includes('sections')
+        .includes('sections.listing')
+        .includes('course')
+        .includes('course.subject')
+        .all().then((listings) => {
+          this.listings = listings.data;
+          this.isLoaded = true;
+          console.log(this.listings);
         });
+      // this.yacsService
+      //   .get('courses', { id: Array.from(this.courseIds).join(','), show_sections: true, show_periods: true })
+      //   .then((data) => {
+      //     this.courses = data['courses'] as Course[];
+      //   });
     }
   }
 }

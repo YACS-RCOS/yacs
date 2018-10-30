@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from './component';
 import { InterestedCoursesComponent } from './interested-courses/component';
 import { NotificationsComponent } from './notifications/component';
-import { CourseModule } from '../course/module';
-import { CourseComponent } from '../course/component';
+import { ListingModule } from '../listing/module';
+import { ListingComponent } from '../listing/component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     CommonModule,
-    CourseModule,
+    ListingModule,
     FormsModule,
     NgbModule
   ],

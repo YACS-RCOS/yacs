@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Section } from '../../models/section.model';
-import { Period } from '../../models/period.model';
+import { Section } from 'yacs-api-client';
+// import { Period } from '../../models/period.model';
 import { ConflictsService } from '../../services/conflicts.service';
 import { SelectionService } from '../../services/selection.service';
 
@@ -14,7 +14,7 @@ const SHORT_DAYS: string[] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 })
 export class SectionComponent {
   @Input() section: Section;
-  periods: Period[][];
+  periods: any[][];
 
   constructor(private conflictsService: ConflictsService, private selectionService: SelectionService) { }
 
@@ -22,7 +22,7 @@ export class SectionComponent {
     this.periods = this.constructPeriodsArray();
   }
 
-  public getDay(period: Period) : string {
+  public getDay(period: any) : string {
     return SHORT_DAYS[period.day];
   }
 
@@ -54,7 +54,7 @@ export class SectionComponent {
     return hour + minuteShow + ampm;
   }
 
-  public getHours(period: Period) : string {
+  public getHours(period: any) : string {
     return this.timeToString(period.start) + '-' + this.timeToString(period.end);
   }
 
@@ -66,7 +66,7 @@ export class SectionComponent {
     return this.selectionService.isSectionSelected(this.section);
   }
 
-  private constructPeriodsArray(): Period[][] {
+  private constructPeriodsArray(): any[][] {
     const periodsByDay = [Array(5)];
     this.section.periods.forEach(period => {
       if (period.day >= 1 && period.day <= 5) {
