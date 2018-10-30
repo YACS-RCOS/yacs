@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181027185738) do
+ActiveRecord::Schema.define(version: 20181030024112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,12 +33,6 @@ ActiveRecord::Schema.define(version: 20181027185738) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["job_id"], name: "index_crono_jobs_on_job_id", unique: true
-  end
-
-  create_table "instructors", force: :cascade do |t|
-    t.string "longname", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "listings", force: :cascade do |t|
@@ -80,7 +74,7 @@ ActiveRecord::Schema.define(version: 20181027185738) do
     t.uuid "uuid", null: false
     t.integer "listing_id", null: false
     t.jsonb "periods", default: "[]", null: false
-    t.integer "instructor_ids", default: [], null: false, array: true
+    t.string "instructors", default: [], null: false, array: true
     t.index ["uuid"], name: "index_sections_on_uuid"
   end
 

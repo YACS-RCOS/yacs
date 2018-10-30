@@ -9,6 +9,6 @@ class SectionResource < ApplicationResource
   attribute :seats_taken, :integer
   attribute :conflict_ids, :array
   attribute :periods, :array
-  attribute :instructor_ids, :array
+  attribute :instructors, :array
   attribute :listing_id, :integer, only: [:filterable]
 end
