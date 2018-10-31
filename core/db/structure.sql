@@ -19,15 +19,14 @@
  */
 
 /* @1/3/18 - Function to compute all conflicting sections
+ * @10/30/18 - Updated to only compare sections in the same term
  * @author Ada Young
  * @param section_id [integer] id of the section in question
  * @return [integer[]] an array containing the ids of any sections that confict
  *   with the section given by `section_id`
  */
-CREATE OR REPLACE FUNCTION COMPUTE_CONFLICT_IDS (section_id INTEGER) RETURNS INTEGER ARRAY AS $$
 DECLARE
-  -- i INTEGER := 0;
-  -- j INTEGER := 0;
+  this_term_id INTEGER;
   this_section RECORD;
   other_section RECORD;
   this_section_period jsonb;
@@ -35,8 +34,17 @@ DECLARE
   conflict_ids INTEGER[] := '{}';
   conflict_found BOOLEAN;
 BEGIN
+  SELECT terms.id INTO this_term_id FROM terms
+    INNER JOIN listings ON listings.term_id = terms.id
+    INNER JOIN sections ON sections.listing_id = listings.id
+    WHERE sections.id = section_id;
   SELECT * INTO this_section FROM sections WHERE sections.id = section_id;
-  FOR other_section IN SELECT * FROM sections WHERE sections.listing_id != this_section.listing_id
+  FOR other_section IN
+    SELECT * FROM sections
+      INNER JOIN listings ON listings.id = sections.listing_id
+      INNER JOIN terms ON terms.id = listings.term_id
+      WHERE sections.listing_id != this_section.listing_id
+      AND terms.id = this_term_id
   LOOP
     conflict_found := 'false';
     FOR this_section_period IN SELECT * FROM jsonb_array_elements(this_section.periods) LOOP
@@ -51,22 +59,6 @@ BEGIN
       END LOOP;
     END LOOP;
   END LOOP;
-  --   i := 1;
-  --   WHILE i <= this_section.num_periods AND conflict_found = 'false' LOOP
-  --     j := 1;
-  --     WHILE j <= other_section.num_periods AND conflict_found = 'false' LOOP
-  --       IF (this_section.periods_day[i] this_section.periods::json->'{i,day}' = other_section.periods_day[j]
-  --         AND ((this_section.periods_start[i] <= other_section.periods_start[j] AND this_section.periods_end[i] > other_section.periods_start[j])
-  --         OR (this_section.periods_start[i] >= other_section.periods_start[j] AND this_section.periods_start[i] < other_section.periods_end[j])))
-  --       THEN
-  --         conflict_ids := conflict_ids || other_section.id;
-  --         conflict_found := 'true';
-  --       END IF;
-  --       j := j + 1;
-  --     END LOOP;
-  --     i := i + 1;
-  --   END LOOP;
-  -- END LOOP;
   RETURN conflict_ids;
 END;
 $$ LANGUAGE plpgsql;
