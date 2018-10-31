@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181030024112) do
+ActiveRecord::Schema.define(version: 20181031001113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,10 @@ ActiveRecord::Schema.define(version: 20181030024112) do
     t.uuid "uuid", null: false
     t.index ["shortname"], name: "index_subjects_on_shortname", unique: true
     t.index ["uuid"], name: "index_subjects_on_uuid"
+  end
+
+  create_table "term_id", id: false, force: :cascade do |t|
+    t.bigint "id"
   end
 
   create_table "terms", force: :cascade do |t|
