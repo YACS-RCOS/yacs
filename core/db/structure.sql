@@ -25,6 +25,7 @@
  * @return [integer[]] an array containing the ids of any sections that confict
  *   with the section given by `section_id`
  */
+CREATE OR REPLACE FUNCTION COMPUTE_CONFLICT_IDS (section_id INTEGER) RETURNS INTEGER ARRAY AS $$
 DECLARE
   this_term_id INTEGER;
   this_section RECORD;

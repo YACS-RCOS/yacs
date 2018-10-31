@@ -89,10 +89,6 @@ ActiveRecord::Schema.define(version: 20181031001113) do
     t.index ["uuid"], name: "index_subjects_on_uuid"
   end
 
-  create_table "term_id", id: false, force: :cascade do |t|
-    t.bigint "id"
-  end
-
   create_table "terms", force: :cascade do |t|
     t.string "shortname", null: false
     t.string "longname", null: false
