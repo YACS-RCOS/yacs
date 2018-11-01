@@ -137,7 +137,7 @@ i {
 
 .hideDescription {
   display:flex;
-  font-size:87%;
+  font-size:95%;
   text-align: justify;
   color: #969696;
   margin-top: -3.2em;
@@ -155,7 +155,7 @@ i {
 
 .showDescription {
   display:flex;
-  font-size:87%;
+  font-size:95%;
   text-align: justify;
   margin-top: -3.2em;
   margin-left: 8em;
@@ -212,6 +212,10 @@ section.closed, section.closed:hover {
   background: $yacs_bgs;
 }
 
+.indicator-selected-hover {
+  background: $yacs_acc;
+}
+
 .indicator-unselected {
   background: #efefef;
 }
@@ -222,7 +226,7 @@ section.closed, section.closed:hover {
 }
 
 .indicator-hover {
-  background: $yacs_acc;
+  background: #969696;
 }
 
 .zero-margins {
@@ -232,4 +236,31 @@ section.closed, section.closed:hover {
 
 .full-width {
   width: 100%;
+}
+
+.arrow-container {
+  padding-left: 1em;
+  padding-right: 1em;
+  height: 1.5em;
+}
+
+.down-arrow:hover {
+  animation: shake 0.3s; 
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(2px, 0, 0);
+  }
 }
