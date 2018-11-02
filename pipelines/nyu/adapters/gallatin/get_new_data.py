@@ -5,6 +5,8 @@ import os
 dirname = None
 datadir = None
 
+# File with utility functions for testing the gallatin adapter
+
 def get_datadir():
 	global dirname,datadir
 	if dirname is None:
@@ -20,14 +22,19 @@ def get_data(filename = 'data.json'):
 	return txt
 
 def fetch_data(query, filename = "data.json"):
+	print("Getting file information...")
 	datadir = get_datadir()
 	try:
 		os.mkdir(datadir)
 	except:
 		pass
 
+	print("Getting information from server...")
 	r = requests.get(API_URL+'?'+query)
 	if filename is not None:
+		print('Opening output file...')
 		with open(os.path.join(datadir,filename),"w") as f:
 			f.write(r.text)
-	return r.text
+		print(f'wrote to \'{filename}\'')
+	else:
+		return r.text
