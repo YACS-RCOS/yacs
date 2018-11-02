@@ -1,22 +1,47 @@
 import pandas as pd
 import json
 
-SUBJECTS = None # TODO extract all the subject names and make them into a list for easier access
+SUBJECTS = ['Interdisciplinary Seminars (IDSEM-UG)',
+       'Advanced Writing Courses (WRTNG-UG)', 'Arts Workshops (ARTS-UG)',
+       'Individualized Projects  (INDIV-UG)',
+       'Global Programs (INDIV-UG)',
+       'First-Year Program: Writing Seminars (FIRST-UG)',
+       'Global Programs (PRACT-UG)', 'Graduate Core (CORE-GG)',
+       'Leaves and Sabbaticals (LEAVE-XX)',
+       'Graduate Electives (ELEC-GG)', 'Global Programs (WRTNG-UG)',
+       'First-Year Program: Interdisciplinary Seminars (FIRST-UG)',
+       'Global Programs (SASEM-UG)', 'Travel Courses  (TRAVL-UG)',
+       'Individualized Projects  (INDIV-GG)',
+       'Global Programs (IDSEM-UG)', 'Practicum (PRACT-UG)',
+       'Colloquium (COLLQ-UG)',
+       'First-Year Program: Transfer Student Research Seminar (FIRST-UG)',
+       'Community Learning Courses (CLI-UG)']
+	   # TODO extract all the subject names and make them into a list for easier access
+SUBJECTS_LONG = ['Interdisciplinary Seminars', 'Advanced Writing Courses',
+				'Arts Workshops', 'Individualized Projects ', 'Global Programs',
+				'First-Year Program: Writing Seminars', 'Global Programs',
+				'Graduate Core', 'Leaves and Sabbaticals', 'Graduate Electives',
+				'Global Programs', 'First-Year Program: Interdisciplinary Seminars',
+				'Global Programs', 'Travel Courses ', 'Individualized Projects ',
+				'Global Programs', 'Practicum', 'Colloquium',
+				'First-Year Program: Transfer Student Research Seminar',
+				'Community Learning Courses']
 
+SUBJECTS_SHORT = ['IDSEM', 'WRTNG', 'ARTS', 'INDIV',
+				'INDIV', 'FIRST', 'PRACT', 'CORE',
+				'LEAVE', 'ELEC', 'WRTNG', 'FIRST',
+				'SASEM', 'TRAVL', 'INDIV', 'IDSEM',
+				'PRACT', 'COLLQ', 'FIRST', 'CLI']
+
+SUBJECT_IS_UG = [True, True, True, True, True, True,
+				True, False, False, False, True, True,
+				True, True, False, True, True, True, True, True]
 
 def format_data(unformatted_json):
 	# This function takes in a JSON string in the API's format
 	# and returns a JSON string in Yacs format
 
-	# TODO Figure out how to divide work
-	# between into pandas and json effectively
-	# data = load(unformatted_json)
-	# del data['totalMatches']
-
-	# Read in data, and drop the 'totalMatches' row
-	df = pd.read_json(unformatted_json, orient = 'index') # Read in data
-	df = df.drop('totalMatches',axis=0) # Drop 'totalMatches'
-	df.index = pd.to_numeric(df.index) # Reformat index
+	df = get_df(unformatted_json)
 
 	# For testing purposes only
 	df['description'] = df['description'].str[0]
@@ -27,9 +52,17 @@ def format_data(unformatted_json):
 
 	# Original
 	# Index(['course', 'credit', 'days', 'days2', 'description',
-    #    'foundation-libarts', 'instructors', 'level', 'notes', 'section',
-    #    'term', 'times', 'title', 'type', 'year'],
-    #   dtype='object')
+	#    'foundation-libarts', 'instructors', 'level', 'notes', 'section',
+	#    'term', 'times', 'title', 'type', 'year'],
+	#   dtype='object')
+	# https://stackoverflow.com/questions/40470954/convert-pandas-dataframe-to-nested-json
+	# https://stackoverflow.com/questions/46205399/how-to-generate-n-level-hierarchical-json-from-pandas-dataframe
+	j = (df.groupby(['ID','Location','Country','Latitude','Longitude'], as_index=False)
+	     .apply(lambda x: x[['timestamp','tide']].to_dict('r'))
+		.reset_index()
+         .rename(columns={0:'Tide-Data'})
+         .to_json(orient='records'))
+
 
 
 	# Desired
@@ -39,7 +72,7 @@ def format_data(unformatted_json):
 	# 	"listings": [
 	# 			{
 	# 				"shortname": "1485","longname": "FullCourseName","min_credits": 4,"max_credits": 4,
-	# 				"description": "This course covers the very basic techniques of photography and digital imaging. Beyond Picture Perfect explores the many choices available to today\u2019s image makers. New technology combined with traditional photographic techniques will be addressed, enabling the students to realize their distinctive image-making vocabulary..."
+	# 				"description": "Course desc"
 	# 				"sections": [
 	# 					"shortname": "001",
 	# 					"periods": [
@@ -63,6 +96,14 @@ def format_data(unformatted_json):
 	# data = {'schools':[gallatin]}
 	# return json.dumps(data)
 
+def get_df(raw_json):
+	# Read in data, and drop the 'totalMatches' row
+	df = pd.read_json(raw_json, orient = 'index') # Read in data
+	df = df.drop('totalMatches',axis=0) # Drop 'totalMatches'
+	df.index = pd.to_numeric(df.index) # Reformat index
+	return df
+
+# Below functions probably no longer useful
 def _shorten_desc(json_obj):
 	if 'course' in json_obj:
 		del json_obj['description']
