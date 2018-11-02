@@ -8,7 +8,7 @@ Task| Name				| Package(s)		| Description
 :---| :---				| :---				| :---
 1	| Webpage Parsing	| `requests`		| Connecting to and querying the site
 2 	| HTML Parsing		| `bs4`,`json`		| Converting the HTML into usable JSON using Beautiful Soup
-3 	| JSON Conversion	| `json`,`pandas`	| Converting JSON into a Yacs-readable format
+3 	| JSON Conversion	| `json`			| Converting JSON into a Yacs-readable format
 4 	| Sending JSON		| `http`			| Sending formatted JSON to Yacs
 
 ### File Structure
@@ -26,7 +26,30 @@ Task| Name				| Package(s)		| Description
 We'll use the following standard functions:
 
 ```python
-#TODO Decide these
+
+# Task 1
+def get_page(term, year, subject):
+	# term is a string, year is an integer, and subject
+	# is a string
+	# Returns HTML from formatted GET request
+	# Using these parameters
+	return "RAW_HTML"
+
+# Task 2
+def get_records(raw_html):
+	#input is raw HTML (string)
+	# Yields a dictionary with all the data for a record
+	yield "ENTRY_DICT"
+
+# Task 3
+def append_data(subject_dict, entry_dict):
+	# subject_dict and entry_dict are both dictionaries
+	# Uses information stored in the entry_dict to
+	# update the subject_dict
+	# i.e. adding entries
+	return None
+
+
 ```
 
 [course-search]: https://sis.nyu.edu/psc/csprod/EMPLOYEE/SA/c/NYU_SR.NYU_CLS_SRCH.GBL
