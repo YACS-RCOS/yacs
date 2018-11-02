@@ -2,6 +2,7 @@ import requests # Python Packages
 import os
 import sys
 import warnings
+from importlib import reload
 
 # Getting Cython to chill out
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
@@ -62,17 +63,35 @@ def pd_settings(max_cols = 0,max_rows = None,disp_width = None):
 def pd_reset():
 	return pd_settings(*PD_DEFAULTS)
 
-# importing resources from local modules in file system
-print('Reloading packages...')
+# Updating local modules
+try:
+	get_new_data.dirname = dirname # This will throw a exception unless we've already loaded the packages once
+	print('Reloading packages...')
+	reload(apitrans)
+	reload(galreq)
+	reload(globals)
+	reload(jsontrans)
+	reload(get_new_data)
+	reload(main)
+except:
+	print('Loading packages...')
+	import apitrans
+	import galreq
+	import globals
+	import jsontrans
+	import main
+	import get_new_data
+	get_new_data.dirname = dirname
+
+# Importing resources from modules into workspace
 from apitrans import get_query
 from galreq import gallatin_data
 from globals import *
 from jsontrans import format_data
 from main import run
-import get_new_data
 from get_new_data import fetch_data,get_data
-get_new_data.dirname = dirname
 
 print('Setting display settings...')
-pd_settings(0,None,50)
+pd_settings(0,10,50)
+
 print('test.py was run successfully')
