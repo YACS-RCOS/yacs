@@ -1,3 +1,6 @@
 <div class="container">
+    <div class="schedule-status">
+    	{{statusText}}
+    </div>
 	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true"></course>
 </div>
