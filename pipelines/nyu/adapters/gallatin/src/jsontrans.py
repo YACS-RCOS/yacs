@@ -39,6 +39,8 @@ cols = ['COURSE', # ARTS-UG1275
 'YEAR'] # Integer
 
 def append_subjects(subject_list,df):
+	# https://pandas.pydata.org/pandas-docs/stable/groupby.html#iterating-through-groups
+	# Use groupby for efficiency
 	subject_shortnames = df['subject_shortname'].unique()
 	for shortname in subject_shortnames:
 		currentdf = df[df['subject_shortname'] == shortname]
@@ -48,8 +50,15 @@ def append_subjects(subject_list,df):
 		listings = []
 		append_sections(listings,currentdf)
 		sub_dict['listings'] = listings
+		subject_list.append(sub_dict)
 
 def append_sections(listings, df):
+	section_shortnames = df['course_shortname'].unique()
+	for shortname in section_shortnames:
+		currentdf = df[df['course_shortname'] == shortname] # This is inefficient
+		# There's only like 1 row per section basically
+		section_dict = {}
+
 	# Adds the row data to the subjects dictionary
 	pass
 
@@ -57,8 +66,6 @@ def append_periods(subjects,df):
 	pass
 
 # Desired
-# {
-# 	"shortname": "ARTS-UG","longname": "Arts Workshops",
 # 	"listings": [
 # 			{
 # 				"shortname": "1485","longname": "FullCourseName","min_credits": 4,"max_credits": 4,
@@ -77,7 +84,6 @@ def append_periods(subjects,df):
 # 		"listings": [
 # 			...
 # 		]
-# 	}
 
 def get_df(raw_json):
 # Read in data, and do some simple formatting
@@ -131,6 +137,6 @@ def format_df(df):
 
 	# Sort df so that we can directly append to list
 	# Group by type first, then within each type group by course name
-	df = df.sort_values(['subject_longname','course_shortname'])
+	df = df.sort_values(['subject_shortname','course_shortname'])
 	df = df.reset_index(drop=True)
 	return df
