@@ -12,10 +12,6 @@ def format_data(unformatted_json):
 	df = get_df(unformatted_json) # Get a pandas dataframe to do operations on
 	df = format_df(df)
 	global subject_list
-
-
-
-
 	gallatin = {'longname': 'Gallatin','shortname': 'gallatin','subjects':subject_list}
 	data = {'schools':[gallatin]}
 	return json.dumps(data)
@@ -41,22 +37,19 @@ cols = ['COURSE', # ARTS-UG1275
 def append_subjects(subject_list,df):
 	# https://pandas.pydata.org/pandas-docs/stable/groupby.html#iterating-through-groups
 	# Use groupby for efficiency
-	subject_shortnames = df['subject_shortname'].unique()
-	for shortname in subject_shortnames:
-		currentdf = df[df['subject_shortname'] == shortname]
+	grp_by_subject = df.groupby('subject_shortname')
+	for shortname, group in grp_by_subject:
 		sub_dict = {}
 		sub_dict['subject_shortname'] = shortname
-		sub_dict['subject_longname'] = currentdf['subject_longname'][0]
+		sub_dict['subject_longname'] = group['subject_longname'][0]
 		listings = []
 		append_sections(listings,currentdf)
 		sub_dict['listings'] = listings
 		subject_list.append(sub_dict)
 
 def append_sections(listings, df):
-	section_shortnames = df['course_shortname'].unique()
-	for shortname in section_shortnames:
-		currentdf = df[df['course_shortname'] == shortname] # This is inefficient
-		# There's only like 1 row per section basically
+	grp_by_section = df.groupby('course_shortname')
+	for shortname, group in grp_by_section:
 		section_dict = {}
 
 	# Adds the row data to the subjects dictionary
