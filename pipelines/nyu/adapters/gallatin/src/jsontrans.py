@@ -51,32 +51,24 @@ def append_sections(listings, df):
 	grp_by_section = df.groupby('course_shortname')
 	for shortname, group in grp_by_section:
 		section_dict = {}
-
-	# Adds the row data to the subjects dictionary
-	pass
+		section_dict['shortname'] = shortname
+		section_dict['longname'] = group['title'][0]
+		section_dict['min_credits'] = group['credit'][0]
+		section_dict['max_credits'] = group['credit'][0]
+		section_dict['description'] = group['description'][0]
+		sections = []
 
 def append_periods(subjects,df):
 	pass
 
 # Desired
-# 	"listings": [
-# 			{
-# 				"shortname": "1485","longname": "FullCourseName","min_credits": 4,"max_credits": 4,
-# 				"description": "Course desc"
+
 # 				"sections": [
 # 					"shortname": "001",
 # 					"periods": [
 # 						{...}
 # 					]
 # 				]
-# 			}
-# 		]
-# 	},
-# 	{
-# 		"shortname": "IDSEM-UG","longname": "Interdisciplinary Seminars",
-# 		"listings": [
-# 			...
-# 		]
 
 def get_df(raw_json):
 # Read in data, and do some simple formatting
@@ -123,7 +115,7 @@ def format_df(df):
 
 	# Replace course with 'subject_shortname' and 'course_id'
 	# Change course into course shortname and course id
-	course_parts = df['course'].str.split(r'(?<=[A-Z])(?=[0-9])',n=1,expand=True)
+	course_parts = df['course'].str.split(r'(?<=[A-Z])G(?=[0-9])',n=1,expand=True)
 	df['subject_shortname'] = course_parts[0]
 	df['course_shortname'] = course_parts[1] # Coerce to numeric?
 	df = df.drop('course',axis = 1)
