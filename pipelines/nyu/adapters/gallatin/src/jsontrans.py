@@ -16,24 +16,7 @@ def format_data(unformatted_json):
 	data = {'schools':[gallatin]}
 	return json.dumps(data)
 
-cols = ['COURSE', # ARTS-UG1275
-'CREDIT', # 4
-'DAYS', # Wed
-'DAYS2', # Fri
-'DESCRIPTION', # Text...
-'HISTCULT',
-'LIBARTS',
-'INSTRUCTORS', # [{'name':'website'}]
-'LEVEL', # U or G
-'NOTES', # Extra text
-'SECTION', # number
-'TERM', # FA, SU, WI, or SP
-'TIMES', # Time String
-'TIMES2', # Time String
-'TITLE', # Course Title
-'TYPE', # Arts Workshops (ARTS-UG)
-'YEAR'] # Integer
-
+# Maybe improve this in the future using a list comprehension?
 def append_subjects(subject_list,df):
 	# https://pandas.pydata.org/pandas-docs/stable/groupby.html#iterating-through-groups
 	# Use groupby for efficiency
@@ -56,19 +39,49 @@ def append_sections(listings, df):
 		section_dict['min_credits'] = group['credit'][0]
 		section_dict['max_credits'] = group['credit'][0]
 		section_dict['description'] = group['description'][0]
-		sections = []
+		section = {}
+		section['shortname'] = shortname
+		section['crn'] = shortname
+		periods = []
+		append_periods(periods,group)
+		section['periods'] = periods
+		section_dict['sections'] = [section]
+		listings.append(section_dict)
 
-def append_periods(subjects,df):
+def append_periods(periods,df):
+	days = df['days'][0]
+	days2 = df['days2'][0]
+	times = df['times'][0]
+	times2 = df['times2'][0]
 	pass
 
-# Desired
+cols = ['COURSE', # ARTS-UG1275
+'CREDIT', # 4
+'DAYS', # Wed
+'DAYS2', # Fri
+'DESCRIPTION', # Text...
+'HISTCULT',
+'LIBARTS',
+'INSTRUCTORS', # [{'name':'website'}]
+'LEVEL', # U or G
+'NOTES', # Extra text
+'SECTION', # number
+'TERM', # FA, SU, WI, or SP
+'TIMES', # Time String
+'TIMES2', # Time String
+'TITLE', # Course Title
+'TYPE', # Arts Workshops (ARTS-UG)
+'YEAR'] # Integer
 
-# 				"sections": [
-# 					"shortname": "001",
-# 					"periods": [
-# 						{...}
-# 					]
-# 				]
+# "periods": [ // optional, but needed for scheduling
+#   {
+# 	"day": 1, // required, day of week (Sunday = 0, Saturday = 6)
+# 	"start": "1200", // required, start time (24hr)
+# 	"end": "1450", // required, end time (24hr)
+# 	"type": "lecture" // optional, but please be consistent in naming if used
+# 	"location": "DCC 328" // optional, but please abbreviate if used
+#   }
+# ]
 
 def get_df(raw_json):
 # Read in data, and do some simple formatting
