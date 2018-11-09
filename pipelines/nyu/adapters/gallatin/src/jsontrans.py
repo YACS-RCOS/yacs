@@ -10,15 +10,50 @@ def format_data(unformatted_json):
 	# This function takes in a JSON string in the API's format
 	# and returns a JSON string in Yacs format
 	df = get_df(unformatted_json) # Get a pandas dataframe to do operations on
-
+	df = format_df(df)
 	global subject_list
-
-
-
-
 	gallatin = {'longname': 'Gallatin','shortname': 'gallatin','subjects':subject_list}
 	data = {'schools':[gallatin]}
 	return json.dumps(data)
+
+# Maybe improve this in the future using a list comprehension?
+def append_subjects(subject_list,df):
+	# https://pandas.pydata.org/pandas-docs/stable/groupby.html#iterating-through-groups
+	# Use groupby for efficiency
+	grp_by_subject = df.groupby('subject_shortname')
+	for shortname, group in grp_by_subject:
+		sub_dict = {}
+		sub_dict['subject_shortname'] = shortname
+		sub_dict['subject_longname'] = group['subject_longname'][0]
+		listings = []
+		append_sections(listings,currentdf)
+		sub_dict['listings'] = listings
+		subject_list.append(sub_dict)
+
+def append_sections(listings, df):
+	grp_by_section = df.groupby('course_shortname')
+	for shortname, group in grp_by_section:
+		section_dict = {}
+		section_dict['shortname'] = shortname
+		section_dict['longname'] = group['title'][0]
+		section_dict['min_credits'] = group['credit'][0]
+		section_dict['max_credits'] = group['credit'][0]
+		section_dict['description'] = group['description'][0]
+		section = {}
+		section['shortname'] = shortname
+		section['crn'] = shortname
+		periods = []
+		append_periods(periods,group)
+		section['periods'] = periods
+		section_dict['sections'] = [section]
+		listings.append(section_dict)
+
+def append_periods(periods,df):
+	days = df['days'][0]
+	days2 = df['days2'][0]
+	times = df['times'][0]
+	times2 = df['times2'][0]
+	pass
 
 cols = ['COURSE', # ARTS-UG1275
 'CREDIT', # 4
@@ -38,46 +73,15 @@ cols = ['COURSE', # ARTS-UG1275
 'TYPE', # Arts Workshops (ARTS-UG)
 'YEAR'] # Integer
 
-match_global = re.compile('^Global')
-
-def should_include(row):
-	# Returns true if the row should be included in the final output
-	if match_global.match(row[index['type']]) is None:
-		return True
-	return False
-
-def append_subject(subjects,df):
-	pass
-
-def append_section(subjects, df):
-	# Adds the row data to the subjects dictionary
-	pass
-
-def append_period(subjects,df):
-	pass
-
-# Desired
-# {
-# 	"shortname": "ARTS-UG","longname": "Arts Workshops",
-# 	"listings": [
-# 			{
-# 				"shortname": "1485","longname": "FullCourseName","min_credits": 4,"max_credits": 4,
-# 				"description": "Course desc"
-# 				"sections": [
-# 					"shortname": "001",
-# 					"periods": [
-# 						{...}
-# 					]
-# 				]
-# 			}
-# 		]
-# 	},
-# 	{
-# 		"shortname": "IDSEM-UG","longname": "Interdisciplinary Seminars",
-# 		"listings": [
-# 			...
-# 		]
-# 	}
+# "periods": [ // optional, but needed for scheduling
+#   {
+# 	"day": 1, // required, day of week (Sunday = 0, Saturday = 6)
+# 	"start": "1200", // required, start time (24hr)
+# 	"end": "1450", // required, end time (24hr)
+# 	"type": "lecture" // optional, but please be consistent in naming if used
+# 	"location": "DCC 328" // optional, but please abbreviate if used
+#   }
+# ]
 
 def get_df(raw_json):
 # Read in data, and do some simple formatting
@@ -87,7 +91,7 @@ def get_df(raw_json):
 	df['description'] = df['description'].str[0:5]
 	# Drop useless columns
 	df = df.drop(['syllabus', 'term','year','level'],axis = 1)
-	# Drop  these two columns because they're annoying and IDK what to do with them
+	# Drop these two columns because they're annoying and IDK what to do with them
 	for name in ['foundation-histcult','foundation-libarts']:
 		if name in df.columns:
 			df = df.drop(name,axis = 1)
@@ -95,15 +99,17 @@ def get_df(raw_json):
 	df = df.drop('totalMatches',axis=0)
 	# To make it easier to work with, remove empty strings, None, and the like
 	df = df.replace(r'^\s*$',pd.np.nan,regex=True).fillna(value=pd.np.nan)
+	# Reset index to integers (so that formatting doesn't screw up randomly)
+	df = df.reset_index(drop=True)
+	return df
 
+def format_df(df):
 # Filter out global courses
 	# Preformats a series to be used for filtering
 	type_col = df['type'].str.strip().str.lower()
 	# Filter out those global courses using a mask
 	df = df[type_col.str.startswith('global') == False]
 	del type_col # No longer need the series
-	# Reset index to integers (so that formatting doesn't screw up randomly)
-	df = df.reset_index(drop=True)
 
 # Format columns
 
@@ -116,28 +122,19 @@ def get_df(raw_json):
 	df = df.drop('type',axis = 1)
 	del type_parts # we don't need this anymore
 
+	# Remove 'LEAVE-XX11' - It's not a class
+	leave_course_mask = df['course'] != 'LEAVE-XX11'
+	df = df[leave_course_mask]
+
 	# Replace course with 'subject_shortname' and 'course_id'
 	# Change course into course shortname and course id
-	course_parts = df['course'].str.split(r'(?<=[A-Z])(?=[0-9])',n=1,expand=True)
+	course_parts = df['course'].str.split(r'(?<=[A-Z])G(?=[0-9])',n=1,expand=True)
 	df['subject_shortname'] = course_parts[0]
-	df['course_shortname'] = course_parts[1]
-
-
-	# making seperate first name column from new data frame
-	data["First Name"]= new[0]
-
-	# making seperate last name column from new data frame
-	data["Last Name"]= new[1]
-
-	# Dropping old Name columns
-	data.drop(columns =["Name"], inplace = True)
-
-
-
-
+	df['course_shortname'] = course_parts[1] # Coerce to numeric?
+	df = df.drop('course',axis = 1)
 
 	# Sort df so that we can directly append to list
 	# Group by type first, then within each type group by course name
-	df = df.sort_values(['type','course'])
-
+	df = df.sort_values(['subject_shortname','course_shortname'])
+	df = df.reset_index(drop=True)
 	return df

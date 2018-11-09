@@ -4,11 +4,11 @@ Building our web-scraper will involve the following tasks:
 Task| Name				| Package(s)		| Description
 :---| :---				| :---				| :---
 1	| Webpage Parsing	| `requests`		| Connecting to and querying the site
-2 	| HTML Parsing		| `bs4`,`json`		| Converting the HTML into usable JSON using Beautiful Soup
-3 	| JSON Conversion	| `json`,`pandas`	| Converting JSON into a Yacs-readable format
-4 	| Serving JSON		| `http`,`pandas`	| Sending formatted JSON to Yacs
+2 	| HTML Parsing		| `bs4`				| Converting the HTML into usable JSON using Beautiful Soup
+3 	| JSON Conversion	| `json`			| Converting JSON into a Yacs-readable format
+4 	| Sending JSON		| `http`			| Sending formatted JSON to Yacs
 
-For help on these packages, please look in the [`sites.md`](pipelines/nyu/sites.md)
+For help on these packages, please look in the [`sites.md`](pipelines/nyu/sites.md) for useful docs/guides.
 
 ### Webpage Parsing
 We're going to be first inspecting the architecture of the javascript that the site uses, then trying to emulate the GET requests that it generates in order to reduce the amount of requests necessary to get all the course information we want.
