@@ -20,6 +20,8 @@ export class InterestedCoursesComponent implements OnInit {
   private listingIds: Set<string>;
   private subscription;
 
+  statusText: string = '';
+
   constructor (
       private yacsService : YacsService,
       public selectionService : SelectionService) {
@@ -36,7 +38,10 @@ export class InterestedCoursesComponent implements OnInit {
   async getCourses (): Promise<void> {
     this.selectionService.getSelectedCourseIds().forEach(this.listingIds.add, this.listingIds);
 
+    // display interested courses on sidebar
+    // display message to try selecting some if none
     if (this.listingIds.size > 0) {
+      this.statusText = '';
       this.isLoaded = false;
       const term = await Term.first();
       Listing
@@ -55,6 +60,8 @@ export class InterestedCoursesComponent implements OnInit {
       //   .then((data) => {
       //     this.courses = data['courses'] as Course[];
       //   });
+    } else {
+      this.statusText = 'Try selecting some courses :)';
     }
   }
 }
