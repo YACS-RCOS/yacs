@@ -4,32 +4,32 @@ import {
   Attr,
   BelongsTo,
   HasMany
-} from "spraypaint"
+} from "spraypaint";
 
 import { ApplicationRecord } from "./application-record";
 import { Listing } from "./listing";
 
 export class Period {
-	day: number
-	start: string
-	end: string
-	type: string
-	location: string
+	day: number;
+	start: string;
+	end: string;
+	type: string;
+	location: string;
 }
 
 @Model()
 export class Section extends ApplicationRecord {
 	static jsonapiType = "sections";
 
-	@Attr() active: boolean
-	@Attr() shortname: string
-	@Attr() crn: string
-	@Attr() instructors: string[]
-	@Attr() seats: number
-	@Attr() seatsTaken: number
-	@Attr() uuid: string
-	@Attr() periods: Period[]
-	@Attr() conflictIds: number[]
+	@Attr() active: boolean;
+	@Attr() shortname: string;
+	@Attr() crn: string;
+	@Attr() instructors: string[];
+	@Attr() seats: number;
+	@Attr() seatsTaken: number;
+	@Attr() uuid: string;
+	@Attr() periods: Period[];
+	@Attr() conflictIds: number[];
 
-	@BelongsTo() listing: Listing
+	@BelongsTo() listing: Listing;
 }

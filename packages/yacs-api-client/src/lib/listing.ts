@@ -4,7 +4,7 @@ import {
   Attr,
   BelongsTo,
   HasMany
-} from "spraypaint"
+} from "spraypaint";
 
 import { ApplicationRecord } from "./application-record";
 import { Course } from "./course";
@@ -15,15 +15,15 @@ import { Section } from "./section";
 export class Listing extends ApplicationRecord {
 	static jsonapiType = "listings";
 
-	@Attr() tags: string[]
-	@Attr() active: boolean
-	@Attr() maxCredits: number
-	@Attr() minCredits: number
-	@Attr() description: string
-	@Attr() longname: string
-	@Attr() uuid: string
+	@Attr() tags: string[];
+	@Attr() active: boolean;
+	@Attr() maxCredits: number;
+	@Attr() minCredits: number;
+	@Attr() description: string;
+	@Attr() longname: string;
+	@Attr() uuid: string;
 
-	@BelongsTo() course: Course
-	@BelongsTo() term: Term
-	@HasMany() sections: Section[]
+	@BelongsTo() course: Course;
+	@BelongsTo() term: Term;
+	@HasMany() sections: Section[];
 }
