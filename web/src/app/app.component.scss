@@ -82,3 +82,7 @@ footer {
 .row {
   flex-wrap: nowrap;
 }
+
+button:focus{
+  outline: none;
+}
