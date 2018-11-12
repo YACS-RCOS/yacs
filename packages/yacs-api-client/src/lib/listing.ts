@@ -21,6 +21,8 @@ export class Listing extends ApplicationRecord {
 	@Attr() minCredits: number;
 	@Attr() description: string;
 	@Attr() longname: string;
+	@Attr() courseShortname: string;
+	@Attr() subjectShortname: string;
 	@Attr() uuid: string;
 
 	@BelongsTo() course: Course;

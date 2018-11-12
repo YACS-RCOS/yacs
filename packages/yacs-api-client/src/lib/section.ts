@@ -15,6 +15,7 @@ export class Period {
 	end: string;
 	type: string;
 	location: string;
+	section: Section;
 }
 
 @Model()
