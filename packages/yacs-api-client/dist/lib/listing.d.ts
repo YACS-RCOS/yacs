@@ -10,6 +10,8 @@ export declare class Listing extends ApplicationRecord {
     minCredits: number;
     description: string;
     longname: string;
+    courseShortname: string;
+    subjectShortname: string;
     uuid: string;
     course: Course;
     term: Term;

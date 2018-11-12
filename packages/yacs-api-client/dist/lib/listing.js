@@ -47,6 +47,12 @@ var Listing = /** @class */ (function (_super) {
     ], Listing.prototype, "longname", void 0);
     __decorate([
         spraypaint_1.Attr()
+    ], Listing.prototype, "courseShortname", void 0);
+    __decorate([
+        spraypaint_1.Attr()
+    ], Listing.prototype, "subjectShortname", void 0);
+    __decorate([
+        spraypaint_1.Attr()
     ], Listing.prototype, "uuid", void 0);
     __decorate([
         spraypaint_1.BelongsTo()
