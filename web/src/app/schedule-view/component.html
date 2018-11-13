@@ -2,9 +2,9 @@
 <div class="schedule-view">
   <div class="schedule-menu">
     <div class="switch">
-      <span class="schedule-switch" (click) = "previousSchedule()">&#9664;</span>
-      <span class="schedule-index">{{scheduleIndex + 1}} / {{schedules.length}}</span>
-      <span class="schedule-switch" (click) = "nextSchedule()">&#9654;</span>
+      <span class="schedule-switch" (click) = "scheduleSet.decrementActiveSchedule()">&#9664;</span>
+      <span class="schedule-index">{{scheduleSet.activeScheduleIndex + 1}} / {{scheduleSet.numSchedules}}</span>
+      <span class="schedule-switch" (click) = "scheduleSet.incrementActiveSchedule()">&#9654;</span>
     </div>
     <div>
       <button class="schedule-button" (click) = "clear()">Clear</button>
@@ -20,8 +20,8 @@
       <button class="schedule-button" [disabled]="isTemporary">Copy Schedule Link</button>
     </div>
     <div class="schedule-status">
-      {{ statusText() }}
+      {{ statusText }}
     </div>
   </div>
-  <schedule [schedule]="schedules[scheduleIndex]" *ngIf="schedules.length > 0"></schedule>
+  <schedule [scheduleSet]="scheduleSet"></schedule>
 </div>
