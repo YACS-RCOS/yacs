@@ -36,11 +36,11 @@ def opens(path,mode = 'r'):
 
 # Simply way to update a file. Ideally this would write to a temp file then perform a swap,
 # but that's annoyingly complicated
-def update_file(from,to):
-    with opens(from,'r') as f:
-        data = f.read()
-    with opens(to,'w') as f:
-        f.write(data)
+# def update_file(from,to):
+#     with opens(from,'r') as f:
+#         data = f.read()
+#     with opens(to,'w') as f:
+#         f.write(data)
 
 
 # To use threading effectively, we want to stay hyper-IO bound
