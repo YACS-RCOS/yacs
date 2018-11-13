@@ -58,15 +58,11 @@ def add_entry(entry_dict): # Add an entry dictionary to the entry dict queue
 def get_entry(): # Get an entry dictionary to format
     return entry_object
 
-def add_filedata(path, data): # add a fully formed result for a specific /:term_shortname to the file write queue
+def put_data(term_shortname,json):
     return None
 
-def get_filedata(): # Get data to write to a file
-    return file_path, file_data_to_write
-
-def opens(path,mode = 'r'): # Open a file at a path safely
-    return FILE_OBJECT
-
+def get_data(term_shortname):
+    return term_shortname_data
 ```
 
 [course-search]: https://sis.nyu.edu/psc/csprod/EMPLOYEE/SA/c/NYU_SR.NYU_CLS_SRCH.GBL
