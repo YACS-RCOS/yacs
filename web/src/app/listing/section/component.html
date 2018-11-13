@@ -3,7 +3,7 @@
     <div class="col-1 align-center section-name"><div class="highlight" [class.highlight-selected]="isSelected()">{{section.shortname}}</div></div>
     <div class="col-2 align-center section-details">
       <div>
-        <span *ngIf="doesConflict(section.id)" placement="top" triggers="mouseenter:mouseleave" title="Section Conflicts"><img class="conflict-img" src="assets/images/red_exclamation.svg" /></span>
+        <span *ngIf="doesConflict()" placement="top" triggers="mouseenter:mouseleave" title="Section Conflicts"><img class="conflict-img" src="assets/images/red_exclamation.svg" /></span>
         <span class="section-crn">{{section.crn}}</span>
         <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
         <div class="section-seats">

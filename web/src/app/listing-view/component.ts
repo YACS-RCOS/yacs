@@ -30,8 +30,8 @@ export class ListingViewComponent implements OnInit {
       .order('course_shortname')
       .all().then((listings) => {
         this.listings = listings.data;
+        this.conflictsService.populateConflictsCache(this.listings);
         this.isLoaded = true;
-        console.log(this.listings);
       });
   }
 
