@@ -6,7 +6,7 @@ import copy
 index = {}
 subject_list = [] # This is global only for testing purposes
 
-def format_data(unformatted_json):
+def format_data(unformatted_json): # Probably should also pass a reference to the output file from server instance
 	# This function takes in a JSON string in the API's format
 	# and returns a JSON string in Yacs format
 	df = get_df(unformatted_json) # Get a pandas dataframe to do operations on
@@ -90,9 +90,9 @@ def get_df(raw_json):
 	# For testing purposes only
 	df['description'] = df['description'].str[0:5]
 	# Drop useless columns
-	df = df.drop(['syllabus', 'term','year','level'],axis = 1)
+	df = df.drop(['term','year','level'],axis = 1)
 	# Drop these two columns because they're annoying and IDK what to do with them
-	for name in ['foundation-histcult','foundation-libarts']:
+	for name in ['foundation-histcult','foundation-libarts','syllabus']:
 		if name in df.columns:
 			df = df.drop(name,axis = 1)
 	# Drop 'totalMatches' - it's not a record
