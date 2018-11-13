@@ -2,11 +2,13 @@ from queue import Queue
 import threading
 import os
 
-
 data_queue = Queue() # Scrapers add to this, data formatters consume from this
 write_queue = Queue() # Data formatters produce to this, file writer consumes from this
-file_dict = {} # Dictionary of which files are available and which are not
-file_dict_lock = threading.Lock() # Lock to use/write to file_dictionary
+# file_dict = {} # Dictionary of which files are available and which are not
+# file_dict_lock = threading.Lock() # Lock to use/write to file_dictionary
+
+data_dict = {}
+data_dict_lock = threading.Lock()
 
 def add_entry(entry_dict):
     data_queue.put(entry)
@@ -14,25 +16,27 @@ def add_entry(entry_dict):
 def get_entry():
     return data_queue.get()
 
-def add_filedata(path, data):
-    write_queue.put((path, data))
+def put_data(term_shortname,json):
+    with data_dict_lock:
+        data_dict[term_shortname] = json
 
-def get_filedata():
-    return write_queue.get()
+def get_data(term_shortname):
+    with data_dict_lock:
+        return data_dict[term_shortname]
 
 # Open a file at a path safely
-def opens(path,mode = 'r'):
-    global file_dict_lock
-    path = os.path.abspath(path)
-    with file_dict_lock:
-        if path in file_dict:
-            file_lock = file_dict[path]
-        else:
-            file_lock = threading.Lock()
-            file_dict[path] = file_lock
-    with file_lock:
-        file = open(path, mode)
-    return file
+# def opens(path,mode = 'r'):
+#     global file_dict_lock
+#     path = os.path.abspath(path)
+#     with file_dict_lock:
+#         if path in file_dict:
+#             file_lock = file_dict[path]
+#         else:
+#             file_lock = threading.Lock()
+#             file_dict[path] = file_lock
+#     with file_lock:
+#         file = open(path, mode)
+#     return file
 
 # Simply way to update a file. Ideally this would write to a temp file then perform a swap,
 # but that's annoyingly complicated
@@ -42,9 +46,7 @@ def opens(path,mode = 'r'):
 #     with opens(to,'w') as f:
 #         f.write(data)
 
-
 # To use threading effectively, we want to stay hyper-IO bound
-#
 
 # Information queue (Tuples of catalog number and json entries)
 # Producer: scraper(s)
