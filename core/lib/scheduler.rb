@@ -1,6 +1,6 @@
 class Scheduler
   def self.all_schedules(sections)
-    params = expand_courses(sections)
+    params = expand_listings(sections)
     schedules = []
     search(params, schedules)
     schedules
@@ -36,14 +36,7 @@ class Scheduler
     true
   end
 
-  def self.expand_courses(sections)
-    hash = {}
-    sections.each do |s|
-      if s.num_periods > 0
-        hash[s.course] ||= []
-        hash[s.course] << s
-      end
-    end
-    hash.values
+  def self.expand_listings(sections)
+    sections.reject { |s| s.periods.count == 0 }.group_by(&:listing_id).values
   end
 end

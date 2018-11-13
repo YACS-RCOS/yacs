@@ -1,8 +1,8 @@
 <div class="schedule-event">
 	<div class="event-text">
-		{{ scheduleEvent.title }}<br>
-		{{ scheduleEvent.crn }}<br>
-		{{ scheduleEvent.instructor }}<br>
-		{{ scheduleEvent.location }}
+		{{ period.section.listing.subjectShortname }} {{ period.section.listing.courseShortname }} - {{ period.section.shortname }}<br>
+		{{ period.section.crn }}<br>
+		{{ period.section.instructors.join(', ') }}<br>
+		{{ period.location }}
 	</div>
 </div>

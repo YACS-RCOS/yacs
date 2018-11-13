@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { Section } from 'yacs-api-client';
-// import { Period } from '../../models/period.model';
+import { Section, Period } from 'yacs-api-client';
 import { ConflictsService } from '../../services/conflicts.service';
 import { SelectionService } from '../../services/selection.service';
 
@@ -54,15 +53,15 @@ export class SectionComponent {
     return hour + minuteShow + ampm;
   }
 
-  public getHours(period: any) : string {
+  public getHours (period: any) : string {
     return this.timeToString(period.start) + '-' + this.timeToString(period.end);
   }
 
-  public doesConflict(secId: number) {
-    return this.conflictsService.doesConflict(secId);
+  public doesConflict () {
+    return this.conflictsService.doesConflict(this.section);
   }
 
-  public isSelected() {
+  public isSelected () {
     return this.selectionService.isSectionSelected(this.section);
   }
 

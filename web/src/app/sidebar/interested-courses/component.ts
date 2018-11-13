@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { YacsService } from '../../services/yacs.service';
 import { SelectionService } from '../../services/selection.service';
+import { ConflictsService } from '../../services/conflicts.service';
 // import { Course } from '../../models/course.model';
 import { Term, Listing } from 'yacs-api-client';
 import 'rxjs/Rx';
@@ -23,8 +23,8 @@ export class InterestedCoursesComponent implements OnInit {
   statusText: string = '';
 
   constructor (
-      private yacsService : YacsService,
-      public selectionService : SelectionService) {
+      public selectionService : SelectionService,
+      private conflictsService: ConflictsService) {
     this.subscription = this.selectionService.subscribe(() => {
       this.getCourses();
     });
@@ -52,14 +52,9 @@ export class InterestedCoursesComponent implements OnInit {
         .includes('course.subject')
         .all().then((listings) => {
           this.listings = listings.data;
+          this.conflictsService.populateConflictsCache(this.listings);
           this.isLoaded = true;
-          console.log(this.listings);
         });
-      // this.yacsService
-      //   .get('courses', { id: Array.from(this.courseIds).join(','), show_sections: true, show_periods: true })
-      //   .then((data) => {
-      //     this.courses = data['courses'] as Course[];
-      //   });
     } else {
       this.statusText = 'Try selecting some courses :)';
     }

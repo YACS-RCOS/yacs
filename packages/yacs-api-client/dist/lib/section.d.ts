@@ -6,6 +6,7 @@ export declare class Period {
     end: string;
     type: string;
     location: string;
+    section: Section;
 }
 export declare class Section extends ApplicationRecord {
     static jsonapiType: string;

@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { ConstantsService } from './services/constants';
 import { NoticeService } from './services/notice.service';
 
 @Component({
@@ -7,7 +6,6 @@ import { NoticeService } from './services/notice.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: [
-    ConstantsService,
     NoticeService
   ]
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { Listing, Section } from 'yacs-api-client';
 import { SelectionService } from './selection.service';
 
 @Injectable()
@@ -12,20 +12,19 @@ export class ConflictsService {
   /**
    * Given the data returned from the API, populate the conflicts cache with
    * the data for conflicts.
-   * @param {Object} data - The verbatim JSON object returned from the courses API.
+   * @param {Listing[]} listings - The verbatim JSON object returned from the courses API.
    */
-  public populateConflictsCache(data) {
+  public populateConflictsCache(listings: Listing[]) {
     /* NOTE: The data in the conflicts cache MUST be sorted by section ID.
      * Currently we are assuming the conflicts in the API will always be sorted.
      * If that is not the case, a sort must be implemented here.
      */
-    let courses = data.courses || [];
-    courses.forEach((course) => {
-      let sections = course.sections || [];
+    listings.forEach((listing) => {
+      let sections = listing.sections || [];
       sections.forEach((section) => {
         let id = section.id;
         if (!this.conflicts[id]) {
-          this.conflicts[id] = section.conflicts;
+          this.conflicts[id] = section.conflictIds;
         }
       });
     });
@@ -73,7 +72,8 @@ export class ConflictsService {
    * @param {int} sectId - Section ID to check for conflicts.
    * @return {boolean} Whether this section conflicts with currently selected sections.
    */
-  public doesConflict(sectId: number) {
+  public doesConflict(section: Section) {
+    let sectId = parseInt(section.id);
     let flattenedSelections = this.flattenSelections(this.selectionService.getSelections()); // An object in the same format returned by flattenSelections.
     let selectionsFlat = flattenedSelections.selectionsFlat;
     let courseSelectionCounts = {};
@@ -109,7 +109,7 @@ export class ConflictsService {
       else if (conflicts[i] > selectedSectionId) {
         ++j;
       }
-      else if (conflicts[i] === selectedSectionId) {
+      else {
         --courseSelectionCounts[selectedCourseId];
         if (courseSelectionCounts[selectedCourseId] < 1) {
           // all sections for a single selected course conflict with this section
