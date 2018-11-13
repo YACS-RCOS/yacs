@@ -1,7 +1,7 @@
 <div class = "course" [class.fixed-height]="!showingMenu && !showingDescription" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
 	<div class="row flex-nowrap h-100 min-height">
 	  <div class="indicator-container" (click)="clickCourse()">
-	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
+	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered" ></div>
 	  </div>
 	  <div class="w-100 h-100 course-content position-relative min-height">
 		  <table (click)="clickCourse()" class="w-100">
@@ -16,19 +16,19 @@
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
 			</table>
-			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" placement="right" [ngbPopover]="listing.description" container="body" triggers="mouseenter:mouseleave">
+			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" placement="right" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/info.svg" />
 			</span>
 			<span (click)="descriptionClick()" *ngIf="!showDescriptionTooltip" class="course-description" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription" [class.selectedDescription]="isCourseSelected()">
 				{{listing.description}}
 			</span>
 			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
-				<div class = "arrow-container down-arrow" *ngIf="!showingMenu">
+				<span *ngIf="!showingMenu">
 					<i class="arrow down"></i>
-				</div>
-				<div class="arrow-container" *ngIf="showingMenu">
+				</span>
+				<span *ngIf="showingMenu">
 					<i class="arrow up"></i>
-				</div>
+				</span>
 			</div>
 	  </div>
   </div>

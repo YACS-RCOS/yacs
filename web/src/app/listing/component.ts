@@ -16,7 +16,7 @@ import { ConflictsService } from '../services/conflicts.service'
 export class ListingComponent implements OnInit{
   @Input() listing: Listing;
   @Input() showDescriptionTooltip: boolean = false;
-  @Input() showDescription: boolean = false;
+  @Input() showDescription: boolean = false;  
 
   constructor (
     public selectionService : SelectionService,
@@ -69,5 +69,9 @@ export class ListingComponent implements OnInit{
   public descriptionClick (): void {
     // this.selectionService.toggleCourse(this.listing);
     this.showingDescription= !(this.showingDescription);
+  }
+
+  public get tooltipDescription (): string {
+    return this.listing.description || 'No description available :('; 
   }
 }
