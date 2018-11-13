@@ -26,7 +26,8 @@ Task| Name				| Package(s)		| Description
 We'll use the following standard functions:
 
 ```python
-
+# These will eventually have to change; not all of these really imply thread safety, and all of them assume
+# that we're using the non-mobile version of the course catalog website
 # Task 1
 def get_page(term, year, subject):
 	# term is a string, year is an integer, and subject
@@ -49,6 +50,22 @@ def append_data(subject_dict, entry_dict):
 	# i.e. adding entries
 	return None
 
+# ----- Task ~5 (not on the task list) --------
+# ----- Use these functions (from file_management) to do anything with files/data
+def add_entry(entry_dict): # Add an entry dictionary to the entry dict queue
+    return None
+
+def get_entry(): # Get an entry dictionary to format
+    return entry_object
+
+def add_filedata(path, data): # add a fully formed result for a specific /:term_shortname to the file write queue
+    return None
+
+def get_filedata(): # Get data to write to a file
+    return file_path, file_data_to_write
+
+def opens(path,mode = 'r'): # Open a file at a path safely
+    return FILE_OBJECT
 
 ```
 
