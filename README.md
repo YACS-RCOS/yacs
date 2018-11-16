@@ -26,7 +26,7 @@ Further, Yacs aims to provide the best experience possible to as many people as 
 Yacs is built from the ground up to be modular and flexible, and as such can use data from any source, and even combine data from many sources in an intelligent way.
 
 We have made it as easy as possible to connect Yacs to your university, and have designed this process to be accessible to developers of nearly any skill level.
-Please check out our [documentation] or [contact] us if you'd like to bring Yacs to your school, and help us make Yacs as great as it can be.
+Please check out our [documentation](https://yacs.io) or [contact](mailto:yacsrpi@gmail.com) us if you'd like to bring Yacs to your school, and help us make Yacs as great as it can be.
 
 Yacs owes its creation and continued maintenance to [RCOS](https://rcos.io), the Rensselaer Center for Open Source, and is developed in collaboration with [BUGS](https://bugs-nyu.github.io/), NYU's Open Source Club.
 
