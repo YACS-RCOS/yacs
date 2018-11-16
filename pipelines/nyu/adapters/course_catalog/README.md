@@ -26,28 +26,18 @@ Task| Name				| Package(s)		| Description
 We'll use the following standard functions:
 
 ```python
-# These will eventually have to change; not all of these really imply thread safety, and all of them assume
-# that we're using the non-mobile version of the course catalog website
-# Task 1
-def get_page(term, year, subject):
-	# term is a string, year is an integer, and subject
-	# is a string
-	# Returns HTML from formatted GET request
-	# Using these parameters
-	return "RAW_HTML"
 
-# Task 2
-def get_records(raw_html):
-	#input is raw HTML (string)
-	# Yields a dictionary with all the data for a record
-	yield "ENTRY_DICT"
+# Task 1 and 2
+def get_data(queue, *data):
+	# Queue is a queue that implements queue.put(obj)
+	# *data is an ordered list of attributes
+	# necessary to determine the page to request from
+	return None
 
 # Task 3
-def append_data(subject_dict, entry_dict):
-	# subject_dict and entry_dict are both dictionaries
-	# Uses information stored in the entry_dict to
-	# update the subject_dict
-	# i.e. adding entries
+def append_data(queue, data_dict):
+	# queue is a queue that implements queue.get()
+	# data_dict is a dictionary of term_shortname=key,dictionary=value pairs
 	return None
 
 # ----- Task ~5 (not on the task list) --------
