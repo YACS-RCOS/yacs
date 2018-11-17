@@ -1,6 +1,6 @@
 <div class="container">
-    <div id="sidebar-stat" class="sidebar-status">
-    	<div class="alert alert-sidebar"> {{statusText}} </div>
+    <div class="sidebar-status">
+    	<div id = "sidebar-stat" class="alert alert-sidebar"> {{statusText}} </div>
     </div>
 	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true"></course>
 </div>
