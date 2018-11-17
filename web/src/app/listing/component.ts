@@ -16,7 +16,7 @@ import { ConflictsService } from '../services/conflicts.service'
 export class ListingComponent implements OnInit{
   @Input() listing: Listing;
   @Input() showDescriptionTooltip: boolean = false;
-  @Input() showDescription: boolean = false;  
+  @Input() showDescription: boolean = false;
 
   constructor (
     public selectionService : SelectionService,
