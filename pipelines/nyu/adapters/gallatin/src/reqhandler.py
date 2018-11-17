@@ -60,4 +60,4 @@ class ReqHandler(BaseHTTPRequestHandler):
 		message = formatted_data
 
 		# Write content as utf-8 data
-		self.write_message(data)
+		self.write_message(message)
