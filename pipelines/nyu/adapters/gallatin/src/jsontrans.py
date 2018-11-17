@@ -32,8 +32,8 @@ def append_sections(listings, df):
 	grp_by_section = df.groupby('course_shortname')
 	for shortname, group in grp_by_section:
 		section_dict = {}
-		print(group['title'])
-		print(group.shape)
+		# print(group['title'])
+		# print(group.shape)
 		section_dict['shortname'] = shortname
 		section_dict['longname'] = group['title'].iloc[0]
 		section_dict['min_credits'] = group['credit'].iloc[0]
@@ -53,25 +53,6 @@ def append_periods(periods,df):
 	days2 = df['days2'].iloc[0]
 	times = df['times'].iloc[0]
 	times2 = df['times2'].iloc[0]
-	pass
-
-cols = ['COURSE', # ARTS-UG1275
-'CREDIT', # 4
-'DAYS', # Wed
-'DAYS2', # Fri
-'DESCRIPTION', # Text...
-'HISTCULT',
-'LIBARTS',
-'INSTRUCTORS', # [{'name':'website'}]
-'LEVEL', # U or G
-'NOTES', # Extra text
-'SECTION', # number
-'TERM', # FA, SU, WI, or SP
-'TIMES', # Time String
-'TIMES2', # Time String
-'TITLE', # Course Title
-'TYPE', # Arts Workshops (ARTS-UG)
-'YEAR'] # Integer
 
 # "periods": [ // optional, but needed for scheduling
 #   {
@@ -104,14 +85,15 @@ def get_df(raw_json):
 	return df
 
 def format_df(df):
-# Filter out global courses
+	# Filter out global courses
+	
 	# Preformats a series to be used for filtering
 	type_col = df['type'].str.strip().str.lower()
 	# Filter out those global courses using a mask
 	df = df[type_col.str.startswith('global') == False].copy()
 	del type_col # No longer need the series
 
-# Format columns
+	# Format columns
 
 	# Replace 'type' with 'subject_longname'
 	# 'type' is formatted as :longname: (:shortname:-:level:)
