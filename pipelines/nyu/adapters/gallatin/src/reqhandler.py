@@ -1,4 +1,7 @@
 from http.server import BaseHTTPRequestHandler
+from apitrans import get_query
+from galreq import gallatin_data
+from jsontrans import format_data
 
 # So we need to override the do_GET() method in BaseHTTPRequestHandler
 # We need to then fetch the appropriate data
