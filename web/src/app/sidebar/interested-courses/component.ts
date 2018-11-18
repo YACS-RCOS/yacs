@@ -20,7 +20,7 @@ export class InterestedCoursesComponent implements OnInit {
   private listingIds: Set<string>;
   private subscription;
 
-  statusText: string = 'Try selecting some courses :)';
+  @Input() showStatusText: boolean = false;
 
   constructor (
       private yacsService : YacsService,
@@ -41,7 +41,7 @@ export class InterestedCoursesComponent implements OnInit {
     // display interested courses on sidebar
     // display message to try selecting some if none
     if (this.listingIds.size > 0) {
-      document.getElementById('sidebar-stat').classList.add("hide-sidebar-status");
+      this.showStatusText = false;
       this.isLoaded = false;
       const term = await Term.first();
       Listing
@@ -61,7 +61,7 @@ export class InterestedCoursesComponent implements OnInit {
       //     this.courses = data['courses'] as Course[];
       //   });
     } else {
-      document.getElementById('sidebar-stat').classList.remove("hide-sidebar-status");
+      this.showStatusText = true;
     }
   }
 }
