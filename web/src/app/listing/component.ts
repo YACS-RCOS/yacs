@@ -68,4 +68,8 @@ export class ListingComponent implements OnInit{
     // this.selectionService.toggleCourse(this.listing);
     this.showingDescription= !(this.showingDescription);
   }
+
+  public get tooltipDescription (): string {
+    return this.listing.description || 'No description available :('; 
+  }
 }

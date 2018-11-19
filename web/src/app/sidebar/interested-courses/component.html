@@ -1,6 +1,6 @@
 <div class="container">
     <div class="sidebar-status">
-    	{{statusText}}
+    	<div *ngIf="showStatusText" class="alert alert-sidebar"> Try selecting some courses :) </div>
     </div>
 	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true"></course>
 </div>
