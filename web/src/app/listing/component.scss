@@ -103,6 +103,18 @@ i {
   -webkit-transform: rotate(45deg);
 }
 
+.arrow-container {
+  padding-left: 1em;
+  height: 1.5em;
+}
+
+.down-arrow:hover {
+  animation: shake 0.3s; 
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
 .course-content {
 	padding-right: 35px;
 }
@@ -236,19 +248,6 @@ section.closed, section.closed:hover {
 
 .full-width {
   width: 100%;
-}
-
-.arrow-container {
-  padding-left: 1em;
-  padding-right: 1em;
-  height: 1.5em;
-}
-
-.down-arrow:hover {
-  animation: shake 0.3s; 
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
 }
 
 @keyframes shake {
