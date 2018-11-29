@@ -167,6 +167,24 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
 
+  public copyScheduleLink () : void {
+      var targetUrl = window.location.protocol + '//' + window.location.host +
+      '/#/schedules?section_ids=' + this.selectionService.getSelectedSectionIds().join(',') +
+      '&schedule_index=' + this.scheduleIndex;
+
+      let selBox = document.createElement('textarea');
+      selBox.style.position = 'fixed';
+      selBox.style.left = '0';
+      selBox.style.top = '0';
+      selBox.style.opacity = '0';
+      selBox.value = targetUrl;
+      document.body.appendChild(selBox);
+      selBox.focus();
+      selBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(selBox);
+  }
+
   public clear (): void {
     this.selectionService.clear();
   }
