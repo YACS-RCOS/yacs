@@ -7,17 +7,17 @@
       <span class="schedule-switch" (click) = "scheduleSet.incrementActiveSchedule()">&#9654;</span>
     </div>
     <div>
-      <button class="schedule-button" (click) = "clear()">Clear</button>
+      <button class="schedule-button" (click) = "clearSelections()">Clear</button>
       <div ngbDropdown class="d-inline-block">
         <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
           Share
         </button>
         <div ngbDropdownMenu>
-          <button class="schedule-button dropdown-item" (click) = "downloadImage()">Download Image</button>
+          <button class="schedule-button dropdown-item" (click) = "downloadImage()">Save as Image</button>
+          <button class="schedule-button dropdown-item">Save as iCalendar (disabled)</button>
+          <button class="schedule-button dropdown-item" [disabled]="isTemporary">Copy Schedule Link (disabled)</button>
         </div>
       </div>
-      <button class="schedule-button">Download ICS</button>
-      <button class="schedule-button" [disabled]="isTemporary">Copy Schedule Link</button>
     </div>
     <div class="schedule-status">
       {{ statusText }}
