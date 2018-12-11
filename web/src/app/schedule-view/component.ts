@@ -185,8 +185,63 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
       document.body.removeChild(selBox);
   }
 
+  // Helper padding function, for makeVCalendar
+  public pad0 (num) : string {
+      return ('0' + num).slice(-2);
+  }
+
+  // Helper function to make date stamp for makeVCalendar
+  public makeStamp (d) : string {
+      return d.getFullYear() + this.pad0(d.getMonth() + 1) + this.pad0(d.getDate()) +
+        'T' + this.pad0(d.getHours()) + this.pad0(d.getMinutes()) + '00';
+  }
+
+  // Helper function to format each period into VEvent for ICS
+  public makeVEvent (period, uidCounter) : string {
+      var d = new Date();
+      var nowstamp = this.makeStamp(d);
+      var weekdayOffset = period.day - d.getDay();
+      d.setDate(d.getDate() + weekdayOffset);
+      d.setHours(Math.floor(period.start / 60));
+      d.setMinutes(period.start % 60);
+
+      var startstamp = this.makeStamp(d);
+      d.setMinutes(d.getMinutes() + (period.end - period.start));
+      var endstamp = this.makeStamp(d);
+      uidCounter++;
+      return 'BEGIN:VEVENT\r\n' + 'UID:event' + uidCounter +
+        '@yacs.cs.rpi.edu\r\n' +
+        'SUMMARY:' + period.tooltip + '\r\n' +
+        'DTSTAMP:' + nowstamp + '\r\n' +
+        'DTSTART:' + startstamp + '\r\n' +
+        'DTEND:' + endstamp + '\r\n' + 'END:VEVENT\r\n';
+  }
+
+  public makeVCalendar () : string {
+      let vCalendarData = 'BEGIN:VCALENDAR\r\n' + 'VERSION:2.0\r\n' +
+        'PRODID:-//yacs/NONSGML v1.0//EN\r\n';
+        // What is version number based on? May need to be changed.
+      var uidCounter = 0;
+
+      // for each period in the period array:
+      for (let period of this.currentSchedule().periods){
+        vCalendarData += this.makeVEvent(period, uidCounter);
+      }
+      vCalendarData += 'END:VCALENDAR';
+      return vCalendarData;
+  }
+
   public clear (): void {
     this.selectionService.clear();
+  }
+  public downloadICS(): void {
+      let vCalendarData = this.makeVCalendar();
+      var elt = document.createElement('a');
+      elt.setAttribute('href', 'data:text/calendar;charset=utf8' + encodeURIComponent(vCalendarData));
+      elt.setAttribute('download', 'yacs-schedule.ics');
+      document.body.appendChild(elt);
+      elt.click();
+      document.body.removeChild(elt);
   }
 
   ngAfterViewInit() {
