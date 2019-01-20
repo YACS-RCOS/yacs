@@ -121,8 +121,11 @@ class Graph
     if parent
       parent[type] ||= []
       parent[type] << new_record
-      parent_uuid_field = "#{@schema.singularize(@schema.parent_type_for(type))}_uuid"
+      parent_type = @schema.singularize(@schema.parent_type_for(type))
+      parent_uuid_field = "#{parent_type}_uuid"
+      parent_identifier = @schema.identifier_for(@schema.parent_type_for(type))
       new_record[parent_uuid_field] = parent['uuid']
+      new_record["#{parent_type}_#{parent_identifier}"] = parent[parent_identifier]
       @sources[new_record['uuid']][parent_uuid_field] = Priorities::FIXED
     end
     @transport.dispatch 'create', new_record, type

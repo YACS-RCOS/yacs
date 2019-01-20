@@ -1,5 +1,7 @@
 class SectionResource < ApplicationResource
-	belongs_to :listing
+  include UuidFilterable
+
+  belongs_to :listing
 
   attribute :shortname, :string
   attribute :crn, :string
@@ -7,7 +9,6 @@ class SectionResource < ApplicationResource
   attribute :seats_taken, :integer
   attribute :conflict_ids, :array
   attribute :periods, :array
-  attribute :uuid, :string
-  attribute :instructor_ids, :array
+  attribute :instructors, :array
   attribute :listing_id, :integer, only: [:filterable]
 end
