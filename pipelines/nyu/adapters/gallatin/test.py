@@ -29,9 +29,9 @@ print('Setting up global environment...')
 jst = os.path.join(src,'jsontrans.py') # shorthand for jsontrans module
 
 # Setting useful Global vars
-SERVER_URL = '127.0.0.1'
-PORT = 8080
-INDEX = ''
+SERVER_URL = 'localhost'
+PORT = 8081
+INDEX = '2018FA'
 e = exec
 PD_DEFAULTS = (0, 60, 80)
 
@@ -39,8 +39,8 @@ PD_DEFAULTS = (0, 60, 80)
 
 # Send a request to the server and print it
 def try_connect():
-	r = requests.get("{}:{}/{}".format(SERVER_URL,PORT,INDEX))
-	print(r.text)
+	r = requests.get("http://{}:{}/{}".format(SERVER_URL,PORT,INDEX))
+	return r.text
 
 def r(filename):
 	with open(filename,"r") as f:

@@ -40,7 +40,19 @@ def append_data(queue, data_dict):
 	# data_dict is a dictionary of term_shortname=key,dictionary=value pairs
 	return None
 
+# ----- Task ~5 (not on the task list) --------
+# ----- Use these functions (from file_management) to do anything with files/data
+def add_entry(entry_dict): # Add an entry dictionary to the entry dict queue
+    return None
 
+def get_entry(): # Get an entry dictionary to format
+    return entry_object
+
+def put_data(term_shortname,json):
+    return None
+
+def get_data(term_shortname):
+    return term_shortname_data
 ```
 
 [course-search]: https://sis.nyu.edu/psc/csprod/EMPLOYEE/SA/c/NYU_SR.NYU_CLS_SRCH.GBL

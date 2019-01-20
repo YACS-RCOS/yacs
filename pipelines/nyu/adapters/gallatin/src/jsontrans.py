@@ -3,15 +3,13 @@ import json
 import re
 import copy
 
-index = {}
-subject_list = [] # This is global only for testing purposes
-
-def format_data(unformatted_json):
+def format_data(unformatted_json): # Probably should also pass a reference to the output file from server instance
 	# This function takes in a JSON string in the API's format
 	# and returns a JSON string in Yacs format
 	df = get_df(unformatted_json) # Get a pandas dataframe to do operations on
 	df = format_df(df)
-	global subject_list
+	subject_list = []
+	append_subjects(subject_list,df)
 	gallatin = {'longname': 'Gallatin','shortname': 'gallatin','subjects':subject_list}
 	data = {'schools':[gallatin]}
 	return json.dumps(data)
@@ -23,10 +21,10 @@ def append_subjects(subject_list,df):
 	grp_by_subject = df.groupby('subject_shortname')
 	for shortname, group in grp_by_subject:
 		sub_dict = {}
-		sub_dict['subject_shortname'] = shortname
-		sub_dict['subject_longname'] = group['subject_longname'][0]
+		sub_dict['shortname'] = shortname
+		sub_dict['longname'] = group['subject_longname'].iloc[0]
 		listings = []
-		append_sections(listings,currentdf)
+		append_sections(listings,group.copy())
 		sub_dict['listings'] = listings
 		subject_list.append(sub_dict)
 
@@ -34,11 +32,13 @@ def append_sections(listings, df):
 	grp_by_section = df.groupby('course_shortname')
 	for shortname, group in grp_by_section:
 		section_dict = {}
+		# print(group['title'])
+		# print(group.shape)
 		section_dict['shortname'] = shortname
-		section_dict['longname'] = group['title'][0]
-		section_dict['min_credits'] = group['credit'][0]
-		section_dict['max_credits'] = group['credit'][0]
-		section_dict['description'] = group['description'][0]
+		section_dict['longname'] = group['title'].iloc[0]
+		section_dict['min_credits'] = group['credit'].iloc[0]
+		section_dict['max_credits'] = group['credit'].iloc[0]
+		section_dict['description'] = group['description'].iloc[0]
 		section = {}
 		section['shortname'] = shortname
 		section['crn'] = shortname
@@ -49,29 +49,10 @@ def append_sections(listings, df):
 		listings.append(section_dict)
 
 def append_periods(periods,df):
-	days = df['days'][0]
-	days2 = df['days2'][0]
-	times = df['times'][0]
-	times2 = df['times2'][0]
-	pass
-
-cols = ['COURSE', # ARTS-UG1275
-'CREDIT', # 4
-'DAYS', # Wed
-'DAYS2', # Fri
-'DESCRIPTION', # Text...
-'HISTCULT',
-'LIBARTS',
-'INSTRUCTORS', # [{'name':'website'}]
-'LEVEL', # U or G
-'NOTES', # Extra text
-'SECTION', # number
-'TERM', # FA, SU, WI, or SP
-'TIMES', # Time String
-'TIMES2', # Time String
-'TITLE', # Course Title
-'TYPE', # Arts Workshops (ARTS-UG)
-'YEAR'] # Integer
+	days = df['days'].iloc[0]
+	days2 = df['days2'].iloc[0]
+	times = df['times'].iloc[0]
+	times2 = df['times2'].iloc[0]
 
 # "periods": [ // optional, but needed for scheduling
 #   {
@@ -88,11 +69,11 @@ def get_df(raw_json):
 	# Read in data
 	df = pd.read_json(raw_json, orient = 'index')
 	# For testing purposes only
-	df['description'] = df['description'].str[0:5]
+	# df['description'] = df['description'].str[0:5]
 	# Drop useless columns
-	df = df.drop(['syllabus', 'term','year','level'],axis = 1)
+	df = df.drop(['term','year','level'],axis = 1)
 	# Drop these two columns because they're annoying and IDK what to do with them
-	for name in ['foundation-histcult','foundation-libarts']:
+	for name in ['foundation-histcult','foundation-libarts','syllabus']:
 		if name in df.columns:
 			df = df.drop(name,axis = 1)
 	# Drop 'totalMatches' - it's not a record
@@ -104,14 +85,15 @@ def get_df(raw_json):
 	return df
 
 def format_df(df):
-# Filter out global courses
+	# Filter out global courses
+	
 	# Preformats a series to be used for filtering
 	type_col = df['type'].str.strip().str.lower()
 	# Filter out those global courses using a mask
-	df = df[type_col.str.startswith('global') == False]
+	df = df[type_col.str.startswith('global') == False].copy()
 	del type_col # No longer need the series
 
-# Format columns
+	# Format columns
 
 	# Replace 'type' with 'subject_longname'
 	# 'type' is formatted as :longname: (:shortname:-:level:)
