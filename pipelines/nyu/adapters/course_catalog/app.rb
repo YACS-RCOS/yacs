@@ -14,7 +14,7 @@ def pps data
 end
 
 def get_data(term, school, subject)
-	$albert_client.query_albert(term, school, subject)
+	$albert_client.schools term
 end
 
 def parse_term_shortname term_shortname
