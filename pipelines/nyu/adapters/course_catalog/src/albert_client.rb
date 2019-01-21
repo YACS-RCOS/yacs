@@ -1,6 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
-require 'pry'
+require_relative 'process_data'
 
 class AlbertClient
 
@@ -29,10 +29,6 @@ class AlbertClient
 		get_drop_down_values 'term'
 	end
 
-	# def parse_data_response response
-	# 	nil
-	# end
-
 	private
 
 	def listings term_shortname, school_shortname, subject_shortname
@@ -40,12 +36,25 @@ class AlbertClient
 		extract_listings response
 	end
 
-	def schools
-		YAML.load schools_filename
-	end
+	# def schools
+	# 	YAML.load schools_filename
+	# end
 
 	def extract_listings html
-		
+		elements = html.children
+		elements[0] = Hash.new { |h,k| h[k] = [] }
+		elements.inject do |first, second|
+			nil
+		end
+		html
+	end
+
+	def parse_header div_tag
+
+	end
+
+	def parse_section a_tag
+
 	end
 
 	def post_request_xml term, school, subject
