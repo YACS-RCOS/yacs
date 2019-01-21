@@ -7,6 +7,7 @@ require 'pry'
 class AlbertClient
 
 	ALBERT_ROOT = 'https://m.albert.nyu.edu/app/catalog/classSearch/'
+	ALBERT_DATA = 'https://m.albert.nyu.edu/app/catalog/getClassSearch'
 
 	def initialize
 		@http_client = HTTPClient.new
@@ -23,53 +24,55 @@ class AlbertClient
 
 	def query_albert(term_shortname, school_shortname, subject_shortname)
 		response = post_request_xml(term_shortname, school_shortname, subject_shortname)
-		parse_response response
+		output = parse_data_response response
+		binding.pry
+		output
+	end
+
+	def parse_data_response response
+		nil
 	end
 
 	private
 
-	def post_request_xml(term_shortname, school_shortname, subject_shortname)
-		url = URI::join(ALBERT_ROOT,term_shortname)
-		body = {
+	def post_request_xml(term, school, subject)
+		url = URI::join(ALBERT_ROOT,term.to_s)
+		form_body = {
 			CSRFToken: @csrf_token,
-			term: term_shortname,
-			acad_group: school_shortname,
-			subject: subject_shortname
-		}
-		post_xml(url, body)
+			term: term,
+			acad_group: school,
+			subject: subject }
+		post_xml(ALBERT_DATA, form_body, extheader = { Referer: url })
 	end
 
-	def parse_response response
-		response
+	def post_xml(url, body, extheader = {})
+		response = @http_client.post(url, body, extheader = extheader)
+		Nokogiri::HTML.parse(response.body)
 	end
 
 	def get_drop_down_values id
 		xml = get_xml ALBERT_ROOT
 		nodes = xml.css("##{id}").css('option')
 		nodes[1..].map do |node|
-			{
-				shortname: node.attributes['value'].value,
-				longname: node.text
-			}
+			{shortname: node.attributes['value'].value,
+				longname: node.text }
 		end
 	end
+
 	def get_csrf_token
 		response = @http_client.get ALBERT_ROOT
-		response.headers['Set-Cookie'].match(/(?:[A-Za-z]+=)([^;]+)/)[1]
+		cookies = @http_client.cookie_manager.cookies
+		cookies.each do |cookie|
+			if cookie.name == 'CSRFCookie'
+				return cookie.value
+			end
+		end
 	end
-	def post_xml(url, body)
-		response = @http_client.post(url, body)
-		binding.pry
-		Nokogiri::XML.parse(response.body)
-	end
+
 	def get_xml url # TODO take method name as string
 		# @http_client.send verb, params
 		response = @http_client.get(url)
 		Nokogiri::XML.parse(response.body)
-	end
-	def get_html url
-		response = @http_client.get(url)
-		Nokogiri::HTML.parse(response.body)
 	end
 	def subjects school_shortname# TODO Need to either run javascript or fill out form to continue
 		# Or lets just hard code this lol
