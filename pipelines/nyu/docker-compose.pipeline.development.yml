@@ -1,0 +1,62 @@
+version: '3.2'
+
+services:
+  malg:
+    links:
+      - adapter-acalog
+      - adapter-banner
+      - adapter-yaml
+      - adapter-csv
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/config/sources.yml:/usr/src/app/config/sources.yml
+
+  adapter-acalog:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/acalog-rpi
+    expose:
+      - "4600"
+    ports:
+      - "4601:4600"
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/adapters/acalog-rpi:/usr/src/app
+    tty: true
+    stdin_open: true
+  adapter-banner:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/banner-rpi
+    expose:
+      - "4600"
+    ports:
+      - "4602:4600"
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/adapters/banner-rpi:/usr/src/app
+    tty: true
+    stdin_open: true
+  adapter-yaml:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/yaml-rpi
+    expose:
+      - "4600"
+    ports:
+      - "4603:4600"
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/adapters/yaml-rpi:/usr/src/app
+  adapter-csv:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/csv-rpi
+    expose:
+      - "4600"
+    ports:
+      - "4604:4600"
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/adapters/csv-rpi:/usr/src/app
+    environment:
+      - CSV_SOURCE_201809=https://docs.google.com/spreadsheets/d/e/2PACX-1vThsxFovHKq-FpIx7keMhgvhPjBPS59EWOiMPEcFTKCi883GGmFLdKS4YFNbA8jfDzGciFYOZHZdE-x/pub?gid=0&single=true&output=csv
+  adapter-textbooks:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/textbooks-rpi
+    depends_on:
+      - adapter-banner
+    expose:
+      - "4600"
+    ports:
+      - "4605:4600"
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/adapters/textbooks-rpi:/usr/src/app
+    environment:
+      - EFOLLET_BOOKSTORE_ID=1461
