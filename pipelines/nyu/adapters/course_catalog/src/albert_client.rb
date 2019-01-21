@@ -1,5 +1,3 @@
-require 'nokogiri'
-require 'httpclient'
 require 'active_support'
 require 'active_support/core_ext'
 require 'pry'
@@ -22,8 +20,8 @@ class AlbertClient
 		get_drop_down_values 'term'
 	end
 
-	def query_albert(term_shortname, school_shortname, subject_shortname)
-		response = post_request_xml(term_shortname, school_shortname, subject_shortname)
+	def query_albert(term, school, subject)
+		response = post_request_xml(term, school, subject)
 		output = parse_data_response response
 		binding.pry
 		output
@@ -42,10 +40,10 @@ class AlbertClient
 			term: term,
 			acad_group: school,
 			subject: subject }
-		post_xml(ALBERT_DATA, form_body, extheader = { Referer: url })
+		post_html(ALBERT_DATA, form_body, extheader = { Referer: url })
 	end
 
-	def post_xml(url, body, extheader = {})
+	def post_html(url, body, extheader = {})
 		response = @http_client.post(url, body, extheader = extheader)
 		Nokogiri::HTML.parse(response.body)
 	end
@@ -73,27 +71,5 @@ class AlbertClient
 		# @http_client.send verb, params
 		response = @http_client.get(url)
 		Nokogiri::XML.parse(response.body)
-	end
-	def subjects school_shortname# TODO Need to either run javascript or fill out form to continue
-		# Or lets just hard code this lol
-		[
-				['PH','Physics'],
-				['CM','Chemistry']
-		].map do |item|
-			{
-					shortname: item[0],
-					longname: item[1]
-			}
-		end
-		# body = get_xml ALBERT_ROOT
-		# subject_tag = body.css('#subject')
-		# binding.pry
-		# subject_nodes = subject_tag.css('option')
-		# subject_nodes.map do |subject_node|
-		# 	{
-		# 		shortname: subject_node.attributes['value'].value,
-		# 		longname: subject_node.text
-		# 	}
-		# end
 	end
 end
