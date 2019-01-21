@@ -1,0 +1,1153 @@
+---
+schools:
+- shortname: GU
+  longname: Coll of Global Public Health - Grad
+  subjects:
+  - shortname: GPH-GU
+    longname: Global Public Health
+  - shortname: MAINT-GU
+    longname: Maintenance
+  - shortname: UGPH-GU
+    longname: Undergrad Global Public Health
+- shortname: UU
+  longname: Coll of Global Public Health-UGRD
+  subjects: []
+- shortname: UA
+  longname: College of Arts and Science
+  subjects:
+  - shortname: AHSEM-UA
+    longname: Advanced Honors Seminars
+  - shortname: ANST-UA
+    longname: Animal Studies
+  - shortname: ANTH-UA
+    longname: Anthropology
+  - shortname: ARTH-UA
+    longname: Art History
+  - shortname: BIOL-UA
+    longname: Biology
+  - shortname: SCHOL-UA
+    longname: CAS Scholars Program
+  - shortname: CHEM-UA
+    longname: Chemistry
+  - shortname: CAMS-UA
+    longname: Child/Adoles Mental Hlth Stds
+  - shortname: CLASS-UA
+    longname: Classics
+  - shortname: CORE-UA
+    longname: College Core Curriculum
+  - shortname: COLIT-UA
+    longname: Comparative Literature
+  - shortname: CSCI-UA
+    longname: Computer Science
+  - shortname: CRWRI-UA
+    longname: Creative Writing
+  - shortname: DS-UA
+    longname: Data Science
+  - shortname: DRLIT-UA
+    longname: Dramatic Literature
+  - shortname: EAST-UA
+    longname: East Asian Studies
+  - shortname: ECON-UA
+    longname: Economics
+  - shortname: ENGL-UA
+    longname: English
+  - shortname: ENVST-UA
+    longname: Environmental Studies
+  - shortname: EURO-UA
+    longname: European and Mediterranean Stu
+  - shortname: EXPOS-UA
+    longname: Expository Writing
+  - shortname: COHRT-UA
+    longname: First-Year Cohort Meeting
+  - shortname: FYSEM-UA
+    longname: First-Year Seminars
+  - shortname: FREN-UA
+    longname: French
+  - shortname: GERM-UA
+    longname: German
+  - shortname: HBRJD-UA
+    longname: Hebrew Judaic Studies
+  - shortname: HEL-UA
+    longname: Hellenic Studies
+  - shortname: HIST-UA
+    longname: History
+  - shortname: INTRL-UA
+    longname: International Relations
+  - shortname: IRISH-UA
+    longname: Irish Studies
+  - shortname: ITAL-UA
+    longname: Italian
+  - shortname: JOUR-UA
+    longname: Journalism
+  - shortname: LATC-UA
+    longname: Latin Amer-Caribbean Studies
+  - shortname: LWSOC-UA
+    longname: Law and Society
+  - shortname: LING-UA
+    longname: Linguistics
+  - shortname: MAINT-UA
+    longname: Maintenance
+  - shortname: MATH-UA
+    longname: Math
+  - shortname: MEDI-UA
+    longname: Medieval Renaissance Studies
+  - shortname: MEIS-UA
+    longname: Middle Eastern Islam Studies
+  - shortname: MUSIC-UA
+    longname: Music
+  - shortname: NEURL-UA
+    longname: Neural Science
+  - shortname: NODEP-UA
+    longname: Non-Departmental
+  - shortname: PHIL-UA
+    longname: Philosophy
+  - shortname: PHYS-UA
+    longname: Physics
+  - shortname: POL-UA
+    longname: Politics
+  - shortname: PORT-UA
+    longname: Portuguese
+  - shortname: PSYCH-UA
+    longname: Psychology
+  - shortname: PUBPL-UA
+    longname: Public Policy
+  - shortname: RELST-UA
+    longname: Religious Studies
+  - shortname: RUSSN-UA
+    longname: Russian Slavic Studies
+  - shortname: SCA-UA
+    longname: Social and Cultural Analysis
+  - shortname: SOC-UA
+    longname: Sociology
+  - shortname: SPAN-UA
+    longname: Spanish
+- shortname: CD
+  longname: College of Dentistry - Cont Ed
+  subjects:
+  - shortname: BASCI-CD
+    longname: Basic Sciences
+  - shortname: BEHSC-CD
+    longname: Behavioral Sciences
+  - shortname: DGSCI-CD
+    longname: Diagnostic Sciences
+  - shortname: ETHIC-CD
+    longname: Ethics
+  - shortname: IMPLA-CD
+    longname: Implant Dentistry
+- shortname: DN
+  longname: College of Dentistry - Grad
+  subjects:
+  - shortname: BAS01-DN
+    longname: Basic Sciences
+  - shortname: BAS06-DN
+    longname: Basic Sciences
+  - shortname: BASCI-DN
+    longname: Basic Sciences
+  - shortname: BEH03-DN
+    longname: Behavioral Sciences
+  - shortname: BEH05-DN
+    longname: Behavioral Sciences
+  - shortname: BIOMS-DN
+    longname: Biomaterials
+  - shortname: CLS03-DN
+    longname: Clinical Sciences
+  - shortname: CLS09-DN
+    longname: Clinical Sciences
+  - shortname: CLSCI-DN
+    longname: Clinical Sciences
+  - shortname: DGS03-DN
+    longname: Diagnostic Sciences
+  - shortname: PCL03-DN
+    longname: Preclinical Skills
+  - shortname: PCL07-DN
+    longname: Preclinical Skills
+  - shortname: PCL08-DN
+    longname: Preclinical Skills
+  - shortname: PCL09-DN
+    longname: Preclinical Skills
+- shortname: UD
+  longname: College of Dentistry - Undergrad
+  subjects:
+  - shortname: DHYG3-UD
+    longname: Dental Hygiene BS
+  - shortname: DHYG1-UD
+    longname: Dental Hygiene Level 1
+  - shortname: DHYG2-UD
+    longname: Dental Hygiene Level 2
+- shortname: GX
+  longname: Ctr for Urban Sci and Progress
+  subjects:
+  - shortname: CUSP-GX
+    longname: Ctr for Urban Sci and Progress
+- shortname: GG
+  longname: Gallatin - Grad
+  subjects:
+  - shortname: CORE-GG
+    longname: Core
+  - shortname: ELEC-GG
+    longname: Electives
+  - shortname: INDIV-GG
+    longname: Individualized Projects
+  - shortname: SCHOL-GG
+    longname: Scholarly Communities
+- shortname: UG
+  longname: Gallatin - Undergrad
+  subjects:
+  - shortname: WRTNG-UG
+    longname: Advanced Writing Courses
+  - shortname: ARTS-UG
+    longname: Arts Workshops
+  - shortname: COLLQ-UG
+    longname: Colloquium
+  - shortname: FIRST-UG
+    longname: First Year program
+  - shortname: INDIV-UG
+    longname: Individualized Projects
+  - shortname: IDSEM-UG
+    longname: Interdisciplinary Seminars
+  - shortname: PRACT-UG
+    longname: Practicum
+  - shortname: SASEM-UG
+    longname: Study Away Seminar
+- shortname: GA
+  longname: Graduate School of Arts and Science
+  subjects:
+  - shortname: AFRS-GA
+    longname: Africana Studies
+  - shortname: AMST-GA
+    longname: American Studies
+  - shortname: ANST-GA
+    longname: Animal Studies
+  - shortname: ANTH-GA
+    longname: Anthropology
+  - shortname: ARTH-GA
+    longname: Art and Architecture
+  - shortname: BMSC-GA
+    longname: Basic Medical Science
+  - shortname: BIOE-GA
+    longname: Bioethics
+  - shortname: BIOL-GA
+    longname: Biology
+  - shortname: BMIN-GA
+    longname: Biomedical Informatics
+  - shortname: CHEM-GA
+    longname: Chemistry
+  - shortname: CLASS-GA
+    longname: Classics
+  - shortname: COLIT-GA
+    longname: Comparative Literature
+  - shortname: CSCI-GA
+    longname: Computer Science
+  - shortname: CRWRI-GA
+    longname: Creative Writing
+  - shortname: CEH-GA
+    longname: Ctr for Experiment Humanities
+  - shortname: DS-GA
+    longname: Data Science
+  - shortname: EAST-GA
+    longname: East Asian Studies
+  - shortname: ECON-GA
+    longname: Economics
+  - shortname: ENGL-GA
+    longname: English
+  - shortname: EHSC-GA
+    longname: Environmental Health Science
+  - shortname: EURO-GA
+    longname: European and Mediterranean Stu
+  - shortname: FINH-GA
+    longname: Fine Arts
+  - shortname: FREN-GA
+    longname: French
+  - shortname: GERM-GA
+    longname: German
+  - shortname: GSAS-GA
+    longname: Grad School of Arts Science
+  - shortname: HBRJD-GA
+    longname: Hebrew and Judaic Studies
+  - shortname: HEL-GA
+    longname: Hellenic Studies
+  - shortname: HIST-GA
+    longname: History
+  - shortname: ISAW-GA
+    longname: Inst Study of the Ancient Wrld
+  - shortname: IFST-GA
+    longname: Institute of French Studies
+  - shortname: INTRL-GA
+    longname: International Relations
+  - shortname: IRISH-GA
+    longname: Irish Studies
+  - shortname: ITAL-GA
+    longname: Italian
+  - shortname: JOUR-GA
+    longname: Journalism
+  - shortname: LATC-GA
+    longname: Latin Amer-Caribbean Studies
+  - shortname: LWSOC-GA
+    longname: Law and Society
+  - shortname: LING-GA
+    longname: Linguistics
+  - shortname: MAINT-GA
+    longname: Maintenance
+  - shortname: MATH-GA
+    longname: Mathematics
+  - shortname: MEDI-GA
+    longname: Medieval Renaissance Studies
+  - shortname: MEIS-GA
+    longname: Middle Eastern Studies
+  - shortname: MSMS-GA
+    longname: Museum Studies
+  - shortname: MUSIC-GA
+    longname: Music
+  - shortname: NEST-GA
+    longname: Near Eastern Studies
+  - shortname: NEURL-GA
+    longname: Neural Science
+  - shortname: PHIL-GA
+    longname: Philosophy
+  - shortname: PHYS-GA
+    longname: Physics
+  - shortname: POET-GA
+    longname: Poetics and Theory
+  - shortname: POL-GA
+    longname: Politics
+  - shortname: PORT-GA
+    longname: Portuguese
+  - shortname: PSYCH-GA
+    longname: Psychology
+  - shortname: PDPSA-GA
+    longname: Psychotherapy Psychoanalysis
+  - shortname: RELST-GA
+    longname: Religious Studies
+  - shortname: RUSSN-GA
+    longname: Russian Slavic Studies
+  - shortname: SOC-GA
+    longname: Sociology
+  - shortname: SPAN-GA
+    longname: Spanish
+- shortname: UF
+  longname: Liberal Studies
+  subjects:
+  - shortname: AELS-UF
+    longname: Academic Engl for Liberal Stdy
+  - shortname: AGT-UF
+    longname: Advanced Global Topics
+  - shortname: AWS-UF
+    longname: Advanced Writing Studio
+  - shortname: APRGS-UF
+    longname: Approaches to Global Studies
+  - shortname: APR-UF
+    longname: 'Approaches: Sophomore Seminar'
+  - shortname: CWP-UF
+    longname: Creative Writing
+  - shortname: CWGV-UF
+    longname: 'Creative Writing: Global Voice'
+  - shortname: CFI-UF
+    longname: Cultural Foundations I
+  - shortname: CFII-UF
+    longname: Cultural Foundations II
+  - shortname: CFIII-UF
+    longname: Cultural Foundations III
+  - shortname: DC-UF
+    longname: Dean's Circle
+  - shortname: EAGC-UF
+    longname: East Asian Cultures- Global Cu
+  - shortname: ECI-UF
+    longname: Economics I
+  - shortname: ECII-UF
+    longname: Economics II
+  - shortname: ENSTU-UF
+    longname: Environmental Studies
+  - shortname: EXLII-UF
+    longname: Experiential Learning II
+  - shortname: FWS-UF
+    longname: Fieldwork Seminar
+  - shortname: GT-UF
+    longname: Global Topics
+  - shortname: HOU-UF
+    longname: History of the Universe
+  - shortname: IF-UF
+    longname: Independent Fieldwork
+  - shortname: IND-UF
+    longname: Independent Study
+  - shortname: JIRS-UF
+    longname: Junior Independent Research Se
+  - shortname: LAGC-UF
+    longname: Latin American Cultures- Globa
+  - shortname: LISCI-UF
+    longname: Life Science
+  - shortname: LIVN-UF
+    longname: Living in the Anthropocene
+  - shortname: SCTEC-UF
+    longname: Science of Technology
+  - shortname: SCAI-UF
+    longname: Senior Capstone I
+  - shortname: SRTH-UF
+    longname: Senior Thesis
+  - shortname: SFI-UF
+    longname: Social Foundations I
+  - shortname: SFII-UF
+    longname: Social Foundations II
+  - shortname: SFIII-UF
+    longname: Social Foundations III
+  - shortname: WRI-UF
+    longname: Writing I
+  - shortname: WRII-UF
+    longname: Writing II
+- shortname: NS
+  longname: NC Silver School of Social Work
+  subjects:
+  - shortname: PMC-NS
+    longname: Post Master's Certificate
+- shortname: GH
+  longname: NYU Abu Dhabi - Grad
+  subjects:
+  - shortname: ENGR-GH
+    longname: Engineering
+- shortname: UH
+  longname: NYU Abu Dhabi - Undergrad
+  subjects:
+  - shortname: ANTH-UH
+    longname: Anthropology
+  - shortname: ACS-UH
+    longname: Arab Crossroads Studies
+  - shortname: ARABL-UH
+    longname: Arabic Language
+  - shortname: ARTH-UH
+    longname: Art History
+  - shortname: BIOL-UH
+    longname: Biology
+  - shortname: BUSOR-UH
+    longname: Business Organizational Std
+  - shortname: CHEM-UH
+    longname: Chemistry
+  - shortname: CHINL-UH
+    longname: Chinese Language
+  - shortname: CS-UH
+    longname: Computer Science
+  - shortname: CADT-UH
+    longname: 'Core: Arts, Design Technolgy'
+  - shortname: CCOL-UH
+    longname: 'Core: Colloquium'
+  - shortname: CCEA-UH
+    longname: 'Core: Cultural Exploration A'
+  - shortname: CDAD-UH
+    longname: 'Core: Data and Discovery'
+  - shortname: CSTS-UH
+    longname: 'Core: Strct of Thogh Society'
+  - shortname: ECON-UH
+    longname: Economics
+  - shortname: ENGR-UH
+    longname: Engineering
+  - shortname: FILMM-UH
+    longname: Film and New Media
+  - shortname: FRENL-UH
+    longname: French Language
+  - shortname: HERST-UH
+    longname: Heritage Studies
+  - shortname: HIST-UH
+    longname: History
+  - shortname: HISTN-UH
+    longname: History - AEP/ESP
+  - shortname: IM-UH
+    longname: Interactive Media
+  - shortname: LEAD-UH
+    longname: Leadership Soc Entrepreneurs
+  - shortname: LAW-UH
+    longname: Legal Studies
+  - shortname: LITCW-UH
+    longname: Literature Creative Writing
+  - shortname: MATH-UH
+    longname: Mathematics
+  - shortname: MCC-UH
+    longname: Media, Culture Communication
+  - shortname: MUSIC-UH
+    longname: Music
+  - shortname: PHIL-UH
+    longname: Philosophy
+  - shortname: PHYED-UH
+    longname: Physical Education
+  - shortname: PHYS-UH
+    longname: Physics
+  - shortname: POLSC-UH
+    longname: Political Science
+  - shortname: PSYCH-UH
+    longname: Psychology
+  - shortname: PSYCN-UH
+    longname: Psychology – Non-Majors
+  - shortname: SCIEN-UH
+    longname: Science
+  - shortname: SMSP-UH
+    longname: Sheikh Mohamed Scholars Prog
+  - shortname: SRPP-UH
+    longname: Social Research Public Polic
+  - shortname: SOCSC-UH
+    longname: Social Sciences
+  - shortname: THEAT-UH
+    longname: Theater
+  - shortname: UNIST-UH
+    longname: University Studies
+  - shortname: URBAN-UH
+    longname: Urbanization
+  - shortname: VISAR-UH
+    longname: Visual Arts
+  - shortname: WRIT-UH
+    longname: Writing
+- shortname: UI
+  longname: NYU Shanghai - Undergrad
+  subjects: []
+- shortname: GN
+  longname: Rory Meyers College of Nursing-Grad
+  subjects:
+  - shortname: MAINT-GN
+    longname: Maintenance
+  - shortname: NURSE-GN
+    longname: Nursing - Graduate
+- shortname: UN
+  longname: Rory Meyers College of Nursing-UGRD
+  subjects:
+  - shortname: MAINT-UN
+    longname: Maintenance
+  - shortname: NURSE-UN
+    longname: Nursing - Undergraduate
+- shortname: DC
+  longname: SPS - Diploma
+  subjects:
+  - shortname: CRED1-DC
+    longname: Credit Analysis Diploma
+  - shortname: PARAL-DC
+    longname: Paralegal
+- shortname: GC
+  longname: SPS - Grad
+  subjects:
+  - shortname: CONM1-GC
+    longname: Construction Management MA/GC
+  - shortname: FDGR1-GC
+    longname: Fundraising MS
+  - shortname: GLOB1-GC
+    longname: Global Studies
+  - shortname: GCOM1-GC
+    longname: Graphic Communications
+  - shortname: TCHS1-GC
+    longname: Hospitality Management MA/GC
+  - shortname: INTG1-GC
+    longname: Integrated Marketing
+  - shortname: HRCM1-GC
+    longname: MS in Human Resources
+  - shortname: MSPM1-GC
+    longname: MS in Project Management
+  - shortname: MAINT-GC
+    longname: Maintenance
+  - shortname: MASY1-GC
+    longname: Management Systems MA/GC
+  - shortname: PWRT1-GC
+    longname: Professional Writing
+  - shortname: PRCC1-GC
+    longname: Public Relations MS
+  - shortname: PUBB1-GC
+    longname: Publishing Masters
+  - shortname: QUAL1-GC
+    longname: Quality Assurance
+  - shortname: DEVE1-GC
+    longname: RE Development
+  - shortname: REAL1-GC
+    longname: Real Estate Masters/GC
+  - shortname: RWLD1-GC
+    longname: Real World Graduate
+  - shortname: TCSB1-GC
+    longname: Sports Business Magmt. MA/GC
+  - shortname: TCTM1-GC
+    longname: Tourism Management
+  - shortname: TRAN1-GC
+    longname: Translation
+- shortname: UC
+  longname: SPS - Undergrad
+  subjects:
+  - shortname: ANTH1-UC
+    longname: Anthropology
+  - shortname: ADAV1-UC
+    longname: Applied Data Analytics and Vis
+  - shortname: ARTH1-UC
+    longname: Art History
+  - shortname: ARTS1-UC
+    longname: Arts
+  - shortname: BUSN1-UC
+    longname: Business
+  - shortname: CWRG1-UC
+    longname: Creative Writing
+  - shortname: DGCM1-UC
+    longname: Digital Communications Media
+  - shortname: FILV1-UC
+    longname: Digital Communications Media
+  - shortname: ECON1-UC
+    longname: Economics
+  - shortname: EXWR1-UC
+    longname: Expository Writing
+  - shortname: HEAL1-UC
+    longname: Healthcare Management
+  - shortname: HIST1-UC
+    longname: History
+  - shortname: TCHT1-UC
+    longname: Hotel Tourism Management
+  - shortname: HUMN1-UC
+    longname: Humanities
+  - shortname: ISMM1-UC
+    longname: Information Systems Management
+  - shortname: LRMS1-UC
+    longname: Leadership and Management Stud
+  - shortname: LITR1-UC
+    longname: Literature
+  - shortname: MKAN1-UC
+    longname: Marketing Analytics
+  - shortname: MATH1-UC
+    longname: Math
+  - shortname: MEST1-UC
+    longname: Media Studies
+  - shortname: ORBC1-UC
+    longname: Organizational Behavior Chan
+  - shortname: POLS1-UC
+    longname: Politics
+  - shortname: PSYC1-UC
+    longname: Psychology
+  - shortname: REAL1-UC
+    longname: Real Estate
+  - shortname: RWLD1-UC
+    longname: Real World Undergraduate
+  - shortname: REBS1-UC
+    longname: Schack Undergraduate Real Esta
+  - shortname: SCNC1-UC
+    longname: Science
+  - shortname: SOCS1-UC
+    longname: Social Sciences
+  - shortname: SOCY1-UC
+    longname: Sociology
+  - shortname: TCSM1-UC
+    longname: Sports Management
+- shortname: MD
+  longname: School of Medicine
+  subjects:
+  - shortname: INTER-MD
+    longname: Interdepartmental
+  - shortname: MED-MD
+    longname: Medicine
+- shortname: GS
+  longname: Silver School - Grad
+  subjects:
+  - shortname: MSWAC-GS
+    longname: Advanced Concentration Courses
+  - shortname: DSWSW-GS
+    longname: Doctor of Social Welfare
+  - shortname: PHDSW-GS
+    longname: Doctoral
+  - shortname: MSWEL-GS
+    longname: Electives
+  - shortname: MSWFD-GS
+    longname: Fieldlearning
+  - shortname: MAINT-GS
+    longname: Maintenance
+  - shortname: MSWPF-GS
+    longname: Professional Foundation Course
+- shortname: US
+  longname: Silver School - Undergrad
+  subjects:
+  - shortname: UNDSW-US
+    longname: Undergrad Social Work
+- shortname: GE
+  longname: Steinhardt - Graduate
+  subjects:
+  - shortname: AMLT-GE
+    longname: 'Administration, Leadership '
+  - shortname: ASH-GE
+    longname: Appl Stat, Social Sci, Human
+  - shortname: APSY-GE
+    longname: Applied Psychology
+  - shortname: APSTA-GE
+    longname: Applied Statistics
+  - shortname: ARTP-GE
+    longname: Art Art Professions
+  - shortname: ARTED-GE
+    longname: Art Education
+  - shortname: ARTCR-GE
+    longname: Art Theory Critical Studies
+  - shortname: ARTT-GE
+    longname: Art Therapy
+  - shortname: BILED-GE
+    longname: Bilingual Education
+  - shortname: CHDED-GE
+    longname: Childhood Education
+  - shortname: CSCD-GE
+    longname: 'Communicative Sciences '
+  - shortname: ARCS-GE
+    longname: Costume Studies
+  - shortname: MPADE-GE
+    longname: Dance Education
+  - shortname: MPAGC-GE
+    longname: Departmental Courses
+  - shortname: DCADV-GE
+    longname: Doctoral Advisement
+  - shortname: MPADT-GE
+    longname: Drama Therapy
+  - shortname: ECED-GE
+    longname: Early Childhood
+  - shortname: EJST-GE
+    longname: Education Jewish Studies
+  - shortname: EDLED-GE
+    longname: Educational Administration Edu
+  - shortname: EDCT-GE
+    longname: 'Educational Communications '
+  - shortname: EDPLY-GE
+    longname: Educational Policy
+  - shortname: MPAET-GE
+    longname: Educational Theatre
+  - shortname: ENGED-GE
+    longname: English Education
+  - shortname: ENYC-GE
+    longname: Environmental Conservation Ed
+  - shortname: FOOD-GE
+    longname: Food Studies
+  - shortname: FLGED-GE
+    longname: Foreign Language Education
+  - shortname: HPSE-GE
+    longname: Higher Post-Secondary Educ
+  - shortname: HSED-GE
+    longname: History of Education
+  - shortname: IUCD-GE
+    longname: Inter-University Doctoral Cons
+  - shortname: MPAIA-GE
+    longname: Interactive Music Courses
+  - shortname: RESCH-GE
+    longname: Interdepartmental Research
+  - shortname: INTE-GE
+    longname: International Education
+  - shortname: LANED-GE
+    longname: Language Education
+  - shortname: LITC-GE
+    longname: Literacy Education
+  - shortname: MAINT-GE
+    longname: Maintenance
+  - shortname: MTHED-GE
+    longname: Mathematics Education
+  - shortname: MCC-GE
+    longname: Media, Culture Communication
+  - shortname: MPAMB-GE
+    longname: Music Business
+  - shortname: MPAME-GE
+    longname: Music Education
+  - shortname: MPABR-GE
+    longname: 'Music Instrumental: Brass'
+  - shortname: MPAJZ-GE
+    longname: 'Music Instrumental: Jazz'
+  - shortname: MPAPS-GE
+    longname: 'Music Instrumental: Percussion'
+  - shortname: MPAPE-GE
+    longname: 'Music Instrumental: Piano'
+  - shortname: MPASS-GE
+    longname: 'Music Instrumental: Strings'
+  - shortname: MPAVP-GE
+    longname: 'Music Instrumental: Voice'
+  - shortname: MPAWW-GE
+    longname: 'Music Instrumental: Woodwinds'
+  - shortname: MPATC-GE
+    longname: 'Music Performance/Theory '
+  - shortname: MPATE-GE
+    longname: Music Technology
+  - shortname: MPAMT-GE
+    longname: Music Therapy
+  - shortname: NUTR-GE
+    longname: Nutrition Dietetics
+  - shortname: OT-GE
+    longname: Occupational Therapy
+  - shortname: MPAPA-GE
+    longname: Performing Arts Administration
+  - shortname: PHED-GE
+    longname: Philosophy of Education
+  - shortname: PT-GE
+    longname: Physical Therapy
+  - shortname: SCIED-GE
+    longname: Science Education
+  - shortname: EMAT-GE
+    longname: Social Studies Edu - Distance
+  - shortname: SOCED-GE
+    longname: Social Studies Education
+  - shortname: SOED-GE
+    longname: Sociology of Education
+  - shortname: SPCED-GE
+    longname: Special Education
+  - shortname: SAHS-GE
+    longname: Student Affairs Honors Semin
+  - shortname: ART-GE
+    longname: Studio Art
+  - shortname: TCHL-GE
+    longname: Teaching Learning
+  - shortname: TESOL-GE
+    longname: Teaching English as a Second
+  - shortname: ARVA-GE
+    longname: Visual Arts Administration
+- shortname: UE
+  longname: Steinhardt - Undergraduate
+  subjects:
+  - shortname: ACE-UE
+    longname: Advanced College Essay
+  - shortname: ASL-UE
+    longname: American Sign Language
+  - shortname: APSY-UE
+    longname: Applied Psychology
+  - shortname: APSTA-UE
+    longname: Applied Statistics
+  - shortname: ARTP-UE
+    longname: Art Art Professions
+  - shortname: ARTCR-UE
+    longname: Art Theory Critical Studies
+  - shortname: ARCS-UE
+    longname: Art and Costume Studies
+  - shortname: CHDED-UE
+    longname: Childhood Education
+  - shortname: CSCD-UE
+    longname: 'Communicative Sciences '
+  - shortname: MPADE-UE
+    longname: Dance Education
+  - shortname: MPAGC-UE
+    longname: Departmental Courses
+  - shortname: ECED-UE
+    longname: Early Childhood
+  - shortname: EDST-UE
+    longname: Education Studies
+  - shortname: EDCT-UE
+    longname: Educational Communication and
+  - shortname: MPAET-UE
+    longname: Educational Theatre
+  - shortname: ENGED-UE
+    longname: English Education
+  - shortname: FOOD-UE
+    longname: Food Studies
+  - shortname: FLGED-UE
+    longname: Foreign Language Education
+  - shortname: HEOP-UE
+    longname: Higher Education Opportunities
+  - shortname: HSED-UE
+    longname: History of Education
+  - shortname: MPAIA-UE
+    longname: Interactive Music Courses
+  - shortname: INTE-UE
+    longname: International Education
+  - shortname: LITC-UE
+    longname: Literacy Education
+  - shortname: MAINT-UE
+    longname: Maintenance
+  - shortname: MTHED-UE
+    longname: Mathematics Education
+  - shortname: MCC-UE
+    longname: Media, Culture Communication
+  - shortname: MPAMB-UE
+    longname: Music Business
+  - shortname: MPAME-UE
+    longname: Music Education
+  - shortname: MPABR-UE
+    longname: 'Music Instrumental: Brass'
+  - shortname: MPAJZ-UE
+    longname: 'Music Instrumental: Jazz'
+  - shortname: MPAPS-UE
+    longname: 'Music Instrumental: Percussion'
+  - shortname: MPAPE-UE
+    longname: 'Music Instrumental: Piano'
+  - shortname: MPASS-UE
+    longname: 'Music Instrumental: Strings'
+  - shortname: MPAVP-UE
+    longname: 'Music Instrumental: Voice'
+  - shortname: MPAWW-UE
+    longname: 'Music Instrumental: Woodwinds'
+  - shortname: MPATC-UE
+    longname: 'Music Performance/Theory '
+  - shortname: MPATE-UE
+    longname: Music Technology
+  - shortname: MPAMT-UE
+    longname: Music Therapy
+  - shortname: NUTR-UE
+    longname: Nutrition Dietetics
+  - shortname: OT-UE
+    longname: Occupational Therapy
+  - shortname: PHED-UE
+    longname: Philosophy of Education
+  - shortname: SCIED-UE
+    longname: Science Education
+  - shortname: SOCED-UE
+    longname: Social Studies Education
+  - shortname: SOED-UE
+    longname: Sociology of Education
+  - shortname: SPCED-UE
+    longname: Special Education
+  - shortname: SAHS-UE
+    longname: Student Affairs Honors Semin
+  - shortname: ART-UE
+    longname: Studio Art
+  - shortname: TCHL-UE
+    longname: Teaching Learning
+- shortname: GB
+  longname: Stern - Grad
+  subjects:
+  - shortname: ACCT-GB
+    longname: Accounting
+  - shortname: BSPA-GB
+    longname: Business Society
+  - shortname: CONS-GB
+    longname: Consortium Courses
+  - shortname: COR1-GB
+    longname: Core Course
+  - shortname: COR2-GB
+    longname: Core Course, capstone
+  - shortname: ECON-GB
+    longname: Economics
+  - shortname: FINC-GB
+    longname: Finance
+  - shortname: DBIN-GB
+    longname: Global Trip
+  - shortname: INFO-GB
+    longname: Information Systems
+  - shortname: INTA-GB
+    longname: Interarea
+  - shortname: MGMT-GB
+    longname: Management
+  - shortname: MCOM-GB
+    longname: Management Communication
+  - shortname: MKTG-GB
+    longname: Marketing
+  - shortname: NOCR-GB
+    longname: Non-Credit
+  - shortname: OPMG-GB
+    longname: Operations Management
+  - shortname: STAT-GB
+    longname: Statistics Operations Rsrch
+- shortname: UB
+  longname: Stern - Undergrad
+  subjects:
+  - shortname: ACCT-UB
+    longname: Accounting
+  - shortname: BPEP-UB
+    longname: Business and Political Economy
+  - shortname: BSPA-UB
+    longname: Business and Society
+  - shortname: INFO-UB
+    longname: Computing and Data Science
+  - shortname: ECON-UB
+    longname: Economics
+  - shortname: FINC-UB
+    longname: Finance
+  - shortname: MGMT-UB
+    longname: Management
+  - shortname: MKTG-UB
+    longname: Marketing
+  - shortname: MULT-UB
+    longname: Multidisciplinary
+  - shortname: OPMG-UB
+    longname: Operations Management
+  - shortname: SOIM-UB
+    longname: Social Impact
+  - shortname: STAT-UB
+    longname: Statistics Operations Resear
+  - shortname: IBEX-UB
+    longname: Study Abroad
+- shortname: GY
+  longname: Tandon - Grad
+  subjects:
+  - shortname: BE-GY
+    longname: BioEngineering
+  - shortname: BI-GY
+    longname: Bioinformatics
+  - shortname: BT-GY
+    longname: Biotechnology
+  - shortname: BTE-GY
+    longname: Biotechnology Entrepreneursh
+  - shortname: CBE-GY
+    longname: Chemical Biological Engnrng
+  - shortname: CM-GY
+    longname: Chemistry
+  - shortname: CE-GY
+    longname: Civil Urban Engineering
+  - shortname: CP-GY
+    longname: Co-op Education Program
+  - shortname: CS-GY
+    longname: Computer Science
+  - shortname: ECE-GY
+    longname: Elect. Engineering - ECE GRAD
+  - shortname: FRE-GY
+    longname: Finance and Risk Engineering
+  - shortname: IE-GY
+    longname: Industrial Engineering
+  - shortname: DM-GY
+    longname: Integrated Digital Media
+  - shortname: MG-GY
+    longname: Management
+  - shortname: MN-GY
+    longname: Manufacturing Engineering
+  - shortname: MA-GY
+    longname: Mathematics
+  - shortname: ME-GY
+    longname: Mechanical Engineering
+  - shortname: PH-GY
+    longname: Physics
+  - shortname: RE-GY
+    longname: Registrar
+  - shortname: TR-GY
+    longname: Transportation
+- shortname: UY
+  longname: Tandon - Undergrad
+  subjects:
+  - shortname: AE-UY
+    longname: Aerospace Engineering
+  - shortname: BMS-UY
+    longname: Biomolecular Science
+  - shortname: CBE-UY
+    longname: Chemical Biological Enginrng
+  - shortname: CM-UY
+    longname: Chemistry
+  - shortname: CE-UY
+    longname: Civil Urban Engineering
+  - shortname: CP-UY
+    longname: Co-op Education Program
+  - shortname: CS-UY
+    longname: Computer Science
+  - shortname: CAM-UY
+    longname: Culture, Arts, and Media
+  - shortname: ECE-UY
+    longname: Elect. Engineering - ECE UGRD
+  - shortname: EN-UY
+    longname: English
+  - shortname: EX-UY
+    longname: Exam Hour
+  - shortname: FIN-UY
+    longname: Finance
+  - shortname: EG-UY
+    longname: General Engineering
+  - shortname: GS-UY
+    longname: General Studies
+  - shortname: HI-UY
+    longname: History
+  - shortname: DM-UY
+    longname: Integrated Digital Media
+  - shortname: MG-UY
+    longname: Management
+  - shortname: MA-UY
+    longname: Mathematics
+  - shortname: ME-UY
+    longname: Mechanical Engineering
+  - shortname: MD-UY
+    longname: Media Studies
+  - shortname: PH-UY
+    longname: Physics
+  - shortname: PHP-UY
+    longname: Prehealth Prep
+  - shortname: STS-UY
+    longname: Science and Technology
+  - shortname: SEG-UY
+    longname: Society, Envirnmnt, Globaliz
+  - shortname: SL-UY
+    longname: Student Life
+  - shortname: URB-UY
+    longname: Urban Studies
+  - shortname: VIP-UY
+    longname: Vertically Integrated Projects
+- shortname: GT
+  longname: Tisch - Grad
+  subjects:
+  - shortname: CINE-GT
+    longname: Cinema Studies
+  - shortname: ASPP-GT
+    longname: Ctr for Art, Society Pub Pol
+  - shortname: DANC-GT
+    longname: Dance
+  - shortname: DESG-GT
+    longname: Design
+  - shortname: DWPG-GT
+    longname: Dramatic Writing
+  - shortname: GAMES-GT
+    longname: Game Design
+  - shortname: ACTG-GT
+    longname: Graduate Acting
+  - shortname: GFMTV-GT
+    longname: Graduate Film TV
+  - shortname: ITPG-GT
+    longname: Interactive Telecommunications
+  - shortname: MAINT-GT
+    longname: Maintenance
+  - shortname: GMTW-GT
+    longname: Musical Theatre
+  - shortname: OART-GT
+    longname: Open Arts Curriculum
+  - shortname: PERF-GT
+    longname: Performance Studies
+  - shortname: PHTI-GT
+    longname: Photography and Imaging
+- shortname: UT
+  longname: Tisch - Undergrad
+  subjects:
+  - shortname: CINE-UT
+    longname: Cinema Studies
+  - shortname: ASPP-UT
+    longname: Ctr for Art, Society Pub Pol
+  - shortname: DANC-UT
+    longname: Dance
+  - shortname: THEA-UT
+    longname: Drama
+  - shortname: DWPG-UT
+    longname: Dramatic Writing
+  - shortname: GAMES-UT
+    longname: Game Design
+  - shortname: ISPEC-UT
+    longname: Int'l Pgms TSOA Special Pgms
+  - shortname: ICINE-UT
+    longname: Int`l Pgms, Cinema Studies
+  - shortname: ITHEA-UT
+    longname: Int`l Pgms, Drama
+  - shortname: IDWPG-UT
+    longname: Int`l Pgms, Dramatic Writing
+  - shortname: IFMTV-UT
+    longname: Int`l Pgms, Film Television
+  - shortname: IPHTI-UT
+    longname: Int`l Pgms, Photography
+  - shortname: IMNY-UT
+    longname: Interactive Media Arts
+  - shortname: MAINT-UT
+    longname: Maintenance
+  - shortname: GMTW-UT
+    longname: Musical Theatre
+  - shortname: OART-UT
+    longname: Open Arts Curriculum
+  - shortname: PERF-UT
+    longname: Performance Studies
+  - shortname: PHTI-UT
+    longname: Photography and Imaging
+  - shortname: REMU-UT
+    longname: Recorded Music
+  - shortname: SFMTV-UT
+    longname: Spr Sem at Tisch - Film TV
+  - shortname: FMTV-UT
+    longname: Undergrad Film TV
+- shortname: GP
+  longname: Wagner - Grad
+  subjects:
+  - shortname: CAP-GP
+    longname: Capstone
+  - shortname: PHD-GP
+    longname: Doctoral
+  - shortname: EXEC-GP
+    longname: Executive MPA
+  - shortname: MHA-GP
+    longname: Health Administration
+  - shortname: HPAM-GP
+    longname: Health policy and management
+  - shortname: MSPP-GP
+    longname: M.S. in Public Policy Courses
+  - shortname: MAINT-GP
+    longname: Maintenance
+  - shortname: NONCR-GP
+    longname: Noncredit
+  - shortname: PADM-GP
+    longname: Pub and Nonprofit MGMT and Pol
+  - shortname: CORE-GP
+    longname: School-wide core
+  - shortname: UPADM-GP
+    longname: UG Pub Nonprofit MGT and Pol
+  - shortname: URPL-GP
+    longname: Urban planning
+- shortname: UW
+  longname: Wagner - Undergrad
+  subjects: []
