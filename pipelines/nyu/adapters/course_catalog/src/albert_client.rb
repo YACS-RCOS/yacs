@@ -7,69 +7,77 @@ class AlbertClient
 	ALBERT_ROOT = 'https://m.albert.nyu.edu/app/catalog/classSearch/'
 	ALBERT_DATA = 'https://m.albert.nyu.edu/app/catalog/getClassSearch'
 
-	def initialize
+	def initialize schools_filename='/usr/src/app/schools.yml'
 		@http_client = HTTPClient.new
 		@csrf_token = get_csrf_token
+		@schools_filename = schools_filename
 	end
 
-	def schools
-		get_drop_down_values 'search-acad-group'
+	def schools term_shortname
+		schools.each do |school|
+			schools[:subjects].each do |subject|
+				subject[:listings] = listings term[:shortname], school[:shortname], subject[:shortname]
+			end
+		end
 	end
+
+	# def schools
+	# 	get_drop_down_values 'search-acad-group'
+	# end
 
 	def terms
 		get_drop_down_values 'term'
 	end
 
-	def query_albert(term, school, subject)
-		response = post_request_xml(term, school, subject)
-		output = parse_data_response response
-		binding.pry
-		output
-	end
-
-	def parse_data_response response
-		nil
-	end
+	# def parse_data_response response
+	# 	nil
+	# end
 
 	private
 
-	def post_request_xml(term, school, subject)
-		url = URI::join(ALBERT_ROOT,term.to_s)
+	def listings term_shortname, school_shortname, subject_shortname
+		response = post_request_xml term_shortname, school_shortname, subject_shortname
+		extract_listings response
+	end
+
+	def schools
+		YAML.load schools_filename
+	end
+
+	def extract_listings html
+		
+	end
+
+	def post_request_xml term, school, subject
+		url = URI::join ALBERT_ROOT, term.to_s
 		form_body = {
 			CSRFToken: @csrf_token,
 			term: term,
 			acad_group: school,
-			subject: subject }
-		post_html(ALBERT_DATA, form_body, extheader = { Referer: url })
-	end
-
-	def post_html(url, body, extheader = {})
-		response = @http_client.post(url, body, extheader = extheader)
-		Nokogiri::HTML.parse(response.body)
+			subject: subject
+		}
+		request_html :post, ALBERT_DATA, nil, form_body, { Referer: url }
 	end
 
 	def get_drop_down_values id
-		xml = get_xml ALBERT_ROOT
+		xml = request_html :get, ALBERT_ROOT
 		nodes = xml.css("##{id}").css('option')
-		nodes[1..].map do |node|
-			{shortname: node.attributes['value'].value,
-				longname: node.text }
+		nodes[1..].map do |node|=
+			{
+				shortname: node.attributes['value'].value,
+				longname: node.text
+			}
 		end
 	end
 
 	def get_csrf_token
 		response = @http_client.get ALBERT_ROOT
 		cookies = @http_client.cookie_manager.cookies
-		cookies.each do |cookie|
-			if cookie.name == 'CSRFCookie'
-				return cookie.value
-			end
-		end
+		cookies.select { |c| c.name == 'CSRFCookie'}
 	end
 
-	def get_xml url # TODO take method name as string
-		# @http_client.send verb, params
-		response = @http_client.get(url)
-		Nokogiri::XML.parse(response.body)
+	def request_html method, url, query=nil, body=nil, headers={}
+		response = @http_client.request method, url, query, body
+		Nokogiri::HTML.parse response.body
 	end
 end
