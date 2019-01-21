@@ -21,6 +21,9 @@ def parse_term_shortname term_shortname
 	term_shortname
 end
 
+get_data 1194, 'UA', 'AHSEM-UA'
+
+quit
 get("/favicon.ico") { pps Hash.new }
 
 get "/:term_shortname" do
