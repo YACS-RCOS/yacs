@@ -4,7 +4,6 @@ require 'oj'
 require_relative 'albert_client'
 require 'pry'
 
-
 set :bind, '0.0.0.0'
 set :port, 4600
 
@@ -14,23 +13,25 @@ def pps data
 	"<pre>#{JSON.pretty_generate(data)}</pre>"
 end
 
+def get_data(term, school, subject)
+	$albert_client.query_albert(term, school, subject)
+end
+
+get("/favicon.ico") { pps Hash.new }
+
 get "/:term_shortname" do
-	if params[:term_shortname] == "favicon.ico"
-		return pps Hash.new
-	end
-	school_shortname = 'UA'
-	subject_shortname = 'AHSEM-UA'
-	pps $albert_client.query_albert(params[:term_shortname], school_shortname, subject_shortname)
+	pps get_data(params[:term_shortname], 'UA', 'AHSEM-UA')
 end
 
-get "/metadata/terms" do
-	pps $albert_client.terms
-end
-
-get "/metadata/schools" do
-	pps $albert_client.schools
+get "/metadata/:keyword" do
+	pps $albert_client.send(params[:keyword])
 end
 
 get "/metadata/subjects/:school_shortname" do
 	pps nil
+end
+
+get "/test/:test_data" do
+	term, school, subject = params[:test_data].split(',')
+	get_data(term, school, subject)
 end
