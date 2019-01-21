@@ -1,7 +1,7 @@
 require 'sinatra'
 require 'sinatra/json'
 require 'oj'
-require_relative 'albert_client'
+require_relative 'src/albert_client'
 require 'pry'
 
 set :bind, '0.0.0.0'
@@ -15,6 +15,10 @@ end
 
 def get_data(term, school, subject)
 	$albert_client.query_albert(term, school, subject)
+end
+
+def parse_term_shortname term_shortname
+	term_shortname
 end
 
 get("/favicon.ico") { pps Hash.new }
