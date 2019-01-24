@@ -1,6 +1,6 @@
 require 'pry'
 
-module ExtractData
+module ExtractListingData
 
   # List of courses for a subject
   def self.extract_listings html
@@ -81,5 +81,32 @@ module ExtractData
 
 end
 
+module ExtractSectionData
 
+  def extract_section html
+    fields = html.css('.section-content.clearfix')
+    units, description, meets, room = fields.values_at(3,5,9,11).map { |element| parse_field element }
+    credits = units[0].to_i
+
+    # Bldg:GCASL Room:275 Loc: Washington Square
+    location = room.split(/ /).first(2).map { |item| item.split(/:/).last }.join(' ')
+    
+    # MoWe 2:00PM - 3:15PM
+    periods_count = meets.split(/(?<!-) (?![-])/).each_slice(2).map do |days,time|
+      days.size
+    end.sum / 2
+
+    {
+      "min_credits" => credits,
+      "max_credits" => credits,
+      "description" => description,
+      "periods"     => Array.new(periods_count, Hash["location",location])
+    }
+  end
+
+  def parse_field element
+    element.css('div.pull-right > div').text.strip
+  end
+
+end
 
