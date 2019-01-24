@@ -1,101 +1,85 @@
 require 'pry'
-require 'uri'
 
-# List of courses for a subject
-def extract_listings html
-  elements = html.children[1].child.children[1..]
-  current = nil
-  elements.map do |item|
-    if item.name == 'div'
-      current = []
-      parse_course_header item,current
-    else
-      if item.name == 'a'
-        current << (parse_section item)
+module ExtractData
+
+  # List of courses for a subject
+  def self.extract_listings html
+    elements = html.css('div.primary-head ~ *')
+    current = nil
+    elements.map do |item|
+      if item.name == 'div'
+        current = []
+        self.parse_course_header item,current
+      else
+        current << (self.parse_section item)
       end
-      nil
-    end
-  end.select { |item| item.is_a? Hash }
-end
-
-def parse_course_header div_tag,sections
-  shortname_raw, longname = div_tag.text.split ' - '
-  shortname = shortname_raw.split(' ')[1]
-  { # Yacs format
-    "shortname" => shortname,
-    "longname" => longname,
-    "min_credits" => nil,
-    "max_credits" => nil,
-    "description" => nil,
-    "sections" => sections
-  }
-end
-
-def parse_section a_tag
-  course_url = a_tag.attributes['href'].value
-  crn = URI(course_url).path.chomp('/').split('/').last
-
-  data_div = a_tag.children.find { |element| element.name == 'div' }
-  enroll_status = data_div.attributes['data-enrl_stat'].value
-
-  content_divs = data_div.children.select { |element| element.name == 'div' }
-
-  section_number, section_type = parse_section_header content_divs[0].text.strip
-  periods = parse_section_times content_divs[2].text.strip,section_type
-  instructors = parse_section_instructors content_divs[4].text.strip
-
-  {
-    "shortname" => section_number, # required, must be unique-per-listing
-    "instructors" => instructors, # optional
-    "crn" => crn, # required, registration number/id, unique-per-term
-    "seats" => 1, # optional, total seats in section
-    "seats_taken" => enroll_status == 'O' ? 0 : 1, # optional, seats taken in section (available = seats - seats_taken)
-    "periods" => periods
-  }
-end
-
-def parse_section_header sec_header # Section: 001-LEC (7869)
-  sec_header.split(' ')[1].split('-')
-end
-
-# Days/Times: MoWe 9:30am - 10:45am Fr 2:00pm - 4:00pm Fr 2:00pm - 4:00pm
-DaysOfWeek = "SuMoTuWeThFrSa".scan(/../).zip(0..6).to_h
-def parse_section_times sec_times_string, type
-  times_strings = sec_times_string.split(/(?<!-) (?![- ])/)[1..]
-  times = Hash[times_strings.each_slice(2).to_a]
-  periods = []
-  times.each do |days,time|
-    start_time_string, end_time_string = time.split(/ - /)
-    days.scan(/../).each do |day|
-      periods << {
-        "day" => ::DaysOfWeek[day], # required, day of week (Sunday = 0, Saturday = 6)
-        "start" => parse_period_time(start_time_string), # required, start time (24hr)
-        "end" => parse_period_time(end_time_string), # required, end time (24hr)
-        "type" => type, # optional, but please be consistent in naming if used
-        "location" => nil # optional, but please abbreviate if used
-      }
-    end
+    end.select { |item| item.is_a? Hash }
   end
-  periods
+
+  def self.parse_course_header div_tag, sections
+    shortname_raw, longname = div_tag.text.split ' - '
+    shortname = shortname_raw.split(' ')[1]
+    { # Yacs format
+      "shortname" => shortname,
+      "longname" => longname,
+      "sections" => sections
+    }
+  end
+
+  def self.parse_section a_tag
+    course_url = a_tag.attributes['href'].value
+    crn = course_url.chomp('/').split('/').last
+
+    data_div = a_tag.css('div.section-content')
+    enroll_status = data_div.attributes['data-enrl_stat'].value
+
+    content = data_div.css('div.section-body').map { |element| element.text.strip }
+    header, times_string, instructors_string = content.values_at(0,2,4)
+
+    shortname, section_type = self.parse_course_header header
+    periods = self.parse_section_times times_string, section_type
+    instructors = self.parse_section_instructors instructors_string
+
+    {
+      "shortname" => shortname, # required, must be unique-per-listing
+      "instructors" => instructors, # optional
+      "crn" => crn, # required, registration number/id, unique-per-term
+      # "status" => enroll_status,
+      "periods" => periods
+    }
+  end
+
+  def self.parse_course_header course_header # Section: 001-LEC (7869)
+    course_header.split(' ')[1].split('-')
+  end
+
+  # Days/Times: MoWe 9:30am - 10:45am Fr 2:00pm - 4:00pm Fr 2:00pm - 4:00pm
+  DAYS_OF_WEEK = {"Su"=>0, "Mo"=>1, "Tu"=>2, "We"=>3, "Th"=>4, "Fr"=>5, "Sa"=>6}
+  def self.parse_section_times section_times_string, type
+    times_strings = section_times_string.split(/(?<!-) (?![- ])/)[1..]
+    time_strings.each_slice(2).map do |days, time|
+
+      start_time, end_time = time.split(/ - /).map do |time_string|
+        Time.parse(time_string).strftime("%H%M")
+      end
+
+      days.scan(/../).map do |day|
+        {
+          "day" => self::DAYS_OF_WEEK[day], # required, day of week (Sunday = 0, Saturday = 6)
+          "start" => start_time, # required, start time (24hr)
+          "end" => end_time, # required, end time (24hr)
+          "type" => type, # optional, but please be consistent in naming if used
+        }
+      end
+    end.flatten
+  end
+
+  # Instructor: Esteban O Mazzoni, Gloria Coruzzi, Katie Schneider, Patrick Eichenberger
+  def parse_section_instructors section_instructor_string
+    section_instructor_string.partition("Instructor: ").last.split(/, /)
+  end
+
 end
 
-#2:00pm
-def parse_period_time period_time_string
-  hour,suffix = period_time_string.split(/:/)
-  minutes, am_pm = suffix.scan(/../)
-  if hour == '12'
-    return "#{am_pm == 'am' ? hour.to_i - 12 : hour}#{minutes}"
-  end
-  if am_pm == 'am'
-    return "0#{hour}#{minutes}"
-  else
-    return "#{hour.to_i+12}#{minutes}"
-  end
-end
 
-# Instructor: Esteban O Mazzoni, Gloria Coruzzi, Katie Schneider, Patrick Eichenberger
-def parse_section_instructors sec_instructor_string
-  title_len = 12 # "Instructor: ".size
-  sec_instructor_string[title_len..].split(/, /)
-end
 
