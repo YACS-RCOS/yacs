@@ -24,20 +24,20 @@ class AlbertClient
 		end
 	end
 
-	def terms
+	def get_terms
 		get_drop_down_values 'term'
 	end
 
-	private
+	def get_schools
+		YAML.load(open(@schools_filename)).deep_symbolize_keys[:schools]
+	end
 
 	def get_listings term_shortname, school_shortname, subject_shortname
 		response = post_request_xml term_shortname, school_shortname, subject_shortname
 		extract_listings response
 	end
 
-	def get_schools
-		YAML.load(open(@schools_filename)).deep_symbolize_keys[:schools]
-	end
+	private
 
 	def post_request_xml term, school, subject
 		url = URI::join ALBERT_ROOT, term.to_s

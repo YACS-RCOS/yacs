@@ -23,7 +23,7 @@ end
 
 get_data 1194, 'UA', 'AHSEM-UA'
 
-quit
+# quit
 get("/favicon.ico") { pps Hash.new }
 
 get "/:term_shortname" do
