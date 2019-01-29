@@ -14,11 +14,11 @@ class Pollable
 	#
 	# @param [String] name the name of the source
 	# @param [String] url the url of the source
-	# @param [Config] config to be used by this instance
-	def initialize name:, url:, config:
+	# @param [Config] logger to be used by this instance
+	def initialize name:, url:, logger:
 		@name = name
 		@url = url
-		@logger = config.logger.with_fields log_fields
+		@logger = logger.with_fields log_fields
 		@connection = Faraday.new url: @url
 	end
 
@@ -30,17 +30,6 @@ class Pollable
 			.then { |response| parse response }
 			.then { |result| log_pass :info, :pollable_poll_success, result }
 			.rescue { |reason| log_raise :warn, :pollable_poll_failure, reason }
-	end
-
-	# Polls the source, and retries if the request fails
-	#
-	# @param [Integer] delay how long we should wait between retries
-	# @param [Integer] count how many times we should retry
-	def poll_with_retry count:, delay:
-		poll.rescue do
-			if (count > 0) poll_with_retry delay: delay, count: count - 1
-			else log_raise :error, :pollable_retries_exceeded
-		end.flat
 	end
 
 	def log_fields
