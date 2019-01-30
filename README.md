@@ -34,7 +34,7 @@ Yacs owes its creation and continued maintenance to [RCOS](https://rcos.io), the
 
 Yacs exposes an API that provides easy, open access to your school's public academic data.
 This API can be used to collect and analyze data, create extensions and third party applications, and provide valuable external services and integrations.
-Our API documentation can be found on our public site, [yacs.io](https://yacs.io/#/api_doc).
+Our API documentation can be found on our public site, [yacs.io](https://yacs.io/#/api/usage).
 We can't wait to see what you build.
 
 ## Setup
