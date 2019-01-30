@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { School } from '../models/school.model';
+import { School } from 'yacs-api-client';
 
 @Component({
   selector: 'school-list',

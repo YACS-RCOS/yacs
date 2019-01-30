@@ -1,20 +1,10 @@
 import { NgModule } from '@angular/core';
-// this is added so that an ngFor in the schools html will work.
 import { CommonModule } from '@angular/common';
-//import { RouterModule } from '@angular/router';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ScheduleViewComponent } from './component';
 import { ScheduleComponent } from './schedule/component';
 import { ScheduleEventComponent } from './schedule-event/component';
-//import { SectionComponent } from '../course-list/section/component';
-
-//import { YacsService } from '../services/yacs.service';
-
-import { CourseListModule } from '../course-list/module';
-//import { CourseComponent } from '../course-list/course/component';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { ColorService } from '../services/color.service';
 
 @NgModule({
   declarations: [
@@ -24,13 +14,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     NgbModule,
-    CommonModule,
-    CourseListModule
-    //CourseComponent
-    //RouterModule
+    CommonModule
   ],
-  providers: [],
-  //providers: [YacsService],
+  providers: [
+    ColorService
+  ]
 })
 
 export class ScheduleViewModule {}

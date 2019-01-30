@@ -1,0 +1,31 @@
+@import "../../../_vars.scss";
+
+.notification {
+  border: 2px solid $yacs_bgs;
+  border-radius: 0;
+  padding: 10px;
+  margin: 5px;
+  max-width: 32rem;
+}
+
+.notification-title {
+  font-size: 130%;
+  font-weight: 400;
+}
+
+.notification-subtitle {
+	margin-top: 0;
+  padding-top: 0;
+}
+
+.notification-content {
+  display:block;
+  font-size:87%;
+  text-align: justify;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-left: 0;
+  margin-top: 0;
+  padding-top: 0;
+  padding-left: 0;
+} 

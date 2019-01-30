@@ -1,88 +1,107 @@
 import { Component, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { ConstantsService } from '../../services/constants';
-import { ScheduleEvent } from '../../models/schedule-event.model';
-import { Schedule } from '../../models/schedule.model';
-import { Section } from '../../models/section.model';
-import { SelectionService } from '../../services/selection.service'
+import { Schedule, Section, Period } from 'yacs-api-client';
+import { ScheduleSet } from '../../models/schedule-set';
+import { Day } from '../../models/day.model';
+import { SelectionService } from '../../services/selection.service';
+import { ColorService } from '../../services/color.service';
 
 @Component({
   selector: 'schedule',
   templateUrl: './component.html',
   styleUrls: ['./component.scss'],
-  // don't need to specify ConstantsService here as long as
-  // it's on the AppComponent
-  providers: [
-    // ConstantsService,
-  ],
+  providers: []
 })
 
 export class ScheduleComponent implements AfterViewInit {
-  @Input() schedule: Schedule;
-  constants: ConstantsService;
+
+  @Input() scheduleSet: ScheduleSet;
   @ViewChild('mySchedule')
-  public mySchedule:ElementRef
+  public mySchedule: ElementRef
   public scheduleNode;
 
-  // this uses constants - inject the constants service
-  constructor(constants: ConstantsService) {
-    this.constants = constants;
-  }
-
-  public longDayName(day: number) {
-    return this.constants.longDayName(day);
-  }
-
-  public hourName(hour: number){
-    hour = hour / 60;
-    if (hour === 0) {
-        return '12 AM';
-      }
-      else if (hour < 12) {
-        return hour + ' AM';
-      }
-      else if (hour === 12) {
-        return 'Noon';
-      }
-      else {
-        return (hour - 12) + ' PM';
-      }
-  }
-
-  /* Filter and return only the periods on a given day. */
-  public periodsOnDay(day: number) {
-    return this.schedule.periods.filter(p => (p.day === day));
-  }
-
-  public get getDayWidth(): number {
-    return (100 / this.schedule.getDaySpan);
-  }
-
-  public get getHourHeight(){
-    return (60 * 100 / this.schedule.getTimeSpan);
-  }
-
-  public eventPosition(eventStart: number){
-    return (this.schedule.height * ((eventStart - this.schedule.earliestStart) / this.schedule.getTimeSpan));
-  }
-
-  public eventHeight(eventDuration: number){
-    return (this.schedule.height  * (eventDuration / this.schedule.getTimeSpan));
-  }
-
-  public getBackgroundColor(color: number){
-    return Schedule.COLORS[color];
-  }
-
-  public getBorderColor(color: number){
-    return Schedule.BORDER_COLORS[color];
-  }
-
-  public getTextColor(color: number){
-    return Schedule.TEXT_COLORS[color];
-  }
+  constructor (private colorService: ColorService) { }
 
   ngAfterViewInit() {
-      this.scheduleNode = this.mySchedule.nativeElement;
+    this.scheduleNode = this.mySchedule.nativeElement;
   }
 
+  public get schedule (): Schedule {
+    return this.scheduleSet.activeSchedule;
+  }
+
+  public get periods (): Period[] {
+    return this.scheduleSet.activePeriods;
+  }
+
+  public get days (): Day[] {
+    const days = [];
+    for (let day = this.scheduleSet.startDay; day <= this.scheduleSet.endDay; ++day) {
+      days.push(new Day(day));
+    }
+    return days;
+  }
+
+  public get hours (): string[] {
+    const hours = [];
+    for (let time = this.scheduleSet.startTime; time < this.scheduleSet.endTime; time += 60) {
+      hours.push(this.hourName(time));
+    }
+    return hours;
+  }
+
+  public get dayWidth (): number {
+    return (100 / this.scheduleSet.numDays);
+  }
+
+  public get hourHeight (): number {
+    return (60 * 100 / this.scheduleSet.numMinutes);
+  }
+
+  public get totalHeight (): number {
+    return this.scheduleSet.height;
+  }
+
+  public periodsOnDay (day: Day) {
+    return this.periods.filter(p => (p.day === day.num));
+  }
+
+  public eventPosition (period: Period): number {
+    const eventStart = this.toMinutes(period.start);
+    return (this.scheduleSet.height * ((eventStart - this.scheduleSet.startTime) / this.scheduleSet.numMinutes));
+  }
+
+  public eventHeight (period: Period): number {
+    const eventDuration = this.toMinutes(period.end) - this.toMinutes(period.start);
+    return (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes));
+  }
+
+  public getBackgroundColor (period: Period) {
+    return this.colorService.getColor(period.section.listing.id).primary;
+  }
+
+  public getBorderColor (period: Period) {
+    return this.colorService.getColor(period.section.listing.id).border;
+  }
+
+  public getTextColor (period: Period) {
+    return this.colorService.getColor(period.section.listing.id).text;
+  }
+
+  private hourName (minutes: number) {
+    const hour = minutes / 60;
+    if (hour === 0) {
+      return '12 AM';
+    } else if (hour < 12) {
+      return hour + ' AM';
+    } else if (hour === 12) {
+      return 'Noon';
+    } else {
+      return (hour - 12) + ' PM';
+    }
+  }
+
+  private toMinutes (timeString: string): number {
+    let timeInt = parseInt(timeString);
+    return (Math.floor(timeInt / 100) * 60) + (timeInt % 100);
+  }
 }

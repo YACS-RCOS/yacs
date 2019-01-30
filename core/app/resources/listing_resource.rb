@@ -40,6 +40,10 @@ class ListingResource < ApplicationResource
     eq { |scope, value| scope.latest(value) }
   end
 
+  filter :search, :string do
+    eq { |scope, value| scope.matches_search(value.first) }
+  end
+
   def base_scope
     Listing.eager_load({ course: :subject })
   end
