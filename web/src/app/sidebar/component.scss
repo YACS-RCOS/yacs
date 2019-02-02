@@ -1,0 +1,25 @@
+@import "../../_vars.scss";
+
+#sidebar {
+  min-height: 100%;
+  background: none;
+  padding-top: 0px;
+  align-items: left;
+  padding-left: 10px;
+  /*padding-right: 10px;*/
+  font-size: 98%;
+  border-right: 2px solid #e8e8e8;
+  /*width: %100;*/
+}
+
+ul {
+  font-weight: 400;
+  padding-top: 50px;
+  list-style: none;
+}
+
+.tabs {
+  width: 100%;
+  font-weight: 400;
+}
+

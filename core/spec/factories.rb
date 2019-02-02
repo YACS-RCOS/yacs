@@ -1,26 +1,26 @@
 FactoryBot.define do
   factory :school do
-    uuid SecureRandom.uuid
-    sequence(:name) { |n| "School of Thing ##{n}" }
+    uuid { SecureRandom.uuid }
+    sequence(:longname) { |n| "School of Thing ##{n}" }
   end
 
   factory :department do
-    uuid SecureRandom.uuid
-    sequence(:code) { |n| "DEPT#{n}" }
-    sequence(:name) { |n| "Department #{n}" }
+    uuid { SecureRandom.uuid }
+    sequence(:shortname) { |n| "DEPT#{n}" }
+    sequence(:longname) { |n| "Department #{n}" }
     school
   end
 
   factory :course do
-    uuid SecureRandom.uuid
+    uuid { SecureRandom.uuid }
     sequence(:name)   { |n| "Course #{n}" }
     sequence(:number) { |n| 1000 + n }
-    min_credits   4
-    max_credits   4
+    min_credits { 4 }
+    max_credits { 4 }
     department
     factory :course_with_sections_with_periods do
       transient do
-        sections_count 6
+        sections_count { 6 }
       end
       after(:create) do |course, evaluator|
         create_list(:section_with_periods, evaluator.sections_count, course: course)
@@ -64,13 +64,13 @@ should be zero.
 =end
 
   factory :section do
-    uuid SecureRandom.uuid
+    uuid { SecureRandom.uuid }
     sequence(:name) { |n| "#{n}" }
     sequence(:crn)  { |n| 87600 + n }
-    seats       10
-    seats_taken 5
+    seats       { 10 }
+    seats_taken { 5 }
     course
-    instructors ['Some Prof', 'Other Prof']
+    instructors { ['Some Prof', 'Other Prof'] }
     factory :section_with_periods do
       sequence(:num_periods) do |n|
         num_p = [3, 3, 2, 2, 2, 2]

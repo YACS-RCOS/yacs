@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { SchoolListComponent } from './component';
 import { SchoolComponent } from './school/component';
-import { DepartmentComponent } from './department/component';
+import { SubjectComponent } from './subject/component';
 
 import { YacsService } from '../services/yacs.service';
 import { ConflictsService } from '../services/conflicts.service';
@@ -13,7 +13,7 @@ import { ConflictsService } from '../services/conflicts.service';
   declarations: [
     SchoolListComponent,
     SchoolComponent,
-    DepartmentComponent
+    SubjectComponent
   ],
   imports: [
     CommonModule,

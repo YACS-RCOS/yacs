@@ -1,0 +1,30 @@
+@import "../../../_vars.scss";
+
+.sidebar-status {
+  margin: 0;
+  margin-top: 3px;
+  margin-left: 5px;
+  font-weight: 600;
+  -moz-user-select:text;
+  -webkit-user-select:text;
+  -ms-user-select:text;
+}
+
+@media (min-width: 576px) {
+	.sidebar-status {
+		min-width: 500px;
+	}
+}
+
+@media (max-width: 575.98px) {
+	.sidebar-status {
+		min-width: 375px;
+	}
+}
+
+.alert-sidebar {
+  background-color: #d57f7f;
+  color: #ffffff;
+  font-weight: 300;
+  padding: .5rem 1.25rem;
+}

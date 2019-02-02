@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { School } from '../models/school.model';
+// import { School } from '../models/school.model';
 import { YacsService } from '../services/yacs.service';
+import { School } from 'yacs-api-client'
 
 @Component({
   selector: 'school-view',
@@ -16,12 +17,10 @@ export class SchoolViewComponent implements OnInit {
 
   getSchools () {
     this.isLoaded = false;
-    this.yacsService
-        .get('schools', { show_departments: true })
-        .then((data) => {
-          this.schools = data['schools'] as School[];
-          this.isLoaded = true;
-        });
+    School.includes('subjects').all().then((schools) => {
+      this.schools = schools.data;
+      this.isLoaded = true;
+    });
   }
 
   ngOnInit () : void {
