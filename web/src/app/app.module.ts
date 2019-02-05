@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/component';
 import { NavUserComponent } from './header/nav-user/component';
 import { NoticeBarComponent } from './notice-bar/component';
 import { FooterComponent } from './footer/component';
+import { AboutComponent } from './about/component';
 
 import { SidebarModule } from './sidebar/module';
 import { SchoolViewModule } from './school-view/module';
@@ -19,13 +20,12 @@ import { ListingViewModule } from './listing-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
 import { ListingModule } from './listing/module';
 
-import { ConstantsService } from './services/constants';
 import { SelectionService } from './services/selection.service';
 import { ConflictsService } from './services/conflicts.service';
 import { NoticeService } from './services/notice.service';
 import { UserService } from './services/user.service';
+import { ColorService } from './services/color.service';
 
-import { AboutComponent } from './about/component';
 
 @NgModule({
   imports: [
@@ -51,11 +51,11 @@ import { AboutComponent } from './about/component';
     NavUserComponent
   ],
   providers: [
-    ConstantsService,
     SelectionService,
     ConflictsService,
     NoticeService,
-    UserService
+    UserService,
+    ColorService
   ],
   bootstrap: [AppComponent]
 })

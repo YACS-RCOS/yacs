@@ -21,51 +21,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var spraypaint_1 = require("spraypaint");
 var application_record_1 = require("./application-record");
-var Listing = /** @class */ (function (_super) {
-    __extends(Listing, _super);
-    function Listing() {
+var Schedule = /** @class */ (function (_super) {
+    __extends(Schedule, _super);
+    function Schedule() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Listing.jsonapiType = "listings";
+    Schedule.jsonapiType = "schedules";
     __decorate([
         spraypaint_1.Attr()
-    ], Listing.prototype, "tags", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "active", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "maxCredits", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "minCredits", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "description", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "longname", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "courseShortname", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "subjectShortname", void 0);
-    __decorate([
-        spraypaint_1.Attr()
-    ], Listing.prototype, "uuid", void 0);
-    __decorate([
-        spraypaint_1.BelongsTo()
-    ], Listing.prototype, "course", void 0);
-    __decorate([
-        spraypaint_1.BelongsTo()
-    ], Listing.prototype, "term", void 0);
+    ], Schedule.prototype, "uuid", void 0);
     __decorate([
         spraypaint_1.HasMany()
-    ], Listing.prototype, "sections", void 0);
-    Listing = __decorate([
+    ], Schedule.prototype, "sections", void 0);
+    Schedule = __decorate([
         spraypaint_1.Model()
-    ], Listing);
-    return Listing;
+    ], Schedule);
+    return Schedule;
 }(application_record_1.ApplicationRecord));
-exports.Listing = Listing;
+exports.Schedule = Schedule;

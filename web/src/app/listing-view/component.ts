@@ -21,8 +21,9 @@ export class ListingViewComponent implements OnInit {
   async getCourses (params: Params): Promise<void> {
     this.isLoaded = false;
     const term = await Term.first();
+    const query = Object.assign({ term_id: term.data.id }, params);
     Listing
-      .where({ term_id: term.data.id, subject_id: params.subject_id } )
+      .where(query)
       .includes('sections')
       .includes('sections.listing')
       .includes('course')
@@ -30,8 +31,8 @@ export class ListingViewComponent implements OnInit {
       .order('course_shortname')
       .all().then((listings) => {
         this.listings = listings.data;
+        this.conflictsService.populateConflictsCache(this.listings);
         this.isLoaded = true;
-        console.log(this.listings);
       });
   }
 

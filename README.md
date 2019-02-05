@@ -1,53 +1,70 @@
-# YACS - Yet Another Course Scheduler
+# Yacs - The Scheduler for Everyone
 [![All Contributors](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#contributors)
 [![Build Status](https://img.shields.io/travis/YACS-RCOS/yacs/master.svg)](https://travis-ci.org/YACS-RCOS/yacs)
-[![Coverage Status](https://img.shields.io/coveralls/YACS-RCOS/yacs.svg)](https://coveralls.io/github/YACS-RCOS/yacs?branch=master)
 [![Code Climate](https://img.shields.io/codeclimate/github/YACS-RCOS/yacs.svg)](https://codeclimate.com/github/YACS-RCOS/yacs)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-Simple, Sane Course Scheduling. To use YACS @ RPI, visit https://yacs.cs.rpi.edu. Coming soon to NYU, and a school near you.
+To use Yacs @ RPI, visit https://rpi.yacs.io. Coming soon to NYU, and a school near you.
 
 See [yacs.io](https://yacs.io) for our complete documentation.
 
-# What is YACS?
+## What is Yacs?
 
-YACS was created with the goal of making students' lives a little easier. It allows users to avoid the often clunky UIs of proprietary Catalog Management and Student Information Systems by enabling easy browsing and searching of courses, and adds the additional functionality of easy schedule generation.
+Yacs was created with the goal of making students' lives a little easier.
+It allows users to avoid the clunky UIs of proprietary Catalog Management and Student Information Systems, replacing these unpleseant experiences with easy browsing and searching of courses, and adds the additional functionality of easy schedule generation, and much more.
 
-YACS is capable of aggregating academic data stored across multiple proprietary systems, including course offerings, section meeting times, and seat availability. This data then is presented to users in a searchable, browesable form.
+But Yacs has grown to be much more than a simple schedule generator.
+Our mission at Yacs is the following:
 
-Most importantly, YACS leverages meeting time data to provide students with an easy way to plan their semesters. Students need only select the courses and sections they would like to take, and are given a list of all valid schedule variants based on their selections. Schedules are presented in a weekly-calendar view, and are easily downloadable and shareable.
+> 1. To alleviate the stress around academic and extracurrciluar planning for Students, Faculty and Staff by offering a Free, easy-to-use interface to supplement or replace traditional academic information and management systems.
 
-All of this functionality is exposed through a public REST API, making it easy to create exciting new applications and extensions that leverage the data YACS provides.
+> 2. To enable innovative, disruptive applications in the academic space by breaking down propreitary information silos and providing consistent, digestible, Open Data.
 
-YACS is primarily developed within [RCOS, the Rensselaer Center for Open Source](https://rcos.io), an amazing organization at RPI that aims to facilitate open source education and solve societal problems. However, other developers and universities are strongly encouraged to contribute to and influence the direction of this project.
+> 3. To empower students to take control of their academic experience and excel their careers through learning about and contributing to Open Source.
 
-Visit [our blog](https://yacs-rcos.github.io/), [pull requests](https://github.com/YACS-RCOS/yacs/pulls), and [issues page](https://github.com/YACS-RCOS/yacs/issues) for development updates and information.
+Further, Yacs aims to provide the best experience possible to as many people as possible by serving as many universities as we can.
+Yacs is built from the ground up to be modular and flexible, and as such can use data from any source, and even combine data from many sources in an intelligent way.
 
-# API
+We have made it as easy as possible to connect Yacs to your university, and have designed this process to be accessible to developers of nearly any skill level.
+Please check out our [documentation](https://yacs.io) or [contact](mailto:yacsrpi@gmail.com) us if you'd like to bring Yacs to your school, and help us make Yacs as great as it can be.
 
-Yacs exposes an API that provides easy, open access to your school's public academic data. This API can be used to collect and analyze data, create extensions and third party applications, and provide valuable external services and integrations. Our API documentation can be found on our public site, [yacs.io](https://yacs.io/#/api_doc).
+Yacs owes its creation and continued maintenance to [RCOS](https://rcos.io), the Rensselaer Center for Open Source, and is developed in collaboration with [BUGS](https://bugs-nyu.github.io/), NYU's Open Source Club.
 
-# Setup
+## API
 
+Yacs exposes an API that provides easy, open access to your school's public academic data.
+This API can be used to collect and analyze data, create extensions and third party applications, and provide valuable external services and integrations.
+Our API documentation can be found on our public site, [yacs.io](https://yacs.io/#/api/usage).
+We can't wait to see what you build.
+
+## Setup
+
+Installing Yacs is easy as pie.
 Installation and setup documentation can be found on our public site, [yacs.io](https://yacs.io/#/contributors/setup_guide).
 
-# Contributing
+## Contributing
 
-We encourage you to [submit issues](https://github.com/YACS-RCOS/yacs/issues/new) and contribute to Yacs! To contribute [fork the repo](https://github.com/YACS-RCOS/yacs/fork), comment on an issue, and submit a pull request to the [staging](https://github.com/YACS-RCOS/yacs/tree/staging) branch. Complete contributing information can be found on our public site, [yacs.io](https://yacs.io/#/contributors/getting_started).
+Yacs is a community built and run project, and we depend on your ideas and contributions.
+We encourage you to [submit issues](https://github.com/YACS-RCOS/yacs/issues/new) and contribute to Yacs!
+To contribute [fork the repo](https://github.com/YACS-RCOS/yacs/fork), comment on an issue, and submit a pull request to the [staging](https://github.com/YACS-RCOS/yacs/tree/staging) branch.
+Complete contributing information can be found on our public site, [yacs.io](https://yacs.io/#/contributors/getting_started).
 
-# Code of Conduct
+## Code of Conduct
 
 In the interest of fostering an open and welcoming environment, Yacs pledges to be an inclusive and harassment-free experience for  all, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, educational background, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-To this end, the Yacs community adheres to the [RCOS Code of Conduct](CODE_OF_CONDUCT.md). All contributors must read and respect the Code of Conduct.
+To this end, the Yacs community adheres to the [RCOS Code of Conduct](CODE_OF_CONDUCT.md).
+It is vital that all contributors read and respect the Code of Conduct.
 
-# License
+## License
 
-Yacs is and always will be Free and Open Source software, released under the [AGPL License](LICENSE.md).
+Yacs is and always will be Free and Open Source software, and is released under the [AGPL License](LICENSE.md).
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FYACS-RCOS%2Fyacs?ref=badge_large)
+
 ## Contributors
 
-Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+Thanks goes to these wonderful people for making Yacs awesome ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
@@ -59,4 +76,5 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 | [<img src="https://avatars2.githubusercontent.com/u/35976740?v=4" width="100px;"/><br /><sub><b>Briana Griffin</b></sub>](https://github.com/esoterum)<br />[💻](https://github.com/yacs-rcos/yacs/commits?author=esoterum "Code") [🎨](#design-esoterum "Design") [🤔](#ideas-esoterum "Ideas, Planning, & Feedback") |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome! If you are missing from this list, or would like to be removed, please open a PR or let us know <3
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.
+Contributions of all kinds welcome! If you are missing from this list, or would like to be removed, please open a PR or let us know <3

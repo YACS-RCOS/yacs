@@ -12,7 +12,7 @@ class Section < ActiveRecord::Base
   end
 
   def conflicts_with(section)
-    seld.conflict_ids.include? section.id
+    self.conflict_ids.include? section.id
   end
 
   private

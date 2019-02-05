@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-// import { Course } from '../models/course.model';
-import { Listing } from 'yacs-api-client';
-import { Section } from 'yacs-api-client';
+import { Listing, Section } from 'yacs-api-client';
 import { ScheduleEvent } from '../models/schedule-event.model';
-import { Schedule } from '../models/schedule.model';
 import { SelectionService } from '../services/selection.service'
 import { ConflictsService } from '../services/conflicts.service'
 
@@ -63,7 +60,8 @@ export class ListingComponent implements OnInit{
   }
 
   public doesConflict (section: Section): boolean {
-    return this.conflictsService.doesConflict(parseInt(section.id));
+    // TODO: We shouldn't need to check this here and in the section component
+    return this.conflictsService.doesConflict(section);
   }
 
   public descriptionClick (): void {

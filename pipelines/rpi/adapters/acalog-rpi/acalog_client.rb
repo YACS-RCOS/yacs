@@ -9,7 +9,7 @@ class AcalogClient
     description: 'p',
     subject_shortname: 'prefix',
     shortname: 'code',
-    name: 'name'
+    longname: 'name'
   }.freeze
 
   def initialize api_url, api_key, term_shortname

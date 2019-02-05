@@ -26,7 +26,7 @@ export class ScheduleSet {
 	}
 
 	public get activeScheduleIndex (): number {
-		return (this.schedules.length > 0) ? this.scheduleIndex : -1;
+		return this.scheduleIndex;
 	}
 
 	public get numSchedules (): number {
@@ -47,7 +47,7 @@ export class ScheduleSet {
   public decrementActiveSchedule (): void {
     if (this.scheduleIndex > 0) {
       --this.scheduleIndex;
-    } else if (this.schedules.length > 0) {
+    } else {
       this.scheduleIndex = this.schedules.length - 1;
     }
   }

@@ -4,7 +4,7 @@ import {
   Attr,
   BelongsTo,
   HasMany
-} from "spraypaint"
+} from "spraypaint";
 
 import { ApplicationRecord } from "./application-record";
 import { Subject } from "./subject";
@@ -14,9 +14,9 @@ import { Listing } from "./listing";
 export class Course extends ApplicationRecord {
 	static jsonapiType = "courses";
 
-	@Attr() shortname: string
-	@Attr() uuid: string
+	@Attr() shortname: string;
+	@Attr() uuid: string;
 
-	@BelongsTo() subject: Subject
-	@HasMany() listings: Listing[]
+	@BelongsTo() subject: Subject;
+	@HasMany() listings: Listing[];
 }

@@ -4,10 +4,10 @@ import {
   Attr,
   BelongsTo,
   HasMany
-} from "spraypaint"
+} from "spraypaint";
 
 @Model()
 export class ApplicationRecord extends SpraypaintBase {
-  static baseUrl = ""
-  static apiNamespace = "/api/v6"
+  static baseUrl = "";
+  static apiNamespace = "/api/v6";
 }
