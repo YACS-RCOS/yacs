@@ -8,6 +8,11 @@
 //   white-space: nowrap;
 // }
 
+#content {
+  margin: auto;
+  overflow: hidden;
+}
+
 img#loading {
   position:absolute;
   top: 50%;
