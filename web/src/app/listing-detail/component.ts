@@ -10,17 +10,17 @@ import { ConflictsService } from '../services/conflicts.service';
   styleUrls: ['./component.scss']
 })
 export class ListingDetailComponent implements OnInit {
-  listings: Listing[] = [];
-  isLoaded: boolean = false;
-
   constructor (
     private yacsService : YacsService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private conflictsService: ConflictsService) { }
 
   ngOnInit (): void {
-    // this.activatedRoute.queryParams.subscribe((params: Params) => {
-    //   this.getCourses(params);
-    // });
+    let id: number;
+
+    this.activatedRoute.params.subscribe((params: Params) => {
+      id = +params['id'];
+     });
   }
 }

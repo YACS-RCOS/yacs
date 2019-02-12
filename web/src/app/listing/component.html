@@ -10,7 +10,7 @@
 					</div>
 		  	</tr>
 				<tr>
-					<div style="position: relative; margin-top: 10px; margin-right: 10px;"><a href="courses/{{listing.id}}">EDIT</a></div>
+					<div style="position: relative; margin-top: 10px; margin-right: 10px;"><a [routerLink]="['/courses', listing.id]">EDIT</a></div>
 				</tr>
 	  	  <tr>
 	  	  	<div class= "course-details">{{listing.course.subject.shortname}}   {{listing.course.shortname}}</div>
