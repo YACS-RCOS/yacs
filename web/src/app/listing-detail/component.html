@@ -1,1 +1,47 @@
-<p>LISTING DETAIL</p>
+<div id="listingDetail" *ngIf="listing">
+  <h2 id="detailHeading">
+    {{listing.longname}}
+  </h2>
+
+  <!-- <div class="form-row justify-content-start">
+    <div id="deptField" class="form-group form-inline ">
+      <label for="depts-dropdown"> Department: </label>
+      <select class="form-control" id="depts-dropdown" name="course.department_code" [(ngModel)]="course.department_code" #newCode>
+        <option *ngFor="let dept of depts" [ngValue]="dept.code">{{dept.code}}</option>
+      </select>
+      &nbsp;
+      <label for="numInput">Course #: </label>
+      <input id="numInput" class="form-control" [(ngModel)]="course.number" placeholder="num" #newNum>
+    </div>
+
+  </div>
+  <div class="form-row">
+  <div id="nameField" class="form-group form-inline">
+    <label for="nameInput">Name: </label>
+    <input id="nameInput" class="form-control" style ="width:95% !important;"[(ngModel)]="course.name" placeholder="name" #newName>
+  </div>
+  </div> -->
+
+  <div class="form-row">
+    <div id="credField" class="form-group form-inline">
+      <label for="minCredInput">Min Credits: </label>
+      <input id="minCredInput" class="form-control" style="width: 70px !important" [(ngModel)]="listing.min_credits" #newMinCred>
+      &nbsp;
+      <label for="maxCredInput">Max Credits: </label>
+      <input id="maxCredInput" class="form-control" style="width: 70px !important" [(ngModel)]="listing.max_credits" placeholder="{{listing.max_credits}}" #newMaxCred>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div id="descField" class="form-group form-inline">
+      <label for="descInput">Description: &nbsp;</label>
+      <textarea id="descInput" class="form-control" style="width: 90% !important" [(ngModel)]="listing.description" rows="5" #newDesc></textarea>
+    </div>
+  </div>
+
+  <div id="buttonHolder">
+    <button class="btn btn-search" id="save" (click)="saveListing()">Save Changes</button>
+    <button class="btn btn-search" id="cancel" (click)="goBack()">Cancel</button>
+  </div>
+
+</div>
