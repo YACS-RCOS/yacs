@@ -6,9 +6,12 @@
 	  <div class="w-100 h-100 course-content position-relative min-height">
 		  <table (click)="clickCourse()" class="w-100">
 		  	<tr>
-		    	<div class="course-name">{{listing.longname}} 
+		    	<div class="course-name">{{listing.longname}}
 					</div>
 		  	</tr>
+				<tr>
+					<div style="position: relative; margin-top: 10px; margin-right: 10px;"><a href="courses/{{listing.id}}">EDIT</a></div>
+				</tr>
 	  	  <tr>
 	  	  	<div class= "course-details">{{listing.course.subject.shortname}}   {{listing.course.shortname}}</div>
 	      </tr>
