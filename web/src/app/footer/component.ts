@@ -35,7 +35,6 @@ const FLAVORTEXTS: string[] = [
   'A kid-tested, mother-approved',
   'A science-backed',
   'A somewhat broken',
-  'A PHP-free',
   'A dog-friendly',
   'A cat-approved',
   'A dishwasher-safe',
