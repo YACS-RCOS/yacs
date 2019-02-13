@@ -22,7 +22,8 @@ export class ListingComponent implements OnInit{
   public showingMenu;
   public showingDescription;
   public hovered;
-  
+  public sectionStatus;
+
   ngOnInit () {
     this.showingMenu = false;
     this.showingDescription = false;
@@ -44,7 +45,15 @@ export class ListingComponent implements OnInit{
   }
 
   public clickCourse () {
-    this.selectionService.toggleCourse(this.listing);
+    let closedSectionsCount = this.selectionService.toggleCourse(this.listing);
+    let totalSectionsCount = this.listing.sections.length;
+    if (closedSectionsCount === -1 || closedSectionsCount === 0) {
+      this.sectionStatus = "normal";
+    } else if (closedSectionsCount < totalSectionsCount){
+      this.sectionStatus = "someClosed";
+    } else {
+      this.sectionStatus = "allClosed";
+    }
   }
 
   public isCourseSelected () {
@@ -70,6 +79,6 @@ export class ListingComponent implements OnInit{
   }
 
   public get tooltipDescription (): string {
-    return this.listing.description || 'No description available :('; 
+    return this.listing.description || 'No description available :(';
   }
 }

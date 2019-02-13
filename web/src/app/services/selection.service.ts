@@ -8,13 +8,13 @@ import { Listing } from 'yacs-api-client';
 
 @Injectable()
 export class SelectionService {
-  
+
   private clickEvent = new Subject();
 
   subscribe (next): Subscription {
     return this.clickEvent.subscribe(next);
   }
-  
+
   next (event) {
     this.clickEvent.next(event);
   }
@@ -28,7 +28,7 @@ export class SelectionService {
   }
 
   public toggleSection (section : Section) {
-    
+
     this.isSectionSelected(section) ? this.removeSection(section) : this.addSection(section);
     this.next('event'); //this should be changed
   }
@@ -55,19 +55,22 @@ export class SelectionService {
   }
 
   public toggleCourse(course: Listing) {
-    
+    let closedCount = -1;
     if (this.hasSelectedSection(course)) {
       let store = this.getSelections();
       delete store[course.id];
       this.setItem('selections', JSON.stringify(store));
     } else {
+      closedCount = 0;
       course.sections.forEach((s) => {
-        if (s.seatsTaken < s.seats) {
-          this.addSection(s);
+        if (s.seatsTaken >= s.seats) {
+          closedCount += 1;
         }
+        this.addSection(s);
       });
     }
     this.next('event');
+    return closedCount;
   }
 
   public isSectionSelected (section: Section) : boolean {
@@ -83,7 +86,7 @@ export class SelectionService {
   public getSelections () {
     return JSON.parse(this.getItem('selections')) || {};
   }
-  
+
   public getSelectedSectionIds () {
     const selections = this.getSelections();
     const sectionIds = [];
@@ -97,7 +100,7 @@ export class SelectionService {
     return Object.keys(this.getSelections());
   }
 
-  public clear () { 
+  public clear () {
     let store = {};
     this.setItem('selections', JSON.stringify(store));
     this.next('event');

@@ -109,7 +109,7 @@ i {
 }
 
 .down-arrow:hover {
-  animation: shake 0.3s; 
+  animation: shake 0.3s;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
@@ -262,4 +262,16 @@ section.closed, section.closed:hover {
   40%, 60% {
     transform: translate3d(2px, 0, 0);
   }
+}
+
+.warning {
+    position: absolute;
+    height: auto;
+    max-width: 100px;
+    opacity: 0.2;
+    margin-left: 5px;
+}
+
+table {
+    position: relative;
 }
