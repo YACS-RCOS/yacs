@@ -8,6 +8,11 @@
 //   white-space: nowrap;
 // }
 
+#content {
+  margin: auto;
+  overflow: hidden;
+}
+
 img#loading {
   position:absolute;
   top: 50%;
@@ -42,14 +47,22 @@ img#loading {
   margin-left: 400px;
 }
 
+/* defines properties for sidebar button */
 button {
-  max-height: 35px;
-  background: none;
+  background: #b2b2b2;
   border: none;
-  border-shadow: none;
-  position: absolute;
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
   z-layer: 99999;
-  align-items: left;
+  align-items: stretch;
+  height: 90vh;
+  position: sticky;
+  top: 60px;
+}
+
+/* properties for mouse hover */
+button:hover {
+  background-color: #d57f7f;
 }
 
 .right {
