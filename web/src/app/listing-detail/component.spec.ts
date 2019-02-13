@@ -8,9 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import * as Stubs from '../../lib/router-stubs';
 
-import { CourseViewModule } from './module';
-import { Course } from '../models/course.model';
-import { CourseViewComponent } from './component';
+import { Term, Course, Listing } from 'yacs-api-client';
+import { ListingDetailModule } from './module';
+import { ListingDetailComponent } from './component';
 import { ConflictsService } from '../services/conflicts.service';
 import { YacsService } from '../services/yacs.service';
 
@@ -34,15 +34,15 @@ class MockConflictsService {
     }
 }
 
-describe("Testing Course-View component", function() {
-  let component: CourseViewComponent;
-  let fixture: ComponentFixture<CourseViewComponent>;
+describe("Testing listing-detail component", function() {
+  let component: ListingDetailComponent;
+  let fixture: ComponentFixture<ListingDetailComponent>;
   let de: DebugElement;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-       imports: [ CourseViewModule ],
+       imports: [ ListingDetailModule ],
        providers: [
          { provide: YacsService, useClass: YacsServiceMock },
          { provide: ActivatedRoute, useValue: mockActivatedRoute },
@@ -50,21 +50,20 @@ describe("Testing Course-View component", function() {
        ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CourseViewComponent);
+    fixture = TestBed.createComponent(ListingDetailComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('course-list'));
-    element  = de.nativeElement;
-    component.getCourses(null);
+    //de = fixture.debugElement.query(By.css('course-list'));
+    //element  = de.nativeElement;
+    component.getCourseByID(null);
   }));
 
   it("should have a component", function() {
     expect(component).toBeDefined();
   });
 
-  it("testing courses", function() {
-    // Testing that courses has generated correctly.
-    expect(component.courses).toBeDefined();
-    expect(component.courses.length).toEqual(1);
-    expect(component.courses[0].name).toEqual('Mock Course');
+  it("testing listing", function() {
+    // Testing that the listing has generated correctly.
+    expect(component.listing).toBeDefined();
+    expect(component.listing[0].longname).toEqual('Mock Course');
   });
 });
