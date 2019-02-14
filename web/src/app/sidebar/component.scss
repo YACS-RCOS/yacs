@@ -1,15 +1,19 @@
 @import "../../_vars.scss";
 
 #sidebar {
-  min-height: 100%;
+  height: 100vh;
   background: none;
   padding-top: 0px;
   align-items: left;
-  padding-left: 10px;
+  padding-left: 0px;
   /*padding-right: 10px;*/
   font-size: 98%;
   border-right: 2px solid #e8e8e8;
   /*width: %100;*/
+  position: sticky;
+  overflow-x: hidden; 
+  overflow-y: auto;
+  top: 60px;
 }
 
 ul {
