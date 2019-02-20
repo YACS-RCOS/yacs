@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Listing, Section } from 'yacs-api-client';
 import { ScheduleEvent } from '../models/schedule-event.model';
-import { SelectionService } from '../services/selection.service'
-import { ConflictsService } from '../services/conflicts.service'
+import { SelectionService } from '../services/selection.service';
+import { ConflictsService } from '../services/conflicts.service';
 
 @Component({
   selector: 'course',
@@ -14,6 +14,7 @@ export class ListingComponent implements OnInit{
   @Input() listing: Listing;
   @Input() showDescriptionTooltip: boolean = false;
   @Input() showDescription: boolean = false;
+  @Input() showRemoveButton: boolean = false;
 
   constructor (
     public selectionService : SelectionService,
@@ -71,5 +72,9 @@ export class ListingComponent implements OnInit{
 
   public get tooltipDescription (): string {
     return this.listing.description || 'No description available :('; 
+  }
+
+  public get removeButtonDescription (): string {
+    return  'Click on this button to remove class from sidebar'; 
   }
 }

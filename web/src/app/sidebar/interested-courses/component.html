@@ -2,5 +2,5 @@
     <div class="sidebar-status">
     	<div *ngIf="showStatusText" class="alert alert-sidebar"> Try selecting some courses :) </div>
     </div>
-	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true"></course>
+	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true" [showRemoveButton]="true"></course>
 </div>
