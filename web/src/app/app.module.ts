@@ -19,6 +19,7 @@ import { SchoolViewModule } from './school-view/module';
 import { ListingViewModule } from './listing-view/module';
 import { ScheduleViewModule } from './schedule-view/module';
 import { ListingModule } from './listing/module';
+import { ListingDetailModule } from './listing-detail/module';
 
 import { SelectionService } from './services/selection.service';
 import { ConflictsService } from './services/conflicts.service';
@@ -40,7 +41,8 @@ import { ColorService } from './services/color.service';
     ListingViewModule,
     ScheduleViewModule,
     ListingModule,
-    SidebarModule
+    SidebarModule,
+    ListingDetailModule
   ],
   declarations: [
     AppComponent,
