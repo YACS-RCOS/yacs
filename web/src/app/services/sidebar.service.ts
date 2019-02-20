@@ -7,13 +7,11 @@ import { Listing } from 'yacs-api-client';
 
 @Injectable()
 export class SidebarService {
-  private setItem (key: string, value: object) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
+	private event = new Subject();
 
-  private getItem (data: string) {
-    return JSON.parse(localStorage.getItem(data));
-  }
+	public subscribe (next): Subscription {
+		return this.event.subscribe(next);
+	}
 
   public getListingIds (): Set<string> {
   	return new Set(this.getItem('listings') || []);
@@ -23,11 +21,25 @@ export class SidebarService {
 		const currentListingIds = this.getListingIds();
 		currentListingIds.add(listing.id);
 		this.setItem('listings', currentListingIds);
+		this.next();
 	}
 
 	public removeListing (listing: Listing) {
 		const currentListingIds = this.getListingIds();
 		currentListingIds.delete(listing.id);
 		this.setItem('listings', currentListingIds);
+		this.next();
 	}
+
+	private next () {
+		this.event.next('event');
+	}
+
+  private setItem (key: string, value: object) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  private getItem (data: string) {
+    return JSON.parse(localStorage.getItem(data));
+  }	
 }
