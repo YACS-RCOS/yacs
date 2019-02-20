@@ -20,14 +20,14 @@
 				<img src="assets/images/info.svg" />
 			</span>
 
-			<span *ngIf="showRemoveButton" class="remove-button  position-absolute"  [placement]="['right','bottom','left','top','auto']"  [ngbPopover]="removeButtonDescription" container="body" triggers="mouseenter:mouseleave">
+			<span *ngIf="showRemoveButton" (click)="showingMenu=!showingMenu"class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']"  [ngbPopover]="removeButtonDescription" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/remove.svg" />
 			</span>
-
 
 			<span (click)="descriptionClick()" *ngIf="!showDescriptionTooltip" class="course-description" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription" [class.selectedDescription]="isCourseSelected()">
 				{{listing.description}}
 			</span>
+
 			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
 				<div class = "arrow-container down-arrow" *ngIf="!showingMenu">
 					<i class="arrow down"></i>

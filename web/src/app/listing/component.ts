@@ -3,6 +3,7 @@ import { Listing, Section } from 'yacs-api-client';
 import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
+// import { SidebarService } from '../services/sidebar.service';
 
 @Component({
   selector: 'course',
@@ -16,9 +17,12 @@ export class ListingComponent implements OnInit{
   @Input() showDescription: boolean = false;
   @Input() showRemoveButton: boolean = false;
 
+
   constructor (
     public selectionService : SelectionService,
+    // public sidebarService: SidebarService,
     private conflictsService: ConflictsService) { }
+
 
   public showingMenu;
   public showingDescription;
@@ -77,4 +81,10 @@ export class ListingComponent implements OnInit{
   public get removeButtonDescription (): string {
     return  'Click on this button to remove class from sidebar'; 
   }
+
+
+  // public removeButtonClick (): string {
+  //   // this.sidebarService.removeListing(Listing);
+  //   return removeDescription();
+  // }
 }
