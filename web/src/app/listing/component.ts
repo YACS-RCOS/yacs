@@ -20,6 +20,7 @@ export class ListingComponent implements OnInit{
 
   constructor (
     public selectionService : SelectionService,
+    public sidebarService : SidebarService,
     private conflictsService: ConflictsService) { }
 
 
@@ -83,6 +84,6 @@ export class ListingComponent implements OnInit{
 
 
   public removeButtonClick (): void {
-    //this.sidebarService.removeListing(this.listing.id);
+    this.sidebarService.removeListing(this.listing);
   }
 }
