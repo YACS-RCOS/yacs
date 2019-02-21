@@ -14,7 +14,8 @@ export class SidebarService {
 	}
 
   public getListingIds (): Set<string> {
-  	return new Set(this.getItem('listings') || []);
+  	//return new Set(this.getItem('listings') || []);
+  	return new Set(this.getItem('listings'));
   }
 
 	public addListing (listing: Listing) {
@@ -35,8 +36,8 @@ export class SidebarService {
 		this.event.next('event');
 	}
 
-  private setItem (key: string, value: object) {
-    localStorage.setItem(key, JSON.stringify(value));
+  private setItem (key: string, value: Set<string> ) {
+    localStorage.setItem(key, JSON.stringify( Array.from(value) ) );
   }
 
   private getItem (data: string) {

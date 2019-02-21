@@ -20,7 +20,7 @@
 				<img src="assets/images/info.svg" />
 			</span>
 
-			<span *ngIf="showRemoveButton" (click)="removeButtonClick" class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']"  [ngbPopover]="removeButtonDescription" container="body" triggers="mouseenter:mouseleave">
+			<span *ngIf="showRemoveButton" (click)="removeButtonClick()" class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']"  [ngbPopover]="removeButtonDescription" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/remove.svg" />
 			</span>
 
