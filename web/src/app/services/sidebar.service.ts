@@ -35,8 +35,8 @@ export class SidebarService {
 		this.event.next('event');
 	}
 
-  private setItem (key: string, value: Set<string> ) {
-    localStorage.setItem(key, JSON.stringify( Array.from(value) ) );
+  private setItem (key: string, value: Set<string>) {
+    localStorage.setItem(key, JSON.stringify(Array.from(value)));
   }
 
   private getItem (data: string) {
