@@ -25,6 +25,8 @@ import { ConflictsService } from './services/conflicts.service';
 import { NoticeService } from './services/notice.service';
 import { UserService } from './services/user.service';
 import { ColorService } from './services/color.service';
+import {SelectedTermService} from './services/selected-term.service';
+import {TermSelectorComponent} from './header/term-selector/component';
 
 
 @NgModule({
@@ -48,14 +50,16 @@ import { ColorService } from './services/color.service';
     NoticeBarComponent,
     FooterComponent,
     AboutComponent,
-    NavUserComponent
+    NavUserComponent,
+    TermSelectorComponent
   ],
   providers: [
     SelectionService,
     ConflictsService,
     NoticeService,
     UserService,
-    ColorService
+    ColorService,
+    SelectedTermService
   ],
   bootstrap: [AppComponent]
 })
