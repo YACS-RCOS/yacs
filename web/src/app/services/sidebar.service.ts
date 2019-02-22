@@ -14,7 +14,6 @@ export class SidebarService {
 	}
 
   public getListingIds (): Set<string> {
-  	//return new Set(this.getItem('listings') || []);
   	return new Set(this.getItem('listings'));
   }
 
