@@ -78,11 +78,6 @@ export class ListingComponent implements OnInit{
     return this.listing.description || 'No description available :('; 
   }
 
-  public get removeButtonDescription (): string {
-    return  'Click on this button to remove class from sidebar'; 
-  }
-
-
   public removeButtonClick (): void {
     this.sidebarService.removeListing(this.listing);
     this.selectionService.removeListing(this.listing);
