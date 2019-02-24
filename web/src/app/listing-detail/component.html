@@ -1,5 +1,5 @@
-<div id="listingDetail" *ngIf="listing">
-  <h2 id="detailHeading">
+<div class="container" *ngIf="listing">
+  <h2 class="detail-heading">
     {{listing.longname}}
   </h2>
 
@@ -25,10 +25,10 @@
   <div class="form-row">
     <div id="credField" class="form-group form-inline">
       <label for="minCredInput">Min Credits: </label>
-      <input id="minCredInput" class="form-control" style="width: 70px !important" [(ngModel)]="listing.min_credits" #newMinCred>
+      <input id="minCredInput" class="form-control" style="width: 70px !important" [(ngModel)]="listing.minCredits" placeholder="{{listing.minCredits}}" #newMinCred>
       &nbsp;
       <label for="maxCredInput">Max Credits: </label>
-      <input id="maxCredInput" class="form-control" style="width: 70px !important" [(ngModel)]="listing.max_credits" placeholder="{{listing.max_credits}}" #newMaxCred>
+      <input id="maxCredInput" class="form-control" style="width: 70px !important" [(ngModel)]="listing.maxCredits" placeholder="{{listing.maxCredits}}" #newMaxCred>
     </div>
   </div>
 
