@@ -1,66 +1,3 @@
-// header-bar {
-//   width:100%;
-//   height:50px;
-//   position:fixed;
-//   z-index: 1;
-//   color: white;
-//   background-color: #c65353;
-//   white-space: nowrap;
-// }
-
-/*Remove the scrollbar from Chrome, Safari, Edge and IE*/
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent;
-}
-
-* {
-  -ms-overflow-style: none !important;
-}
-
-// .app-container {
-//   display: flex;
-//   flex-flow: row wrap;
-//   height: 100vh;
-// }
-
-// .header-container {
-//   flex: 1 100%;
-// }
-
-// .main-content-container {
-//   height: 100%;
-//   overflow-x: hidden;
-//   overflow-y: auto;
-//   // flex: 3 0;
-// }
-
-// .sidebar-content-container {
-//   height: 100%;
-//   overflow-y: auto;
-//   // flex: 0 0 auto;
-// }
-
-// .footer-container {
-//   flex: 1 100%;
-// }
-
-
-// @media (min-width: 576px) {
-//   .main-content-container {
-//     flex: 1 0;
-//   }
-
-//   .sidebar-content-container {
-//     flex: 0 0 auto;
-//   }
-// }
-
-// @media (max-width: 575.98px) {
-
-// }
-
-
 .app-container {
   height: 100vh;
 }
@@ -68,11 +5,12 @@
 .content-container-wrapper {
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  // overflow-y: scroll;
 }
 
 .sidebar-content-container {
-
+  overflow-y: scroll;
+  flex-shrink: 0;
 }
 
 .main-content-container {
@@ -94,12 +32,28 @@ img#loading {
 @media (min-width: 576px) {
   .sidebar-content-container {
     // max-width: 500px;
+    // padding: 15px;
+  }
+
+  .main-content-container {
+    // padding: 15px;
+  }
+
+  .sidebar-toggle {
+    top: 60px;
+    bottom: 20px;
   }
 }
 
 @media (max-width: 575.98px) {
   .sidebar-content-container {
     width: 100%;
+    // flex-shrink: 0;
+  }
+
+  .sidebar-toggle {
+    top: 60px;
+    height: 50px;
   }
 }
 
@@ -109,20 +63,18 @@ img#loading {
 }
 
 /* defines properties for sidebar button */
-button {
+.sidebar-toggle {
   background: #b2b2b2;
   border: none;
   border-top-right-radius:12px;
   border-bottom-right-radius:12px;
   z-index: 99999;
   align-items: stretch;
-  height: 90vh;
   position: fixed;
-  top: 60px;
 }
 
 /* properties for mouse hover */
-button:hover {
+.sidebar-toggle:hover {
   background-color: #d57f7f;
 }
 
