@@ -8,10 +8,100 @@
 //   white-space: nowrap;
 // }
 
-#content {
-  margin: auto;
-  overflow: hidden;
+/*Remove the scrollbar from Chrome, Safari, Edge and IE*/
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
+
+* {
+  -ms-overflow-style: none !important;
+}
+
+.app-container {
+  display: flex;
+  flex-flow: row wrap;
+  height: 100vh;
+}
+
+// .app-container > .item {
+//   flex: 1 100%;
+// }
+
+// .header-container {
+//   // height: 60px;
+//   width: 100vw;
+// }
+
+// .content-container-wrapper {
+//   display: flex;
+//   align-items: stretch center;
+//   // position: relative;
+//   height: 100%;
+// }
+
+// .main-content-container {
+//   // margin: auto;
+//   height: 100%;
+//   // overflow-x: hidden;
+//   overflow-y: auto;
+//   flex: 1 auto;
+// }
+
+// .sidebar-content-container {
+//   height: 100%;
+//   // overflow-x: hidden;
+//   overflow-y: scroll;
+//   flex: 1 auto;
+//   flex-shrink: 0;
+// }
+
+
+.header-container {
+  // height: 60px;
+  // width: 100vw;
+  flex: 1 100%;
+}
+
+// .content-container-wrapper {
+//   display: flex;
+//   align-items: stretch center;
+//   // position: relative;
+//   height: 100%;
+//   flex
+// }
+
+.main-content-container {
+  // margin: auto;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  flex: 3 0;
+}
+
+.sidebar-content-container {
+  height: 100%;
+  // overflow-x: hidden;
+  overflow-y: scroll;
+  flex: 0 auto;
+  flex-shrink: 0;
+}
+
+.footer-container {
+  flex: 3 100%;
+}
+
+// @media all and (min-width: 600px) {
+//   .aside { flex: 1 0 0; }
+// }
+
+// @media all {
+//   .main-content-container    { flex: 3 0px; }
+//   .sidebar-content-container { order: 1; } 
+//   .main-content-container    { order: 2; }
+//   // .aside-2 { order: 3; }
+//   .footer-container  { order: 2; }
+// }
 
 img#loading {
   position:absolute;
@@ -22,12 +112,6 @@ img#loading {
      real values (half of the image width and height) here. */
   margin-top: -4.5px;
   margin-left: -62.5px;
-}
-
-.wrapper {
-  display: flex;
-  align-items: stretch center;
-  position: relative;
 }
 
 @media (max-width: 570px) {
@@ -53,7 +137,7 @@ button {
   border: none;
   border-top-right-radius:12px;
   border-bottom-right-radius:12px;
-  z-layer: 99999;
+  z-index: 99999;
   align-items: stretch;
   height: 90vh;
   position: sticky;
@@ -87,10 +171,10 @@ button:hover {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1.0)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
-footer {
-  margin: 0px auto;
-  max-width: 950px;
-}
+// footer {
+//   margin: 0px auto;
+//   max-width: 950px;
+// }
 
 .row {
   flex-wrap: nowrap;
