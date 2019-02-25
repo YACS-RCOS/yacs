@@ -1,54 +1,55 @@
 <div class = "course" [class.fixed-height]="!showingMenu && !showingDescription" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
 	<div class="row flex-nowrap h-100 min-height">
-		<!-- <div class="col-12"> -->
-		  <div class="indicator-container" (click)="clickCourse()">
-		  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
-		  </div>
-		  <div class="w-100 h-100 course-content position-relative min-height">
-			  <table (click)="clickCourse()" class="w-100">
-			  	<tr>
-			    	<div class="course-name">{{listing.longname}} 
-						</div>
-			  	</tr>
-		  	  <tr>
-		  	  	<div class= "course-details">{{listing.course.subject.shortname}}   {{listing.course.shortname}}</div>
-		      </tr>
-			    <tr >
-			    	<div class="course-details">{{creditRange}}</div>
-			    </tr>
-				</table>
-				<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
-					<img src="assets/images/info.svg" />
-				</span>
-				<span (click)="descriptionClick()" *ngIf="!showDescriptionTooltip" class="course-description" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription" [class.selectedDescription]="isCourseSelected()">
-					{{listing.description}}
-				</span>
-				<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
-					<div class = "arrow-container down-arrow" *ngIf="!showingMenu">
-						<i class="arrow down"></i>
-					</div>
-					<div class="arrow-container" *ngIf="showingMenu">
-						<i class="arrow up"></i>
-					</div>
-				</div>
-		  </div>
+	  <div class="indicator-container" (click)="clickCourse()">
+	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
 	  </div>
-	  <div *ngIf="showingMenu" class = "position-relative">
-			<span class="period-days float-right">
-				<span class="padded">Mon</span>
-				<span class="padded">Tues</span>
-				<span class="padded">Wed</span>
-				<span class="padded">Thurs</span>
-				<span class="padded">Fri</span>
+	  <div class="w-100 h-100 course-content position-relative min-height">
+		  <table (click)="clickCourse()" class="w-100">
+		  	<tr>
+		    	<div class="course-name">{{listing.longname}} 
+					</div>
+		  	</tr>
+	  	  <tr>
+	  	  	<div class= "course-details">{{listing.course.subject.shortname}}   {{listing.course.shortname}}</div>
+	      </tr>
+		    <tr >
+		    	<div class="course-details">{{creditRange}}</div>
+		    </tr>
+			</table>
+			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
+				<img src="assets/images/info.svg" />
 			</span>
-			<div class = "position-relative">
-			<span class = "vertical-separators position-absolute tues"></span>
-	  	<span class = "vertical-separators position-absolute thurs"></span>
-			  <div *ngFor="let section of listing.sections; let i=index">
-			  	<div class="container" *ngIf="i!=0"><div class="col-auto separator"></div></div>
-				  <section [ngClass]="{ 'selected': isSectionSelected(section), 'closed': section.seatsTaken >= section.seats, 'conflicts': doesConflict(section) }" [section]="section" (click)="clickSection(section)"></section>
-			  </div>
+			<span *ngIf="showRemoveButton" (click)="removeButtonClick()" class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']" ngbPopover="Click on this button to remove class from sidebar" container="body" triggers="mouseenter:mouseleave">
+				<img src="assets/images/remove.svg" />
+			</span>
+			<span (click)="descriptionClick()" *ngIf="!showDescriptionTooltip" class="course-description" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription" [class.selectedDescription]="isCourseSelected()">
+				{{listing.description}}
+			</span>
+			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
+				<div class = "arrow-container down-arrow" *ngIf="!showingMenu">
+					<i class="arrow down"></i>
+				</div>
+				<div class="arrow-container" *ngIf="showingMenu">
+					<i class="arrow up"></i>
+				</div>
 			</div>
-		<!-- </div> -->
+	  </div>
+  </div>
+  <div *ngIf="showingMenu" class = "position-relative">
+		<span class="period-days float-right">
+			<span class="padded">Mon</span>
+			<span class="padded">Tues</span>
+			<span class="padded">Wed</span>
+			<span class="padded">Thurs</span>
+			<span class="padded">Fri</span>
+		</span>
+		<div class = "position-relative">
+		<span class = "vertical-separators position-absolute tues"></span>
+  	<span class = "vertical-separators position-absolute thurs"></span>
+		  <div *ngFor="let section of listing.sections; let i=index">
+		  	<div class="container" *ngIf="i!=0"><div class="col-auto separator"></div></div>
+			  <section [ngClass]="{ 'selected': isSectionSelected(section), 'closed': section.seatsTaken >= section.seats, 'conflicts': doesConflict(section) }" [section]="section" (click)="clickSection(section)"></section>
+		  </div>
+		</div>
 	</div>
 </div>

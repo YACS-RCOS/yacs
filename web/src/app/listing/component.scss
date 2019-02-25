@@ -38,9 +38,20 @@
 }
 
 .description-tooltip {
-  top: 0.8em;
-  right: 27px;
+	top: 10px;
+	right: 27px;
+  width: 24px;
+  height: 24px;
 }
+
+.remove-button {
+  top: 40px;
+  right: 27px;
+
+  width: 24px;
+  height: 24px;
+}
+
 
 .menu {
   align: right;
