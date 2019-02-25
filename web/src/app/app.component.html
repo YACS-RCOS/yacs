@@ -1,19 +1,19 @@
-<div class="app-container">
+<div class="app-container d-flex flex-column">
 	<div class="header-container item">
 		<header-bar></header-bar>
 		<notice-bar></notice-bar>
 	</div>
-	<!-- <div class="content-container-wrapper">  -->
+	<div class="content-container-wrapper d-flex flex-row"> 
 	  <button (click)="toggleSidebar()">
 	    <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
 	  </button>
-	  <div class="sidebar-content-container item">
-	  	<sidebar [hidden]="showingSidebar"></sidebar>
+	  <div class="sidebar-content-container item" [hidden]="showingSidebar">
+	  	<sidebar></sidebar>
 	  </div>
-		<div class="main-content-container item">
+		<div class="main-content-container item container">
 		  <router-outlet></router-outlet>
 		</div>
-	<!-- </div> -->
+	</div>
 	<div class="footer-container item">
 		<footer></footer>
 	</div>

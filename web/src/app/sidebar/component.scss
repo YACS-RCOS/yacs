@@ -8,7 +8,7 @@
   padding-left: 0px;
   /*padding-right: 10px;*/
   font-size: 98%;
-  border-right: 2px solid #e8e8e8;
+  // border-right: 2px solid #e8e8e8;
   /*width: %100;*/
   position: sticky;
   overflow-x: hidden; 
@@ -16,11 +16,23 @@
   // top: 60px;
 }
 
-ul {
-  font-weight: 400;
-  padding-top: 50px;
-  list-style: none;
+// @media (max-width: 575.98px) {
+//   .sidebar-content-container {
+//     width: 400px;
+//   }
+// }
+
+@media (min-width: 576px) {
+  #sidebar {
+    border-right: 2px solid #e8e8e8;
+  }
 }
+
+// ul {
+//   font-weight: 400;
+//   padding-top: 50px;
+//   list-style: none;
+// }
 
 .tabs {
   width: 100%;

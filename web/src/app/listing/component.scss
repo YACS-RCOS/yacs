@@ -1,7 +1,7 @@
 @import "../../_vars.scss";
 
 .course {
-  margin: 10px;
+  // margin: 10px;
   padding: 0;
   box-shadow: 2px 2px 5px 2px #efefef;
   height: 100%;
@@ -11,6 +11,7 @@
 	.course {
 	  min-width: 485px;
     min-height: 7em;
+    margin: 10px 10px 10px 10px;
 		/*max-width: 950px;*/
 	}
   .min-height {
@@ -24,6 +25,7 @@
 @media (max-width: 575.98px) {
 	.course {
 		min-width: 345px;
+    margin: 10px 0px 10px 0px;
 	}
 	.fixed-height {
 	  height: 7em;
@@ -32,11 +34,14 @@
 	.course-description {
 		display: none !important;
 	}
+  .description-tooltip {
+    display: none;
+  }
 }
 
 .description-tooltip {
-	top: 0.8em;
-	right: 27px;
+  top: 0.8em;
+  right: 27px;
 }
 
 .menu {
