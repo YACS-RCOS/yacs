@@ -1,20 +1,20 @@
 <div class="app-container d-flex flex-column">
 	<div class="header-container">
 		<header-bar></header-bar>
-		<notice-bar></notice-bar>
+		<notice-bar hidden></notice-bar>
 	</div>
 	<div class="content-container-wrapper d-flex flex-row"> 
 	  <button class="sidebar-toggle" (click)="toggleSidebar()">
 	    <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
 	  </button>
-	  <div class="sidebar-content-container ml-sm-4 py-sm-3" [hidden]="showingSidebar">
+	  <div class="sidebar-content-container container ml-sm-4 py-sm-3 px-sm-0" [hidden]="showingSidebar">
 	  	<sidebar></sidebar>
 	  </div>
 		<div class="main-content-container container p-sm-3">
 		  <router-outlet></router-outlet>
 		</div>
 	</div>
-	<div class="footer-container p-2">
+	<div class="footer-container d-none d-sm-block p-2">
 		<footer></footer>
 	</div>
 </div>

@@ -31,12 +31,7 @@ img#loading {
 
 @media (min-width: 576px) {
   .sidebar-content-container {
-    // max-width: 500px;
-    // padding: 15px;
-  }
-
-  .main-content-container {
-    // padding: 15px;
+    max-width: 540px;
   }
 
   .sidebar-toggle {
@@ -48,7 +43,6 @@ img#loading {
 @media (max-width: 575.98px) {
   .sidebar-content-container {
     width: 100%;
-    // flex-shrink: 0;
   }
 
   .sidebar-toggle {
@@ -56,7 +50,6 @@ img#loading {
     height: 50px;
   }
 }
-
 
 .leftmargin {
   margin-left: 400px;
