@@ -19,15 +19,12 @@
 			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/info.svg" />
 			</span>
-
 			<span *ngIf="showRemoveButton" (click)="removeButtonClick()" class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']" ngbPopover="Click on this button to remove class from sidebar" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/remove.svg" />
 			</span>
-
 			<span (click)="descriptionClick()" *ngIf="!showDescriptionTooltip" class="course-description" [class.hideDescription]="!showingDescription" [class.showDescription]="showingDescription" [class.selectedDescription]="isCourseSelected()">
 				{{listing.description}}
 			</span>
-
 			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
 				<div class = "arrow-container down-arrow" *ngIf="!showingMenu">
 					<i class="arrow down"></i>

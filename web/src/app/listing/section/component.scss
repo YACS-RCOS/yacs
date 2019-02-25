@@ -1,10 +1,10 @@
 @import "../../../_vars.scss";
 
-// @media (max-width: 575.98px) {
-//     section {
-//         flrx-wrap:
-//     }
-// }
+@media (max-width: 575.98px) {
+    .section-details {
+        display: none!important;
+    }
+}
 
 :host.conflicts>.section-information {
     text-decoration: line-through;

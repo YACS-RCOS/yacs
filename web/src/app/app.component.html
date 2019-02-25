@@ -1,13 +1,20 @@
-<header-bar></header-bar>
-<notice-bar></notice-bar>
-<div class="wrapper" [style.padding-top] = "hasNotice() ? '110px' : '60px'"> 
-  <button (click)="showingSidebar = !showingSidebar">
-    <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
-  </button> 
-  <sidebar [hidden]="showingSidebar"></sidebar>
-  <!-- if there is a notice content will move down -->
-	<div id="content">
-	  <router-outlet></router-outlet>
+<div class="app-container d-flex flex-column">
+	<div class="header-container">
+		<header-bar></header-bar>
+		<notice-bar hidden></notice-bar>
+	</div>
+	<div class="content-container-wrapper d-flex flex-row"> 
+	  <button class="sidebar-toggle" (click)="toggleSidebar()">
+	    <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
+	  </button>
+	  <div class="sidebar-content-container container ml-sm-4 py-sm-3 px-sm-0" [hidden]="showingSidebar">
+	  	<sidebar></sidebar>
+	  </div>
+		<div class="main-content-container container p-sm-3">
+		  <router-outlet></router-outlet>
+		</div>
+	</div>
+	<div class="footer-container d-none d-sm-block p-2">
+		<footer></footer>
 	</div>
 </div>
-<footer></footer>
