@@ -8,7 +8,6 @@
 body {
     color: #000;
     font-family: $font;
-    // margin: 0;
     font-weight: 300;
 }
 
@@ -38,11 +37,6 @@ body {
     margin-top: -4.5px;
     margin-left: -62.5px;       
 }
-
-// footer {
-//     margin: 0px auto;
-//     max-width: 950px;
-// }
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -91,11 +85,6 @@ div.alert {
   border-radius: 0;
 }
 
-// .form-control:focus {
-//   outline: 0 none;
-//   box-shadow: 0 none;
-// }
-
 .dropdown-menu {
   // width: 100% !important;
   left: 0px !important;
@@ -112,7 +101,3 @@ div.alert {
 .dropdown-item.active, .dropdown-item:active {
   background-color: #d57f7f !important;
 }
-
-// .course .row {
-//   flex-wrap: nowrap !important;
-// }
