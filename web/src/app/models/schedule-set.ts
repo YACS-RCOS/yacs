@@ -6,7 +6,7 @@ export class ScheduleSet {
 	public readonly startTime: number = 480;
 	public readonly endTime: number = 1320;
 
-	private scheduleIndex: number = 0;
+	private scheduleIndex: number = 1;
 
 	public constructor (
 		public readonly schedules: Schedule[],
@@ -22,11 +22,11 @@ export class ScheduleSet {
 	}
 
 	public get activeSchedule (): Schedule {
-		return this.schedules[this.scheduleIndex];
+		return this.schedules[this.scheduleIndex-1];
 	}
 
 	public get activeScheduleIndex (): number {
-		return this.scheduleIndex;
+		return (this.schedules.length > 0) ? this.scheduleIndex : 0;
 	}
 
 	public get numSchedules (): number {
@@ -45,18 +45,18 @@ export class ScheduleSet {
 	}
 
   public decrementActiveSchedule (): void {
-    if (this.scheduleIndex > 0) {
+    if (this.scheduleIndex > 1) {
       --this.scheduleIndex;
     } else {
-      this.scheduleIndex = this.schedules.length - 1;
+      this.scheduleIndex = this.schedules.length;
     }
   }
 
   public incrementActiveSchedule (): void {
-    if (this.scheduleIndex < this.schedules.length - 1) {
+    if (this.scheduleIndex < this.schedules.length) {
       ++this.scheduleIndex;
     } else {
-      this.scheduleIndex = 0;
+      this.scheduleIndex = 1;
     }
   }
 }
