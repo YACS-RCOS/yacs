@@ -29,9 +29,8 @@ export class ListingDetailComponent implements OnInit {
     }
 
     async saveListing (): Promise<void> {
-      console.log(this.listing);
-      let success = this.listing.save();
-      console.log(success);
+      this.listing.save();
+      this.goBack();
     }
 
     goBack (): void {
@@ -44,8 +43,5 @@ export class ListingDetailComponent implements OnInit {
       });
 
       this.getCourseByID(this.id);
-      //console.log(this.listing);
-      // this.listing.description = "foo";
-      // this.listing.save();
     }
   }
