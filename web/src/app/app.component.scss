@@ -9,11 +9,13 @@
 
 .sidebar-content-container {
   overflow-y: auto;
+  scrollbar-width: thin;
   flex-shrink: 0;
 }
 
 .main-content-container {
   overflow-x: hidden;
+  scrollbar-width: thin;
 }
 
 @media (min-width: 576px) {
