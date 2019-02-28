@@ -3,7 +3,7 @@
   <div class="schedule-menu">
     <div class="switch">
       <span class="schedule-switch" (click) = "scheduleSet.decrementActiveSchedule()">&#9664;</span>
-      <span class="schedule-index">{{scheduleSet.activeScheduleIndex + 1}} / {{scheduleSet.numSchedules}}</span>
+      <span class="schedule-index">{{activeScheduleIndex}} / {{scheduleSet.numSchedules}}</span>
       <span class="schedule-switch" (click) = "scheduleSet.incrementActiveSchedule()">&#9654;</span>
     </div>
     <div>
