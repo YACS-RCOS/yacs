@@ -60,11 +60,8 @@ import { SidebarService } from './services/sidebar.service';
     NoticeService,
     UserService,
     ColorService,
-<<<<<<< HEAD
-    SelectedTermService
-=======
+    SelectedTermService,
     SidebarService
->>>>>>> upstream/master
   ],
   bootstrap: [AppComponent]
 })
