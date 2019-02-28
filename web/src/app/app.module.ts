@@ -26,6 +26,8 @@ import { ConflictsService } from './services/conflicts.service';
 import { NoticeService } from './services/notice.service';
 import { UserService } from './services/user.service';
 import { ColorService } from './services/color.service';
+import { SidebarService } from './services/sidebar.service';
+
 
 
 @NgModule({
@@ -57,7 +59,8 @@ import { ColorService } from './services/color.service';
     ConflictsService,
     NoticeService,
     UserService,
-    ColorService
+    ColorService,
+    SidebarService
   ],
   bootstrap: [AppComponent]
 })

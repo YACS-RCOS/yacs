@@ -11,18 +11,20 @@ import { NoticeService } from './services/notice.service';
 
 })
 export class AppComponent {
-  
-
   constructor(private noticeService: NoticeService) {}
 
-  public showingSidebar = true;
+  public showingSidebar: boolean = true;
   
-  ngOnInit() {
+  ngOnInit () {
     this.showingSidebar = true;
   }
 
+  public toggleSidebar (): void {
+    this.showingSidebar = !this.showingSidebar;
+  }
+
   //aids in moving contents of page down if notice bar is present
-  hasNotice() : boolean {
+  public hasNotice (): boolean {
     return this.noticeService.hasNotice();
   }
 
