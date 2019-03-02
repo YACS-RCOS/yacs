@@ -5,7 +5,7 @@ class ListingResource < ApplicationResource
   belongs_to :term
   has_many :sections
 
-  attribute :longname, :string
+  attribute :longname, :string, writable: true
   attribute :description, :string, writable: true
   attribute :min_credits, :integer, writable: true
   attribute :max_credits, :integer, writable: true
