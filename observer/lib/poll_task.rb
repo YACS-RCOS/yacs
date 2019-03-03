@@ -27,7 +27,8 @@ class PollTask
     @logger.info :poll_task_start
     every @poll_interval do
       with_retries @retry_count, @retry_delay do
-        perform_once.then { |result| yield result }
+        yield perform_once
+        # perform_once.then { |result| yield result }
       end
     end
   end

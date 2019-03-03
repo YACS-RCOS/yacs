@@ -24,12 +24,13 @@ class Pollable
 
 	# Polls the source url once
 	#
-	# @return [Future<Hash>]
+	# @return [Hash]
 	def poll 
 		future { request }
 			.then { |response| parse response }
 			.then { |result| log_pass :info, :pollable_poll_success, result }
 			.rescue { |reason| log_raise :warn, :pollable_poll_failure, reason }
+			.value!
 	end
 
 	def log_fields

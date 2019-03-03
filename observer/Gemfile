@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.5.1'
+ruby '2.6.0'
 
 gem 'faraday'
 gem 'pry'
@@ -10,3 +10,4 @@ gem 'oj'
 gem 'activesupport'
 gem 'redis'
 gem 'concurrent-ruby'
+gem 'ougai'

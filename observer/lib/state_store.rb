@@ -1,7 +1,12 @@
 require 'oj'
 require 'redis'
+require 'concurrent'
+require_relative 'concurrent_helper'
 
 class StateStore
+	include Concurrent::Promises::FactoryMethods
+	include Concurrent::Promises::CustomHelpers
+
 	KEY_PREFIX = '/observer/state_store/'
 
 	# Creates a new StateStore
@@ -17,12 +22,14 @@ class StateStore
 		future { @redis.get @key }
 			.then { |state| Oj.load state }
 			.rescue { |reason| log_raise :error, :state_store_get_failure, reason }
+			.value!
 	end
 
 	def set state
 		future { Oj.dump state }
 			.then { |json| @redis.set @key, json }
-			.rescue { |reason| log_raise :error, :state_store_set_failure, reason }			
+			.rescue { |reason| log_raise :error, :state_store_set_failure, reason }
+			.value!
 	end
 
 	def log_fields

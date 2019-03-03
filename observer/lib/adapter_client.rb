@@ -1,7 +1,9 @@
+require 'concurrent'
 require_relative 'adapter_factory'
 require_relative 'poll_task'
 require_relative 'pollable'
 require_relative 'source_differ'
+require_relative 'concurrent_helper'
 
 class AdapterClient
 	include Concurrent::Promises::FactoryMethods
@@ -18,9 +20,10 @@ class AdapterClient
 	def start
 		@poll_task.perform do |new_state|
 			future { diff new_state, last_state }
-				.then { |changes| push_changes changes }
-				.then { |_| update_state new_state }
-				# .rescue { |reason| log_raise :error, :adapter_client_flow_failure, reason }
+				.then { |changes| push_changes changes; changes }
+				.then { |_| update_state new_state; _ }
+				.then { |_| log_pass :info, :adapter_client_flow_complete, _ }
+				.rescue { |reason| log_raise :error, :adapter_client_flow_failure, reason }
 			end
 		end
 	end
@@ -67,6 +70,7 @@ class AdapterClient::Factory
 			differ = SourceDiffer.new
 			state_store = StateStore.new key: url, logger: logger
 			AdapterClient.new
+				name: adapter_config[:name],
 				poll_task: poll_task,
 				differ: differ,
 				state_store: state_store,
@@ -75,7 +79,7 @@ class AdapterClient::Factory
 
 		private
 
-		def build_url adapter_config, term_shortname
+		def url_for adapter_config, term_shortname
 			version_major = 'v' + adapter_config[:version].to_i
 			URI.join adapter_config[:root_url], version_major, term_shortname
 		end
