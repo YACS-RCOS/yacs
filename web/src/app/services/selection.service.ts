@@ -5,11 +5,16 @@ import {Subject,Subscription, Subscriber} from 'rxjs/Rx';
 
 import { Section } from 'yacs-api-client';
 import { Listing } from 'yacs-api-client';
+import { SidebarService } from './sidebar.service';
+
 
 @Injectable()
 export class SelectionService {
 
   private clickEvent = new Subject();
+
+   constructor (
+    public sidebarService : SidebarService) { }
 
   subscribe (next): Subscription {
     return this.clickEvent.subscribe(next);
@@ -40,6 +45,8 @@ export class SelectionService {
     store[section.listing.id].push(section.id);
     store[section.listing.id].sort();
     this.setItem('selections', JSON.stringify(store));
+
+    this.sidebarService.addListing(section.listing);
     return true;
   }
 
@@ -66,6 +73,17 @@ export class SelectionService {
     }
     this.next('event');
   }
+
+   public removeListing(course: Listing) {
+    
+    if (this.hasSelectedSection(course)) {
+      let store = this.getSelections();
+      delete store[course.id];
+      this.setItem('selections', JSON.stringify(store));
+    } 
+    this.next('event');
+  }
+
 
   public isSectionSelected (section: Section) : boolean {
     let store = this.getSelections();

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { SelectionService } from '../../services/selection.service';
+import { SidebarService } from '../../services/sidebar.service';
 import { ConflictsService } from '../../services/conflicts.service';
 // import { Course } from '../../models/course.model';
 import { Term, Listing } from 'yacs-api-client';
@@ -23,9 +23,9 @@ export class InterestedCoursesComponent implements OnInit {
   @Input() showStatusText: boolean = false;
 
   constructor (
-      public selectionService : SelectionService,
+      public sidebarService : SidebarService,
       private conflictsService: ConflictsService) {
-    this.subscription = this.selectionService.subscribe(() => {
+    this.subscription = this.sidebarService.subscribe(() => {
       this.getCourses();
     });
   }
@@ -36,7 +36,7 @@ export class InterestedCoursesComponent implements OnInit {
   }
 
   async getCourses (): Promise<void> {
-    this.selectionService.getSelectedCourseIds().forEach(this.listingIds.add, this.listingIds);
+    this.listingIds = this.sidebarService.getListingIds();
 
     // display interested courses on sidebar
     // display message to try selecting some if none

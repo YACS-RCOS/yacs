@@ -1,67 +1,56 @@
-// header-bar {
-//   width:100%;
-//   height:50px;
-//   position:fixed;
-//   z-index: 1;
-//   color: white;
-//   background-color: #c65353;
-//   white-space: nowrap;
-// }
-
-#content {
-  margin: auto;
-  overflow: hidden;
+.app-container {
+  height: 100vh;
 }
 
-img#loading {
-  position:absolute;
-  top: 50%;
-  left: 50%;
-  /* browsers handle fractional pixel values differently, but the worst that
-     can happen is that it's 1/2 pixel off center. So it's best to use the
-     real values (half of the image width and height) here. */
-  margin-top: -4.5px;
-  margin-left: -62.5px;
+.content-container-wrapper {
+  height: 100%;
+  overflow-x: hidden;
 }
 
-.wrapper {
-  display: flex;
-  align-items: stretch center;
-  position: relative;
+.sidebar-content-container {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  flex-shrink: 0;
 }
 
-@media (max-width: 570px) {
-  #sidebar {
+.main-content-container {
+  overflow-x: hidden;
+  scrollbar-width: thin;
+}
 
+@media (min-width: 576px) {
+  .sidebar-content-container {
+    max-width: 540px;
+  }
+
+  .sidebar-toggle {
+    top: 60px;
+    bottom: 60px;
   }
 }
 
-@media (min-width: 570px) {
-  #sidebar {
+@media (max-width: 575.98px) {
+  .sidebar-content-container {
+    width: 100%;
+  }
 
+  .sidebar-toggle {
+    bottom: 20px;
+    height: 50px;
   }
 }
 
-
-.leftmargin {
-  margin-left: 400px;
-}
-
-/* defines properties for sidebar button */
-button {
+.sidebar-toggle {
   background: #b2b2b2;
   border: none;
   border-top-right-radius:12px;
   border-bottom-right-radius:12px;
-  z-layer: 99999;
+  z-index: 999;
   align-items: stretch;
-  height: 90vh;
-  position: sticky;
-  top: 60px;
+  position: fixed;
 }
 
-/* properties for mouse hover */
-button:hover {
+.sidebar-toggle:hover {
   background-color: #d57f7f;
 }
 
@@ -81,19 +70,6 @@ button:hover {
   padding: 3px;
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
-}
-
-.navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1.0)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-footer {
-  margin: 0px auto;
-  max-width: 950px;
-}
-
-.row {
-  flex-wrap: nowrap;
 }
 
 button:focus{
