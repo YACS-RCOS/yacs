@@ -4,10 +4,6 @@
 	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
 	  </div>
 	  <div class="w-100 h-100 course-content position-relative min-height">
-		  <!-- <img *ngIf="getSectionClosedStatus() === 'someClosed'" src="assets/images/some-closed.png" class="warning" placement="right" ngbTooltip="Some sections are closed">
-			<img *ngIf="getSectionClosedStatus() === 'allClosed'" src="assets/images/all-closed.png" class="warning" placement="right" ngbTooltip="All sections are closed">
-			<img *ngIf="getSectionConflictStatus() === 'someConflict'" src="assets/images/yellow_danger.svg" class="warning" placement="right" ngbTooltip="Some sections are closed">
-			<img *ngIf="getSectionConflictStatus() === 'allConflict'" src="assets/images/red_exclamation.svg" class="warning" placement="right" ngbTooltip="All sections are closed"> -->
 			<table (click)="clickCourse()" class="w-100">
 		  	<tr>
 		    	<div class="course-name">{{listing.longname}}
