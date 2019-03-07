@@ -78,37 +78,25 @@ export class ListingComponent implements OnInit{
     return this.listing.description || 'No description available :(';
   }
 
-  public getSectionClosedStatus (): string {
+  public getSectionClosedCount (): number {
     let closedCount = 0;
     this.listing.sections.forEach((s) => {
       if (s.seatsTaken >= s.seats) {
         closedCount += 1;
       }
     });
-    if (closedCount === this.listing.sections.length) {
-      return "allClosed";
-    } else if (closedCount > 0) {
-      return "someClosed";
-    } else {
-      return "";
-    }
+    return closedCount;
 
   }
 
-  public getSectionConflictStatus (): string {
+  public getSectionConflictCount (): number {
     let conflictCount = 0;
     this.listing.sections.forEach((s) => {
       if (this.doesConflict(s)) {
         conflictCount += 1;
       }
     });
-    if (conflictCount === this.listing.sections.length) {
-      return "allConflict";
-    } else if (conflictCount > 0) {
-      return "someConflict";
-    } else {
-      return "";
-    }
+    return conflictCount;
 
   }
 
