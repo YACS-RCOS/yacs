@@ -22,7 +22,6 @@ export class ListingComponent implements OnInit{
   public showingMenu;
   public showingDescription;
   public hovered;
-  public sectionStatus;
 
   ngOnInit () {
     this.showingMenu = false;
@@ -45,15 +44,7 @@ export class ListingComponent implements OnInit{
   }
 
   public clickCourse () {
-    let closedSectionsCount = this.selectionService.toggleCourse(this.listing);
-    let totalSectionsCount = this.listing.sections.length;
-    if (closedSectionsCount === -1 || closedSectionsCount === 0) {
-      this.sectionStatus = "normal";
-    } else if (closedSectionsCount < totalSectionsCount){
-      this.sectionStatus = "someClosed";
-    } else {
-      this.sectionStatus = "allClosed";
-    }
+    this.selectionService.toggleCourse(this.listing);
   }
 
   public isCourseSelected () {
@@ -80,5 +71,39 @@ export class ListingComponent implements OnInit{
 
   public get tooltipDescription (): string {
     return this.listing.description || 'No description available :(';
+  }
+
+  public getSectionClosedStatus (): string {
+    let closedCount = 0;
+    this.listing.sections.forEach((s) => {
+      if (s.seatsTaken >= s.seats) {
+        closedCount += 1;
+      }
+    });
+    if (closedCount === this.listing.sections.length) {
+      return "allClosed";
+    } else if (closedCount > 0) {
+      return "someClosed";
+    } else {
+      return "";
+    }
+
+  }
+
+  public getSectionConflictStatus (): string {
+    let conflictCount = 0;
+    this.listing.sections.forEach((s) => {
+      if (this.doesConflict(s)) {
+        conflictCount += 1;
+      }
+    });
+    if (conflictCount === this.listing.sections.length) {
+      return "allConflict";
+    } else if (conflictCount > 0) {
+      return "someConflict";
+    } else {
+      return "";
+    }
+
   }
 }

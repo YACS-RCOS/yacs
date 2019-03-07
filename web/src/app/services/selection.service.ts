@@ -55,22 +55,16 @@ export class SelectionService {
   }
 
   public toggleCourse(course: Listing) {
-    let closedCount = -1;
     if (this.hasSelectedSection(course)) {
       let store = this.getSelections();
       delete store[course.id];
       this.setItem('selections', JSON.stringify(store));
     } else {
-      closedCount = 0;
       course.sections.forEach((s) => {
-        if (s.seatsTaken >= s.seats) {
-          closedCount += 1;
-        }
         this.addSection(s);
       });
     }
     this.next('event');
-    return closedCount;
   }
 
   public isSectionSelected (section: Section) : boolean {

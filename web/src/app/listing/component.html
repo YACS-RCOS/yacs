@@ -4,9 +4,11 @@
 	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
 	  </div>
 	  <div class="w-100 h-100 course-content position-relative min-height">
-		  <img *ngIf="isCourseSelected() && sectionStatus === 'someClosed'" src="assets/images/yellow_danger.svg" class="warning" placement="right" ngbTooltip="Some sections are closed">
-			<img *ngIf="isCourseSelected() && sectionStatus === 'allClosed'" src="assets/images/red_exclamation.svg" class="warning" placement="right" ngbTooltip="All sections are closed">
-		  <table (click)="clickCourse()" class="w-100">
+		  <!-- <img *ngIf="getSectionClosedStatus() === 'someClosed'" src="assets/images/some-closed.png" class="warning" placement="right" ngbTooltip="Some sections are closed">
+			<img *ngIf="getSectionClosedStatus() === 'allClosed'" src="assets/images/all-closed.png" class="warning" placement="right" ngbTooltip="All sections are closed">
+			<img *ngIf="getSectionConflictStatus() === 'someConflict'" src="assets/images/yellow_danger.svg" class="warning" placement="right" ngbTooltip="Some sections are closed">
+			<img *ngIf="getSectionConflictStatus() === 'allConflict'" src="assets/images/red_exclamation.svg" class="warning" placement="right" ngbTooltip="All sections are closed"> -->
+			<table (click)="clickCourse()" class="w-100">
 		  	<tr>
 		    	<div class="course-name">{{listing.longname}}
 					</div>
@@ -17,6 +19,13 @@
 		    <tr >
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
+				<tr>
+					<div *ngIf="getSectionConflictStatus() === '' && getSectionClosedStatus() === ''" class="closed-conflict null">&nbsp;</div>
+					<div *ngIf="getSectionConflictStatus() === 'someConflict'" class="closed-conflict some">Conflicting Sections</div>
+					<div *ngIf="getSectionConflictStatus() === 'allConflict'" class="closed-conflict all">Conflicting Sections</div>
+					<div *ngIf="getSectionClosedStatus() === 'someClosed'" class="closed-conflict some">Full Sections</div>
+					<div *ngIf="getSectionClosedStatus() === 'allClosed'" class="closed-conflict all">Full Sections</div>
+				</tr>
 			</table>
 			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/info.svg" />
