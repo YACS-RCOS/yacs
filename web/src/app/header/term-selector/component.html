@@ -1,5 +1,5 @@
 <a class="nav-link">
-    <a href="#"><i class="left"></i></a>&nbsp;
-    <span class="theme-text theme-text-heavy"></span>&nbsp;
-    <a href="#"><i class="right"></i></a>
+    <a (click)="nextTerm()"><i class="arrow left" [class.arrow_disabled]="isLastTerm"></i></a>&nbsp;
+    <span class="theme-text theme-text-heavy">{{ internalName }}</span>&nbsp;
+    <a (click)="previousTerm()"><i class="arrow right" [class.arrow_disabled]="isFirstTerm"></i></a>
 </a>

@@ -1,26 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Term, Course, Listing } from 'yacs-api-client';
 import { YacsService } from '../services/yacs.service';
 import { ConflictsService } from '../services/conflicts.service';
+import { SelectedTermService } from '../services/selected-term.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'listing-view',
   templateUrl: './component.html',
   styleUrls: ['./component.scss']
 })
-export class ListingViewComponent implements OnInit {
+export class ListingViewComponent implements OnInit, OnDestroy {
   listings: Listing[] = [];
   isLoaded: boolean = false;
+  cachedTerm: string;
+  cachedQuery: Params;
+  termSubscription: Subscription;
 
   constructor (
     private yacsService : YacsService,
     private activatedRoute: ActivatedRoute,
-    private conflictsService: ConflictsService) { }
+    private conflictsService: ConflictsService,
+    private selectedTermService: SelectedTermService) {
+    this.cachedTerm = this.selectedTermService.currentUUID;
+  }
 
-  async getCourses (params: Params): Promise<void> {
+  async getCourses (params: Params, termUUID: string): Promise<void> {
     this.isLoaded = false;
-    const term = await Term.first();
+    // get the selected term using the provided uuid
+    const term = await Term.where({uuid: termUUID}).first();
     const query = Object.assign({ term_id: term.data.id }, params);
     Listing
       .where(query)
@@ -38,7 +47,24 @@ export class ListingViewComponent implements OnInit {
 
   ngOnInit (): void {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      this.getCourses(params);
+      this.cachedQuery = params;
+      // only operate if the selected term has been determined (prevents race condition)
+      if (this.cachedTerm !== undefined) {
+        this.getCourses(this.cachedQuery, this.cachedTerm);
+      }
     });
+    this.termSubscription = this.selectedTermService.subscribeToTerm((term: Term) => {
+      this.cachedTerm = term.uuid;
+      // only operate if the query has been determined (prevents race condition)
+      if (this.cachedQuery !== undefined) {
+        this.getCourses(this.cachedQuery, this.cachedTerm);
+      }
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    // unsubscribe from the term subscription when this listing is destroyed to prevent leaking
+    this.termSubscription.unsubscribe();
   }
 }
