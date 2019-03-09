@@ -27,7 +27,7 @@ export class ListingComponent implements OnInit{
   public showingMenu;
   public showingDescription;
   public hovered;
-  
+
   ngOnInit () {
     this.showingMenu = false;
     this.showingDescription = false;
@@ -75,7 +75,29 @@ export class ListingComponent implements OnInit{
   }
 
   public get tooltipDescription (): string {
-    return this.listing.description || 'No description available :('; 
+    return this.listing.description || 'No description available :(';
+  }
+
+  public getSectionClosedCount (): number {
+    let closedCount = 0;
+    this.listing.sections.forEach((s) => {
+      if (s.seatsTaken >= s.seats) {
+        closedCount += 1;
+      }
+    });
+    return closedCount;
+
+  }
+
+  public getSectionConflictCount (): number {
+    let conflictCount = 0;
+    this.listing.sections.forEach((s) => {
+      if (this.doesConflict(s)) {
+        conflictCount += 1;
+      }
+    });
+    return conflictCount;
+
   }
 
   public removeButtonClick (): void {

@@ -71,8 +71,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   }
 
-  public get activeSchedule (): Schedule {
-    return this.scheduleSet.activeSchedule;
+  public get activeScheduleIndex (): number {
+    return (this.scheduleSet.numSchedules > 0) ? this.scheduleSet.activeScheduleIndex + 1 : 0;
   }
 
   public get statusText (): string {
