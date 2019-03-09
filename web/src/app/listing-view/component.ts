@@ -23,14 +23,12 @@ export class ListingViewComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private conflictsService: ConflictsService,
     private selectedTermService: SelectedTermService) {
-    this.cachedTerm = this.selectedTermService.currentUUID;
+    this.cachedTerm = this.selectedTermService.currentTermId;
   }
 
-  async getCourses (params: Params, termUUID: string): Promise<void> {
+  async getCourses (params: Params, term: string): Promise<void> {
     this.isLoaded = false;
-    // get the selected term using the provided uuid
-    const term = await Term.where({uuid: termUUID}).first();
-    const query = Object.assign({ term_id: term.data.id }, params);
+    const query = Object.assign({ term_id: term }, params);
     Listing
       .where(query)
       .includes('sections')
@@ -54,7 +52,7 @@ export class ListingViewComponent implements OnInit, OnDestroy {
       }
     });
     this.termSubscription = this.selectedTermService.subscribeToTerm((term: Term) => {
-      this.cachedTerm = term.uuid;
+      this.cachedTerm = term.id;
       // only operate if the query has been determined (prevents race condition)
       if (this.cachedQuery !== undefined) {
         this.getCourses(this.cachedQuery, this.cachedTerm);

@@ -12,6 +12,7 @@ export class SelectedTermService {
     // cache the current ordinal and uuid
     protected _currentOrdinal: number;
     protected _currentUUID: string;
+    protected _currentId: string;
 
     constructor() {
         this.terms = new Map<string, Term>();
@@ -40,6 +41,7 @@ export class SelectedTermService {
                         this.setSelectedTermByOrdinal(0);
                     } else {
                         this._currentUUID = localTerm.uuid;
+                        this._currentId = localTerm.id;
                         this.setSelectedTerm(localTerm.uuid);
                     }
                 } else {
@@ -49,6 +51,7 @@ export class SelectedTermService {
         });
         // internal subscription to term for localstorage
         this.subscribeToTerm((term: Term) => {
+            this._currentId = term.id;
             this._currentUUID = term.uuid;
             localStorage.setItem('selectedTerm', term.uuid);
             localStorage.setItem('atFirstTerm', `${this._currentOrdinal === 0}`);
@@ -95,6 +98,7 @@ export class SelectedTermService {
     public get currentOrdinal(): number { return this._currentOrdinal; }
     public get maximumOrdinal(): number { return this.termsOrdinal.length - 1; }
     public get currentUUID(): string { return this._currentUUID; }
+    public get currentTermId(): string { return this._currentId; }
 
     // for the future perhaps
     public getTerms(): Map<string, Term> { return this.terms; }
