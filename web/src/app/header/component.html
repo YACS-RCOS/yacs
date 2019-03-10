@@ -1,7 +1,8 @@
-<nav class="navbar navbar-custom fixed-top navbar-expand-sm flex-wrap2 flex-md-nowrap p-0">
+<nav class="navbar navbar-custom navbar-expand-sm flex-wrap2 flex-md-nowrap p-0">
   <div class="container">
     <a class="navbar-brand col-auto mr-0 yacs-link" [routerLink]="['/']" (click)="navbarCollapsed = true">
-      <span class="theme-text theme-text-heavy">Yacs</span>
+      <span><img class="theme-logo" src="assets/images/yacs-symbol-lockup-white.png" /></span> 
+      <!--  <span class="theme-text theme-text-heavy">Yacs</span> -->
     </a>
 
     <button class="navbar-toggler d-sm-none mt-1 mr-0" type="button" (click)="navbarCollapsed = !navbarCollapsed" 
@@ -25,7 +26,7 @@
       <ul class="nav navbar-nav text-nowrap pl-2 pr-3">
         <li class="nav-item my-1">
           <a class="nav-link" [routerLink]="['/courses']" [queryParams]="{ tags: ['featured'] }">
-            <span class="theme-text">Topics</span>
+            <span class="theme-text theme-text-heavy">Topics</span>
           </a>
         </li>
 <!--         <li class="nav-item my-1">

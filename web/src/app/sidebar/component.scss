@@ -1,21 +1,16 @@
 @import "../../_vars.scss";
 
 #sidebar {
-  min-height: 100%;
+  height: 100%;
   background: none;
-  padding-top: 0px;
   align-items: left;
-  padding-left: 10px;
-  /*padding-right: 10px;*/
-  font-size: 98%;
-  border-right: 2px solid #e8e8e8;
-  /*width: %100;*/
+  padding-left: 0px;
 }
 
-ul {
-  font-weight: 400;
-  padding-top: 50px;
-  list-style: none;
+@media (min-width: 576px) {
+  #sidebar {
+    border-right: 2px solid #e8e8e8;
+  }
 }
 
 .tabs {
