@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Term, Course, Listing } from 'yacs-api-client';
-import { YacsService } from '../services/yacs.service';
 import { ConflictsService } from '../services/conflicts.service';
 
 @Component({
@@ -18,8 +17,7 @@ export class ListingDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private conflictsService: ConflictsService,
-    private yacsService : YacsService) { }
+    private conflictsService: ConflictsService) { }
 
 
     async getCourseByID (id: number): Promise<void> {
