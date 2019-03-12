@@ -4,7 +4,7 @@
 	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
 	  </div>
 	  <div class="w-100 h-100 course-content position-relative min-height">
-		  <table (click)="clickCourse()" class="w-100">
+			<table (click)="clickCourse()" class="w-100">
 		  	<tr>
 		    	<div class="course-name">{{listing.longname}}
 					</div>
@@ -15,6 +15,15 @@
 		    <tr >
 		    	<div class="course-details">{{creditRange}}</div>
 		    </tr>
+				<tr>
+					<div *ngIf="getSectionConflictCount() === 0 && getSectionClosedCount() === 0; else elseContent" class="closed-conflict null">&nbsp;</div>
+					<ng-template #elseContent>
+						<div *ngIf="getSectionConflictCount() < listing.sections.length && getSectionConflictCount() != 0" class="closed-conflict some" placement="top" ngbTooltip="Some sections are conflicting">Conflicting Sections</div>
+						<div *ngIf="getSectionConflictCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbTooltip="All sections are conflicting">Conflicting Sections</div>
+						<div *ngIf="getSectionClosedCount() < listing.sections.length && getSectionClosedCount() != 0" class="closed-conflict some" placement="top" ngbTooltip="Some sections are closed">Full Sections</div>
+						<div *ngIf="getSectionClosedCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbTooltip="All sections are closed">Full Sections</div>
+					</ng-template>
+				</tr>
 			</table>
 			<div class="edit-link position-absolute">
 				<a [routerLink]="['/courses', listing.id]">edit</a>
