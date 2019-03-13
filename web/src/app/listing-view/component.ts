@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 export class ListingViewComponent implements OnInit, OnDestroy {
   listings: Listing[] = [];
   isLoaded: boolean = false;
-  cachedTerm: string;
+  cachedTermId: string;
   cachedQuery: Params;
   termSubscription: Subscription;
 
@@ -23,12 +23,12 @@ export class ListingViewComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private conflictsService: ConflictsService,
     private selectedTermService: SelectedTermService) {
-    this.cachedTerm = this.selectedTermService.currentTermId;
+    this.cachedTermId = this.selectedTermService.currentTermId;
   }
 
-  async getCourses (params: Params, term: string): Promise<void> {
+  async getCourses (params: Params, termId: string): Promise<void> {
     this.isLoaded = false;
-    const query = Object.assign({ term_id: term }, params);
+    const query = Object.assign({ term_id: termId }, params);
     Listing
       .where(query)
       .includes('sections')
@@ -47,15 +47,15 @@ export class ListingViewComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.cachedQuery = params;
       // only operate if the selected term has been determined (prevents race condition)
-      if (this.cachedTerm !== undefined) {
-        this.getCourses(this.cachedQuery, this.cachedTerm);
+      if (this.cachedTermId !== undefined) {
+        this.getCourses(this.cachedQuery, this.cachedTermId);
       }
     });
     this.termSubscription = this.selectedTermService.subscribeToTerm((term: Term) => {
-      this.cachedTerm = term.id;
+      this.cachedTermId = term.id;
       // only operate if the query has been determined (prevents race condition)
       if (this.cachedQuery !== undefined) {
-        this.getCourses(this.cachedQuery, this.cachedTerm);
+        this.getCourses(this.cachedQuery, this.cachedTermId);
       }
     });
 
