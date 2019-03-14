@@ -23,7 +23,7 @@ export class ListingViewComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private conflictsService: ConflictsService,
     private selectedTermService: SelectedTermService) {
-    this.cachedTermId = this.selectedTermService.currentTermId;
+    this.cachedTermId = this.selectedTermService.getCurrentTermId;
   }
 
   async getCourses (params: Params, termId: string): Promise<void> {

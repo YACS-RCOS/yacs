@@ -25,18 +25,18 @@ export class TermSelectorComponent implements OnInit {
   }
 
   get isFirstTerm(): boolean {
-    return this.selectedTermService.currentOrdinal === 0;
+    return this.selectedTermService.getCurrentOrdinal === 0;
   }
 
   get isLastTerm(): boolean {
-    return this.selectedTermService.currentOrdinal === this.selectedTermService.maximumOrdinal;
+    return this.selectedTermService.getCurrentOrdinal === this.selectedTermService.getMaximumOrdinal;
   }
 
   /**
    * Move to the previous (more recent) Term
    */
   previousTerm() {
-    const ord = this.selectedTermService.currentOrdinal;
+    const ord = this.selectedTermService.getCurrentOrdinal;
     if (ord > 0) {
       this.selectedTermService.setSelectedTermByOrdinal(ord - 1);
     }
@@ -46,8 +46,8 @@ export class TermSelectorComponent implements OnInit {
    * Move to the next (less recent) Term
    */
   nextTerm() {
-    const ord = this.selectedTermService.currentOrdinal;
-    if (ord < this.selectedTermService.maximumOrdinal) {
+    const ord = this.selectedTermService.getCurrentOrdinal;
+    if (ord < this.selectedTermService.getMaximumOrdinal) {
       this.selectedTermService.setSelectedTermByOrdinal(ord + 1);
     }
   }
