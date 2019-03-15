@@ -1,26 +1,14 @@
 <div class="container" *ngIf="listing">
   <h2 class="detail-heading">
-    {{listing.longname}}
+    {{listing.subjectShortname}} {{listing.courseShortname}}
   </h2>
 
-  <!-- <div class="form-row justify-content-start">
-    <div id="deptField" class="form-group form-inline ">
-      <label for="depts-dropdown"> Department: </label>
-      <select class="form-control" id="depts-dropdown" name="course.department_code" [(ngModel)]="course.department_code" #newCode>
-        <option *ngFor="let dept of depts" [ngValue]="dept.code">{{dept.code}}</option>
-      </select>
-      &nbsp;
-      <label for="numInput">Course #: </label>
-      <input id="numInput" class="form-control" [(ngModel)]="course.number" placeholder="num" #newNum>
-    </div>
-
-  </div>
   <div class="form-row">
-  <div id="nameField" class="form-group form-inline">
-    <label for="nameInput">Name: </label>
-    <input id="nameInput" class="form-control" style ="width:95% !important;"[(ngModel)]="course.name" placeholder="name" #newName>
+    <div id="credField" class="form-group form-inline">
+      <label for="longnameInput">Course Name: </label>
+      <input id="longnameInput" class="form-control" [(ngModel)]="listing.longname" placeholder="{{listing.longname}}" #newLongname>
+    </div>
   </div>
-  </div> -->
 
   <div class="form-row">
     <div id="credField" class="form-group form-inline">
@@ -40,8 +28,8 @@
   </div>
 
   <div id="buttonHolder">
-    <button class="btn btn-search" id="save" (click)="saveListing()">Save Changes</button>
-    <button class="btn btn-search" id="cancel" (click)="goBack()">Cancel</button>
+    <button class="schedule-button" id="save" (click)="saveListing()">Save Changes</button>
+    <button class="schedule-button" id="cancel" (click)="goBack()">Cancel</button>
   </div>
 
 </div>

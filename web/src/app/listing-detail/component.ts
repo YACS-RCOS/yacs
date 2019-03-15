@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Term, Course, Listing } from 'yacs-api-client';
 import { ConflictsService } from '../services/conflicts.service';
@@ -9,6 +9,7 @@ import { ConflictsService } from '../services/conflicts.service';
   templateUrl: './component.html',
   styleUrls: ['./component.scss']
 })
+
 export class ListingDetailComponent implements OnInit {
   id: number;
   listing: Listing;
@@ -20,7 +21,7 @@ export class ListingDetailComponent implements OnInit {
     private conflictsService: ConflictsService) { }
 
 
-    async getCourseByID (id: number): Promise<void> {
+    async getListingByID (id: number): Promise<void> {
       Listing.find(id).then((listing) => {
         this.listing = listing.data;
       });
@@ -40,6 +41,6 @@ export class ListingDetailComponent implements OnInit {
         this.id = +params['id'];
       });
 
-      this.getCourseByID(this.id);
+      this.getListingByID(this.id);
     }
   }
