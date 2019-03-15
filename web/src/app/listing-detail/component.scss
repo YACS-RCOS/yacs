@@ -10,9 +10,28 @@
   width: 90% !important;
 }
 
-.listing-detail {
-  margin: 10px;
+.container{
+  margin: auto;
   padding: 0;
   box-shadow: 2px 2px 5px 2px #efefef;
   width: 100%;
+}
+
+// Taken from schedule-view/component.scss
+.schedule-button {
+    color: #ffffff;
+    background-color: #c65353;
+    font-size: 14px;
+    outline: none;
+    border: none;
+    padding: 5px 15px;
+    margin-left: 5px;
+}
+
+.schedule-button:hover {
+    background-color: #d57f7f;
+}
+
+.schedule-button[disabled] {
+  background-color:#daa;
 }
