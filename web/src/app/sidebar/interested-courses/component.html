@@ -1,6 +1,12 @@
 <div>
+  <div *ngIf="!isActiveTerm" class="sidebar-status p-2">
+    <div class="alert alert-warning font-weight-300">
+      The term you're viewing is not the active term. You may set it as writable, but you will lose your selections. <br /> <br />
+      <button type="button" class="btn btn-warning" (click)="selectedTermService.setSelectedTermAsActive()">Set current term as active</button>
+    </div>
+  </div>
   <div *ngIf="showStatusText" class="sidebar-status p-2">
-  	<div  class="alert alert-sidebar">Try selecting some courses :)</div>
+  	<div  class="alert alert-sidebar font-weight-300">Try selecting some courses :)</div>
   </div>
 	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true" [showRemoveButton]="true"></course>
 </div>
