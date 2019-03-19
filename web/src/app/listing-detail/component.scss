@@ -1,20 +1,38 @@
+#longnameInput {
+  width: 24em !important;
+}
+
 #minCredInput {
-  width: 70px !important;
+  width: 2.5em !important;
+  margin-right: 5px;
 }
 
 #maxCredInput {
-  width: 70px !important;
+  width: 2.5em !important;
 }
 
 #descInput {
-  width: 90% !important;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+#buttonHolder {
+  position: relative;
+  left: 0px;
+  bottom: 0px;
 }
 
 .container{
   margin: auto;
-  padding: 0;
-  box-shadow: 2px 2px 5px 2px #efefef;
+  padding: 35px 50px;
   width: 100%;
+  box-shadow: 2px 2px 5px 2px #efefef;
+}
+
+.detail-heading {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+  font-weight: 600;
 }
 
 // Taken from schedule-view/component.scss
@@ -25,7 +43,7 @@
     outline: none;
     border: none;
     padding: 5px 15px;
-    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .schedule-button:hover {

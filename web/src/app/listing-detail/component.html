@@ -1,30 +1,24 @@
 <div class="container" *ngIf="listing">
-  <h2 class="detail-heading">
+  <div class="detail-heading">
     {{listing.subjectShortname}} {{listing.courseShortname}}
-  </h2>
-
-  <div class="form-row">
-    <div id="credField" class="form-group form-inline">
-      <label for="longnameInput">Course Name: </label>
-      <input id="longnameInput" class="form-control" [(ngModel)]="listing.longname" placeholder="{{listing.longname}}" #newLongname>
-    </div>
   </div>
 
-  <div class="form-row">
-    <div id="credField" class="form-group form-inline">
-      <label for="minCredInput">Min Credits: </label>
-      <input id="minCredInput" class="form-control" [(ngModel)]="listing.minCredits" placeholder="{{listing.minCredits}}" #newMinCred>
-      &nbsp;
-      <label for="maxCredInput">Max Credits: </label>
-      <input id="maxCredInput" class="form-control" [(ngModel)]="listing.maxCredits" placeholder="{{listing.maxCredits}}" #newMaxCred>
-    </div>
+  <div id="credField" class="form-group form-inline">
+    <label for="longnameInput">Course Name&nbsp;</label>
+    <input id="longnameInput" class="form-control" [(ngModel)]="listing.longname" placeholder="{{listing.longname}}" #newLongname>
   </div>
 
-  <div class="form-row">
-    <div id="descField" class="form-group form-inline">
-      <label for="descInput">Description: &nbsp;</label>
-      <textarea id="descInput" class="form-control" [(ngModel)]="listing.description" rows="5" #newDesc></textarea>
-    </div>
+  <div id="credField" class="form-group form-inline">
+    <label for="minCredInput">Min Credits&nbsp;</label>
+    <input id="minCredInput" class="form-control" [(ngModel)]="listing.minCredits" placeholder="{{listing.minCredits}}" #newMinCred>
+    &nbsp;&nbsp;&nbsp;
+    <label for="maxCredInput">Max Credits&nbsp;</label>
+    <input id="maxCredInput" class="form-control" [(ngModel)]="listing.maxCredits" placeholder="{{listing.maxCredits}}" #newMaxCred>
+  </div>
+
+  <div id="descField" class="form-group form-inline">
+    <label for="descInput">Description&nbsp;</label>
+    <textarea id="descInput" class="form-control" [(ngModel)]="listing.description" rows="5" #newDesc></textarea>
   </div>
 
   <div id="buttonHolder">
