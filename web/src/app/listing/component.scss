@@ -52,6 +52,10 @@
   height: 24px;
 }
 
+@media (max-width: 575.98px) {
+  .remove-button {
+    top: 10px;  
+}
 
 .menu {
   align: right;
@@ -131,6 +135,12 @@ i {
 
 .course-content {
 	padding-right: 35px;
+}
+
+@media (max-width: 575.98px) {
+  .course-content {
+    background: white
+  }
 }
 
 .course-name {
@@ -253,6 +263,12 @@ section.closed, section.closed:hover {
 .indicator-container {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+@media (max-width: 575.98px) {
+  .indicator-container {
+    background: white;
+  }
 }
 
 .indicator-hover {
