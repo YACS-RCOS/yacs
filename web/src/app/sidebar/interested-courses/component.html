@@ -1,7 +1,8 @@
 <div>
   <div *ngIf="!isActiveTerm" class="sidebar-status p-2">
     <div class="alert alert-warning font-weight-300">
-      The term you're viewing is not the active term. You may set it as writable, but you will lose your selections. <br /> <br />
+      This term is in view-only mode. To create schedules for this term, you must set it to be active. Note that changing the active term will reset your selections.
+      <br /> <br />
       <button type="button" class="btn btn-warning" (click)="selectedTermService.setSelectedTermAsActive()">Set current term as active</button>
     </div>
   </div>
