@@ -13,6 +13,7 @@ import { NavUserComponent } from './header/nav-user/component';
 import { NoticeBarComponent } from './notice-bar/component';
 import { FooterComponent } from './footer/component';
 import { AboutComponent } from './about/component';
+import { TermSelectorComponent } from './header/term-selector/component';
 
 import { SidebarModule } from './sidebar/module';
 import { SchoolViewModule } from './school-view/module';
@@ -26,8 +27,8 @@ import { ConflictsService } from './services/conflicts.service';
 import { NoticeService } from './services/notice.service';
 import { UserService } from './services/user.service';
 import { ColorService } from './services/color.service';
+import { SelectedTermService } from './services/selected-term.service';
 import { SidebarService } from './services/sidebar.service';
-
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { SidebarService } from './services/sidebar.service';
     NoticeBarComponent,
     FooterComponent,
     AboutComponent,
-    NavUserComponent
+    NavUserComponent,
+    TermSelectorComponent
   ],
   providers: [
     SelectionService,
@@ -60,6 +62,7 @@ import { SidebarService } from './services/sidebar.service';
     NoticeService,
     UserService,
     ColorService,
+    SelectedTermService,
     SidebarService
   ],
   bootstrap: [AppComponent]

@@ -1,0 +1,9 @@
+<a class="nav-link">
+    <a (click)="previousTerm()"><i class="arrow left" [class.arrow_disabled]="isFirstTerm"></i></a>&nbsp;
+    <span class="theme-text theme-text-heavy">
+        {{ internalName }}
+        <img *ngIf="!isActiveTerm" src="assets/images/eye.svg" placement="bottom" ngbPopover="Term is currently is view-only mode." alt="View Only" />
+    </span>&nbsp;
+
+    <a (click)="nextTerm()"><i class="arrow right" [class.arrow_disabled]="isLastTerm"></i></a>
+</a>
