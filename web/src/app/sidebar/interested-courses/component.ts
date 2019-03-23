@@ -51,7 +51,34 @@ export class InterestedCoursesComponent implements OnInit {
         .includes('course')
         .includes('course.subject')
         .all().then((listings) => {
-          this.listings = listings.data;
+          //this.listings = listings.data;
+          for (let i = 0; i < listings.data.length; ++i) {
+            let inCurList: boolean = false;
+            console.log(listings.data[i]);
+            for (let j = 0; j < this.listings.length; ++j) {
+              if (listings.data[i].id == this.listings[j].id) {
+                inCurList = true;
+                console.log("inCurList is True");
+              }
+            }
+
+            if (!inCurList) {
+              this.listings.push(listings.data[i]);
+            }
+          }
+
+         for (let i = 0; i < this.listings.length; ++i) {
+            let removeCurList: boolean = true;
+            for (let j = 0; j < listings.data.length; ++j) {
+              if (this.listings[j].id == listings.data[i].id) {
+                removeCurList = false;
+              }
+            }
+
+            if (removeCurList) {
+              this.listings.splice(i, 1);
+            }
+          }
           this.conflictsService.populateConflictsCache(this.listings);
           this.isLoaded = true;
         });
