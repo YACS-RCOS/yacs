@@ -38,7 +38,7 @@ export class ListingDetailComponent implements OnInit {
 
     ngOnInit (): void {
       this.activatedRoute.params.subscribe((params: Params) => {
-        this.id = +params['id'];
+        this.id = params['id'];
       });
 
       this.getListingByID(this.id);
