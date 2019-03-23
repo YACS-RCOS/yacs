@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { ConflictsService } from '../../services/conflicts.service';
+import { SelectedTermService } from '../../services/selected-term.service';
 // import { Course } from '../../models/course.model';
 import { Term, Listing } from 'yacs-api-client';
 import 'rxjs/Rx';
@@ -24,7 +25,8 @@ export class InterestedCoursesComponent implements OnInit {
 
   constructor (
       public sidebarService : SidebarService,
-      private conflictsService: ConflictsService) {
+      private conflictsService: ConflictsService,
+      private selectedTermService: SelectedTermService) {
     this.subscription = this.sidebarService.subscribe(() => {
       this.getCourses();
     });
@@ -35,6 +37,10 @@ export class InterestedCoursesComponent implements OnInit {
     this.getCourses();
   }
 
+  get isActiveTerm(): boolean {
+    return this.selectedTermService.isCurrentTermActive;
+  }
+
   async getCourses (): Promise<void> {
     this.listingIds = this.sidebarService.getListingIds();
 
@@ -43,7 +49,6 @@ export class InterestedCoursesComponent implements OnInit {
     if (this.listingIds.size > 0) {
       this.showStatusText = false;
       this.isLoaded = false;
-      const term = await Term.first();
       Listing
         .where({ id: Array.from(this.listingIds) })
         .includes('sections')
