@@ -55,33 +55,40 @@ export class InterestedCoursesComponent implements OnInit {
         .includes('sections.listing')
         .includes('course')
         .includes('course.subject')
-        .all().then((listings) => {
+        .all().then((newListings) => {
           //this.listings = listings.data;
-          for (let i = 0; i < listings.data.length; ++i) {
+
+          /*
+          oldListingsSet =  new Set<string>(this.listings.map((listing) => listing.id));
+          for (let new_listing of listings)
+          */
+          for (let i = 0; i < newListings.data.length; ++i) {
             let inCurList: boolean = false;
-            console.log(listings.data[i]);
+            console.log(newListings.data[i]);
             for (let j = 0; j < this.listings.length; ++j) {
-              if (listings.data[i].id == this.listings[j].id) {
+              if (newListings.data[i].id == this.listings[j].id) {
                 inCurList = true;
                 console.log("inCurList is True");
               }
             }
 
             if (!inCurList) {
-              this.listings.push(listings.data[i]);
+              this.listings.push(newListings.data[i]);
             }
           }
 
          for (let i = 0; i < this.listings.length; ++i) {
             let removeCurList: boolean = true;
-            for (let j = 0; j < listings.data.length; ++j) {
-              if (this.listings[j].id == listings.data[i].id) {
+            for (let j = 0; j < newListings.data.length; ++j) {
+              if (this.listings[i].id == newListings.data[j].id) {
                 removeCurList = false;
+                console.log("removeCurList is False");
               }
             }
 
             if (removeCurList) {
               this.listings.splice(i, 1);
+              console.log("Removed");
             }
           }
           this.conflictsService.populateConflictsCache(this.listings);
