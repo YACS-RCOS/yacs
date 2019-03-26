@@ -20,8 +20,6 @@ export class InterestedCoursesComponent implements OnInit {
 
   listings: Listing[] = [];
   isLoaded: boolean = false;
-  oldListingsSet: Set<string>;
-  newListingsSet: Set<string>;
   private listingIds: Set<string>;
   private subscription;
 
@@ -61,10 +59,10 @@ export class InterestedCoursesComponent implements OnInit {
         .includes('course')
         .includes('course.subject')
         .all().then((newListings) => {
-          this.oldListingsSet =  new Set(this.listings.map((listing) => listing.id));
-          this.newListingsSet = new Set(newListings.data.map((benis) => benis.id));
+          let oldListingsSet =  new Set(this.listings.map((listing) => listing.id));
+          let newListingsSet = new Set(newListings.data.map((newListing) => newListing.id));
           for (let i in newListings.data) {
-            let inCurList: boolean  = this.oldListingsSet.has(newListings.data[i].id);
+            let inCurList: boolean  = oldListingsSet.has(newListings.data[i].id);
             if (!inCurList) {
               this.listings.push(newListings.data[i]);
 
@@ -72,7 +70,7 @@ export class InterestedCoursesComponent implements OnInit {
           }
 
           for( let j = 0; j < this.listings.length; ++j) {
-            let removeCurList: boolean = !this.newListingsSet.has(this.listings[j].id);
+            let removeCurList: boolean = !newListingsSet.has(this.listings[j].id);
             if (removeCurList) {
               this.listings.splice(j, 1);
 
