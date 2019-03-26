@@ -8,6 +8,8 @@ import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
 
+
+
 @Component({
   selector: 'interested-courses',
   templateUrl: './component.html',
@@ -18,8 +20,11 @@ export class InterestedCoursesComponent implements OnInit {
 
   listings: Listing[] = [];
   isLoaded: boolean = false;
+  oldListingsSet: Set<string>;
+  newListingsSet: Set<string>;
   private listingIds: Set<string>;
   private subscription;
+
 
   @Input() showStatusText: boolean = false;
 
@@ -56,41 +61,24 @@ export class InterestedCoursesComponent implements OnInit {
         .includes('course')
         .includes('course.subject')
         .all().then((newListings) => {
-          //this.listings = listings.data;
-
-          /*
-          oldListingsSet =  new Set<string>(this.listings.map((listing) => listing.id));
-          for (let new_listing of listings)
-          */
-          for (let i = 0; i < newListings.data.length; ++i) {
-            let inCurList: boolean = false;
-            console.log(newListings.data[i]);
-            for (let j = 0; j < this.listings.length; ++j) {
-              if (newListings.data[i].id == this.listings[j].id) {
-                inCurList = true;
-                console.log("inCurList is True");
-              }
-            }
-
+          this.oldListingsSet =  new Set(this.listings.map((listing) => listing.id));
+          this.newListingsSet = new Set(newListings.data.map((benis) => benis.id));
+          for (let i in newListings.data) {
+            let inCurList: boolean  = this.oldListingsSet.has(newListings.data[i].id);
             if (!inCurList) {
               this.listings.push(newListings.data[i]);
+
             }
           }
 
-         for (let i = 0; i < this.listings.length; ++i) {
-            let removeCurList: boolean = true;
-            for (let j = 0; j < newListings.data.length; ++j) {
-              if (this.listings[i].id == newListings.data[j].id) {
-                removeCurList = false;
-                console.log("removeCurList is False");
-              }
-            }
-
+          for( let j = 0; j < this.listings.length; ++j) {
+            let removeCurList: boolean = !this.newListingsSet.has(this.listings[j].id);
             if (removeCurList) {
-              this.listings.splice(i, 1);
-              console.log("Removed");
+              this.listings.splice(j, 1);
+
             }
           }
+
           this.conflictsService.populateConflictsCache(this.listings);
           this.isLoaded = true;
         });
