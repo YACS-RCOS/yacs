@@ -65,7 +65,6 @@ export class InterestedCoursesComponent implements OnInit {
             let inCurList: boolean  = oldListingsSet.has(newListings.data[i].id);
             if (!inCurList) {
               this.listings.push(newListings.data[i]);
-
             }
           }
 
@@ -73,7 +72,6 @@ export class InterestedCoursesComponent implements OnInit {
             let removeCurList: boolean = !newListingsSet.has(this.listings[j].id);
             if (removeCurList) {
               this.listings.splice(j, 1);
-
             }
           }
 
