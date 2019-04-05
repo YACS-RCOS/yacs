@@ -53,9 +53,9 @@ BEGIN
     FOR this_section_period IN SELECT * FROM jsonb_array_elements(this_section.periods) LOOP
       <<inner_period_loop>>
       FOR other_section_period IN SELECT * FROM jsonb_array_elements(other_section.periods) LOOP
-        IF (other_section_period->'day' = other_section_period->'day'
-          AND (((this_section_period->'start')::NUMERIC <= (other_section_period->'start')::NUMERIC AND (this_section_period->'end')::NUMERIC >= (other_section_period->'start')::NUMERIC)
-          OR ((this_section_period->'start')::NUMERIC >= (other_section_period->'start')::NUMERIC AND (this_section_period->'start')::NUMERIC <= (other_section_period->'end')::NUMERIC)))
+        IF (other_section_period->>'day' = other_section_period->>'day'
+          AND (((this_section_period->>'start')::NUMERIC <= (other_section_period->>'start')::NUMERIC AND (this_section_period->>'end')::NUMERIC >= (other_section_period->>'start')::NUMERIC)
+          OR ((this_section_period->>'start')::NUMERIC >= (other_section_period->>'start')::NUMERIC AND (this_section_period->>'start')::NUMERIC <= (other_section_period->>'end')::NUMERIC)))
         THEN
           conflict_ids := conflict_ids || other_section.id;
           conflict_found := 'true';
