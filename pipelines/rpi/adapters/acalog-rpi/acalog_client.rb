@@ -74,11 +74,15 @@ class AcalogClient
 
   def catalog_id_for term_shortname
     year, month = /(\d{4})(\d{2})/.match(term_shortname).captures.map &:to_i
+    catalogs_xml = request('content', method: :getCatalogs)
     year -= 1 if month < 9
-    title = "Rensselaer Catalog #{year}-#{year + 1}"
-    node = request('content', method: :getCatalogs).
-      xpath("//catalog[title[contains(text(),\"#{title}\")]]/@id")
+    node = catalogs_xml.xpath("//catalog[title[contains(text(),\"#{title_for(year)}\")]]/@id")
+    node = catalogs_xml.xpath("//catalog[title[contains(text(),\"#{title_for(year - 1)}\")]]/@id") if node.empty?
     @catalog_id = /acalog-catalog-(?<id>\d+)/.match(node.text)[:id].to_i
+  end
+
+  def title_for year
+    "Rensselaer Catalog #{year}-#{year + 1}"
   end
 
   def request path, params

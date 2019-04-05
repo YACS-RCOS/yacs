@@ -15,8 +15,8 @@ class ApplicationConsumer < Karafka::BaseConsumer
     subject: %i(shortname longname uuid school_uuid),
     listing: %i(shortname longname description min_credits max_credits uuid subject_uuid subject_shortname) <<
       { required_textbooks: [], recommended_textbooks: [], tags: [] },
-    section: %i(shortname crn seats seats_taken uuid listing_uuid instructors) <<
-      { periods: %i(day start end type location) }
+    section: %i(shortname crn seats seats_taken uuid listing_uuid) <<
+      { instructors: [], periods: %i(day start end type location) }
   }.with_indifferent_access.freeze
 
   include Karafka::Consumers::Callbacks
