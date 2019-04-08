@@ -8,8 +8,6 @@ import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
 
-
-
 @Component({
   selector: 'interested-courses',
   templateUrl: './component.html',
@@ -22,7 +20,6 @@ export class InterestedCoursesComponent implements OnInit {
   isLoaded: boolean = false;
   private listingIds: Set<string>;
   private subscription;
-
 
   @Input() showStatusText: boolean = false;
 
