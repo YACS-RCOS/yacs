@@ -59,21 +59,29 @@ export class InterestedCoursesComponent implements OnInit {
         .includes('course')
         .includes('course.subject')
         .all().then((newListings) => {
+          // Create sets from the ids of the two arrays to check for memebership
+          // This allows the runtime to be linear
           let oldListingsSet =  new Set(this.listings.map((listing) => listing.id));
           let newListingsSet = new Set(newListings.data.map((newListing) => newListing.id));
-          for (let i in newListings.data) {
-            let inCurList: boolean  = oldListingsSet.has(newListings.data[i].id);
-            if (!inCurList) {
-              this.listings.push(newListings.data[i]);
-            }
-          }
 
-          for( let j = 0; j < this.listings.length; ++j) {
-            let removeCurList: boolean = !newListingsSet.has(this.listings[j].id);
-            if (removeCurList) {
-              this.listings.splice(j, 1);
+          // Iterate over new listings, and add each new listing if it is not already
+          // present in the current listings
+          newListings.data.forEach((newListing) => {
+            let inCurList: boolean  = oldListingsSet.has(newListing.id);
+
+            if (!inCurList) {
+              this.listings.push(newListing);
             }
-          }
+          });
+
+          // Remove listings that are not in the array of new listings
+          this.listings.forEach((listing, index) => {
+            let removeCurList: boolean = !newListingsSet.has(listing.id);
+
+            if (removeCurList) {
+              this.listings.splice(index, 1);
+            }
+          });
 
           this.conflictsService.populateConflictsCache(this.listings);
           this.isLoaded = true;
