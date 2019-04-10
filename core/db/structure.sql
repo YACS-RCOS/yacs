@@ -2,17 +2,17 @@
  *
  * This purpose of this file is to house any custom plpgsql functions
  * or other "raw" postgresql code that is needed to configure the database.
- * 
+ *
  * Any changes or additions to such code should be handled via migration,
  * using `20171210212207_add_conflict_ids_procedure.rb` as an example.
- * 
+ *
  * This file is needed because although it is possible to execute "raw"
  * sql code in a migration, this is not reflected in the generated schema.rb,
  * which causes problems with testing and deployment.
- * 
+ *
  * As such, this file should contain any and all "raw" sql code necessary
  * to configure the database to the state of the **latest** migration.
- * 
+ *
  * If you are getting odd test failures that could be related to such a
  * misconfiguration, check to make sure any "raw" migrations are reflected
  * here as well.
@@ -53,7 +53,7 @@ BEGIN
     FOR this_section_period IN SELECT * FROM jsonb_array_elements(this_section.periods) LOOP
       <<inner_period_loop>>
       FOR other_section_period IN SELECT * FROM jsonb_array_elements(other_section.periods) LOOP
-        IF (other_section_period->>'day' = other_section_period->>'day'
+        IF (this_section_period->>'day' = other_section_period->>'day'
           AND (((this_section_period->>'start')::NUMERIC <= (other_section_period->>'start')::NUMERIC AND (this_section_period->>'end')::NUMERIC >= (other_section_period->>'start')::NUMERIC)
           OR ((this_section_period->>'start')::NUMERIC >= (other_section_period->>'start')::NUMERIC AND (this_section_period->>'start')::NUMERIC <= (other_section_period->>'end')::NUMERIC)))
         THEN
