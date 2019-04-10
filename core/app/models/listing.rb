@@ -24,6 +24,7 @@ class Listing < ActiveRecord::Base
           to_tsvector(subjects.shortname) ||
           to_tsvector(to_char(courses.shortname, '9999')) ||
           to_tsvector(listings.longname) ||
+          to_tsvector(sections.crn) ||
           to_tsvector(coalesce((string_agg(array_to_string(sections.instructors, ' '), ' ')), '')) ||
           to_tsvector(coalesce((string_agg(array_to_string(listings.tags, ' '), ' ')), ''))
         AS document FROM listings
