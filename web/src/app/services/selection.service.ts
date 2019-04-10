@@ -1,25 +1,29 @@
 import { Injectable } from '@angular/core';
 
 import 'rxjs/Rx';
-import {Subject,Subscription, Subscriber} from 'rxjs/Rx';
+import {Subject, Subscription, Subscriber} from 'rxjs/Rx';
 
-import { Section } from 'yacs-api-client';
-import { Listing } from 'yacs-api-client';
+import { Section, Listing, Term } from 'yacs-api-client';
 import { SidebarService } from './sidebar.service';
-
+import { SelectedTermService } from './selected-term.service';
 
 @Injectable()
 export class SelectionService {
-  
+
   private clickEvent = new Subject();
 
    constructor (
-    public sidebarService : SidebarService) { }
+    public sidebarService: SidebarService,
+    protected selectedTermService: SelectedTermService) {
+    this.selectedTermService.subscribeToActiveTerm((term: Term) => {
+      this.clear();
+    })
+  }
 
   subscribe (next): Subscription {
     return this.clickEvent.subscribe(next);
   }
-  
+
   next (event) {
     this.clickEvent.next(event);
   }
@@ -33,12 +37,13 @@ export class SelectionService {
   }
 
   public toggleSection (section : Section) {
-    
+    if (!this.selectedTermService.isCurrentTermActive) { return; }
     this.isSectionSelected(section) ? this.removeSection(section) : this.addSection(section);
     this.next('event'); //this should be changed
   }
 
   public addSection (section: Section) {
+    if (!this.selectedTermService.isCurrentTermActive) { return; }
     let store = this.getSelections() || {};
     store[section.listing.id] = store[section.listing.id] || [];
     if (store[section.listing.id].includes(section.id)) return false;
@@ -51,6 +56,7 @@ export class SelectionService {
   }
 
   public removeSection (section: Section) {
+    if (!this.selectedTermService.isCurrentTermActive) { return; }
     let store = this.getSelections() || {};
     if (!store[section.listing.id] || !store[section.listing.id].includes(section.id)) return false;
     store[section.listing.id].splice(store[section.listing.id].indexOf(section.id), 1);
@@ -62,23 +68,21 @@ export class SelectionService {
   }
 
   public toggleCourse(course: Listing) {
-    
+    if (!this.selectedTermService.isCurrentTermActive) { return; }
     if (this.hasSelectedSection(course)) {
       let store = this.getSelections();
       delete store[course.id];
       this.setItem('selections', JSON.stringify(store));
     } else {
       course.sections.forEach((s) => {
-        if (s.seatsTaken < s.seats) {
-          this.addSection(s);
-        }
+        this.addSection(s);
       });
     }
     this.next('event');
   }
 
    public removeListing(course: Listing) {
-    
+    if (!this.selectedTermService.isCurrentTermActive) { return; }
     if (this.hasSelectedSection(course)) {
       let store = this.getSelections();
       delete store[course.id];
@@ -101,7 +105,7 @@ export class SelectionService {
   public getSelections () {
     return JSON.parse(this.getItem('selections')) || {};
   }
-  
+
   public getSelectedSectionIds () {
     const selections = this.getSelections();
     const sectionIds = [];
@@ -115,7 +119,7 @@ export class SelectionService {
     return Object.keys(this.getSelections());
   }
 
-  public clear () { 
+  public clear () {
     let store = {};
     this.setItem('selections', JSON.stringify(store));
     this.next('event');

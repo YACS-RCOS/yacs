@@ -26,7 +26,7 @@
     margin: 10px 0px 10px 0px;
 	}
 	.fixed-height {
-	  height: 7em;
+	  height: 8.5em;
 	}
 
 	.course-description {
@@ -123,7 +123,7 @@ i {
 }
 
 .down-arrow:hover {
-  animation: shake 0.3s; 
+  animation: shake 0.3s;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
@@ -166,12 +166,14 @@ i {
   font-size:95%;
   text-align: justify;
   color: #969696;
-  margin-top: -3.2em;
+  margin-top: -4.6em;
   margin-left: 8em;
   margin-right: 2em;
   line-height: 1.7em;
   overflow: hidden;
   height: 3.5em;
+  position: relative;
+  z-index: 10;
 }
 
 .hideDescription:hover {
@@ -183,13 +185,15 @@ i {
   display:flex;
   font-size:95%;
   text-align: justify;
-  margin-top: -3.2em;
+  margin-top: -3.6em;
   margin-left: 8em;
   margin-right: 2em;
   line-height: 1.7em;
   bottom: 1em;
   height: auto;
   min-height: 3.5em;
+  position: relative;
+  z-index: 10;
 }
 
 .showDescription:hover {
@@ -227,7 +231,7 @@ section.conflicts, section.conflicts:hover {
 }
 
 section.closed, section.closed:hover {
-  color: #888;
+  color: #4a3c3c;
 }
 
 .indicator {
@@ -276,4 +280,39 @@ section.closed, section.closed:hover {
   40%, 60% {
     transform: translate3d(2px, 0, 0);
   }
+}
+
+.warning {
+    position: absolute;
+    height: auto;
+    max-width: 175px;
+    opacity: 0.25;
+    margin-left: -15px;
+    margin-top: -5px;
+    z-index: 1;
+}
+
+table {
+    position: relative;
+}
+
+.closed-conflict {
+  float: left;
+  color: white;
+  font-size: 80%;
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 5px;
+  margin-right: 10px
+}
+
+.some {
+  border: 1px solid #E5C201;
+  background-color: #E5C201;
+}
+
+.all {
+  border: 1px solid #C65353;
+  background-color: #C65353;
 }
