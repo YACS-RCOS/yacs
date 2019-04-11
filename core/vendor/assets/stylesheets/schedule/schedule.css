@@ -17,7 +17,7 @@ schedule-legend {
 legend-hour {
   position: absolute;
   height: 0.5em;
-  font-size: 0.5em;
+  font-size: 0.75em;
   right: 0.75em;
 }
 
@@ -53,10 +53,6 @@ grid-hour {
 
 grid-day:last-child grid-hour {
   border-right: none;
-}
-
-grid-hour:last-child {
-  border-bottom: none;
 }
 
 /*
