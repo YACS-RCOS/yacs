@@ -31,6 +31,7 @@ export class Section extends ApplicationRecord {
 	@Attr() uuid: string;
 	@Attr() periods: Period[];
 	@Attr() conflictIds: number[];
+  @Attr() status: string;
 
 	@BelongsTo() listing: Listing;
 }

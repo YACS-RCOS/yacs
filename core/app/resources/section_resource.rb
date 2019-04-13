@@ -11,4 +11,5 @@ class SectionResource < ApplicationResource
   attribute :periods, :array
   attribute :instructors, :array
   attribute :listing_id, :integer, only: [:filterable]
+  attribute :status, :string
 end
