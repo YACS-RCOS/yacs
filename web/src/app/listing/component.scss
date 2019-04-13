@@ -134,7 +134,6 @@ i {
 }
 
 .course-name {
-  margin-top: 10px;
   font-size: 100%;
   font-weight: 600;
 }
@@ -162,18 +161,11 @@ i {
 }
 
 .hideDescription {
-  display:flex;
   font-size:95%;
   text-align: justify;
   color: #969696;
-  margin-top: -4.6em;
-  margin-left: 8em;
   margin-right: 2em;
   line-height: 1.7em;
-  overflow: hidden;
-  height: 3.5em;
-  position: relative;
-  z-index: 10;
 }
 
 .hideDescription:hover {
@@ -181,19 +173,16 @@ i {
   color: black;
 }
 
+.overflow-hide {
+  overflow: hidden;
+  height: 3.4em;
+}
+
 .showDescription {
-  display:flex;
   font-size:95%;
   text-align: justify;
-  margin-top: -3.6em;
-  margin-left: 8em;
   margin-right: 2em;
   line-height: 1.7em;
-  bottom: 1em;
-  height: auto;
-  min-height: 3.5em;
-  position: relative;
-  z-index: 10;
 }
 
 .showDescription:hover {
@@ -259,6 +248,10 @@ section.closed, section.closed:hover {
   background: #969696;
 }
 
+.table-margin {
+  margin-bottom: 1em;
+}
+
 .zero-margins {
   padding:0 !important;
   margin:0 !important;
@@ -305,6 +298,18 @@ table {
   padding-right: 8px;
   margin-top: 5px;
   margin-right: 10px
+}
+
+.blocked-tags {
+  width: 145px;
+}
+
+.course-info {
+  height: 1em;
+}
+
+tr.align {
+  vertical-align: top;
 }
 
 .some {

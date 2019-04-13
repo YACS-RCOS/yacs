@@ -69,7 +69,8 @@ export class ListingComponent implements OnInit{
     return this.conflictsService.doesConflict(section);
   }
 
-  public descriptionClick (): void {
+  public descriptionClick (event): void {
+    event.stopPropagation();
     // this.selectionService.toggleCourse(this.listing);
     this.showingDescription= !(this.showingDescription);
   }
