@@ -113,7 +113,7 @@ window.Schedule = function (scheduleContainer, givenOptions) {
   };
 
   var drawLegend = function () {
-    for (var r = 1; r < options.timeSpan / 60; ++r) {
+    for (var r = 0; r < options.timeSpan / 60 + 1; ++r) {
       var hourElement = document.createElement('legend-hour');
       var hour = (options.timeBegin / 60) + r;
 
@@ -131,7 +131,7 @@ window.Schedule = function (scheduleContainer, givenOptions) {
       }
 
       hourElement.textContent = hour;
-      hourElement.style.top = 'calc(' + timeOffset(60 * r) + ' - 0.75em)';
+      hourElement.style.top = 'calc(' + timeOffset(60 * r) + ' + 0.95em)';
       legendElement.appendChild(hourElement);
     }
   };
