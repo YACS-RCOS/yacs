@@ -1,6 +1,13 @@
 <div>
+  <div *ngIf="!isActiveTerm" class="sidebar-status p-2">
+    <div class="alert alert-warning font-weight-300">
+      This term is in view-only mode. To create schedules for this term, you must set it to be active. Note that changing the active term will reset your selections.
+      <br /> <br />
+      <button type="button" class="btn btn-warning" (click)="selectedTermService.setSelectedTermAsActive()">Set current term as active</button>
+    </div>
+  </div>
   <div *ngIf="showStatusText" class="sidebar-status p-2">
-  	<div  class="alert alert-sidebar">Try selecting some courses :)</div>
+  	<div  class="alert alert-sidebar font-weight-300">Try selecting some courses :)</div>
   </div>
 	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true" [showRemoveButton]="true"></course>
 </div>
