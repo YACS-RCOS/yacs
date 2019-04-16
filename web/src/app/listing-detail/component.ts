@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Term, Course, Listing } from 'yacs-api-client';
+import { Term, Course, Listing, Section } from 'yacs-api-client';
 import { ConflictsService } from '../services/conflicts.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { ConflictsService } from '../services/conflicts.service';
 export class ListingDetailComponent implements OnInit {
   id: number;
   listing: Listing;
+  sections: Section[];
 
   constructor (
     private activatedRoute: ActivatedRoute,
@@ -22,8 +23,11 @@ export class ListingDetailComponent implements OnInit {
 
 
     async getListingByID (id: number): Promise<void> {
-      Listing.find(id).then((listing) => {
+      Listing.includes('sections').find(id).then((listing) => {
         this.listing = listing.data;
+        //this.sections = this.listing.sections;
+        this.sections = [];
+        console.log(this.sections);
       });
     }
 
