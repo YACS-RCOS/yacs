@@ -97,6 +97,40 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
         });
   }
 
+  public copyLink() {
+    let selectedSectionsStr = this.selectionService.getSelectedSectionIds().join(',');
+
+    let linkToCopy = window.location.protocol + '//'
+        + window.location.host
+        + '/#/schedules?section_ids=' + selectedSectionsStr
+        + '&schedule_index=' + this.scheduleSet.activeScheduleIndex;
+
+    console.log('Attempting to copy to clipboard: ', linkToCopy);
+
+    // Create an element to hold the text to be copied
+    let textArea = document.createElement('textarea');
+    textArea.value = linkToCopy;
+
+    // Set style to ensure textarea isn't seen by user
+    textArea.style.position = 'absolute';
+    textArea.style.left = '-1000px';
+    textArea.style.top = '-1000px';
+
+    // Append to the DOM as some browsers require this to perform the copy
+    document.body.appendChild(textArea);
+
+    // Select the text and tell browser to perform the copy
+    textArea.select();
+    let sucessfulCopy = document.execCommand('copy');
+
+    if (!sucessfulCopy) {
+      console.error('Copying failed!');
+    }
+
+    document.body.removeChild(textArea);
+  }
+
+
   public clearSelections (): void {
     this.selectionService.clear();
   }
