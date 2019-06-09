@@ -4,7 +4,7 @@ class Config
 	attr_accessor :logger
 
 	def intialize
-		@logger = Ougai::Logger.new(STDOUT)
+		logger = Ougai::Logger.new(STDOUT)
 	end
 
 	class << self

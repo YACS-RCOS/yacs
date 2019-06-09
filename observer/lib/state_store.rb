@@ -2,10 +2,12 @@ require 'oj'
 require 'redis'
 require 'concurrent'
 require_relative 'concurrent_helper'
+require_relative 'logger'
 
 class StateStore
 	include Concurrent::Promises::FactoryMethods
 	include Concurrent::Promises::CustomHelpers
+	include Logging
 
 	KEY_PREFIX = '/observer/state_store/'
 
@@ -15,7 +17,6 @@ class StateStore
 	def initialize key:, logger:
 		@key = KEY_PREFIX + key
 		@redis = Redis.current
-		@logger = logger.with_fields log_fields
 	end
 
 	def get

@@ -4,21 +4,22 @@ require_relative 'poll_task'
 require_relative 'pollable'
 require_relative 'source_differ'
 require_relative 'concurrent_helper'
+require_relative 'logging'
 
 class AdapterClient
 	include Concurrent::Promises::FactoryMethods
 	include Concurrent::Promises::CustomHelpers
+	include Logging
 
-	def initialize name:, poll_task:, differ:, state_store:, logger:
+	def initialize name:, poll_task:, differ:, state_store:
 		@name = name
 		@poll_task = poll_task
 		@differ = differ
 		@state_store = state_store
-		@logger = logger.with_fields log_fields
 	end
 
 	def start
-		@poll_task.perform do |new_state|
+		@poll_task.perform.then do |new_state|
 			future { diff new_state, last_state }
 				.then { |changes| push_changes changes; changes }
 				.then { |_| update_state new_state; _ }
@@ -36,12 +37,12 @@ class AdapterClient
 
 	def diff newer, older
 		@differ.diff newer, older
-		@logger.info :adapter_client_pushed_changes
+		logger.info :adapter_client_pushed_changes
 	end
 
 	def push_changes changes
 		@pipeline.produce_batch changes
-		@logger.info, :adapter_client_updated_state
+		logger.info, :adapter_client_updated_state
 	end
 
 	def last_state

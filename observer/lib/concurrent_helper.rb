@@ -1,15 +1,19 @@
+require_relative 'logging'
+
 module Concurrent
 	module Promises
 		module CustomeHelpers
+			prepend Logging
+
 			def log_raise *args
 				reason = args[2] || args[1]
-				@logger.send *args
+				logger.send *args
 				raise reason
 			end
 
 			def log_pass *args
 				result = args.pop if args.size > 2
-				@logger.send *args
+				logger.send *args
 				result
 			end
 
@@ -30,6 +34,6 @@ end
 
 # class Concurrent::Promises::Future
 # 	def log_pass *args, &task
-# 		@logger.info
+# 		logger.info
 # 	end
 # end

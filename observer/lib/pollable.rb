@@ -1,12 +1,14 @@
 require 'concurrent'
 require 'oj'
 require_relative 'concurrent_helper'
+require_relative 'logging'
 
 # Simple polling interface. Pollable#poll and Pollable#poll_with_retry, which asynchronously
 # perform a network request to a JSON resource and resolve with the parsed response body
 class Pollable
 	include Concurrent::Promises::FactoryMethods
 	include Concurrent::Promises::CustomHelpers
+	include Logging
 
 	attr_reader :name, :url
 
@@ -15,22 +17,20 @@ class Pollable
 	# @param [String] name the name of the source
 	# @param [String] url the url of the source
 	# @param [Config] logger to be used by this instance
-	def initialize name:, url:, logger:
+	def initialize name:, url:
 		@name = name
 		@url = url
-		@logger = logger.with_fields log_fields
 		@connection = Faraday.new url: @url
 	end
 
 	# Polls the source url once
 	#
-	# @return [Hash]
+	# @return [Future<Hash>]
 	def poll 
 		future { request }
 			.then { |response| parse response }
 			.then { |result| log_pass :info, :pollable_poll_success, result }
 			.rescue { |reason| log_raise :warn, :pollable_poll_failure, reason }
-			.value!
 	end
 
 	def log_fields
