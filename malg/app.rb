@@ -14,6 +14,7 @@ Redis.current = Redis.new(host: 'redis', port: 6379, db: 11)
 WaterDrop.setup do |config|
   config.deliver = true
   config.kafka.seed_brokers = %w(kafka://kafka:9094)
+  config.logger = Logger.new(STDERR, level: Logger::WARN)
 end
 
 uni_shortname = ENV['UNI_SHORTNAME']

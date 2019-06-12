@@ -1,6 +1,4 @@
-FROM ruby:2.5.1-alpine
-
-RUN apk add --update ruby-dev build-base
+FROM ruby:2.6.3
 
 ENV INSTALL_PATH /usr/src/app/
 RUN mkdir -p $INSTALL_PATH

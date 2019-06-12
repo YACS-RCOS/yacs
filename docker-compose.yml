@@ -56,28 +56,6 @@ services:
       - UNI_SHORTNAME
       - TERM_SHORTNAME
 
-  notifications:
-    image: yacsrcos/yacs-notifications
-    depends_on:
-      - kafka
-    expose: 
-      - "3000"
-
-  users:
-    image: yacsrcos/yacs-users
-    environment:
-      - RAILS_ENV
-      - SECRET_KEY_BASE
-      - SECRET_TOKEN
-    volumes:
-      - ./ssl:/etc/ssl/yacs
-    depends_on:
-      - postgres
-      - redis
-    command: bin/start.sh
-    expose:
-      - "4400"
-
   # Dependency services
   postgres:
     image: postgres:10.5-alpine
@@ -152,6 +130,28 @@ services:
   #     - redis
   #   expose:
   #     - "4900"
+
+  # notifications:
+  #   image: yacsrcos/yacs-notifications
+  #   depends_on:
+  #     - kafka
+  #   expose: 
+  #     - "3000"
+
+  users:
+    image: yacsrcos/yacs-users
+    environment:
+      - RAILS_ENV
+      - SECRET_KEY_BASE
+      - SECRET_TOKEN
+    volumes:
+      - ./ssl:/etc/ssl/yacs
+    depends_on:
+      - postgres
+      - redis
+    command: bin/start.sh
+    expose:
+      - "4400"
 
 volumes:
   dist-web:
