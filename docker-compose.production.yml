@@ -20,14 +20,6 @@ services:
   malg:
     restart: unless-stopped
 
-  notifications:
-    restart: unless-stopped
-
-  users:
-    restart: unless-stopped
-    environment:
-      - RAILS_ENV=production
-
   # Dependency services
   postgres:
     restart: unless-stopped
@@ -41,3 +33,11 @@ services:
   # Future/abandoned services
   # admin:
   #   restart: unless-stopped
+
+  # notifications:
+  #   restart: unless-stopped
+
+  # users:
+  #   restart: unless-stopped
+  #   environment:
+  #     - RAILS_ENV=production
