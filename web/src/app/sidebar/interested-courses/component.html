@@ -6,8 +6,10 @@
       <button type="button" class="btn btn-warning" (click)="selectedTermService.setSelectedTermAsActive()">Set current term as active</button>
     </div>
   </div>
-  <div *ngIf="showStatusText" class="sidebar-status p-2">
+  <div *ngIf="showStatusText; else elseBlock" class="sidebar-status p-2">
   	<div  class="alert alert-sidebar font-weight-300">Try selecting some courses :)</div>
   </div>
-	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true" [showRemoveButton]="true"></course>
+  <ng-template #elseBlock>
+	  <course *ngFor="let listing of listings" [listing]="listing" [showDescription]="false" [showDescriptionTooltip]="true" [showRemoveButton]="true"></course>
+  </ng-template>
 </div>
