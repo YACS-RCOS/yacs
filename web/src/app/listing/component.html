@@ -42,7 +42,7 @@
 			<span *ngIf="showRemoveButton" (click)="removeButtonClick()" class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']" ngbPopover="Click on this button to remove class from sidebar" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/remove.svg" />
 			</span>
-			<div class="menu position-absolute" (click)="showingMenu=!showingMenu">
+			<div class="menu position-absolute" (click)="showingMenu=!showingMenu" (click)="showingDescription=!showingDescription">
 				<div class = "arrow-container down-arrow" *ngIf="!showingMenu">
 					<i class="arrow down"></i>
 				</div>

@@ -73,6 +73,7 @@ export class ListingComponent implements OnInit{
     event.stopPropagation();
     // this.selectionService.toggleCourse(this.listing);
     this.showingDescription= !(this.showingDescription);
+    this.showingMenu = !this.showingMenu;
   }
 
   public get tooltipDescription (): string {
