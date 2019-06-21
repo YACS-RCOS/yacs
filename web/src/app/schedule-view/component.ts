@@ -24,8 +24,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event);
-
     if(event.keyCode === KEY_CODE.RIGHT_ARROW) {
       this.scheduleSet.incrementActiveSchedule();
     }
