@@ -1,4 +1,4 @@
-FROM ruby:2.4.2
+FROM ruby:2.6.3
 
 MAINTAINER Ada Young <ada@adadoes.io>
 

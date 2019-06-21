@@ -1,4 +1,4 @@
-FROM nginx:1.11.9-alpine
+FROM nginx:1.11.9
 
 MAINTAINER Mark Robinson <robinm8@rpi.edu>
 

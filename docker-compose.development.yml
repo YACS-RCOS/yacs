@@ -50,22 +50,6 @@ services:
       - TERM_SHORTNAME=201909
       - UNI_SHORTNAME
 
-  notifications:
-    build: ./notifications
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./notifications:/usr/src/app
-
-  users:
-    build: ./users
-    ports:
-      - "4400:4400"
-    volumes:
-      - "./users:/usr/src/app"
-    tty: true
-    stdin_open: true
-
   # Dependency services
   postgres:
     ports:
@@ -132,3 +116,19 @@ services:
   #     - "4600:3100"
   #   expose:
   #     - "3100"
+
+  # notifications:
+  #   build: ./notifications
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./notifications:/usr/src/app
+
+  users:
+    build: ./users
+    ports:
+      - "4400:4400"
+    volumes:
+      - "./users:/usr/src/app"
+    tty: true
+    stdin_open: true
