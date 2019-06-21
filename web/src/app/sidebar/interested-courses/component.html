@@ -6,7 +6,7 @@
       <button type="button" class="btn btn-warning" (click)="selectedTermService.setSelectedTermAsActive()">Set current term as active</button>
     </div>
   </div>
-  <div *ngIf="showStatusText; else hasCourses" class="sidebar-status p-2">
+  <div *ngIf="isEmpty; else hasCourses" class="sidebar-status p-2">
   	<div  class="alert alert-sidebar font-weight-300">Try selecting some courses :)</div>
   </div>
   <ng-template #hasCourses>
