@@ -7,8 +7,7 @@
         <span class="section-crn">{{section.crn}}</span>
         <span class="section-instructors"> {{ section.instructors.join(', ') }}</span>
         <div class="section-seats">
-          {{ section.seats - section.seatsTaken }}
-          <span>/{{ section.seats }} seats</span>
+          {{ section.seats - section.seatsTaken }}/{{ section.seats }} seats
         </div>
       </div>
     </div>

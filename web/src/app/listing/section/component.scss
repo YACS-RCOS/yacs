@@ -30,6 +30,7 @@
     float:right;
     height:100%;
     white-space: nowrap;
+    width: 350px
 }
 
 .section-seats {
@@ -38,7 +39,11 @@
 
 .period-time {
     font-size: 90%;
-    width: 63px;
+    width: 70px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 
 }
 .period-day {
