@@ -21,7 +21,7 @@ export class InterestedCoursesComponent implements OnInit {
   private listingIds: Set<string>;
   private subscription;
 
-  @Input() showStatusText: boolean = false;
+  @Input() isEmpty: boolean = false;
 
   constructor (
       public sidebarService : SidebarService,
@@ -47,7 +47,7 @@ export class InterestedCoursesComponent implements OnInit {
     // display interested courses on sidebar
     // display message to try selecting some if none
     if (this.listingIds.size > 0) {
-      this.showStatusText = false;
+      this.isEmpty = false;
       this.isLoaded = false;
       Listing
         .where({ id: Array.from(this.listingIds) })
@@ -84,7 +84,7 @@ export class InterestedCoursesComponent implements OnInit {
           this.isLoaded = true;
         });
     } else {
-      this.showStatusText = true;
+      this.isEmpty = true;
     }
   }
 }
