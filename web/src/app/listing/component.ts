@@ -71,9 +71,12 @@ export class ListingComponent implements OnInit{
 
   public descriptionClick (event): void {
     event.stopPropagation();
+    if ( getSelection() == "" ) {
+      this.selectionService.toggleCourse(this.listing);
+    }
     // this.selectionService.toggleCourse(this.listing);
-    this.showingDescription= !(this.showingDescription);
-    this.showingMenu = !this.showingMenu;
+    // this.showingDescription= !(this.showingDescription);
+
   }
 
   public get tooltipDescription (): string {
@@ -106,4 +109,10 @@ export class ListingComponent implements OnInit{
     this.sidebarService.removeListing(this.listing);
     this.selectionService.removeListing(this.listing);
   }
+
+  public expandDescripAndListings (): void {
+    this.showingDescription = !this.showingDescription;
+    this.showingMenu = !this.showingMenu;
+  }
+  
 }
