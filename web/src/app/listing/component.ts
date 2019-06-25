@@ -72,7 +72,7 @@ export class ListingComponent implements OnInit{
   public descriptionClick (event): void {
     event.stopPropagation();
     if ( getSelection() == "" ) {
-      this.selectionService.toggleCourse(this.listing);
+      this.clickCourse();
     }
     // this.selectionService.toggleCourse(this.listing);
     // this.showingDescription= !(this.showingDescription);
