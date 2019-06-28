@@ -28,6 +28,9 @@ export class ListingComponent implements OnInit{
   public showingDescription;
   public hovered;
 
+  public mouseMove: boolean = false;
+  public mouseDown: boolean = false; 
+
   ngOnInit () {
     this.showingMenu = false;
     this.showingDescription = false;
@@ -69,14 +72,27 @@ export class ListingComponent implements OnInit{
     return this.conflictsService.doesConflict(section);
   }
 
-  public descriptionClick (event): void {
-    event.stopPropagation();
-    if ( getSelection() == "" ) {
-      this.clickCourse();
+  public mouseDownFunc (): void { 
+    this.mouseDown = true;
+  }
+
+  public mouseMoveFunc (): void { 
+    if (this.mouseDown) {
+      this.mouseMove = true;
     }
+  }
+
+  public descriptionClick (event): void { 
+    event.stopPropagation();
+    if (this.mouseMove) {
+      this.selectionService.toggleCourse(this.listing);
+    } 
+    
+    this.mouseMove = false;
+    this.mouseDown = false;
+
     // this.selectionService.toggleCourse(this.listing);
     // this.showingDescription= !(this.showingDescription);
-
   }
 
   public get tooltipDescription (): string {

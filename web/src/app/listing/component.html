@@ -14,7 +14,7 @@
 					  <div class= "course-details">{{listing.course.subject.shortname}}   {{listing.course.shortname}}</div>
 				  </td>
 				  <td [rowSpan]="showingDescription ? 3 : 2">
-					  <div *ngIf="showDescription" [class.overflow-hide]="!showingDescription" (click)="descriptionClick($event)"
+					  <div *ngIf="showDescription" [class.overflow-hide]="!showingDescription" (mousemove)="mouseMoveFunc()" (mouseup)="descriptionClick($event)" (mousedown)="mouseDownFunc()"  (mousemove)="mouseMoveFunc()"
 						   [class.showDescription]="showingDescription" [class.hideDescription]="!showingDescription"
 						   [class.selectedDescription]="isCourseSelected()">{{listing.description}}</div>
 				  </td>
