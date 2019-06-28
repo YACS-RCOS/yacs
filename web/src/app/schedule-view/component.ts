@@ -7,6 +7,12 @@ import { ScheduleComponent } from '../schedule-view/schedule/component';
 // import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
+import { Component, HostListener } from '@angular/core';
+
+export enum KEY_CODE {
+  RIGHT_ARROW = 39,
+  LEFT_ARROW = 37
+}
 
 @Component({
   selector: 'schedule-view',
@@ -15,6 +21,18 @@ import * as domtoimage  from 'dom-to-image';
 })
 
 export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if(event.keyCode === KEY_CODE.RIGHT_ARROW) {
+      this.scheduleSet.incrementActiveSchedule();
+    }
+
+    if(event.keyCode === KEY_CODE.LEFT_ARROW) {
+      this.scheduleSet.decrementActiveSchedule();
+    }
+  }
+
   @ViewChildren(ScheduleComponent)
   public ScheduleList: QueryList<ScheduleComponent>
 
