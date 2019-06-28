@@ -4,14 +4,14 @@
 		<notice-bar hidden></notice-bar>
 	</div>
 	<div class="content-container-wrapper d-flex flex-row"> 
-	  <button class="sidebar-toggle" (click)="toggleSidebar()">
-	    <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
-	  </button>
-	  <div class="sidebar-content-container container ml-sm-4 py-sm-3 px-sm-0" [hidden]="showingSidebar">
-	  	<sidebar></sidebar>
-	  </div>
+	    <button class="sidebar-toggle" (click)="toggleSidebar()">
+	        <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
+	    </button>
+	<div class="sidebar-content-container container ml-sm-4 py-sm-3 px-sm-0" [hidden]="showingSidebar">
+	<sidebar></sidebar>
+	</div>
 		<div class="main-content-container container p-sm-3">
-		  <router-outlet></router-outlet>
+		    <router-outlet></router-outlet>
 		</div>
 	</div>
 	<div class="footer-container d-none d-sm-block p-2">
