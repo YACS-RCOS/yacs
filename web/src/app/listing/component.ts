@@ -90,9 +90,6 @@ export class ListingComponent implements OnInit{
     
     this.mouseMove = false;
     this.mouseDown = false;
-
-    // this.selectionService.toggleCourse(this.listing);
-    // this.showingDescription= !(this.showingDescription);
   }
 
   public get tooltipDescription (): string {
