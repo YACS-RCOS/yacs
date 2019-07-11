@@ -38,7 +38,8 @@ services:
       - "4200:4200"
     volumes:
       - "./web/src:/usr/src/app/src"
-    command: "ng build --watch"
+      - "./web/npm-cache:/root/.npm"
+    command: "npm run-script docker-test-build"
 
   malg:
     build: ./malg

@@ -14,7 +14,7 @@
         </button>
         <div ngbDropdownMenu>
           <button class="schedule-button dropdown-item" (click) = "downloadImage()">Save as Image</button>
-          <button class="schedule-button dropdown-item">Save as iCalendar (disabled)</button>
+          <button class="schedule-button dropdown-item" (click)="downloadICSFile()">Save as iCalendar</button>
           <button class="schedule-button dropdown-item" [disabled]="isTemporary">Copy Schedule Link (disabled)</button>
         </div>
       </div>

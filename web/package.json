@@ -9,7 +9,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docker-test-build": "npm install && ng build --watch"
   },
   "private": true,
   "dependencies": {
@@ -30,13 +31,18 @@
     "core-js": "^2.6.9",
     "dom-to-image": "^2.6.0",
     "intl": "^1.2.5",
+    "js-file-download": "^0.4.7",
     "npm": "^5.4.2",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "typings": "^2.1.1",
     "web-animations-js": "^2.3.1",
     "yacs-api-client": "^1.0.0-beta.11",
-    "zone.js": "^0.8.29"
+    "zone.js": "^0.8.29",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "uuid": "^3.3.2",
+    "joi-browser": "^13.4.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.12.4",

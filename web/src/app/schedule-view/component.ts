@@ -1,13 +1,16 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Schedule } from 'yacs-api-client';
 import { ScheduleSet } from '../models/schedule-set';
+import { Day } from '../models/day.model';
+import { Period } from '../models/period.model';
 import { SelectionService } from '../services/selection.service';
 import { ScheduleComponent } from '../schedule-view/schedule/component';
 // import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
-import { Component, HostListener } from '@angular/core';
+import { createEvents } from '../../lib/ics';
+import fileDownload from 'js-file-download';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -113,6 +116,45 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
         .catch(function(error) {
           console.error('oops, something went wrong!', error);
         });
+  }
+
+  public downloadICSFile (): void {
+    function calculateEventTime (dayOfWeek: number, periodStart: number): number[] {
+      const date = new Date();
+      const curDayOfWeek = date.getDay();
+      const ago = curDayOfWeek === dayOfWeek ? 7 : (curDayOfWeek > dayOfWeek ? curDayOfWeek - dayOfWeek : 7 - dayOfWeek + curDayOfWeek);
+      const dateAgo = new Date(date.getTime() - 1000 * 3600 * 24 * ago);
+      const result = [dateAgo.getFullYear(), dateAgo.getMonth() + 1, dateAgo.getDate(), Math.floor(periodStart / 60), periodStart % 60];
+      return result;
+    }
+
+    function toMinutes (timeString: string): number {
+      let timeInt = parseInt(timeString);
+      return (Math.floor(timeInt / 100) * 60) + (timeInt % 100);
+    }
+
+
+    const events = [];
+
+    for (const period of this.scheduleSet.activePeriods) {
+      events.push({
+        start: calculateEventTime(period.day, toMinutes(period.start)),
+        end: calculateEventTime(period.day, toMinutes(period.end)),
+        title: String(period.section.listing.subjectShortname) + ' ' + String(period.section.listing.courseShortname) + ' - ' + String(period.section.shortname),
+        description: String(period.section.crn) + ' ' + String(period.section.instructors.join(' ,')),
+        recurrenceRule: 'FREQ=WEEKLY',
+        location: String(period.location)
+      });
+    }
+
+    createEvents(events, (error, data) => {
+      if (error) {
+        alert('Error in creating ICS file');
+        console.error('ICS error', error);
+      } else {
+        fileDownload(data, 'schedule.ics');
+      }
+    });
   }
 
   public clearSelections (): void {
