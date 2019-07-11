@@ -26,7 +26,6 @@ export class ListingComponent implements OnInit{
 
   public showingMenu;
   public showingDescription;
-  public hovered;
 
   public mouseMove: boolean = false;
   public mouseDown: boolean = false; 

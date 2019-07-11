@@ -1,7 +1,7 @@
-<div class = "course" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
+<div class="course">
 	<div class="row flex-nowrap h-100 min-height">
 	  <div class="indicator-container" (click)="clickCourse()">
-	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
+	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()"></div>
 	  </div>
 	  <div class="w-100 h-100 course-content position-relative min-height">
 		  <table (click)="clickCourse()" class="w-100 table-margin">

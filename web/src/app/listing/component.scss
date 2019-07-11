@@ -232,7 +232,7 @@ section.closed, section.closed:hover {
   background: $yacs_bgs;
 }
 
-.indicator-selected-hover {
+.indicator-selected:hover {
   background: $yacs_acc;
 }
 
@@ -245,7 +245,7 @@ section.closed, section.closed:hover {
   padding-right: 15px;
 }
 
-.indicator-hover {
+.indicator:hover {
   background: #969696;
 }
 
