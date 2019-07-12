@@ -9,7 +9,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "docker-install-build": "npm install && ng build --watch"
   },
   "private": true,
   "dependencies": {
