@@ -85,6 +85,9 @@ class BannerClient
       end
       section[:instructors].uniq!
       section[:instructors].delete 'Staff'
+      if section[:instructors].empty?
+        section[:instructors] << 'TBA'
+      end
       section
     end
   end
@@ -92,7 +95,7 @@ class BannerClient
   def extract_periods pxml, day
     period = pxml.to_h.symbolize_keys.map do |k,v|
       case k
-      when :instructor 
+      when :instructor
         v.strip.split(/\//)
         [:instructor, v.strip.split(/\//)]
       when :type        then [:type, v]
@@ -107,4 +110,3 @@ class BannerClient
     period
   end
 end
-
