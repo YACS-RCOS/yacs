@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Schedule } from 'yacs-api-client';
 import { ScheduleSet } from '../models/schedule-set';
@@ -7,7 +7,7 @@ import { ScheduleComponent } from '../schedule-view/schedule/component';
 // import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
-import { Component, HostListener } from '@angular/core';
+
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
