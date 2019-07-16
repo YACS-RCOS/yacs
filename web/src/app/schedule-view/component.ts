@@ -98,40 +98,34 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	public copyToClipboard (val: string) {
-		let selBox = document.createElement('textarea');
-		selBox.style.position = 'fixed';
-		selBox.style.left = '0';
-		selBox.style.top = '0';
-		selBox.style.opacity = '0';
-		selBox.value = val;
-		document.body.appendChild(selBox);
-		selBox.focus();
-		selBox.select();
-		document.execCommand('copy');
-		document.body.removeChild(selBox);
+		let textArea = document.createElement('textarea');
+		textArea.value = val;
+		textArea.style.position = 'fixed';
+		textArea.style.left = '0'
+		textArea.style.top = '0'
+		textArea.style.opacity = '0';
+
+		document.body.appendChild(textArea);
+		textArea.select();
+		let success = document.execCommand('copy');
+
+		if (!success) {
+			console.error('Copying failed!');
+		}
+
+		document.body.removeChild(textArea);
 	}
 
-	public copySchedule() {		
-		let schedule_link: string = window.location.href + "?section_ids=";
+	public copyLink() {		
+		let selectedSections: string = this.selectionService.getSelectedSectionIds().join(',');
+		let scheduleIndex: number = this.activeScheduleIndex - 1;
+		let schedule_link: string = window.location.protocol + '//' 
+			+ window.location.host + '/schedules?section_ids='
+			+ selectedSections + '&schedule_index=' + scheduleIndex;
 
-		console.log("start schedule copy");
-		const sectionIds = this.selectionService.getSelectedSectionIds();
-		console.log(sectionIds);
-		
-		let num_sections: number = sectionIds.length;
-		console.log(num_sections);
+		console.log('Attehmpting to copy to clipboard: ', schedule_link);
 
-		if (num_sections > 0) {
-			
-			schedule_link += sectionIds[0].toString();
-
-			let i: number;
-			for (i = 1; i < num_sections; i++) {
-				schedule_link += "," + sectionIds[i].toString();
-			}
-
-			this.copyToClipboard(schedule_link);
-		}
+		this.copyToClipboard(schedule_link);
 	}
 
 	public clearSelections (): void {
