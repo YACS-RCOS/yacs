@@ -23,11 +23,14 @@ export class AppComponent {
 
     // check if schedule link entered
     let url: string = window.location.href;
+    let i1: number = url.indexOf('schedules?section_ids=');
+    let i2: number = url.indexOf('&schedule_index=');
     console.log(url);
-    if (url.includes('schedules?section_ids=')) {
-      console.log('yes');
-
-      // this.SelectionService.toggleSection(section);
+    if (i1 != -1 && i2 != -1) {
+      console.log(url.indexOf('schedules?section_ids='));
+      let sectionsStr = url.substring(i1 + 22, i2);
+      let sections: number[] = sectionsStr.split(',').map(Number);
+      console.log(sections);
     }
   }
 
