@@ -36,13 +36,24 @@
     white-space: nowrap;
 }
 
-.period-time {
+.period-time-conflict {
     font-size: 90%;
     width: 6em;
+    color: rgb(112, 105, 105);
+    font-weight: 100;
 }
-.period-day {
+
+.period-time-no-conflict {
+    font-size: 90%;
+    width: 6em;
+    color: #000;
     font-weight: 400;
 }
+
+.period-day {
+    font-weight: 100;
+}
+
 
 div.conflict-note {
     margin-left:0.4em;
