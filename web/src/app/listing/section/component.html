@@ -6,6 +6,7 @@
         <span *ngIf="doesConflict()" placement="top" triggers="mouseenter:mouseleave" title="Section Conflicts"><img class="conflict-img" src="assets/images/red_exclamation.svg" /></span>
         <span class="section-crn">{{section.crn}}</span>
         <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
+        <span *ngIf="section.instructors.length < 1" class="section-instructors-tba" >TBA</span>
         <div class="section-seats">
           {{ section.seats - section.seatsTaken }}
           <span>/{{ section.seats }} seats</span>
@@ -27,6 +28,6 @@
           </span>
         </tr>
       </table>
-    </div>  
+    </div>
   </div>
 </div>

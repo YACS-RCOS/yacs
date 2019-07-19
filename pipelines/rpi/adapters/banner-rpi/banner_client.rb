@@ -85,9 +85,6 @@ class BannerClient
       end
       section[:instructors].uniq!
       section[:instructors].delete 'Staff'
-      if section[:instructors].empty?
-        section[:instructors] << 'TBA'
-      end
       section
     end
   end
