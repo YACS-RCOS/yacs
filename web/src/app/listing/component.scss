@@ -1,7 +1,7 @@
 @import "../../_vars.scss";
 
 .course {
-  padding: 0;
+  padding: 0em;
   box-shadow: 2px 2px 5px 2px #efefef;
   height: 100%;
 }
@@ -38,16 +38,15 @@
 }
 
 .description-tooltip {
-	top: 10px;
-	right: 27px;
+	bottom: 67px;
+	right: 29px;
   width: 24px;
   height: 24px;
 }
 
 .remove-button {
-  top: 40px;
-  right: 27px;
-
+  bottom: 39px;
+  right: 29px;
   width: 24px;
   height: 24px;
 }
@@ -98,13 +97,13 @@
 
 i {
     border: solid black;
-    border-width: 0 3px 3px 0;
+    border-width: 0 5px 5px 0;
     display: inline-block;
     padding: 3px;
 }
 
 .arrow {
-    margin-left: 1em;
+  margin-left: 0em;
 }
 
 .up {
@@ -118,8 +117,10 @@ i {
 }
 
 .arrow-container {
-  padding-left: 1em;
+  padding-left: .4em;
+  padding-right: .1em;
   height: 1.5em;
+  width: 1.1em;
 }
 
 .down-arrow:hover {

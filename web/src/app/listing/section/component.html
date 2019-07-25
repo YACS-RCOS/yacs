@@ -5,7 +5,6 @@
       <div>
         <span *ngIf="doesConflict()" placement="top" triggers="mouseenter:mouseleave" title="Section Conflicts"><img class="conflict-img" src="assets/images/red_exclamation.svg" /></span>
         <span class="section-crn">{{section.crn}}</span>
-        
         <span *ngIf="section.instructors.length < 1; else hasProf" class="section-instructors-tba" >TBA</span>
         <ng-template #hasProf>
       	  <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
@@ -20,7 +19,7 @@
       <table class = "section-periods">
         <tr *ngFor="let week of periods">
           <span *ngFor="let period of week; let i = index">
-            <td class = "period-time">
+            <td [ngClass]="{'period-time-conflict':doesConflict()===true, 'period-time-no-conflict':doesConflict()===false}">
               <div class = "col-12">
                 <div class="row">
                   <span *ngIf="period">{{ getHours(period) }}</span>
