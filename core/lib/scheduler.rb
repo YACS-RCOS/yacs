@@ -23,6 +23,7 @@ class Scheduler
         end
       end
     else
+      schedule.sortSchedules()
       schedules << schedule
     end
   end
