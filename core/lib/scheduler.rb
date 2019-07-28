@@ -3,7 +3,7 @@ class Scheduler
     params = expand_listings(sections)
     schedules = []
     search(params, schedules)
-    schedules
+    sortSchedules(0, schedules)
   end
 
   def self.search(params, schedules, schedule=[])
@@ -23,10 +23,20 @@ class Scheduler
         end
       end
     else
-      schedule.sortSchedules()
+      schedule.findSortValues()
       schedules << schedule
     end
   end
+
+  def self.sortSchedules(sortParameter, schedules)
+      case sortParameter
+      when 1
+          schedules.sort_by.reverse { |this_schedule| this_schedule.avgStart }
+      when 2
+          schedules.sort_by { |this_schedule| this_schedule.avgFinish }
+      else
+          schedules
+      end
 
   def self.schedule_valid?(schedule) #unoptimized
     schedule.each_with_index do |s1, i|

@@ -19,7 +19,7 @@ class Schedule
     end
   end
 
-  def sortSchedules
+  def findSortValues
     avgStart = 0
     avgFinish = 0
 
@@ -36,8 +36,8 @@ class Schedule
     firstPeriods.each { |day, time| avgStart += time }
     lastPeriods.each { |day, time| avgFinish += time }
 
-    firstPeriods /= numDays
-    lastPeriods /= numDays
+    avgStart /= numDays
+    avgFinish /= numDays
   end
 
   def initialize params
