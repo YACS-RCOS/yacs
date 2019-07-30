@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Section } from 'yacs-api-client';
 import { NoticeService } from './services/notice.service';
 import { SelectionService } from './services/selection.service';
 
@@ -29,15 +30,35 @@ export class AppComponent {
 		if (i1 != -1) {
 			console.log(url.indexOf('schedules?section_ids='));
 			let end: number = (i2 != -1) ? i2 : url.length;
-			let sections: number[] = url.substring(i1 + 22, end).split(',').map(Number);
-			console.log(sections);
+			const section_ids = url.substring(i1 + 22, end).split(',');//.map(Number);
+			console.log(section_ids); // TODO: Remove
 		
 			let index: number = 0;
 			if (i2 != -1) {
 				index = parseInt(url.substring(i2 + 16), 10);
 			}
 
-			console.log(index);
+			console.log(index); // TODO: Remove
+			
+			const store = this.selectionService.getSelectedSectionIds();
+			// console.log(store);
+
+			Section
+			.where({id: section_ids})
+			.includes('listing')
+			.includes('listing.sections')
+			.all().then((sections) => {
+				// console.log(sections);
+				sections.data.forEach(section => {
+					console.log(section);
+					// this.selectionService.addSection(section);
+				});
+			});
+			// this.selectionService.removeSection(Section.where({id: sections}));
+			// this.selectionService.removeSection(store[0]);
+			// TODO: clear sections and add the new ones
+			
+
 		}
 	}
 
