@@ -4,7 +4,6 @@ import { ScheduleSet } from '../../models/schedule-set';
 import { Day } from '../../models/day.model';
 import { SelectionService } from '../../services/selection.service';
 import { ColorService } from '../../services/color.service';
-import { Period } from 'app/models/period.model';
 
 @Component({
   selector: 'schedule',
@@ -87,7 +86,6 @@ export class ScheduleComponent implements AfterViewInit {
 
   public mouseLeft (): void {
     this.courseBlockColor = null;
-    console.log(this.courseBlockColor);
   }
 
   public lowerOpacity (period: Period): number {
