@@ -87,6 +87,7 @@ export class ScheduleComponent implements AfterViewInit {
 
   public mouseLeft (): void {
     this.courseBlockColor = null;
+    console.log(this.courseBlockColor);
   }
 
   public lowerOpacity (period: Period): number {
