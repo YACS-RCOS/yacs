@@ -2,7 +2,7 @@ class Schedule
   include ActiveModel::Model
   attr_accessor :sections
   attr_accessor :uuid
-  attr_accessor :sortValue
+  attr_accessor :sort_value
   alias_method :id, :uuid
 
   def self.where params
@@ -19,33 +19,33 @@ class Schedule
     end
   end
 
-  def findSortValues
-    avgStart = 0
-    avgFinish = 0
+  def find_sort_values
+    avg_start = 0
+    avg_finish = 0
 
-    firstPeriods = Hash.new(9999999999999)
-    lastPeriods = Hash.new(-1)
-    numDays = 0
+    first_periods = Hash.new(9999999999999)
+    last_periods = Hash.new(-1)
+    num_days = 0
     sections.each do |this_section|
       this_section.periods.each do |p|
-        numDays += 1.0 if (lastPeriods[p["day"]] == -1)
-        firstPeriods[p["day"]] = p["start"].to_i if (p["start"].to_i < firstPeriods[p["day"]])
-        lastPeriods[p["day"]] = p["end"].to_i if (p["end"].to_i > lastPeriods[p["day"]])
+        num_days += 1.0 if (last_periods[p["day"]] == -1)
+        first_periods[p["day"]] = p["start"].to_i if (p["start"].to_i < first_periods[p["day"]])
+        last_periods[p["day"]] = p["end"].to_i if (p["end"].to_i > last_periods[p["day"]])
       end
     end
-    firstPeriods.each { |day, time| avgStart += time }
-    lastPeriods.each { |day, time| avgFinish += time }
+    first_periods.each { |day, time| avg_start += time }
+    last_periods.each { |day, time| avg_finish += time }
 
-    avgStart /= numDays
-    avgFinish /= numDays
+    avg_start /= num_days
+    avg_finish /= num_days
   end
 
   def initialize params
     super
     @sections ||= []
     @uuid ||= SecureRandom.uuid
-    @avgStart ||= 0
-    @avgFinish ||= 0
+    @avg_start ||= 0
+    @avg_finish ||= 0
   end
 
   def section_id
