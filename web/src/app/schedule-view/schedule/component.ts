@@ -4,6 +4,7 @@ import { ScheduleSet } from '../../models/schedule-set';
 import { Day } from '../../models/day.model';
 import { SelectionService } from '../../services/selection.service';
 import { ColorService } from '../../services/color.service';
+import { Period } from 'app/models/period.model';
 
 @Component({
   selector: 'schedule',
@@ -18,6 +19,7 @@ export class ScheduleComponent implements AfterViewInit {
   @ViewChild('mySchedule')
   public mySchedule: ElementRef
   public scheduleNode;
+  public courseBlockColor = null;
 
   constructor (private colorService: ColorService) { }
 
@@ -73,10 +75,27 @@ export class ScheduleComponent implements AfterViewInit {
   public eventHeight (period: Period): number {
     const eventDuration = this.toMinutes(period.end) - this.toMinutes(period.start);
     return (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes));
+
   }
 
   public getBackgroundColor (period: Period) {
     return this.colorService.getColor(period.section.listing.id).primary;
+  }
+
+  public courseBlockHover (period: Period): void {
+    this.courseBlockColor = this.getBackgroundColor(period);
+  }
+
+  public mouseLeft (): void {
+    this.courseBlockColor = null;
+  }
+
+  public lowerOpacity(period: Period): number {
+    if (this.getBackgroundColor(period) == this.courseBlockColor || !this.courseBlockColor) {
+      return 1.0;
+    } else {
+      return 0.5;
+    }
   }
 
   public getBorderColor (period: Period) {
@@ -86,7 +105,7 @@ export class ScheduleComponent implements AfterViewInit {
   public getTextColor (period: Period) {
     return this.colorService.getColor(period.section.listing.id).text;
   }
-
+  
   private hourName (minutes: number) {
     const hour = minutes / 60;
     if (hour === 0) {
