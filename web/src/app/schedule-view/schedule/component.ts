@@ -75,7 +75,6 @@ export class ScheduleComponent implements AfterViewInit {
   public eventHeight (period: Period): number {
     const eventDuration = this.toMinutes(period.end) - this.toMinutes(period.start);
     return (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes));
-
   }
 
   public getBackgroundColor (period: Period) {
@@ -90,7 +89,7 @@ export class ScheduleComponent implements AfterViewInit {
     this.courseBlockColor = null;
   }
 
-  public lowerOpacity(period: Period): number {
+  public lowerOpacity (period: Period): number {
     if (this.getBackgroundColor(period) == this.courseBlockColor || !this.courseBlockColor) {
       return 1.0;
     } else {
