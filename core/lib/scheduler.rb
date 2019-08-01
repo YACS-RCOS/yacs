@@ -23,7 +23,8 @@ class Scheduler
         end
       end
     else
-      schedule.find_sort_values()
+      schedule.find_average_start()
+      schedule.find_average_finish()
       schedules << schedule
     end
   end
@@ -31,9 +32,9 @@ class Scheduler
   def self.sort_schedules(sort_parameter, schedules)
       case sort_parameter
       when 1
-          schedules.sort_by.reverse { |this_schedule| this_schedule.avg_start }
+          schedules.sort_by.reverse { |this_schedule| this_schedule.average_start }
       when 2
-          schedules.sort_by { |this_schedule| this_schedule.avg_finish }
+          schedules.sort_by { |this_schedule| this_schedule.average_finish }
       else
           schedules
       end

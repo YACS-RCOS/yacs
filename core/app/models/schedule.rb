@@ -19,33 +19,46 @@ class Schedule
     end
   end
 
-  def find_sort_values
-    avg_start = 0
-    avg_finish = 0
+  def find_average_start
+      average_start = 0
 
-    first_periods = Hash.new(9999999999999)
+      first_periods = Hash.new(9999999999999)
+
+      num_days = 0
+      sections.each do |this_section|
+        this_section.periods.each do |p|
+          num_days += 1.0 if (last_periods[p["day"]] == -1)
+          first_periods[p["day"]] = p["start"].to_i if (p["start"].to_i < first_periods[p["day"]])
+        end
+      end
+      first_periods.each { |day, time| average_start += time }
+
+      average_start /= num_days
+  end
+
+  def find_average_finish
+    average_finish = 0
+
     last_periods = Hash.new(-1)
+
     num_days = 0
     sections.each do |this_section|
       this_section.periods.each do |p|
         num_days += 1.0 if (last_periods[p["day"]] == -1)
-        first_periods[p["day"]] = p["start"].to_i if (p["start"].to_i < first_periods[p["day"]])
         last_periods[p["day"]] = p["end"].to_i if (p["end"].to_i > last_periods[p["day"]])
       end
     end
-    first_periods.each { |day, time| avg_start += time }
-    last_periods.each { |day, time| avg_finish += time }
+    last_periods.each { |day, time| average_finish += time }
 
-    avg_start /= num_days
-    avg_finish /= num_days
+    average_finish /= num_days
   end
 
   def initialize params
     super
     @sections ||= []
     @uuid ||= SecureRandom.uuid
-    @avg_start ||= 0
-    @avg_finish ||= 0
+    @average_start ||= 0
+    @average_finish ||= 0
   end
 
   def section_id
