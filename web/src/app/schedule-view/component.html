@@ -12,11 +12,11 @@
           Sort schedules by...
         </button>
         <button ngbDropdownMenu>
-          <button class="schedule-button dropdown-item" (click) = "" >latest average start time</button>
-          <button class="schedule-button dropdown-item" (click) = "" >earliest average end time</button>
-          <button class="schedule-button dropdown-item" (click) = "" >smallest average time between classes</button>
-          <button class="schedule-button dropdown-item" (click) = "" >largest average time between classes</button>
-          <button class="schedule-button dropdown-item" (click) = "" >default</button>
+          <button class="schedule-button dropdown-item" (click) = "setSortingAttribute('average_start', 'descend')" >latest average start time</button>
+          <button class="schedule-button dropdown-item" (click) = "setSortingAttribute('average_finish', 'ascend')" >earliest average end time</button>
+          <button class="schedule-button dropdown-item" [disabled] = "isTemporary" >smallest average time between classes</button>
+          <button class="schedule-button dropdown-item" [disabled] = "isTemporary" >largest average time between classes</button>
+          <button class="schedule-button dropdown-item" (click) = "setSortingAttribute('no_sort', 'ascend')" >default</button>
         </button>
       </div>
       <button class="schedule-button" (click) = "clearSelections()">Clear</button>

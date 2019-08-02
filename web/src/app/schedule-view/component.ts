@@ -43,6 +43,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   scheduleSet: ScheduleSet = this.emptyScheduleSet;
   isTemporary: boolean = false;
   scheduleNode;
+  attribute: string;
+  direction: string;
 
   private subscription;
 
@@ -66,6 +68,11 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ScheduleList.changes.subscribe((comps: QueryList <ScheduleComponent>) => {
       this.scheduleNode = comps.first.scheduleNode;
     });
+  }
+
+  public setSortingAttribute(givenAttribute: string, givenDirection: string): void {
+    this.attribute = givenAttribute;
+    this.direction = givenDirection;
   }
 
   private getSchedules (): void {
