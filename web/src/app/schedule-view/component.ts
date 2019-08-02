@@ -72,7 +72,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isLoaded = false;
     const sectionIds = this.selectionService.getSelectedSectionIds();
     Schedule
-      .where({ section_id: sectionIds})
+      .where({ section_id: sectionIds })
+      .order({ attribute: average_start })
       .includes('sections')
       .includes('sections.listing')
       .all().then((schedules) => {

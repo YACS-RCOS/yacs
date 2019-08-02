@@ -3,7 +3,6 @@ class Scheduler
     params = expand_listings(sections)
     schedules = []
     search(params, schedules)
-    sort_schedules(0, schedules)
   end
 
   def self.search(params, schedules, schedule=[])
@@ -27,17 +26,6 @@ class Scheduler
       schedule.find_average_finish()
       schedules << schedule
     end
-  end
-
-  def self.sort_schedules(sort_parameter, schedules)
-      case sort_parameter
-      when 1
-          schedules.sort_by.reverse { |this_schedule| this_schedule.average_start }
-      when 2
-          schedules.sort_by { |this_schedule| this_schedule.average_finish }
-      else
-          schedules
-      end
   end
 
   def self.schedule_valid?(schedule) #unoptimized
