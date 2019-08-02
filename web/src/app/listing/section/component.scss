@@ -26,10 +26,11 @@
 .section-periods {
     font-size:80%;
     display:inline-block;
-    margin-left:0em;
+    margin-right:0.5em;
     float:right;
     height:100%;
     white-space: nowrap;
+    width: 350px
 }
 
 .section-seats {
@@ -38,9 +39,14 @@
 
 .period-time-conflict {
     font-size: 90%;
-    width: 6em;
+    width: 70px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     color: rgb(112, 105, 105);
     font-weight: 100;
+
 }
 
 .period-time-no-conflict {
@@ -72,6 +78,7 @@ img.conflict-img {
     display:inline-block;
     vertical-align:middle;
     width: 0.9em;
+    margin-bottom: 3.4px;
 }
 span.conflict-text {
     font-size:75%;

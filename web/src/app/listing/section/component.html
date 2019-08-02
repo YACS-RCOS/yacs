@@ -7,8 +7,7 @@
         <span class="section-crn"> {{section.crn}}</span>
         <span class="section-instructors"> {{ section.instructors.join(', ') }}</span>
         <div class="section-seats">
-          {{ section.seats - section.seatsTaken }}
-          <span>/{{ section.seats }} seats</span>
+          {{ section.seats - section.seatsTaken }}/{{ section.seats }} seats
         </div>
       </div>
     </div>
@@ -18,15 +17,15 @@
           <span *ngFor="let period of week; let i = index">
             <td [ngClass]="{'period-time-conflict':doesConflict()===true, 'period-time-no-conflict':doesConflict()===false}">
               <div class = "col-12">
-                <div class="row">
-                  <span *ngIf="period">{{ getHours(period) }}</span>
-                  <span *ngIf="!period">&nbsp;</span>
+                <div class="row" style = "margin-top: 12.175px">
+                  <span *ngIf="period" style="margin-left: auto; margin-right: auto;">{{ getHours(period) }}</span>
+                  <span *ngIf="!period" style="margin-left: auto; margin-right: auto;">&nbsp;</span>
                 </div>
               </div>
             </td>
           </span>
         </tr>
       </table>
-    </div>  
+    </div>
   </div>
 </div>
