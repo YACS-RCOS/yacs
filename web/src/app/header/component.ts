@@ -24,7 +24,7 @@ export class HeaderComponent {
   //keyup.enter generic search
   search (term: string) {
     if (this.isValidSearchTerm(term) && !this.dropDownSelected) {
-      this.router.navigate(['/courses'], { queryParams: { search: term } });
+      else this.router.navigate(['/courses'], { queryParams: { search: term } });
     }
     this.dropDownSelected = false;
   }
