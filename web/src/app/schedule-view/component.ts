@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Schedule } from 'yacs-api-client';
 import { ScheduleSet } from '../models/schedule-set';
@@ -8,6 +8,12 @@ import { ScheduleComponent } from '../schedule-view/schedule/component';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
 
+
+export enum KEY_CODE {
+  RIGHT_ARROW = 39,
+  LEFT_ARROW = 37
+}
+
 @Component({
   selector: 'schedule-view',
   templateUrl: './component.html',
@@ -15,6 +21,18 @@ import * as domtoimage  from 'dom-to-image';
 })
 
 export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if(event.keyCode === KEY_CODE.RIGHT_ARROW) {
+      this.scheduleSet.incrementActiveSchedule();
+    }
+
+    if(event.keyCode === KEY_CODE.LEFT_ARROW) {
+      this.scheduleSet.decrementActiveSchedule();
+    }
+  }
+
   @ViewChildren(ScheduleComponent)
   public ScheduleList: QueryList<ScheduleComponent>
 
