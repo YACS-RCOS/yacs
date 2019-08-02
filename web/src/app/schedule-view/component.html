@@ -11,13 +11,13 @@
         <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
           Sort schedules by...
         </button>
-        <div ngbDropdownMenu>
-          <button class="schedule-button dropdown-item">latest average start time</button>
-          <button class="schedule-button dropdown-item">earliest average end time</button>
-          <button class="schedule-button dropdown-item">smallest average time between classes</button>
-          <button class="schedule-button dropdown-item">largest average time between classes</button>
-          <button class="schedule-button dropdown-item">default</button>
-        </div>
+        <button ngbDropdownMenu>
+          <button class="schedule-button dropdown-item" (click) = "" >latest average start time</button>
+          <button class="schedule-button dropdown-item" (click) = "" >earliest average end time</button>
+          <button class="schedule-button dropdown-item" (click) = "" >smallest average time between classes</button>
+          <button class="schedule-button dropdown-item" (click) = "" >largest average time between classes</button>
+          <button class="schedule-button dropdown-item" (click) = "" >default</button>
+        </button>
       </div>
       <button class="schedule-button" (click) = "clearSelections()">Clear</button>
       <div ngbDropdown class="d-inline-block">

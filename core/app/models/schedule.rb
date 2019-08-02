@@ -20,7 +20,7 @@ class Schedule
   end
 
   def average_start
-      average_start = 0
+      @average_start = 0
 
       first_periods = Hash.new(9999999999999)
 
@@ -31,13 +31,13 @@ class Schedule
           first_periods[p["day"]] = p["start"].to_i if (p["start"].to_i < first_periods[p["day"]])
         end
       end
-      first_periods.each { |day, time| average_start += time }
+      first_periods.each { |day, time| @average_start += time }
 
-      average_start /= num_days
+      @average_start /= num_days
   end
 
   def average_finish
-    average_finish = 0
+    @average_finish = 0
 
     last_periods = Hash.new(-1)
 
@@ -48,9 +48,9 @@ class Schedule
         last_periods[p["day"]] = p["end"].to_i if (p["end"].to_i > last_periods[p["day"]])
       end
     end
-    last_periods.each { |day, time| average_finish += time }
+    last_periods.each { |day, time| @average_finish += time }
 
-    average_finish /= num_days
+    @average_finish /= num_days
   end
 
   def initialize params
