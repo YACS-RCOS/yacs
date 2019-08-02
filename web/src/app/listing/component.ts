@@ -49,7 +49,7 @@ export class ListingComponent implements OnInit{
   }
 
   public clickCourse () {
-    this.selectionService.toggleCourse(this.listing);
+    this.selectionService.toggleCourse(this.listing, true);
   }
 
   public isCourseSelected () {
@@ -61,7 +61,7 @@ export class ListingComponent implements OnInit{
   }
 
   public clickSection (section: Section): void {
-    this.selectionService.toggleSection(section);
+    this.selectionService.toggleSection(section, true);
   }
 
   public doesConflict (section: Section): boolean {

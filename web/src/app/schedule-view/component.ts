@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Schedule } from 'yacs-api-client';
+import { Schedule, Section } from 'yacs-api-client';
 import { ScheduleSet } from '../models/schedule-set';
 import { SelectionService } from '../services/selection.service';
 import { ScheduleComponent } from '../schedule-view/schedule/component';
@@ -32,7 +32,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		private selectionService : SelectionService,
 		private activatedRoute: ActivatedRoute) {
 		this.subscription = this.selectionService.subscribe(() => {
-			this.getSchedules();
+			this.getSchedules(true);
 		});
 	}
 
@@ -41,7 +41,44 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	public ngOnInit (): void {
-		this.getSchedules();
+		// check if schedule link entered
+		let mode: boolean = true;
+
+		let url: string = window.location.href;
+		let i1: number = url.indexOf('schedules?section_ids=');
+		let i2: number = url.indexOf('&schedule_index=');
+		console.log(url);
+		if (i1 != -1) {
+			mode = false;
+			console.log(url.indexOf('schedules?section_ids='));
+			let end: number = (i2 != -1) ? i2 : url.length;
+			const section_ids = url.substring(i1 + 22, end).split(',');//.map(Number);
+			console.log(section_ids); // TODO: Remove
+		
+			let index: number = 0;
+			if (i2 != -1) {
+				index = parseInt(url.substring(i2 + 16), 10);
+			}
+
+			console.log(index); // TODO: Remove
+			
+			const store = this.selectionService.getSelectedSectionIds(true);
+			// console.log(store);
+
+			Section
+			.where({id: section_ids})
+			.includes('listing')
+			.includes('listing.sections')
+			.all().then((sections) => {
+				// console.log(sections);
+				sections.data.forEach(section => {
+					console.log(section);
+					this.selectionService.addSection(section, false);
+				});
+			});
+		}
+		console.log(mode);
+		this.getSchedules(mode);
 	}
 
 	public ngAfterViewInit (): void {
@@ -50,9 +87,9 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 	}
 
-	private getSchedules (): void {
+	private getSchedules (mode:boolean): void {
 		this.isLoaded = false;
-		const sectionIds = this.selectionService.getSelectedSectionIds();
+		const sectionIds = this.selectionService.getSelectedSectionIds(mode);
 		Schedule
 		.where({ section_id: sectionIds})
 		.includes('sections')
@@ -117,7 +154,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	public copyLink() {		
-		let selectedSections: string = this.selectionService.getSelectedSectionIds().join(',');
+		let selectedSections: string = this.selectionService.getSelectedSectionIds(true).join(',');
 		let scheduleIndex: number = this.activeScheduleIndex - 1;
 		let schedule_link: string = window.location.protocol + '//' 
 			+ window.location.host + '/schedules?section_ids='

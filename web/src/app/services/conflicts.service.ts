@@ -74,7 +74,7 @@ export class ConflictsService {
    */
   public doesConflict(section: Section) {
     let sectId = parseInt(section.id);
-    let flattenedSelections = this.flattenSelections(this.selectionService.getSelections()); // An object in the same format returned by flattenSelections.
+    let flattenedSelections = this.flattenSelections(this.selectionService.getSelections(true)); // An object in the same format returned by flattenSelections.
     let selectionsFlat = flattenedSelections.selectionsFlat;
     let courseSelectionCounts = {};
 
