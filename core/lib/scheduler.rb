@@ -22,8 +22,8 @@ class Scheduler
         end
       end
     else
-      schedule.find_average_start()
-      schedule.find_average_finish()
+      schedule.average_start()
+      schedule.average_finish()
       schedules << schedule
     end
   end

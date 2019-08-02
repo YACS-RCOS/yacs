@@ -19,7 +19,7 @@ class Schedule
     end
   end
 
-  def find_average_start
+  def average_start
       average_start = 0
 
       first_periods = Hash.new(9999999999999)
@@ -36,7 +36,7 @@ class Schedule
       average_start /= num_days
   end
 
-  def find_average_finish
+  def average_finish
     average_finish = 0
 
     last_periods = Hash.new(-1)
