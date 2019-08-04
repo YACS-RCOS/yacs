@@ -23,7 +23,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	isLoaded: boolean = false;
 	scheduleSet: ScheduleSet = this.emptyScheduleSet;
-	isTemporary: boolean = false;
+	notTemporary: boolean = true;
 	scheduleNode;
 
 	private subscription;
@@ -42,14 +42,15 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	public ngOnInit (): void {
 		// check if schedule link entered
-		let mode: boolean = true;
+		console.log("Schedule-view init");
 
 		let url: string = window.location.href;
 		let i1: number = url.indexOf('schedules?section_ids=');
 		let i2: number = url.indexOf('&schedule_index=');
 		console.log(url);
 		if (i1 != -1) {
-			mode = false;
+			console.log("temp schedule init");
+			this.notTemporary = false;
 			console.log(url.indexOf('schedules?section_ids='));
 			let end: number = (i2 != -1) ? i2 : url.length;
 			const section_ids = url.substring(i1 + 22, end).split(',');//.map(Number);
@@ -77,8 +78,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 				});
 			});
 		}
-		console.log(mode);
-		this.getSchedules(mode);
+		console.log(this.notTemporary);
+		this.getSchedules(this.notTemporary);
 	}
 
 	public ngAfterViewInit (): void {

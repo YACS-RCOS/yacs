@@ -1,5 +1,10 @@
 <div *ngIf="!isLoaded" class="loader"></div>
 <div class="schedule-view">
+  <div *ngIf="!notTemporary">
+    <div class="alert alert-info" role="alert">
+      You are viewing a temporary schedule. <a href="#" class="alert-link">Replace current selections</a> or <a href="#" class="alert-link">Keep current selections</a>.
+    </div>
+  </div>
   <div class="schedule-menu">
     <div class="switch">
       <span class="schedule-switch" (click) = "scheduleSet.decrementActiveSchedule()">&#9664;</span>
