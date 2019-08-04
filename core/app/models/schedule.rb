@@ -57,8 +57,6 @@ class Schedule
     super
     @sections ||= []
     @uuid ||= SecureRandom.uuid
-    @average_start ||= 0
-    @average_finish ||= 0
   end
 
   def section_id

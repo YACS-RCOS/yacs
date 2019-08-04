@@ -12,13 +12,13 @@ class ScheduleResource < ApplicationResource
   def resolve scope
     schedules = Schedule.where scope
     if scope[:sort].present?
-      if sort[:attribute] == :average_start
+      if sort[:attribute] == "average_start"
         schedules.sort_by! { |this_schedule| this_schedule.average_start }
-        schedules.reverse! if sort[:direction] == :descend
+        schedules.reverse! if sort[:direction] == "descend"
         return schedules
-      elsif sort[:attribute] == :average_finish
+      elsif sort[:attribute] == "average_finish"
         schedules.sort_by! { |this_schedule| this_schedule.average_finish }
-        schedules.reverse! if sort[:direction] == :descend
+        schedules.reverse! if sort[:direction] == "descend"
         return schedules
       end
     else
