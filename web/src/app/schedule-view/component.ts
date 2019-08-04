@@ -32,7 +32,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		private selectionService : SelectionService,
 		private activatedRoute: ActivatedRoute) {
 		this.subscription = this.selectionService.subscribe(() => {
-			this.getSchedules(true);
+			this.getSchedules();
 		});
 	}
 
@@ -51,6 +51,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (i1 != -1) {
 			console.log("temp schedule init");
 			this.notTemporary = false;
+			// this.clearSelections();
 			console.log(url.indexOf('schedules?section_ids='));
 			let end: number = (i2 != -1) ? i2 : url.length;
 			const section_ids = url.substring(i1 + 22, end).split(',');//.map(Number);
@@ -79,7 +80,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 			});
 		}
 		console.log(this.notTemporary);
-		this.getSchedules(this.notTemporary);
+		this.getSchedules();
 	}
 
 	public ngAfterViewInit (): void {
@@ -88,9 +89,9 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 	}
 
-	private getSchedules (mode:boolean): void {
+	private getSchedules (): void {
 		this.isLoaded = false;
-		const sectionIds = this.selectionService.getSelectedSectionIds(mode);
+		const sectionIds = this.selectionService.getSelectedSectionIds(this.notTemporary);
 		Schedule
 		.where({ section_id: sectionIds})
 		.includes('sections')
@@ -161,12 +162,12 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 			+ window.location.host + '/schedules?section_ids='
 			+ selectedSections + '&schedule_index=' + scheduleIndex;
 
-		console.log('Attehmpting to copy to clipboard: ', schedule_link);
+		console.log('Attempting to copy to clipboard: ', schedule_link);
 
 		this.copyToClipboard(schedule_link);
 	}
 
 	public clearSelections (): void {
-		this.selectionService.clear();
+		this.selectionService.clear(this.notTemporary);
 	}
 }

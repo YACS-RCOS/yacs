@@ -16,7 +16,7 @@ export class SelectionService {
     public sidebarService: SidebarService,
     protected selectedTermService: SelectedTermService) {
     this.selectedTermService.subscribeToActiveTerm((term: Term) => {
-      this.clear();
+      this.clear(true);
     })
   }
 
@@ -53,7 +53,7 @@ export class SelectionService {
     store[section.listing.id].sort();
     this.setItem('selections', JSON.stringify(store), mode);
 
-    this.sidebarService.addListing(section.listing);
+    if (mode) this.sidebarService.addListing(section.listing);
     return true;
   }
 
@@ -121,9 +121,9 @@ export class SelectionService {
     return Object.keys(this.getSelections(mode));
   }
 
-  public clear () {
+  public clear (mode:boolean) {
     let store = {};
-    this.setItem('selections', JSON.stringify(store), true);
+    this.setItem('selections', JSON.stringify(store), mode);
     this.next('event');
   }
 }
