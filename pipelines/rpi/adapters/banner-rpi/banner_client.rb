@@ -92,7 +92,7 @@ class BannerClient
   def extract_periods pxml, day
     period = pxml.to_h.symbolize_keys.map do |k,v|
       case k
-      when :instructor 
+      when :instructor
         v.strip.split(/\//)
         [:instructor, v.strip.split(/\//)]
       when :type        then [:type, v]
@@ -107,4 +107,3 @@ class BannerClient
     period
   end
 end
-

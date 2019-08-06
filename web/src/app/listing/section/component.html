@@ -4,8 +4,11 @@
     <div class="col-2 align-center section-details">
       <div>
         <span *ngIf="doesConflict()" placement="top" triggers="mouseenter:mouseleave" title="Section Conflicts"><img class="conflict-img" src="assets/images/red_exclamation.svg" /></span>
-        <span class="section-crn"> {{section.crn}}</span>
-        <span class="section-instructors"> {{ section.instructors.join(', ') }}</span>
+        <span class="section-crn">{{section.crn}}</span>
+        <span *ngIf="section.instructors.length < 1; else hasProf" placement="top" triggers="mouseenter:mouseleave" title="The instructors for this section have yet to be announced or are otherwise unavailable"><img class="tba-icon" src="assets/images/blue_question_mark.png" /></span>
+        <ng-template #hasProf>
+      	  <span class="section-instructors">{{ section.instructors.join(', ') }}</span>
+        </ng-template>
         <div class="section-seats">
           {{ section.seats - section.seatsTaken }}
           <span>/{{ section.seats }} seats</span>
@@ -27,6 +30,6 @@
           </span>
         </tr>
       </table>
-    </div>  
+    </div>
   </div>
 </div>
