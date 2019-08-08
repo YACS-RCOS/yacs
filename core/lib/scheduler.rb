@@ -3,6 +3,7 @@ class Scheduler
     params = expand_listings(sections)
     schedules = []
     search(params, schedules)
+    schedules
   end
 
   def self.search(params, schedules, schedule=[])
@@ -22,8 +23,6 @@ class Scheduler
         end
       end
     else
-      schedule.average_start()
-      schedule.average_finish()
       schedules << schedule
     end
   end

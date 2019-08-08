@@ -19,24 +19,26 @@ class Schedule
     end
   end
 
-  def average_start
-      @average_start = 0
+  def average_start()
+    return @average_start if (@average_start != 0)
+    @average_start = 0
 
-      first_periods = Hash.new(9999999999999)
+    first_periods = Hash.new(9999999999999)
 
-      num_days = 0
-      sections.each do |this_section|
-        this_section.periods.each do |p|
-          num_days += 1.0 if (last_periods[p["day"]] == -1)
-          first_periods[p["day"]] = p["start"].to_i if (p["start"].to_i < first_periods[p["day"]])
-        end
+    num_days = 0
+    sections.each do |this_section|
+      this_section.periods.each do |p|
+        num_days += 1.0 if (last_periods[p["day"]] == -1)
+        first_periods[p["day"]] = p["start"].to_i if (p["start"].to_i < first_periods[p["day"]])
       end
-      first_periods.each { |day, time| @average_start += time }
+    end
+    first_periods.each { |day, time| @average_start += time }
 
-      @average_start /= num_days
+    @average_start /= num_days
   end
 
-  def average_finish
+  def average_finish()
+    return @average_finish if (@average_finish != 0)
     @average_finish = 0
 
     last_periods = Hash.new(-1)

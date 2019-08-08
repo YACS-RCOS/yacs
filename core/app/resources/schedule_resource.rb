@@ -6,19 +6,26 @@ class ScheduleResource < ApplicationResource
   end
 
   sort_all do |scope, attribute, direction|
-      scope[:sort].merge!(attribute: attribute, direction: direction)
+      scope[:sort].merge!(attribute: thisAttribute, direction: thisDirection)
   end
-
+=begin
+  def order(scope, this_attribute, this_direction)
+    scope[:sort].merge!(attribute: this_attribute, direction: this_direction)
+    scope
+  end
+=end
   def resolve scope
     schedules = Schedule.where scope
     if scope[:sort].present?
       if sort[:attribute] == "average_start"
         schedules.sort_by! { |this_schedule| this_schedule.average_start }
-        schedules.reverse! if sort[:direction] == "descend"
+        schedules.reverse! if sort[:direction] == "desc"
         return schedules
       elsif sort[:attribute] == "average_finish"
         schedules.sort_by! { |this_schedule| this_schedule.average_finish }
-        schedules.reverse! if sort[:direction] == "descend"
+        schedules.reverse! if sort[:direction] == "desc"
+        return schedules
+      else
         return schedules
       end
     else

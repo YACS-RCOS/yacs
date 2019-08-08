@@ -43,8 +43,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   scheduleSet: ScheduleSet = this.emptyScheduleSet;
   isTemporary: boolean = false;
   scheduleNode;
-  attribute;
-  direction;
+  attribute: string = null;
+  direction: string = "asc";
 
   private subscription;
 
@@ -70,7 +70,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public setSortingAttribute(givenAttribute: string, givenDirection: string): void {
+  public setSortingAttribute(givenAttribute, givenDirection): void {
     this.attribute = givenAttribute;
     this.direction = givenDirection;
   }
@@ -79,8 +79,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isLoaded = false;
     const sectionIds = this.selectionService.getSelectedSectionIds();
     Schedule
-      .where({ section_id: sectionIds })
-      .order({ attribute: this.attribute, direction: this.direction })
+      .where({ section_id: sectionIds})
+      //.order({ this_attribute: this.attribute, this_direction: this.direction})
       .includes('sections')
       .includes('sections.listing')
       .all().then((schedules) => {
