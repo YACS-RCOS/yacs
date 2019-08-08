@@ -10,7 +10,7 @@
       <div class="day-label">{{ day.longname }}</div>
       <ng-container >
         <div *ngFor="let period of periodsOnDay(day)">
-          <schedule-event (mouseenter)="mouseEnter(period)" #schedule_event
+          <schedule-event (mouseenter)="mouseEnter(period)"
             [style.margin-top.px] = "eventPosition(period)"
             [style.backgroundColor] = "getBackgroundColor(period)"
             [style.borderColor] = "getBorderColor(period)"

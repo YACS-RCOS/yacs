@@ -4,7 +4,6 @@ import { ScheduleSet } from '../../models/schedule-set';
 import { Day } from '../../models/day.model';
 import { SelectionService } from '../../services/selection.service';
 import { ColorService } from '../../services/color.service';
-import { ScheduleEventComponent } from '../schedule-event/component';
 
 @Component({
   selector: 'schedule',
@@ -17,11 +16,7 @@ export class ScheduleComponent implements AfterViewInit {
 
   @Input() scheduleSet: ScheduleSet;
   @ViewChild('mySchedule')
-  public mySchedule: ElementRef
-  @ViewChild('schedule_event')
-  public schedEvent: ElementRef;
-  @ViewChild(ScheduleEventComponent)
-  public schedEventComponent: ScheduleEventComponent;
+  public mySchedule: ElementRef;
   public scheduleNode;
   public currentPeriod = null;
   public currentBlockColor = null;
