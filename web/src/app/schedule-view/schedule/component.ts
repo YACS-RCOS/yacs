@@ -4,6 +4,7 @@ import { ScheduleSet } from '../../models/schedule-set';
 import { Day } from '../../models/day.model';
 import { SelectionService } from '../../services/selection.service';
 import { ColorService } from '../../services/color.service';
+import { ScheduleEventComponent } from '../schedule-event/component';
 
 @Component({
   selector: 'schedule',
@@ -17,12 +18,28 @@ export class ScheduleComponent implements AfterViewInit {
   @Input() scheduleSet: ScheduleSet;
   @ViewChild('mySchedule')
   public mySchedule: ElementRef
+  @ViewChild('schedule_event')
+  public schedEvent: ElementRef;
+  @ViewChild(ScheduleEventComponent)
+  public schedEventComponent: ScheduleEventComponent;
   public scheduleNode;
+  public currentPeriod = null;
+  public currentBlockColor = null;
 
   constructor (private colorService: ColorService) { }
 
   ngAfterViewInit() {
     this.scheduleNode = this.mySchedule.nativeElement;
+  }
+
+  public mouseEnter (period: Period): void {
+    this.currentPeriod = period;
+    this.currentBlockColor = this.getBackgroundColor(period);
+  }
+  
+  public mouseLeft (): void {
+    this.currentPeriod = null;
+    this.currentBlockColor = null;
   }
 
   public get schedule (): Schedule {
@@ -72,7 +89,32 @@ export class ScheduleComponent implements AfterViewInit {
 
   public eventHeight (period: Period): number {
     const eventDuration = this.toMinutes(period.end) - this.toMinutes(period.start);
-    return (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes));
+    var scheduleEventHeight = (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes))
+    if (period == this.currentPeriod) {
+      var professorNamesLength = period.section.instructors.join(', ').length;
+      if (scheduleEventHeight < 87) {
+        if (professorNamesLength > 22) {
+          return 87;
+        } else if (professorNamesLength < 22 && scheduleEventHeight < 68) {
+          return 68;
+        } 
+      }
+    }
+    return scheduleEventHeight;
+  }
+
+  public setZIndex (period: Period): number {
+    if (period == this.currentPeriod) {
+      return 1;
+    }
+  }
+
+  public lowerOpacity(period: Period): number {
+    if (this.currentBlockColor == this.getBackgroundColor(period) || !this.currentBlockColor) {
+      return 1;
+    } else {
+      return 0.5;
+    }
   }
 
   public getBackgroundColor (period: Period) {

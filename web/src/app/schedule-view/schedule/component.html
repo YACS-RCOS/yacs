@@ -1,4 +1,4 @@
-<div class="schedule" [style.height.px] = "totalHeight" #mySchedule>
+<div class="schedule" [style.height.px] = "totalHeight" #mySchedule (mouseleave)="mouseLeft()">
   <div class="schedule-legend">
     <div class="hour-label" [style.height.%] = "hourHeight" *ngFor="let hour of hours; let i = index">
       <div *ngIf="(i != 0)">{{ hour }}</div>
@@ -9,18 +9,23 @@
     <div class="grid-day"  [style.width.%] = "dayWidth" *ngFor="let day of days">
       <div class="day-label">{{ day.longname }}</div>
       <ng-container >
-          <schedule-event *ngFor="let period of periodsOnDay(day)"
+        <div *ngFor="let period of periodsOnDay(day)">
+          <schedule-event (mouseenter)="mouseEnter(period)" #schedule_event
             [style.margin-top.px] = "eventPosition(period)"
             [style.backgroundColor] = "getBackgroundColor(period)"
             [style.borderColor] = "getBorderColor(period)"
             [style.color] = "getTextColor(period)"
+            [style.z-index] = "setZIndex(period)"
+            [style.opacity] = "lowerOpacity(period)"
             [normalHeight] = "eventHeight(period)"
             [period] = "period">
           </schedule-event>
-        <div class="grid-hour" *ngFor="let hour of hours"
+        </div>
+        <div class="grid-hour" *ngFor="let hour of hours" (mouseenter)="mouseLeft()"
           [style.height.%] = "hourHeight" >
         </div>
       </ng-container>
     </div>
+    <div class="right-barrier" (mouseenter)="mouseLeft()"></div>
   </div>
 </div>
