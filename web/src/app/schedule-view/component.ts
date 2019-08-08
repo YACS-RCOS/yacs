@@ -2,12 +2,15 @@ import { Component, OnInit, OnDestroy, AfterViewInit, ViewChildren, QueryList, I
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Schedule } from 'yacs-api-client';
 import { ScheduleSet } from '../models/schedule-set';
+import { Day } from '../models/day.model';
+import { Period } from '../models/period.model';
 import { SelectionService } from '../services/selection.service';
 import { ScheduleComponent } from '../schedule-view/schedule/component';
 // import 'rxjs/Rx';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
-
+import fileDownload from 'js-file-download';
+import moment from 'moment';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -113,6 +116,59 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
         .catch(function(error) {
           console.error('oops, something went wrong!', error);
         });
+  }
+
+  public downloadICSFile (): void {
+    const DATE_FORMAT = "[America/New_York:]YYYYMMDD[T]hhmmss";
+    
+    function calculateEventTime (dayOfWeek: number, periodStart: number, baseDate: number): string {
+      // timezone handling: all the date data is in the local timezone, but in the ICS file we
+      // specify the date as an Eastern Time (America/New_York) value
+      return moment(baseDate).day(dayOfWeek).hour(0).minute(0).second(0).minute(periodStart).format(DATE_FORMAT);
+    }
+    
+    function toMinutes (timeString: string): number {
+      let timeInt = parseInt(timeString);
+      return (Math.floor(timeInt / 100) * 60) + (timeInt % 100);
+    }
+
+
+    const events = [];
+
+    // these values are made up, for testing purposes
+    const TERM_START: number = moment([2019, 7, 1]).valueOf();
+    const TERM_END: number = moment([2019, 9, 1]).valueOf();
+
+    for (const period of this.scheduleSet.activePeriods) {
+      events.push({
+        start: calculateEventTime(period.day, toMinutes(period.start), TERM_START),
+        end: calculateEventTime(period.day, toMinutes(period.end), TERM_START),
+        title: String(period.section.listing.subjectShortname) + ' ' + String(period.section.listing.courseShortname) + ' - ' + String(period.section.shortname),
+        description: String(period.section.crn) + ' ' + String(period.section.instructors.join(' ,')),
+        location: String(period.location)
+      });
+    }
+
+    let s = ''; // the schedule string
+
+    s += 'BEGIN:VCALENDAR\n';
+    s += 'VERSION:2.0\n';
+    s += 'CALSCALE:GREGORIAN\n';
+    s += 'METHOD:PUBLISH\n';
+
+    for (const e of events) {
+      s += 'BEGIN:VEVENT\n';
+      s += 'SUMMARY:' + String(e.title) + '\n';
+      s += 'DTSTART;TZID=' + String(e.start) + '\n';
+      s += 'DTEND;TZID=' + String(e.end) + '\n';
+      s += 'LOCATION:' + String(e.location) + '\n';
+      s += 'DESCRIPTION:' + String(e.description) + '\n';
+      s += 'RRULE:FREQ=DAILY;UNTIL=' + String(moment(TERM_END).format(DATE_FORMAT)) + '\n';
+      s += String(start) + '\n';
+      s += 'END:VEVENT\n';
+    }
+    
+    fileDownload(data, 'schedule.ics');
   }
 
   public clearSelections (): void {
