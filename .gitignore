@@ -41,6 +41,7 @@
 
 # dependencies
 **/node_modules
+**/npm-cache
 
 # IDEs and editors
 /.idea
