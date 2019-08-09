@@ -7,6 +7,18 @@
       <span class="schedule-switch" (click) = "scheduleSet.incrementActiveSchedule()">&#9654;</span>
     </div>
     <div>
+      <div ngbDropdown class="d-inline-block">
+        <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
+          Sort schedules by...
+        </button>
+        <button ngbDropdownMenu>
+          <button class="schedule-button dropdown-item" (click) = "setSortingAttribute('average_start', 'desc')" >latest average start time</button>
+          <button class="schedule-button dropdown-item" (click) = "setSortingAttribute('average_finish', 'asc')" >earliest average end time</button>
+          <button class="schedule-button dropdown-item" [disabled] = "isTemporary" >smallest average time between classes</button>
+          <button class="schedule-button dropdown-item" [disabled] = "isTemporary" >largest average time between classes</button>
+          <button class="schedule-button dropdown-item" (click) = "setSortingAttribute(null, 'asc')" >default</button>
+        </button>
+      </div>
       <button class="schedule-button" (click) = "clearSelections()">Clear</button>
       <div ngbDropdown class="d-inline-block">
         <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
