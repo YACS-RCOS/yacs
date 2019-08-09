@@ -4,7 +4,7 @@
 		<notice-bar hidden></notice-bar>
 	</div>
 	<div class="content-container-wrapper d-flex flex-row"> 
-	    <button class="sidebar-toggle" (click)="toggleSidebar()">
+	    <button aria-label="Toggle Sidebar" class="sidebar-toggle" (click)="toggleSidebar()">
 	        <i [class.right]="showingSidebar" [class.left]="!showingSidebar"></i>
 	    </button>
 	<div class="sidebar-content-container container ml-sm-4 py-sm-3 px-sm-0" [hidden]="showingSidebar">
