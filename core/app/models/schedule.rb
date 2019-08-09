@@ -26,13 +26,13 @@ class Schedule
     first_periods = Hash.new(9999999999999)
 
     num_days = 0
-    sections.each do |this_section|
-      this_section.periods.each do |p|
+    @sections.map do |this_section|
+      this_section.periods.map do |p|
         num_days += 1.0 if (last_periods[p["day"]] == -1)
         first_periods[p["day"]] = p["start"].to_i if (p["start"].to_i < first_periods[p["day"]])
       end
     end
-    first_periods.each { |day, time| @average_start += time }
+    first_periods.map { |day, time| @average_start += time }
 
     @average_start /= num_days
   end
@@ -44,13 +44,13 @@ class Schedule
     last_periods = Hash.new(-1)
 
     num_days = 0
-    sections.each do |this_section|
-      this_section.periods.each do |p|
+    @sections.map do |this_section|
+      this_section.periods.map do |p|
         num_days += 1.0 if (last_periods[p["day"]] == -1)
         last_periods[p["day"]] = p["end"].to_i if (p["end"].to_i > last_periods[p["day"]])
       end
     end
-    last_periods.each { |day, time| @average_finish += time }
+    last_periods.map { |day, time| @average_finish += time }
 
     @average_finish /= num_days
   end

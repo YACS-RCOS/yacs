@@ -80,7 +80,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     const sectionIds = this.selectionService.getSelectedSectionIds();
     Schedule
       .where({ section_id: sectionIds})
-      //.order({ this_attribute: this.attribute, this_direction: this.direction})
+      .order({ average_start: "desc"})
       .includes('sections')
       .includes('sections.listing')
       .all().then((schedules) => {
