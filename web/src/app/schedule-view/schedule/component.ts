@@ -18,7 +18,6 @@ export class ScheduleComponent implements AfterViewInit {
   @ViewChild('mySchedule')
   public mySchedule: ElementRef;
   public scheduleNode;
-  public currentPeriod = null;
   public currentBlockColor = null;
 
   constructor (private colorService: ColorService) { }
@@ -28,12 +27,10 @@ export class ScheduleComponent implements AfterViewInit {
   }
 
   public mouseEnter (period: Period): void {
-    this.currentPeriod = period;
     this.currentBlockColor = this.getBackgroundColor(period);
   }
   
   public mouseLeft (): void {
-    this.currentPeriod = null;
     this.currentBlockColor = null;
   }
 
@@ -85,12 +82,12 @@ export class ScheduleComponent implements AfterViewInit {
   public eventHeight (period: Period): number {
     const eventDuration = this.toMinutes(period.end) - this.toMinutes(period.start);
     var scheduleEventHeight = (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes))
-    if (period == this.currentPeriod) {
+    if (this.getBackgroundColor(period) == this.currentBlockColor) {
       var professorNamesLength = period.section.instructors.join(', ').length;
       if (scheduleEventHeight < 87) {
         if (professorNamesLength > 22) {
           return 87;
-        } else if (professorNamesLength < 22 && scheduleEventHeight < 68) {
+        } else if (professorNamesLength <= 22 && scheduleEventHeight < 68) {
           return 68;
         } 
       }
@@ -99,7 +96,7 @@ export class ScheduleComponent implements AfterViewInit {
   }
 
   public setZIndex (period: Period): number {
-    if (period == this.currentPeriod) {
+    if (this.currentBlockColor == this.getBackgroundColor(period)) {
       return 1;
     }
   }
