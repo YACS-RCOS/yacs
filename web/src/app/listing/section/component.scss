@@ -6,6 +6,31 @@
     }
 }
 
+@media (max-width: 600px) {
+    .section-details {
+        display: none!important;
+    }
+
+    .period-time-conflict {
+        width: 60px !important;
+    }
+
+    .period-time-no-conflict {
+        width: 60px !important;
+    }
+
+    .section-periods {
+        margin-right: 0em !important;
+        height:80% !important;
+        float: left !important;
+        width: 300px !important;
+    }
+
+    .row {
+      margin-top: 4.75px !important;
+    }
+}
+
 :host.conflicts>.section-information {
     text-decoration: line-through;
 }
@@ -30,7 +55,7 @@
     float:right;
     height:100%;
     white-space: nowrap;
-    width: 350px
+    width: 350px;
 }
 
 .section-seats {
@@ -51,7 +76,7 @@
 
 .period-time-no-conflict {
     font-size: 90%;
-    width: 6em;
+    width: 70px;
     color: #000;
     font-weight: 400;
 }

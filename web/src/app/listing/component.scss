@@ -37,6 +37,36 @@
   }
 }
 
+@media (max-width: 600px){
+  .showDescription {
+    text-align: left !important;
+  }
+
+  .hideDescription {
+    text-align: left !important;
+  }
+
+  .vertical-separators {
+    width: 60px !important;
+    top: 1.1em !important;
+  }
+  .thurs {
+    right: 70.4px !important;
+  }
+  .tues {
+    right: 191px !important;
+  }
+
+  .period-days {
+    padding-right: 0.9em !important;
+    font-size: 68% !important;
+  }
+
+  .padded {
+    width: 60px !important;
+  }
+}
+
 .description-tooltip {
 	bottom: 67px;
 	right: 29px;
