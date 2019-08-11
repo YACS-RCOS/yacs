@@ -1,29 +1,29 @@
 .school-longname {
-    display:block;
-    /*width:600px;*/
-    /*margin-right:10px;*/
-    font-size:22px;
-    font-style:italic;
-    padding: 2px 7px;
-    border-bottom: 1px rgba(108, 90, 90, 0.1) solid;
-    background-color: rgba(108, 90, 90, 0.15);
+  display: block;
+  /*width:600px;*/
+  /*margin-right:10px;*/
+  font-size: 22px;
+  font-style: italic;
+  padding: 2px 7px;
+  border-bottom: 1px rgba(108, 90, 90, 0.1) solid;
+  background-color: rgba(108, 90, 90, 0.15);
 }
 
 .subject-list {
-    display:block;
-    margin-bottom: 15px;
-    font-size:17px;
+  display: block;
+  margin-bottom: 15px;
+  font-size: 17px;
 }
 
 subject {
-    display:block;
-    cursor:pointer;
-    padding:2px 12px;
-    /*width:5;*/
+  display: block;
+  cursor: pointer;
+  padding: 2px 12px;
+  /*width:5;*/
 }
 subject:hover {
-/*    color: #fff;
+  /*    color: #fff;
     background-color: #933;*/
-    color: white;
-    background-color: #c65353;
+  color: white;
+  background-color: #c65353;
 }

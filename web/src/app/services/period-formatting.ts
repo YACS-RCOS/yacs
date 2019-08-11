@@ -9,7 +9,7 @@ export class TimeConversionService {
    * 610 = 10:10a
    * 720 = 12p
    */
-  public timeToString(time: number) : string {
+  public timeToString(time: number): string {
     let hour = Math.floor(time / 100);
     let minute = Math.floor(time % 100);
 
@@ -24,10 +24,9 @@ export class TimeConversionService {
     let minuteShow = '';
     if (minute != 0) {
       minuteShow = ':' + (minute < 10 ? '0' : '') + minute;
-    }
-    else {
+    } else {
       minuteShow = ':00';
     }
     return hour + minuteShow + ampm;
-  	}
   }
+}

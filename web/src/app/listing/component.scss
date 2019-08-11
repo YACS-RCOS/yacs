@@ -1,4 +1,4 @@
-@import "../../_vars.scss";
+@import '../../_vars.scss';
 
 .course {
   padding: 0em;
@@ -7,39 +7,39 @@
 }
 
 @media (min-width: 576px) {
-	.course {
-	  min-width: 485px;
+  .course {
+    min-width: 485px;
     min-height: 7em;
     margin: 10px 10px 10px 10px;
-	}
+  }
   .min-height {
     min-height: 7em;
   }
-	.fixed-height {
-	  height: 7em;
-	}
+  .fixed-height {
+    height: 7em;
+  }
 }
 
 @media (max-width: 575.98px) {
-	.course {
-		min-width: 345px;
+  .course {
+    min-width: 345px;
     margin: 10px 0px 10px 0px;
-	}
-	.fixed-height {
-	  height: 8.5em;
-	}
+  }
+  .fixed-height {
+    height: 8.5em;
+  }
 
-	.course-description {
-		display: none !important;
-	}
+  .course-description {
+    display: none !important;
+  }
   .description-tooltip {
     display: none;
   }
 }
 
 .description-tooltip {
-	bottom: 67px;
-	right: 29px;
+  bottom: 67px;
+  right: 29px;
   width: 24px;
   height: 24px;
 }
@@ -51,12 +51,11 @@
   height: 24px;
 }
 
-
 .menu {
   align: right;
   color: #cecece;
   padding: 0;
-  margin: .05em;
+  margin: 0.05em;
   font-weight: 400;
   text-align: right;
   bottom: 0.8em;
@@ -70,7 +69,6 @@
   font-size: 78%;
   font-weight: 600;
   padding-bottom: 2px;
-
 }
 
 .padded {
@@ -96,10 +94,10 @@
 }
 
 i {
-    border: solid black;
-    border-width: 0 5px 5px 0;
-    display: inline-block;
-    padding: 3px;
+  border: solid black;
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 3px;
 }
 
 .arrow {
@@ -107,8 +105,8 @@ i {
 }
 
 .up {
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
 }
 
 .down {
@@ -117,8 +115,8 @@ i {
 }
 
 .arrow-container {
-  padding-left: .4em;
-  padding-right: .1em;
+  padding-left: 0.4em;
+  padding-right: 0.1em;
   height: 1.5em;
   width: 1.1em;
 }
@@ -131,7 +129,7 @@ i {
 }
 
 .course-content {
-	padding-right: 35px;
+  padding-right: 35px;
 }
 
 .course-name {
@@ -146,11 +144,11 @@ i {
 }
 
 .dept-code {
-  margin-left:1em;
+  margin-left: 1em;
 }
 
 .credit-range {
-  margin-left:0.7em;
+  margin-left: 0.7em;
 }
 
 .course-name:hover {
@@ -162,7 +160,7 @@ i {
 }
 
 .hideDescription {
-  font-size:95%;
+  font-size: 95%;
   text-align: justify;
   color: #969696;
   margin-right: 2em;
@@ -180,7 +178,7 @@ i {
 }
 
 .showDescription {
-  font-size:95%;
+  font-size: 95%;
   text-align: justify;
   margin-right: 2em;
   line-height: 1.7em;
@@ -198,15 +196,15 @@ i {
 .separator {
   background: #efefef;
   height: 1px;
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 }
 
 section {
-  display:block;
-  margin:0;
-  padding:0;
-  overflow:auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
   font-size: 90%;
   width: 100%;
 }
@@ -216,11 +214,13 @@ section:not(.selected) {
   color: black;
 }
 
-section.conflicts, section.conflicts:hover {
+section.conflicts,
+section.conflicts:hover {
   color: #aaa;
 }
 
-section.closed, section.closed:hover {
+section.closed,
+section.closed:hover {
   color: #4a3c3c;
 }
 
@@ -254,8 +254,8 @@ section.closed, section.closed:hover {
 }
 
 .zero-margins {
-  padding:0 !important;
-  margin:0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 .full-width {
@@ -263,31 +263,35 @@ section.closed, section.closed:hover {
 }
 
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-2px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(2px, 0, 0);
   }
 }
 
 .warning {
-    position: absolute;
-    height: auto;
-    max-width: 175px;
-    opacity: 0.25;
-    margin-left: -15px;
-    margin-top: -5px;
-    z-index: 1;
+  position: absolute;
+  height: auto;
+  max-width: 175px;
+  opacity: 0.25;
+  margin-left: -15px;
+  margin-top: -5px;
+  z-index: 1;
 }
 
 table {
-    position: relative;
+  position: relative;
 }
 
 .closed-conflict {
@@ -298,7 +302,7 @@ table {
   padding-left: 8px;
   padding-right: 8px;
   margin-top: 5px;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 .blocked-tags {
@@ -314,11 +318,11 @@ tr.align {
 }
 
 .some {
-  border: 1px solid #E5C201;
-  background-color: #E5C201;
+  border: 1px solid #e5c201;
+  background-color: #e5c201;
 }
 
 .all {
-  border: 1px solid #C65353;
-  background-color: #C65353;
+  border: 1px solid #c65353;
+  background-color: #c65353;
 }

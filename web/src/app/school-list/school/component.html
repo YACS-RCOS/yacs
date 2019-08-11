@@ -1,4 +1,9 @@
 <span class="school-longname">{{school.longname}}</span>
 <div class="subject-list">
-  <subject *ngFor="let subject of school.subjects" [subject]="subject" [routerLink]="['/courses']" [queryParams]="{ subject_id: subject.id }"></subject>
+  <subject
+    *ngFor="let subject of school.subjects"
+    [subject]="subject"
+    [routerLink]="['/courses']"
+    [queryParams]="{ subject_id: subject.id }"
+  ></subject>
 </div>

@@ -11,7 +11,7 @@ const FLAVORTEXTS: string[] = [
   'A pizza-funded',
   'An ice tea powered',
   'A lone computer runs this',
-  'Some guy\'s',
+  "Some guy's",
   'A (somewhat) tested',
   'Batteries not included in this',
   'A GMO-free',
@@ -31,7 +31,7 @@ const FLAVORTEXTS: string[] = [
   'Far more work than necessary went into this',
   'An officially cursed',
   'A caffeine-powered',
-  'Better than your mother\'s',
+  "Better than your mother's",
   'A kid-tested, mother-approved',
   'A science-backed',
   'A somewhat broken',
@@ -39,7 +39,7 @@ const FLAVORTEXTS: string[] = [
   'A cat-approved',
   'A dishwasher-safe',
   'An employee-owned',
-  'Don\'t restart your computer while using this',
+  "Don't restart your computer while using this",
   'A painstakingly crafted',
   'A geothermal powered',
   'A mighty fine',
@@ -52,7 +52,6 @@ const FLAVORTEXTS: string[] = [
   templateUrl: './component.html',
   styleUrls: ['component.scss']
 })
-
 export class FooterComponent {
   flavortext: string;
 

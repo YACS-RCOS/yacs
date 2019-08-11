@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { Subject } from 'yacs-api-client'
+import { Subject } from 'yacs-api-client';
 
 @Component({
-    selector: 'subject',
-    templateUrl: './component.html',
-    styleUrls: ['./component.scss']
+  selector: 'subject',
+  templateUrl: './component.html',
+  styleUrls: ['./component.scss']
 })
 export class SubjectComponent {
   @Input() subject: Subject;

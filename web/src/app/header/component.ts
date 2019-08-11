@@ -12,17 +12,15 @@ import 'rxjs/add/operator/distinctUntilChanged';
   templateUrl: './component.html',
   styleUrls: ['component.scss']
 })
-
 export class HeaderComponent {
-
   //flag to stop keyup.enter from doing normal search when drop down is used
   dropDownSelected: boolean = false;
   navbarCollapsed: boolean = true;
 
-  constructor (private router: Router) { }
+  constructor(private router: Router) {}
 
   //keyup.enter generic search
-  search (term: string) {
+  search(term: string) {
     if (this.isValidSearchTerm(term) && !this.dropDownSelected) {
       this.router.navigate(['/courses'], { queryParams: { search: term } });
     }
@@ -36,28 +34,33 @@ export class HeaderComponent {
       .distinctUntilChanged()
       .filter(this.isValidSearchTerm)
       .switchMap(term =>
-        Listing
-          .where({ search: term })
+        Listing.where({ search: term })
           .select({ listings: ['longname'] })
-          .all().then(listings => {
-            const listingLongnames = listings.data.map(listing => listing.longname);
+          .all()
+          .then(listings => {
+            const listingLongnames = listings.data.map(
+              listing => listing.longname
+            );
             return listingLongnames
-              .filter((listingLongname, i) => { // remove duplicates
+              .filter((listingLongname, i) => {
+                // remove duplicates
                 return listingLongnames.indexOf(listingLongname) == i;
               })
               .slice(0, 10); //only return top 10
-          }))
+          })
+      );
 
   //function for on-click typeahead bar
-  selectedCourse ($event: any) {
-    this.router.navigate(['/courses'],
-      { queryParams: {
+  selectedCourse($event: any) {
+    this.router.navigate(['/courses'], {
+      queryParams: {
         longname: $event.item
-      }});
+      }
+    });
     this.dropDownSelected = true;
   }
 
-  private isValidSearchTerm (term: string) {
-    return (term.length > 1 && /\S/.test(term));
+  private isValidSearchTerm(term: string) {
+    return term.length > 1 && /\S/.test(term);
   }
 }

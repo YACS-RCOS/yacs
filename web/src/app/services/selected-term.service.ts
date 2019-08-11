@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Term} from 'yacs-api-client';
-import {Subject, Subscription} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Term } from 'yacs-api-client';
+import { Subject, Subscription } from 'rxjs';
 
 @Injectable()
 export class SelectedTermService {
@@ -60,7 +60,10 @@ export class SelectedTermService {
     this.subscribeToTerm((term: Term) => {
       this.currentId = term.id;
       localStorage.setItem('selectedTerm', term.id);
-      localStorage.setItem('atFirstTerm', `${this.currentOrdinal === this.terms.size - 1}`);
+      localStorage.setItem(
+        'atFirstTerm',
+        `${this.currentOrdinal === this.terms.size - 1}`
+      );
     });
     this.subscribeToActiveTerm((term: Term) => {
       this.activeId = this.currentId;
@@ -80,7 +83,9 @@ export class SelectedTermService {
   public setSelectedTerm(id: string): boolean {
     const nTerm = this.terms.get(id);
     if (nTerm !== undefined) {
-      this.currentOrdinal = Array.from(this.terms.values()).findIndex((term) => term.id === id);
+      this.currentOrdinal = Array.from(this.terms.values()).findIndex(
+        term => term.id === id
+      );
       this.selectedTerm.next(nTerm);
       return true;
     }
@@ -106,7 +111,13 @@ export class SelectedTermService {
    * @param func
    */
   public subscribeToTerm(func: (Term) => void): Subscription {
-    return this.selectedTerm.subscribe(func, (e) => { console.error(e); }, () => {});
+    return this.selectedTerm.subscribe(
+      func,
+      e => {
+        console.error(e);
+      },
+      () => {}
+    );
   }
 
   /**
@@ -114,7 +125,13 @@ export class SelectedTermService {
    * @param func
    */
   public subscribeToActiveTerm(func: (Term) => void): Subscription {
-    return this.activeTerm.subscribe(func, (e) => { console.error(e); }, () => {});
+    return this.activeTerm.subscribe(
+      func,
+      e => {
+        console.error(e);
+      },
+      () => {}
+    );
   }
 
   public setSelectedTermAsActive(): void {
@@ -141,5 +158,4 @@ export class SelectedTermService {
   public get isCurrentTermActive(): boolean {
     return this.currentId === this.activeId;
   }
-
 }

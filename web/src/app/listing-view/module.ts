@@ -4,12 +4,7 @@ import { ListingViewComponent } from './component';
 import { ListingModule } from '../listing/module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ListingModule
-  ],
-  declarations: [
-    ListingViewComponent
-  ]
+  imports: [CommonModule, ListingModule],
+  declarations: [ListingViewComponent]
 })
-export class ListingViewModule { }
+export class ListingViewModule {}

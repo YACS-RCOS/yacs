@@ -8,7 +8,7 @@
     "watch": "ng build --watch",
     "build": "ng build --prod",
     "test": "ng test",
-    "lint": "prettier --write 'src/**/*.{js,ts,html,scss}'",
+    "lint": "prettier --write \"src/**/*.{js,ts,html,scss}\"",
     "e2e": "ng e2e"
   },
   "private": true,

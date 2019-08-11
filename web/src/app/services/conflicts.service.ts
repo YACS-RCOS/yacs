@@ -4,10 +4,9 @@ import { SelectionService } from './selection.service';
 
 @Injectable()
 export class ConflictsService {
-
   private conflicts: any = {};
 
-  constructor(private selectionService: SelectionService) { }
+  constructor(private selectionService: SelectionService) {}
 
   /**
    * Given the data returned from the API, populate the conflicts cache with
@@ -19,16 +18,16 @@ export class ConflictsService {
      * Currently we are assuming the conflicts in the API will always be sorted.
      * If that is not the case, a sort must be implemented here.
      */
-    listings.forEach((listing) => {
+    listings.forEach(listing => {
       let sections = listing.sections || [];
-      sections.forEach((section) => {
+      sections.forEach(section => {
         let id = section.id;
         if (!this.conflicts[id]) {
           this.conflicts[id] = section.conflictIds;
         }
       });
     });
-  };
+  }
 
   /**
    * Flatten the selection data into an array of arrays [sectionId, courseId]
@@ -45,9 +44,9 @@ export class ConflictsService {
     let selectionsFlat = [];
     let courseSelectionCounts = {};
 
-    Object.keys(selections).forEach((cid) => {
+    Object.keys(selections).forEach(cid => {
       courseSelectionCounts[cid] = 0;
-      selections[cid].forEach((sid) => {
+      selections[cid].forEach(sid => {
         selectionsFlat.push([sid, cid]);
         courseSelectionCounts[cid]++;
       });
@@ -60,8 +59,8 @@ export class ConflictsService {
       return sidcid1[0] - sidcid2[0];
     });
     return {
-      'selectionsFlat': selectionsFlat,
-      'courseSelectionCounts': courseSelectionCounts
+      selectionsFlat: selectionsFlat,
+      courseSelectionCounts: courseSelectionCounts
     };
   }
 
@@ -74,15 +73,18 @@ export class ConflictsService {
    */
   public doesConflict(section: Section) {
     let sectId = parseInt(section.id);
-    let flattenedSelections = this.flattenSelections(this.selectionService.getSelections()); // An object in the same format returned by flattenSelections.
+    let flattenedSelections = this.flattenSelections(
+      this.selectionService.getSelections()
+    ); // An object in the same format returned by flattenSelections.
     let selectionsFlat = flattenedSelections.selectionsFlat;
     let courseSelectionCounts = {};
 
     /* this decrements the numbers in course selection counts, so make a deep copy
      * of flattenedSelections.courseSelectionCount.
      */
-    Object.keys(flattenedSelections.courseSelectionCounts).forEach((cid) => {
-      courseSelectionCounts[cid] = flattenedSelections.courseSelectionCounts[cid];
+    Object.keys(flattenedSelections.courseSelectionCounts).forEach(cid => {
+      courseSelectionCounts[cid] =
+        flattenedSelections.courseSelectionCounts[cid];
     });
 
     if (!this.conflicts[sectId]) {
@@ -105,11 +107,9 @@ export class ConflictsService {
       let selectedCourseId = selectionsFlat[j][1];
       if (conflicts[i] < selectedSectionId) {
         ++i;
-      }
-      else if (conflicts[i] > selectedSectionId) {
+      } else if (conflicts[i] > selectedSectionId) {
         ++j;
-      }
-      else {
+      } else {
         --courseSelectionCounts[selectedCourseId];
         if (courseSelectionCounts[selectedCourseId] < 1) {
           // all sections for a single selected course conflict with this section
@@ -123,5 +123,5 @@ export class ConflictsService {
 
     // if here, either the conflict array or the flat selections array has been exhausted
     return false;
-  };
+  }
 }

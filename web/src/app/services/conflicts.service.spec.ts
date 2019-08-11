@@ -1,22 +1,20 @@
-
 import {} from 'jasmine';
 
 import { TestBed, getTestBed, async, inject } from '@angular/core/testing';
 import { ConflictsService } from './conflicts.service';
 import { SelectionService } from './selection.service';
 
-describe("Testing ConflictsService", function() {
-
+describe('Testing ConflictsService', function() {
   let conflictsService: ConflictsService;
 
   beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        providers: [ ConflictsService, SelectionService ]
-      });
+    TestBed.configureTestingModule({
+      providers: [ConflictsService, SelectionService]
+    });
 
-      TestBed.compileComponents();
+    TestBed.compileComponents();
 
-      conflictsService = getTestBed().get(ConflictsService);
+    conflictsService = getTestBed().get(ConflictsService);
   }));
 
   it('conflictsService should be defined', function() {

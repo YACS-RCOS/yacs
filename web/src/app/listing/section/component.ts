@@ -15,13 +15,16 @@ export class SectionComponent {
   @Input() section: Section;
   periods: any[][];
 
-  constructor(private conflictsService: ConflictsService, private selectionService: SelectionService) { }
+  constructor(
+    private conflictsService: ConflictsService,
+    private selectionService: SelectionService
+  ) {}
 
   ngOnInit(): void {
     this.periods = this.constructPeriodsArray();
   }
 
-  public getDay(period: any) : string {
+  public getDay(period: any): string {
     return SHORT_DAYS[period.day];
   }
 
@@ -33,7 +36,7 @@ export class SectionComponent {
    * etc
    * This should possibly be a service.
    */
-  private timeToString(time: number) : string {
+  private timeToString(time: number): string {
     let hour = Math.floor(time / 100);
     let minute = Math.floor(time % 100);
 
@@ -53,15 +56,17 @@ export class SectionComponent {
     return hour + minuteShow + ampm;
   }
 
-  public getHours (period: any) : string {
-    return this.timeToString(period.start) + '-' + this.timeToString(period.end);
+  public getHours(period: any): string {
+    return (
+      this.timeToString(period.start) + '-' + this.timeToString(period.end)
+    );
   }
 
-  public doesConflict () {
+  public doesConflict() {
     return this.conflictsService.doesConflict(this.section);
   }
 
-  public isSelected () {
+  public isSelected() {
     return this.selectionService.isSectionSelected(this.section);
   }
 
@@ -69,10 +74,10 @@ export class SectionComponent {
     const periodsByDay = [Array(5)];
     this.section.periods.forEach(period => {
       if (period.day >= 1 && period.day <= 5) {
-        if (periodsByDay.slice(-1)[0][period.day-1]) {
+        if (periodsByDay.slice(-1)[0][period.day - 1]) {
           periodsByDay.push(Array(5));
         }
-        periodsByDay.slice(-1)[0][period.day-1] = period;
+        periodsByDay.slice(-1)[0][period.day - 1] = period;
       }
     });
     return periodsByDay;

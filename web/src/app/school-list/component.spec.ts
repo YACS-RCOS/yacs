@@ -1,7 +1,12 @@
-
 import {} from 'jasmine';
 import { Http, Response, HttpModule } from '@angular/http';
-import { TestBed, fakeAsync, tick, ComponentFixture, async } from '@angular/core/testing';
+import {
+  TestBed,
+  fakeAsync,
+  tick,
+  ComponentFixture,
+  async
+} from '@angular/core/testing';
 import { Component, OnInit, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
@@ -18,16 +23,21 @@ import { SchoolListModule } from './module';
 import { DepartmentComponent } from './department/component';
 import { SchoolComponent } from './school/component';
 
-import { School } from '../models/school.model'
+import { School } from '../models/school.model';
 
 let mockSchools: School[] = [
-  {"id":1,"name":"School of Humanities, Arts and Social Sciences", "departments":null},
-  {"id":2,"name":"School of Engineering", "departments":null},
-  {"id":3,"name":"School of Science", "departments":null},
-  {"id":4,"name":"School of Architecture", "departments":null},
-  {"id":5,"name":"School of Business Management", "departments":null} ];
+  {
+    id: 1,
+    name: 'School of Humanities, Arts and Social Sciences',
+    departments: null
+  },
+  { id: 2, name: 'School of Engineering', departments: null },
+  { id: 3, name: 'School of Science', departments: null },
+  { id: 4, name: 'School of Architecture', departments: null },
+  { id: 5, name: 'School of Business Management', departments: null }
+];
 
-describe("Testing SchoolListComponent", function() {
+describe('Testing SchoolListComponent', function() {
   let component: SchoolListComponent;
   let fixture: ComponentFixture<SchoolListComponent>;
   let de: DebugElement;
@@ -35,10 +45,15 @@ describe("Testing SchoolListComponent", function() {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [ School ],
-      declarations: [ SchoolListComponent, SchoolComponent, DepartmentComponent,
-        Stubs.RouterLinkStubDirective, Stubs.RouterOutletStubComponent,
-        Stubs.QueryParamsStubDirective ]
+      providers: [School],
+      declarations: [
+        SchoolListComponent,
+        SchoolComponent,
+        DepartmentComponent,
+        Stubs.RouterLinkStubDirective,
+        Stubs.RouterOutletStubComponent,
+        Stubs.QueryParamsStubDirective
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SchoolListComponent);
@@ -48,15 +63,14 @@ describe("Testing SchoolListComponent", function() {
     fixture.detectChanges();
   }));
 
-  it("should have a component", function() {
+  it('should have a component', function() {
     expect(component).toBeTruthy();
   });
 
   it('should contain all schools', function() {
-   let de: DebugElement[] = fixture.debugElement.queryAll(By.css('school'));
-   for(var x of mockSchools) {
-     expect(de[x.id-1].nativeElement.textContent).toContain(x.name);
-   }
+    let de: DebugElement[] = fixture.debugElement.queryAll(By.css('school'));
+    for (var x of mockSchools) {
+      expect(de[x.id - 1].nativeElement.textContent).toContain(x.name);
+    }
   });
-
 });

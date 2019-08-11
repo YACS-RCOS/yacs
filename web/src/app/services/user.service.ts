@@ -3,18 +3,17 @@ import { User } from '../models/user.model';
 
 @Injectable()
 export class UserService {
+  constructor() {}
 
-  constructor () { }
-
-  public isLoggedIn () : boolean {
+  public isLoggedIn(): boolean {
     return !!this.getUser();
   }
 
-  public getUser () : User {
+  public getUser(): User {
     return JSON.parse(this.getCookie('yacs.user'));
   }
 
-  private getCookie (name) : string {
+  private getCookie(name): string {
     const ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];

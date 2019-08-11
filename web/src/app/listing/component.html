@@ -1,72 +1,155 @@
-<div class = "course" (mouseenter)="hovered=true" (mouseleave) = "hovered=false">
-	<div class="row flex-nowrap h-100 min-height">
-	  <div class="indicator-container" (click)="clickCourse()">
-	  	<div class="indicator h-100" [class.indicator-selected]="isCourseSelected()" [class.indicator-unselected]="!isCourseSelected()" [class.indicator-hover]="hovered && !isCourseSelected()" [class.indicator-selected-hover]="hovered && isCourseSelected()"></div>
-	  </div>
-	  <div class="w-100 h-100 course-content position-relative min-height">
-		  <table (click)="clickCourse()" class="w-100 table-margin">
-			  <tr>
-				  <!--Course title-->
-				  <td colspan="2"><div class="course-name">{{listing.longname}}</div></td>
-			  </tr>
-			  <tr class="course-info align">
-				  <td class="blocked-tags course-info">
-					  <div class= "course-details">{{listing.course.subject.shortname}}   {{listing.course.shortname}}</div>
-				  </td>
-				  <td [rowSpan]="showingDescription ? 3 : 2">
-					  <div *ngIf="showDescription" [class.overflow-hide]="!showingDescription" (mousemove)="mouseMoveFunc()" (mouseup)="descriptionClick($event)" (mousedown)="mouseDownFunc()"  (mousemove)="mouseMoveFunc()"
-						   [class.showDescription]="showingDescription" [class.hideDescription]="!showingDescription"
-						   [class.selectedDescription]="isCourseSelected()">{{listing.description}}</div>
-				  </td>
-			  </tr>
-			  <tr class="align">
-				  <td class="blocked-tags course-info">
-					  <div class="course-details">{{creditRange}}</div>
-				  </td>
-			  </tr>
-			  <tr [class.align]="showingDescription">
-				  <td [colSpan]="showingDescription ? 1 : 2">
-					  <div *ngIf="getSectionConflictCount() === 0 && getSectionClosedCount() === 0; else elseContent" class="closed-conflict null">&nbsp;</div>
-					  <ng-template #elseContent>
-						  <div *ngIf="getSectionConflictCount() < listing.sections.length && getSectionConflictCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are conflicting" container="body" triggers="mouseenter:mouseleave">Conflicting Sections</div>
-						  <div *ngIf="getSectionConflictCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are conflicting" container="body" triggers="mouseenter:mouseleave">Conflicting Sections</div>
-						  <div *ngIf="getSectionClosedCount() < listing.sections.length && getSectionClosedCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
-						  <div *ngIf="getSectionClosedCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
-					  </ng-template>
-				  </td>
-			  </tr>
-		  </table>
-			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
-				<img src="assets/images/info.svg" />
-			</span>
-			<span *ngIf="showRemoveButton" (click)="removeButtonClick()" class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']" ngbPopover="Click on this button to remove class from sidebar" container="body" triggers="mouseenter:mouseleave">
-				<img src="assets/images/remove.svg" />
-			</span>
-			<div class="menu position-absolute" (click)="expandDescripAndListings()">
-				<div class = "arrow-container down-arrow" *ngIf="!showingMenu">
-					<i class="arrow down"></i>
-				</div>
-				<div class="arrow-container" *ngIf="showingMenu">
-					<i class="arrow up"></i>
-				</div>
-			</div>
-	  </div>
+<div class="course" (mouseenter)="hovered=true" (mouseleave)="hovered=false">
+  <div class="row flex-nowrap h-100 min-height">
+    <div class="indicator-container" (click)="clickCourse()">
+      <div
+        class="indicator h-100"
+        [class.indicator-selected]="isCourseSelected()"
+        [class.indicator-unselected]="!isCourseSelected()"
+        [class.indicator-hover]="hovered && !isCourseSelected()"
+        [class.indicator-selected-hover]="hovered && isCourseSelected()"
+      ></div>
+    </div>
+    <div class="w-100 h-100 course-content position-relative min-height">
+      <table (click)="clickCourse()" class="w-100 table-margin">
+        <tr>
+          <!--Course title-->
+          <td colspan="2">
+            <div class="course-name">{{listing.longname}}</div>
+          </td>
+        </tr>
+        <tr class="course-info align">
+          <td class="blocked-tags course-info">
+            <div class="course-details">
+              {{listing.course.subject.shortname}} {{listing.course.shortname}}
+            </div>
+          </td>
+          <td [rowSpan]="showingDescription ? 3 : 2">
+            <div
+              *ngIf="showDescription"
+              [class.overflow-hide]="!showingDescription"
+              (mousemove)="mouseMoveFunc()"
+              (mouseup)="descriptionClick($event)"
+              (mousedown)="mouseDownFunc()"
+              (mousemove)="mouseMoveFunc()"
+              [class.showDescription]="showingDescription"
+              [class.hideDescription]="!showingDescription"
+              [class.selectedDescription]="isCourseSelected()"
+            >
+              {{listing.description}}
+            </div>
+          </td>
+        </tr>
+        <tr class="align">
+          <td class="blocked-tags course-info">
+            <div class="course-details">{{creditRange}}</div>
+          </td>
+        </tr>
+        <tr [class.align]="showingDescription">
+          <td [colSpan]="showingDescription ? 1 : 2">
+            <div
+              *ngIf="getSectionConflictCount() === 0 && getSectionClosedCount() === 0; else elseContent"
+              class="closed-conflict null"
+            >
+              &nbsp;
+            </div>
+            <ng-template #elseContent>
+              <div
+                *ngIf="getSectionConflictCount() < listing.sections.length && getSectionConflictCount() != 0"
+                class="closed-conflict some"
+                placement="top"
+                ngbPopover="Some sections are conflicting"
+                container="body"
+                triggers="mouseenter:mouseleave"
+              >
+                Conflicting Sections
+              </div>
+              <div
+                *ngIf="getSectionConflictCount() === listing.sections.length"
+                class="closed-conflict all"
+                placement="top"
+                ngbPopover="All sections are conflicting"
+                container="body"
+                triggers="mouseenter:mouseleave"
+              >
+                Conflicting Sections
+              </div>
+              <div
+                *ngIf="getSectionClosedCount() < listing.sections.length && getSectionClosedCount() != 0"
+                class="closed-conflict some"
+                placement="top"
+                ngbPopover="Some sections are closed"
+                container="body"
+                triggers="mouseenter:mouseleave"
+              >
+                Full Sections
+              </div>
+              <div
+                *ngIf="getSectionClosedCount() === listing.sections.length"
+                class="closed-conflict all"
+                placement="top"
+                ngbPopover="All sections are closed"
+                container="body"
+                triggers="mouseenter:mouseleave"
+              >
+                Full Sections
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+      </table>
+
+      <span
+        *ngIf="showDescriptionTooltip"
+        class="description-tooltip position-absolute"
+        [placement]="['right','bottom','left','top','auto']"
+        [ngbPopover]="tooltipDescription"
+        container="body"
+        triggers="mouseenter:mouseleave"
+      >
+        <img src="assets/images/info.svg" />
+      </span>
+      <span
+        *ngIf="showRemoveButton"
+        (click)="removeButtonClick()"
+        class="remove-button position-absolute"
+        [placement]="['right','bottom','left','top','auto']"
+        ngbPopover="Click on this button to remove class from sidebar"
+        container="body"
+        triggers="mouseenter:mouseleave"
+      >
+        <img src="assets/images/remove.svg" />
+      </span>
+      <div class="menu position-absolute" (click)="expandDescripAndListings()">
+        <div class="arrow-container down-arrow" *ngIf="!showingMenu">
+          <i class="arrow down"></i>
+        </div>
+        <div class="arrow-container" *ngIf="showingMenu">
+          <i class="arrow up"></i>
+        </div>
+      </div>
+    </div>
   </div>
-  <div *ngIf="showingMenu" class = "position-relative">
-		<span class="period-days float-right">
-			<span class="padded">Mon</span>
-			<span class="padded">Tues</span>
-			<span class="padded">Wed</span>
-			<span class="padded">Thurs</span>
-			<span class="padded">Fri</span>
-		</span>
-		<div class = "position-relative">
-		<span class = "vertical-separators position-absolute tues"></span>
-  	<span class = "vertical-separators position-absolute thurs"></span>
-		  <div *ngFor="let section of listing.sections; let i=index">
-		  	<div class="container" *ngIf="i!=0"><div class="col-auto separator"></div></div>
-			  <section [ngClass]="{ 'selected': isSectionSelected(section), 'closed': section.seatsTaken >= section.seats, 'conflicts': doesConflict(section) }" [section]="section" (click)="clickSection(section)"></section>
-		  </div>
-		</div>
-	</div>
+  <div *ngIf="showingMenu" class="position-relative">
+    <span class="period-days float-right">
+      <span class="padded">Mon</span>
+      <span class="padded">Tues</span>
+      <span class="padded">Wed</span>
+      <span class="padded">Thurs</span>
+      <span class="padded">Fri</span>
+    </span>
+    <div class="position-relative">
+      <span class="vertical-separators position-absolute tues"></span>
+      <span class="vertical-separators position-absolute thurs"></span>
+      <div *ngFor="let section of listing.sections; let i=index">
+        <div class="container" *ngIf="i!=0">
+          <div class="col-auto separator"></div>
+        </div>
+        <section
+          [ngClass]="{ 'selected': isSectionSelected(section), 'closed': section.seatsTaken >= section.seats, 'conflicts': doesConflict(section) }"
+          [section]="section"
+          (click)="clickSection(section)"
+        ></section>
+      </div>
+    </div>
+  </div>
 </div>

@@ -15,13 +15,36 @@ export class Schedule {
   dayNums: number[];
   hourNums: number[];
 
-  static COLORS: string[] = ['#ffd4df', '#ceeffc', '#fff4d0', '#dcf7da', '#f7e2f7', '#ede6df', '#ffe9cf'];
-  static TEXT_COLORS: string[] = ['#d1265d', '#1577aa', '#bf8a2e', '#008a2e', '#853d80', '#9d5733', '#d9652b'];
-  static BORDER_COLORS: string[] = ['#ff2066', '#00aff2', '#ffcb45', '#48da58', '#d373da', '#a48363', '#ff9332'];
-  
+  static COLORS: string[] = [
+    '#ffd4df',
+    '#ceeffc',
+    '#fff4d0',
+    '#dcf7da',
+    '#f7e2f7',
+    '#ede6df',
+    '#ffe9cf'
+  ];
+  static TEXT_COLORS: string[] = [
+    '#d1265d',
+    '#1577aa',
+    '#bf8a2e',
+    '#008a2e',
+    '#853d80',
+    '#9d5733',
+    '#d9652b'
+  ];
+  static BORDER_COLORS: string[] = [
+    '#ff2066',
+    '#00aff2',
+    '#ffcb45',
+    '#48da58',
+    '#d373da',
+    '#a48363',
+    '#ff9332'
+  ];
+
   percents: number[];
   statusText: string;
-  
 
   constructor(
     periods: ScheduleEvent[],
@@ -32,8 +55,8 @@ export class Schedule {
     this.periods = periods;
 
     // cap earliestStart and latestEnd to the nearest hours
-    this.earliestStart = Math.floor(earliestStart/60) * 60;
-    this.latestEnd = Math.ceil(latestEnd/60) * 60;
+    this.earliestStart = Math.floor(earliestStart / 60) * 60;
+    this.latestEnd = Math.ceil(latestEnd / 60) * 60;
 
     this.statusText = statusText;
 
@@ -43,23 +66,35 @@ export class Schedule {
 
     this.height = 600;
 
-    
-    this.percents = [480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140];
+    this.percents = [
+      480,
+      540,
+      600,
+      660,
+      720,
+      780,
+      840,
+      900,
+      960,
+      1020,
+      1080,
+      1140
+    ];
 
     this.dayNums = [];
-    for(let i=this.earliestDay; i<=this.latestDay; ++i) {
+    for (let i = this.earliestDay; i <= this.latestDay; ++i) {
       this.dayNums.push(i);
     }
     this.hourNums = [];
     console.log(latestEnd);
-    for(let i=this.earliestStart; i<this.latestEnd; i+=60) {
+    for (let i = this.earliestStart; i < this.latestEnd; i += 60) {
       this.hourNums.push(i);
     }
   }
 
   /* Return the total number of days in the schedule. */
   public get getDaySpan(): number {
-    return (this.latestDay - this.earliestDay) + 1;
+    return this.latestDay - this.earliestDay + 1;
   }
   /* Return the total number of minutes in the schedule,
    * not including the exact minute of the latestEnd. */

@@ -10,21 +10,9 @@ import { YacsService } from '../services/yacs.service';
 import { ConflictsService } from '../services/conflicts.service';
 
 @NgModule({
-  declarations: [
-    SchoolListComponent,
-    SchoolComponent,
-    SubjectComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ],
-  exports: [
-    SchoolListComponent
-  ],
-  providers: [
-    ConflictsService,
-    YacsService
-  ]
+  declarations: [SchoolListComponent, SchoolComponent, SubjectComponent],
+  imports: [CommonModule, RouterModule],
+  exports: [SchoolListComponent],
+  providers: [ConflictsService, YacsService]
 })
-export class SchoolListModule { }
+export class SchoolListModule {}

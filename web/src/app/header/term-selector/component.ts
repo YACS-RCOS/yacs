@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {SelectedTermService} from '../../services/selected-term.service';
-import {Term} from 'yacs-api-client';
+import { Component, OnInit } from '@angular/core';
+import { SelectedTermService } from '../../services/selected-term.service';
+import { Term } from 'yacs-api-client';
 
 @Component({
   selector: 'term-selector',
@@ -8,12 +8,10 @@ import {Term} from 'yacs-api-client';
   styleUrls: ['./component.scss']
 })
 export class TermSelectorComponent implements OnInit {
-
   // cache the name of the term
   private internalName: string;
 
-  constructor(
-    private selectedTermService: SelectedTermService) {
+  constructor(private selectedTermService: SelectedTermService) {
     // default the name to 'loading' until it loads
     this.internalName = 'loading';
   }
@@ -29,7 +27,10 @@ export class TermSelectorComponent implements OnInit {
   }
 
   get isLastTerm(): boolean {
-    return this.selectedTermService.getCurrentOrdinal === this.selectedTermService.getMaximumOrdinal;
+    return (
+      this.selectedTermService.getCurrentOrdinal ===
+      this.selectedTermService.getMaximumOrdinal
+    );
   }
 
   get isActiveTerm(): boolean {

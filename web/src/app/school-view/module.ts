@@ -6,13 +6,8 @@ import { SchoolListModule } from '../school-list/module';
 import { YacsService } from '../services/yacs.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SchoolListModule
-  ],
-  declarations: [
-    SchoolViewComponent
-  ],
-  providers: [YacsService],
+  imports: [CommonModule, SchoolListModule],
+  declarations: [SchoolViewComponent],
+  providers: [YacsService]
 })
-export class SchoolViewModule { }
+export class SchoolViewModule {}

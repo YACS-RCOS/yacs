@@ -1,4 +1,9 @@
-export { ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
+export {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterOutlet
+} from '@angular/router';
 
 import { Component, Directive, Injectable, Input } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
@@ -36,14 +41,13 @@ export class QueryParamsStubDirective {
 }
 
 // #enddocregion router-link
-@Component({selector: 'router-outlet', template: ''})
-export class RouterOutletStubComponent { }
+@Component({ selector: 'router-outlet', template: '' })
+export class RouterOutletStubComponent {}
 
 @Injectable()
 export class RouterStub {
-  navigate(commands: any[], extras?: NavigationExtras) { }
+  navigate(commands: any[], extras?: NavigationExtras) {}
 }
-
 
 // Only implements params and part of snapshot.paramMap
 // #docregion activated-route-stub
@@ -52,14 +56,15 @@ import { convertToParamMap, ParamMap } from '@angular/router';
 
 @Injectable()
 export class ActivatedRouteStub {
-
   // ActivatedRoute.paramMap is Observable
   private subject = new BehaviorSubject(convertToParamMap(this.testParamMap));
   paramMap = this.subject.asObservable();
 
   // Test parameters
   private _testParamMap: ParamMap;
-  get testParamMap() { return this._testParamMap; }
+  get testParamMap() {
+    return this._testParamMap;
+  }
   set testParamMap(params: {}) {
     this._testParamMap = convertToParamMap(params);
     this.subject.next(this._testParamMap);

@@ -8,21 +8,19 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./component.scss']
 })
 export class NavUserComponent implements OnInit {
+  constructor(private router: Router, private userService: UserService) {}
 
-  constructor (private router: Router,
-               private userService: UserService) { }
+  ngOnInit() {}
 
-  ngOnInit () { }
-
-  isLoggedIn () : boolean {
+  isLoggedIn(): boolean {
     return this.userService.isLoggedIn();
   }
 
-  userSignInPath () : string {
+  userSignInPath(): string {
     return `/users/sign_in?referer=${document.location}`;
   }
 
-  userSignOutPath () : string {
-    return "/users/sign_out";
+  userSignOutPath(): string {
+    return '/users/sign_out';
   }
 }

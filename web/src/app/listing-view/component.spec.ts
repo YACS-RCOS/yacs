@@ -1,7 +1,12 @@
-
 import {} from 'jasmine';
 import { Http, Response, HttpModule } from '@angular/http';
-import { TestBed, fakeAsync, tick, ComponentFixture, async } from '@angular/core/testing';
+import {
+  TestBed,
+  fakeAsync,
+  tick,
+  ComponentFixture,
+  async
+} from '@angular/core/testing';
 import { Component, OnInit, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -15,26 +20,34 @@ import { ConflictsService } from '../services/conflicts.service';
 import { YacsService } from '../services/yacs.service';
 
 class YacsServiceMock {
-  get(path:string, params:Object = {}) : Promise<Object> {
-    var json_data:Object =
-    {"courses":[
-      {"id":1,"name":"Mock Course","number":1,"min_credits":4,"max_credits":4,"description":"test","department_id":1}
-    ]};
+  get(path: string, params: Object = {}): Promise<Object> {
+    var json_data: Object = {
+      courses: [
+        {
+          id: 1,
+          name: 'Mock Course',
+          number: 1,
+          min_credits: 4,
+          max_credits: 4,
+          description: 'test',
+          department_id: 1
+        }
+      ]
+    };
     return Promise.resolve(json_data);
   }
 }
 
-var mockActivatedRoute:any;
-  class MockActivatedRoute {
-      subscribe = jasmine.createSpy('subscribe');
-  }
-
-class MockConflictsService {
-    populateConflictsCache(data) {
-    }
+var mockActivatedRoute: any;
+class MockActivatedRoute {
+  subscribe = jasmine.createSpy('subscribe');
 }
 
-describe("Testing Course-View component", function() {
+class MockConflictsService {
+  populateConflictsCache(data) {}
+}
+
+describe('Testing Course-View component', function() {
   let component: CourseViewComponent;
   let fixture: ComponentFixture<CourseViewComponent>;
   let de: DebugElement;
@@ -42,26 +55,26 @@ describe("Testing Course-View component", function() {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-       imports: [ CourseViewModule ],
-       providers: [
-         { provide: YacsService, useClass: YacsServiceMock },
-         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-         { provide: ConflictsService, useClass: MockConflictsService }
-       ]
+      imports: [CourseViewModule],
+      providers: [
+        { provide: YacsService, useClass: YacsServiceMock },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: ConflictsService, useClass: MockConflictsService }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CourseViewComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement.query(By.css('course-list'));
-    element  = de.nativeElement;
+    element = de.nativeElement;
     component.getCourses(null);
   }));
 
-  it("should have a component", function() {
+  it('should have a component', function() {
     expect(component).toBeDefined();
   });
 
-  it("testing courses", function() {
+  it('testing courses', function() {
     // Testing that courses has generated correctly.
     expect(component.courses).toBeDefined();
     expect(component.courses.length).toEqual(1);

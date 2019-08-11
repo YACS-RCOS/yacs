@@ -13,16 +13,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     SidebarComponent,
     InterestedCoursesComponent,
-    NotificationsComponent,
+    NotificationsComponent
   ],
-  imports: [
-    CommonModule,
-    ListingModule,
-    FormsModule,
-    NgbModule
-  ],
-  exports: [
-    SidebarComponent
-  ]
+  imports: [CommonModule, ListingModule, FormsModule, NgbModule],
+  exports: [SidebarComponent]
 })
-export class SidebarModule { }
+export class SidebarModule {}

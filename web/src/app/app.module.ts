@@ -29,7 +29,6 @@ import { ColorService } from './services/color.service';
 import { SelectedTermService } from './services/selected-term.service';
 import { SidebarService } from './services/sidebar.service';
 
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -65,4 +64,4 @@ import { SidebarService } from './services/sidebar.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

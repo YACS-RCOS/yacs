@@ -10,13 +10,11 @@ const routes: Routes = [
   { path: 'schools', component: SchoolViewComponent },
   { path: 'courses', component: ListingViewComponent },
   { path: 'schedules', component: ScheduleViewComponent },
-  { path: 'about', component: AboutComponent},
+  { path: 'about', component: AboutComponent }
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot(routes),
-    ],
-    exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRouterModule {}

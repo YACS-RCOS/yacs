@@ -10,15 +10,9 @@ import { ColorService } from '../services/color.service';
   declarations: [
     ScheduleViewComponent,
     ScheduleComponent,
-    ScheduleEventComponent,
+    ScheduleEventComponent
   ],
-  imports: [
-    NgbModule,
-    CommonModule
-  ],
-  providers: [
-    ColorService
-  ]
+  imports: [NgbModule, CommonModule],
+  providers: [ColorService]
 })
-
 export class ScheduleViewModule {}

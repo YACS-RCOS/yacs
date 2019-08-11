@@ -43,8 +43,8 @@
 .sidebar-toggle {
   background: #b2b2b2;
   border: none;
-  border-top-right-radius:12px;
-  border-bottom-right-radius:12px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
   z-index: 999;
   align-items: stretch;
   position: fixed;
@@ -72,6 +72,6 @@
   -webkit-transform: rotate(135deg);
 }
 
-button:focus{
+button:focus {
   outline: none;
 }

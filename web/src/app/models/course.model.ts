@@ -6,8 +6,8 @@ export class Course {
   num: string;
   department_code: string;
   department_id: number;
-  min_credits:number;
-  max_credits:number;
+  min_credits: number;
+  max_credits: number;
   description: string;
   sections: Section[];
 }
