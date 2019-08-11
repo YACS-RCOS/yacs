@@ -35,10 +35,10 @@
 				  <td [colSpan]="showingDescription ? 1 : 2">
 					  <div *ngIf="getSectionConflictCount() === 0 && getSectionClosedCount() === 0; else elseContent" class="closed-conflict null">&nbsp;</div>
 					  <ng-template #elseContent>
-						  <div *ngIf="getSectionConflictCount() < listing.sections.length && getSectionConflictCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are conflicting" container="body" triggers="mouseenter:mouseleave">Conflicting Sections</div>
-						  <div *ngIf="getSectionConflictCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are conflicting" container="body" triggers="mouseenter:mouseleave">Conflicting Sections</div>
-						  <div *ngIf="getSectionClosedCount() < listing.sections.length && getSectionClosedCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
-						  <div *ngIf="getSectionClosedCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
+						  <div *ngIf="getSectionConflictCount() < listing.sections.length && getSectionConflictCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are conflicting" container="body">Conflicting Sections</div>
+						  <div *ngIf="getSectionConflictCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are conflicting" container="body">Conflicting Sections</div>
+						  <div *ngIf="getSectionClosedCount() < listing.sections.length && getSectionClosedCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are closed" container="body">Full Sections</div>
+						  <div *ngIf="getSectionClosedCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are closed" container="body">Full Sections</div>
 					  </ng-template>
 				  </td>
 			  </tr>

@@ -51,6 +51,24 @@ export class ListingComponent implements OnInit{
     this.selectionService.toggleCourse(this.listing);
   }
 
+  public descriptionClick (event) {
+    // Relevant: https://stackoverflow.com/questions/10390010/jquery-click-is-triggering-when-selecting-highlighting-text
+    event.stopPropagation();
+    if (window.getSelection) {
+      // This operation checks "globally" to see if there are any highlights anywhere.
+      // If there are, course clicks are disabled.
+      // But remember that when the user makes a "true" click all other highlights are unmarked.
+      // So it isn't possible for a highlight in one part of the app to break the rest.
+      const selection = window.getSelection();
+      if (!selection.toString()) {
+        this.clickCourse();
+      }
+    } else {
+      // selection API not supported -- oh well
+      this.clickCourse();
+    }
+  }
+
   public isCourseSelected () {
     return this.selectionService.hasSelectedSection(this.listing);
   }
@@ -60,16 +78,15 @@ export class ListingComponent implements OnInit{
   }
 
   public clickSection (section: Section): void {
+    if (window.getSelection().toString()) {
+
+    }
     this.selectionService.toggleSection(section);
   }
 
   public doesConflict (section: Section): boolean {
     // TODO: We shouldn't need to check this here and in the section component
     return this.conflictsService.doesConflict(section);
-  }
-
-  public descriptionClick (event): void { 
-    this.selectionService.toggleCourse(this.listing);
   }
 
   public get tooltipDescription (): string {
