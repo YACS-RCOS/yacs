@@ -10,7 +10,7 @@ import { ScheduleComponent } from '../schedule-view/schedule/component';
 import {Subject, Subscription} from 'rxjs/Rx';
 import * as domtoimage  from 'dom-to-image';
 import fileDownload from 'js-file-download';
-import moment from 'moment';
+import * as moment from 'moment';
 
 export enum KEY_CODE {
   RIGHT_ARROW = 39,
@@ -119,25 +119,38 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public downloadICSFile (): void {
-    const DATE_FORMAT = "[America/New_York:]YYYYMMDD[T]hhmmss";
-    
+    const DATE_FORMAT = "[America/New_York:]YYYYMMDD[T]HHmmss";
+    const DATE_FORMAT_2 = "YYYYMMDD[T]HHmmss[Z]"; // UTC time
+
     function calculateEventTime (dayOfWeek: number, periodStart: number, baseDate: number): string {
       // timezone handling: all the date data is in the local timezone, but in the ICS file we
       // specify the date as an Eastern Time (America/New_York) value
       return moment(baseDate).day(dayOfWeek).hour(0).minute(0).second(0).minute(periodStart).format(DATE_FORMAT);
-    }
-    
+    }// day(dayOfWeek)
+
     function toMinutes (timeString: string): number {
       let timeInt = parseInt(timeString);
       return (Math.floor(timeInt / 100) * 60) + (timeInt % 100);
+    }
+
+    function parseToOutput (val: any): string {
+      // These are escapes required in the ICAL spec
+      const result = String(val)
+        .trim()
+        .replace(/(\r\n|\n|\r)/gm," ")
+        .replace(/\\/g, "\\")
+        .replace(/\,/g, "\\,")
+        .replace(/;/g, "\\;");
+      return result ? result : '???';
     }
 
 
     const events = [];
 
     // these values are made up, for testing purposes
-    const TERM_START: number = moment([2019, 7, 1]).valueOf();
-    const TERM_END: number = moment([2019, 9, 1]).valueOf();
+    // remember that months are ZERO-INDEXED in JS!!
+    const TERM_START: number = moment([2019, 5, 1]).valueOf(); // June
+    const TERM_END: number = moment([2019, 10, 1]).valueOf(); // November
 
     for (const period of this.scheduleSet.activePeriods) {
       events.push({
@@ -151,24 +164,24 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
     let s = ''; // the schedule string
 
-    s += 'BEGIN:VCALENDAR\n';
-    s += 'VERSION:2.0\n';
-    s += 'CALSCALE:GREGORIAN\n';
-    s += 'METHOD:PUBLISH\n';
+    s += 'BEGIN:VCALENDAR\r\n';
+    s += 'VERSION:2.0\r\n';
+    s += 'CALSCALE:GREGORIAN\r\n';
 
     for (const e of events) {
-      s += 'BEGIN:VEVENT\n';
-      s += 'SUMMARY:' + String(e.title) + '\n';
-      s += 'DTSTART;TZID=' + String(e.start) + '\n';
-      s += 'DTEND;TZID=' + String(e.end) + '\n';
-      s += 'LOCATION:' + String(e.location) + '\n';
-      s += 'DESCRIPTION:' + String(e.description) + '\n';
-      s += 'RRULE:FREQ=DAILY;UNTIL=' + String(moment(TERM_END).format(DATE_FORMAT)) + '\n';
-      s += String(start) + '\n';
-      s += 'END:VEVENT\n';
+      s += 'BEGIN:VEVENT\r\n';
+      s += 'SUMMARY:' + parseToOutput(e.title) + '\r\n';
+      s += 'DTSTART;TZID=' + parseToOutput(e.start) + '\r\n';
+      s += 'DTEND;TZID=' + parseToOutput(e.end) + '\r\n';
+      s += 'DESCRIPTION:' + parseToOutput(e.description) + '\r\n';
+      s += 'SEQUENCE:0\r\n';
+      s += 'STATUS:CONFIRMED\r\n';
+      s += 'RRULE:FREQ=DAILY;UNTIL=' + parseToOutput(moment(TERM_END).format(DATE_FORMAT_2)) + '\r\n';
+      s += 'END:VEVENT\r\n';
     }
-    
-    fileDownload(data, 'schedule.ics');
+
+    s += 'END:VCALENDAR\r\n';
+    fileDownload(s, 'schedule.ics');
   }
 
   public clearSelections (): void {
