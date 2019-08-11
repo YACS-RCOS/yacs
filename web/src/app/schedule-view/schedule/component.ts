@@ -4,6 +4,7 @@ import { ScheduleSet } from '../../models/schedule-set';
 import { Day } from '../../models/day.model';
 import { SelectionService } from '../../services/selection.service';
 import { ColorService } from '../../services/color.service';
+import { ScheduleEventComponent } from '../schedule-event/component';
 
 @Component({
   selector: 'schedule',
@@ -16,13 +17,22 @@ export class ScheduleComponent implements AfterViewInit {
 
   @Input() scheduleSet: ScheduleSet;
   @ViewChild('mySchedule')
-  public mySchedule: ElementRef
+  public mySchedule: ElementRef;
   public scheduleNode;
+  public currentBlockColor = null;
 
   constructor (private colorService: ColorService) { }
 
   ngAfterViewInit() {
     this.scheduleNode = this.mySchedule.nativeElement;
+  }
+
+  public mouseEnter (period: Period): void {
+    this.currentBlockColor = this.getBackgroundColor(period);
+  }
+  
+  public mouseLeft (): void {
+    this.currentBlockColor = null;
   }
 
   public get schedule (): Schedule {
@@ -70,9 +80,27 @@ export class ScheduleComponent implements AfterViewInit {
     return (this.scheduleSet.height * ((eventStart - this.scheduleSet.startTime) / this.scheduleSet.numMinutes));
   }
 
-  public eventHeight (period: Period): number {
+  public eventHeight (period: Period): string {
     const eventDuration = this.toMinutes(period.end) - this.toMinutes(period.start);
-    return (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes));
+    var scheduleEventHeight = (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes))
+    if (this.getBackgroundColor(period) == this.currentBlockColor) {
+      return 'auto';
+    }
+    return String(scheduleEventHeight);
+  }
+
+  public setZIndex (period: Period): number {
+    if (this.currentBlockColor == this.getBackgroundColor(period)) {
+      return 1;
+    }
+  }
+
+  public lowerOpacity(period: Period): number {
+    if (this.currentBlockColor == this.getBackgroundColor(period) || !this.currentBlockColor) {
+      return 1;
+    } else {
+      return 0.5;
+    }
   }
 
   public getBackgroundColor (period: Period) {
