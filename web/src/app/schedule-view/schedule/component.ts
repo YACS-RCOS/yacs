@@ -4,6 +4,7 @@ import { ScheduleSet } from '../../models/schedule-set';
 import { Day } from '../../models/day.model';
 import { SelectionService } from '../../services/selection.service';
 import { ColorService } from '../../services/color.service';
+import { ScheduleEventComponent } from '../schedule-event/component';
 
 @Component({
   selector: 'schedule',
@@ -79,20 +80,13 @@ export class ScheduleComponent implements AfterViewInit {
     return (this.scheduleSet.height * ((eventStart - this.scheduleSet.startTime) / this.scheduleSet.numMinutes));
   }
 
-  public eventHeight (period: Period): number {
+  public eventHeight (period: Period): string {
     const eventDuration = this.toMinutes(period.end) - this.toMinutes(period.start);
     var scheduleEventHeight = (this.scheduleSet.height  * (eventDuration / this.scheduleSet.numMinutes))
     if (this.getBackgroundColor(period) == this.currentBlockColor) {
-      var professorNamesLength = period.section.instructors.join(', ').length;
-      if (scheduleEventHeight < 87) {
-        if (professorNamesLength > 22) {
-          return 87;
-        } else if (professorNamesLength <= 22 && scheduleEventHeight < 68) {
-          return 68;
-        } 
-      }
+      return 'auto';
     }
-    return scheduleEventHeight;
+    return String(scheduleEventHeight);
   }
 
   public setZIndex (period: Period): number {
