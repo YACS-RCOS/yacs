@@ -8,7 +8,7 @@
     "watch": "ng build --watch",
     "build": "ng build --prod",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "prettier --write 'src/**/*.{js,ts,html,scss}'",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -54,11 +54,15 @@
     "karma-jasmine": "^1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "node-sass": "^4.12.0",
+    "prettier": "^1.18.2",
     "protractor": "^5.4.2",
     "raw-loader": "^1.0.0",
     "sass-loader": ">=6.0.6",
     "ts-node": "^8.2.0",
     "tslint": "^5.17.0",
     "typescript": "2.9.2"
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
