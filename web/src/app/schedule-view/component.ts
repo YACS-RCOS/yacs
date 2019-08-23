@@ -36,7 +36,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		private router : Router,
 		private activatedRoute: ActivatedRoute) {
 		this.subscription = this.selectionService.subscribe(() => {
-			console.log("subscribe");
 			if (this.notTemporary && this.finishedInit) this.getSchedules();
 		});
 	}
@@ -78,11 +77,9 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 					this.selectionService.addSection(section, false);
 				});
 				this.getSchedules();
-				this.scheduleSet.setActiveSchedule(index);
+				this.scheduleSet.setActiveSchedule(index); // doesn't work yet
 			});
-				this.scheduleSet.setActiveSchedule(index);
 		} else {
-			console.log("no temp");
 			this.getSchedules();
 		}
 		this.finishedInit = true;
@@ -97,7 +94,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 	private getSchedules (): void {
 		this.isLoaded = false;
 		const sectionIds = this.selectionService.getSelectedSectionIds(this.notTemporary);
-		console.log("getSchedule() sectionIds" + sectionIds);
 		Schedule
 		.where({ section_id: sectionIds})
 		.includes('sections')
