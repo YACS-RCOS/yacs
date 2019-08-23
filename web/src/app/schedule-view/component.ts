@@ -23,9 +23,11 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	isLoaded: boolean = false;
 	scheduleSet: ScheduleSet = this.emptyScheduleSet;
-	notTemporary: boolean = true;
 	scheduleNode;
 
+	// false if viewing temporary schedule, otherwise true
+	notTemporary: boolean = true;
+	
 	private subscription;
 
 	constructor (
@@ -43,43 +45,33 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	public ngOnInit (): void {
 		// check if schedule link entered
-		console.log("Schedule-view init");
 
-		// angular router url params router.params
+		// maybe do this with ActivatedRouteSnapshot later
 
+		/* TODO: check if schedule link supports multiple terms.
+		   Probably doesn't so will need to be implemented.
+		*/
 		let url: string = window.location.href;
 		let i1: number = url.indexOf('schedules?section_ids=');
 		let i2: number = url.indexOf('&schedule_index=');
-		console.log(url);
 		if (i1 != -1) {
 			this.selectionService.clear(false);
-
-			console.log("temp schedule init");
 			this.notTemporary = false;
-			// this.clearSelections();
 			console.log(url.indexOf('schedules?section_ids='));
 			let end: number = (i2 != -1) ? i2 : url.length;
-			const section_ids = url.substring(i1 + 22, end).split(',');//.map(Number);
-			console.log(section_ids); // TODO: Remove
+			const section_ids = url.substring(i1 + 22, end).split(',');
 		
 			let index: number = 0;
 			if (i2 != -1) {
 				index = parseInt(url.substring(i2 + 16), 10);
 			}
-
-			console.log(index); // TODO: Remove
-			
-			// const store = this.selectionService.getSelectedSectionIds(true);
-			// console.log(store);
-
+			// add sections to temporary schedule
 			Section
 			.where({id: section_ids})
 			.includes('listing')
 			.includes('listing.sections')
 			.all().then((sections) => {
-				// console.log(sections);
 				sections.data.forEach(section => {
-					// console.log(section);
 					this.selectionService.addSection(section, false);
 				});
 				this.getSchedules();
@@ -87,8 +79,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		} else {
 			this.getSchedules();
 		}
-		// console.log(this.notTemporary);
-		// this.getSchedules();
 	}
 
 	public ngAfterViewInit (): void {
