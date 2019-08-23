@@ -124,12 +124,39 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	public replaceSelections (): void {
+		// remove temporary schedule view
+		this.notTemporary = true;
+		this.router.navigate(['/schedules']);
 
+		// remove currently selected sections
+		let sectionIds = this.selectionService.getSelectedSectionIds(true);
+		Section
+		.where({id: sectionIds})
+		.includes('listing')
+		.includes('listing.sections')
+		.all().then((sections) => {
+			sections.data.forEach(section => {
+				this.selectionService.removeSection(section, true);
+			});
+		});
+
+		// add sections from temporary schedule to currently selected sections
+		sectionIds = this.selectionService.getSelectedSectionIds(false);
+		Section
+		.where({id: sectionIds})
+		.includes('listing')
+		.includes('listing.sections')
+		.all().then((sections) => {
+			sections.data.forEach(section => {
+				this.selectionService.addSection(section, true);
+			});
+			this.getSchedules();
+		});
 	}
 
 	public keepSelections (): void {
 		this.notTemporary = true;
-		this.router.navigate(['/schedules'])
+		this.router.navigate(['/schedules']);
 		this.getSchedules();
 	}
 
