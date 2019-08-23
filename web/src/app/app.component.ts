@@ -1,8 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { Section } from 'yacs-api-client';
 import { NoticeService } from './services/notice.service';
-import { SelectionService } from './services/selection.service';
 
 @Component({
 	selector: 'app-root',
@@ -14,10 +11,7 @@ import { SelectionService } from './services/selection.service';
 
 })
 export class AppComponent {
-	constructor(
-		private noticeService: NoticeService,
-		private router: Router,
-		private selectionService: SelectionService) {}
+	constructor(private noticeService: NoticeService) {}
 
 	public showingSidebar: boolean = true;
 	
