@@ -11,7 +11,6 @@ import { SelectedTermService } from './selected-term.service';
 export class SelectionService {
 
   private clickEvent = new Subject();
-  // private tempStore = {};
 
    constructor (
     public sidebarService: SidebarService,
