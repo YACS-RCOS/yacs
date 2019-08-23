@@ -27,6 +27,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	// false if viewing temporary schedule, otherwise true
 	notTemporary: boolean = true;
+	finishedInit: boolean = false;
 	
 	private subscription;
 
@@ -35,7 +36,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		private router : Router,
 		private activatedRoute: ActivatedRoute) {
 		this.subscription = this.selectionService.subscribe(() => {
-			this.getSchedules();
+			console.log("subscribe");
+			if (this.notTemporary && this.finishedInit) this.getSchedules();
 		});
 	}
 
@@ -57,14 +59,15 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		if (i1 != -1) {
 			this.selectionService.clear(false);
 			this.notTemporary = false;
-			console.log(url.indexOf('schedules?section_ids='));
 			let end: number = (i2 != -1) ? i2 : url.length;
 			const section_ids = url.substring(i1 + 22, end).split(',');
 		
+			// set schedule to display proper index
 			let index: number = 0;
 			if (i2 != -1) {
 				index = parseInt(url.substring(i2 + 16), 10);
 			}
+			
 			// add sections to temporary schedule
 			Section
 			.where({id: section_ids})
@@ -75,10 +78,14 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 					this.selectionService.addSection(section, false);
 				});
 				this.getSchedules();
+				this.scheduleSet.setActiveSchedule(index);
 			});
+				this.scheduleSet.setActiveSchedule(index);
 		} else {
+			console.log("no temp");
 			this.getSchedules();
 		}
+		this.finishedInit = true;
 	}
 
 	public ngAfterViewInit (): void {
@@ -197,8 +204,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		let schedule_link: string = window.location.protocol + '//' 
 			+ window.location.host + '/schedules?section_ids='
 			+ selectedSections + '&schedule_index=' + scheduleIndex;
-
-		console.log('Attempting to copy to clipboard: ', schedule_link);
 
 		this.copyToClipboard(schedule_link);
 	}

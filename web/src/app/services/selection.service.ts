@@ -105,7 +105,6 @@ export class SelectionService {
   }
 
   public getSelections (mode:boolean) {
-    console.log("selection service getSelectios()" + this.getItem('selections', mode));
     return JSON.parse(this.getItem('selections', mode)) || {};
   }
 
