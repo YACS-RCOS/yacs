@@ -33,7 +33,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		private router : Router,
 		private activatedRoute: ActivatedRoute) {
 		this.subscription = this.selectionService.subscribe(() => {
-			//this.getSchedules(); // this was causing the original schedule to 'blink' when trying to show temporary schedule
+			this.getSchedules();
 		});
 	}
 
