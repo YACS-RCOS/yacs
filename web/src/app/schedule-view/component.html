@@ -2,7 +2,7 @@
 <div class="schedule-view">
   <div *ngIf="!notTemporary">
     <div class="alert alert-info" role="alert">
-      You are viewing a temporary schedule. <a href="#" class="alert-link">Replace current selections</a> or <a href="#" class="alert-link">Keep current selections</a>.
+      You are viewing a temporary schedule. <button class="alert-link temp-schedule-button" (click)  = "replaceSelections()">Replace current selections</button> or <button class="alert-link temp-schedule-button" (click) = "keepSelections()">Keep current selections</button>.
     </div>
   </div>
   <div class="schedule-menu">
@@ -12,15 +12,17 @@
       <span class="schedule-switch" (click) = "scheduleSet.incrementActiveSchedule()">&#9654;</span>
     </div>
     <div>
-      <button class="schedule-button" (click) = "clearSelections()">Clear</button>
+      <div *ngIf="notTemporary">
+        <button class="schedule-button" (click) = "clearSelections()">Clear</button>
+      </div>
       <div ngbDropdown class="d-inline-block">
         <button class="schedule-button" id="dropdownBasic1" ngbDropdownToggle>
           Share
         </button>
         <div ngbDropdownMenu>
           <button class="schedule-button dropdown-item" (click) = "downloadImage()">Save as Image</button>
+          <button class="schedule-button dropdown-item" (click) = "copyLink()">Copy Schedule Link</button>
           <button class="schedule-button dropdown-item">Save as iCalendar (disabled)</button>
-          <button class="schedule-button dropdown-item" (click) = "copyLink()">Copy Schedule Link (will it work?)</button>
         </div>
       </div>
     </div>

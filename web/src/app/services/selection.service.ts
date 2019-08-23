@@ -11,6 +11,7 @@ import { SelectedTermService } from './selected-term.service';
 export class SelectionService {
 
   private clickEvent = new Subject();
+  // private tempStore = {};
 
    constructor (
     public sidebarService: SidebarService,
@@ -105,6 +106,7 @@ export class SelectionService {
   }
 
   public getSelections (mode:boolean) {
+    console.log("selection service getSelectios()" + this.getItem('selections', mode));
     return JSON.parse(this.getItem('selections', mode)) || {};
   }
 

@@ -43,6 +43,17 @@
   background-color:#daa;
 }
 
+.temp-schedule-button {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  cursor: pointer;
+}
+
+.temp-schedule-button:hover {
+  text-decoration: underline;  
+}
+
 .schedule-status {
     margin: 0;
     font-size: 90%;

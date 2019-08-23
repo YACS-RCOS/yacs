@@ -30,9 +30,10 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	constructor (
 		private selectionService : SelectionService,
+		private router : Router,
 		private activatedRoute: ActivatedRoute) {
 		this.subscription = this.selectionService.subscribe(() => {
-			this.getSchedules();
+			//this.getSchedules(); // this was causing the original schedule to 'blink' when trying to show temporary schedule
 		});
 	}
 
@@ -44,11 +45,15 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		// check if schedule link entered
 		console.log("Schedule-view init");
 
+		// angular router url params router.params
+
 		let url: string = window.location.href;
 		let i1: number = url.indexOf('schedules?section_ids=');
 		let i2: number = url.indexOf('&schedule_index=');
 		console.log(url);
 		if (i1 != -1) {
+			this.selectionService.clear(false);
+
 			console.log("temp schedule init");
 			this.notTemporary = false;
 			// this.clearSelections();
@@ -64,7 +69,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 			console.log(index); // TODO: Remove
 			
-			const store = this.selectionService.getSelectedSectionIds(true);
+			// const store = this.selectionService.getSelectedSectionIds(true);
 			// console.log(store);
 
 			Section
@@ -74,13 +79,16 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 			.all().then((sections) => {
 				// console.log(sections);
 				sections.data.forEach(section => {
-					console.log(section);
+					// console.log(section);
 					this.selectionService.addSection(section, false);
 				});
+				this.getSchedules();
 			});
+		} else {
+			this.getSchedules();
 		}
-		console.log(this.notTemporary);
-		this.getSchedules();
+		// console.log(this.notTemporary);
+		// this.getSchedules();
 	}
 
 	public ngAfterViewInit (): void {
@@ -92,6 +100,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 	private getSchedules (): void {
 		this.isLoaded = false;
 		const sectionIds = this.selectionService.getSelectedSectionIds(this.notTemporary);
+		console.log("getSchedule() sectionIds" + sectionIds);
 		Schedule
 		.where({ section_id: sectionIds})
 		.includes('sections')
@@ -112,6 +121,16 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	public get activeScheduleIndex (): number {
 		return (this.scheduleSet.numSchedules > 0) ? this.scheduleSet.activeScheduleIndex + 1 : 0;
+	}
+
+	public replaceSelections (): void {
+
+	}
+
+	public keepSelections (): void {
+		this.notTemporary = true;
+		this.router.navigate(['/schedules'])
+		this.getSchedules();
 	}
 
 	public get statusText (): string {
@@ -155,8 +174,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 		document.body.removeChild(textArea);
 	}
 
-	public copyLink() {		
-		let selectedSections: string = this.selectionService.getSelectedSectionIds(true).join(',');
+	public copyLink () {		
+		let selectedSections: string = this.selectionService.getSelectedSectionIds(this.notTemporary).join(',');
 		let scheduleIndex: number = this.activeScheduleIndex - 1;
 		let schedule_link: string = window.location.protocol + '//' 
 			+ window.location.host + '/schedules?section_ids='
