@@ -5,12 +5,12 @@ class ListingResource < ApplicationResource
   belongs_to :term
   has_many :sections
 
-  attribute :longname, :string
-  attribute :description, :string
-  attribute :min_credits, :integer
-  attribute :max_credits, :integer
+  attribute :longname, :string, writable: true
+  attribute :description, :string, writable: true
+  attribute :min_credits, :integer, writable: true
+  attribute :max_credits, :integer, writable: true
   attribute :active, :boolean
-  attribute :tags, :array
+  attribute :tags, :array, writable: true
   # attribute :auto_attributes, :hash
   # attribute :override_attributes, :hash
   attribute :required_textbooks, :array
