@@ -36,6 +36,9 @@
 				  </td>
 			  </tr>
 		  </table>
+			<div class="edit-link position-absolute">
+				<a [routerLink]="['/courses', listing.id]">edit</a>
+			</div>
 			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
 				<img src="assets/images/info.svg" />
 			</span>

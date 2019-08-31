@@ -1,5 +1,10 @@
 @import "../../_vars.scss";
 
+a {
+  text-decoration:none;
+  color: #D57F7F;
+}
+
 .course {
   padding: 0em;
   box-shadow: 2px 2px 5px 2px #efefef;
@@ -159,6 +164,16 @@ i {
 
 .course-details:hover {
   cursor: pointer;
+}
+
+.edit-link {
+  align: right;
+  padding: 0;
+  margin: 2px;
+  font-size: 90%;
+  text-align: right;
+  top: 6px;
+  right: 25px;
 }
 
 .hideDescription {
