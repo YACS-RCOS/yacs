@@ -23,6 +23,25 @@ export class ListingComponent implements OnInit{
     public sidebarService : SidebarService,
     private conflictsService: ConflictsService) { }
 
+  onKeydown(evt: KeyboardEvent) {
+    const keyCode = evt.which;
+    const enterKey = 13;
+    if(document.activeElement.className == "course"){
+      if(enterKey == keyCode){
+        this.clickCourse();
+      }
+    }
+    else if(document.activeElement.className == "menu position-absolute"){
+      if(enterKey == keyCode){
+        this.expandDescripAndListings();
+      }
+    }
+    else if(document.activeElement.className == "remove-button position-absolute ng-star-inserted"){
+      if(enterKey == keyCode){
+        this.removeButtonClick();
+      }
+    }
+  }
 
   public showingMenu;
   public showingDescription;
