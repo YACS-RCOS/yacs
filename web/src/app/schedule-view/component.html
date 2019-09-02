@@ -13,8 +13,8 @@
           Share
         </button>
         <div ngbDropdownMenu>
-          <button tabindex=0 class="schedule-button dropdown-item" (click) = "downloadImage()" alt="Save as Image">Save as Image</button>
-          <button tabindex=0 class="schedule-button dropdown-item" alt="Save as iCalendar (disabled)">Save as iCalendar (disabled)</button>
+          <button tabindex=0 class="schedule-button dropdown-item" (click)="downloadImage()" alt="Save as Image">Save as Image</button>
+          <button tabindex=0 class="schedule-button dropdown-item" (click)="downloadICSFile()" alt="Save as iCalendar">Save as iCalendar</button>
           <button tabindex=0 class="schedule-button dropdown-item" [disabled]="isTemporary" alt="Copy Schedule Link (disabled)">Copy Schedule Link (disabled)</button>
         </div>
       </div>
