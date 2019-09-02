@@ -16,7 +16,7 @@
             [style.color] = "getTextColor(period)"
             [normalHeight] = "eventHeight(period)"
             [period] = "period">
-          </schedule-event>
+          </schedule-event> <!--using tabindex results in schedules "grabbing" control and not letting go, leading to no tabbing over schedule elements-->
         <div class="grid-hour" *ngFor="let hour of hours"
           [style.height.%] = "hourHeight" >
         </div>
