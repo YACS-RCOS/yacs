@@ -54,7 +54,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
         */
 
         /* TODO: schedule index setting is not yet implemented */
-        
+
         let url: string = window.location.href;
         let i1: number = url.indexOf('schedules?section_ids=');
         let i2: number = url.indexOf('&schedule_index=');
@@ -126,29 +126,33 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
         // remove currently selected sections
         let sectionIds = this.selectionService.getSelectedSectionIds(true);
-        Section
-        .where({id: sectionIds})
-        .includes('listing')
-        .includes('listing.sections')
-        .all().then((sections) => {
-            sections.data.forEach(section => {
-                this.selectionService.removeSection(section, true);
-            });
-            this.getSchedules();
-        });
+        if (sectionIds.length != 0) {
+        	Section
+	        .where({id: sectionIds})
+	        .includes('listing')
+	        .includes('listing.sections')
+	        .all().then((sections) => {
+	            sections.data.forEach(section => {
+	                this.selectionService.removeSection(section, true);
+	            });
+	            // this.getSchedules();
+	        });	
+        } 
 
         // add sections from temporary schedule to currently selected sections
         sectionIds = this.selectionService.getSelectedSectionIds(false);
-        Section
-        .where({id: sectionIds})
-        .includes('listing')
-        .includes('listing.sections')
-        .all().then((sections) => {
-            sections.data.forEach(section => {
-                this.selectionService.addSection(section, true);
-            });
-            this.getSchedules();
-        });
+        if (sectionIds.length != 0) {
+	        Section
+	        .where({id: sectionIds})
+	        .includes('listing')
+	        .includes('listing.sections')
+	        .all().then((sections) => {
+	            sections.data.forEach(section => {
+	                this.selectionService.addSection(section, true);
+	            });
+	            this.getSchedules();
+	        });
+	    }
     }
 
     public keepSelections (): void {
