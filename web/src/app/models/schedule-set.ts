@@ -59,8 +59,4 @@ export class ScheduleSet {
       this.scheduleIndex = 0;
     }
   }
-
-  public setActiveSchedule (index: number): void {
-  	this.scheduleIndex = index;
-  }
 }

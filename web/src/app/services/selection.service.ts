@@ -28,6 +28,13 @@ export class SelectionService {
     this.clickEvent.next(event);
   }
 
+  /*  NOTE:
+      localStorage is for the selected schedule
+      sessionStorage is for the temp schedule
+      when mode is True, we are dealing with localStorage
+      when mode is False, we are dealing with sessionStorage 
+  */
+
   private setItem (data1:string, data2, mode:boolean) {
     if (mode) { localStorage.setItem(data1, data2); }
     else { sessionStorage.setItem(data1, data2); }
@@ -44,6 +51,8 @@ export class SelectionService {
     this.next('event'); //this should be changed
   }
 
+  /* adds a section using setItem and also adds the listing
+      for that section to the sidebar */
   public addSection (section: Section, mode:boolean) {
     if (!this.selectedTermService.isCurrentTermActive) { return; }
     let store = this.getSelections(mode) || {};
@@ -57,6 +66,7 @@ export class SelectionService {
     return true;
   }
 
+  /* removes a section using setItem */
   public removeSection (section: Section, mode:boolean) {
     if (!this.selectedTermService.isCurrentTermActive) { return; }
     let store = this.getSelections(mode) || {};
@@ -93,7 +103,7 @@ export class SelectionService {
     this.next('event');
   }
 
-
+  
   public isSectionSelected (section: Section) : boolean {
     let store = this.getSelections(true);
     return store && store[section.listing.id] && store[section.listing.id].includes(section.id);
