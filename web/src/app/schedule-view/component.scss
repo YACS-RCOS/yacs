@@ -39,6 +39,10 @@
     background-color: #d57f7f;
 }
 
+.schedule-button:focus {
+    background-color: #d57f7f;
+}
+
 .schedule-button[disabled] {
   background-color:#daa;
 }

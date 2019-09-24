@@ -1,77 +1,81 @@
 .app-container {
-  height: 100vh;
+    height: 100vh;
 }
 
 .content-container-wrapper {
-  height: 100%;
-  overflow-x: hidden;
+    height: 100%;
+    overflow-x: hidden;
 }
 
 .sidebar-content-container {
-  overflow-y: auto;
-  scrollbar-width: thin;
-  flex-shrink: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    flex-shrink: 0;
 }
 
 .main-content-container {
-  overflow-x: hidden;
-  scrollbar-width: thin;
+    overflow-x: hidden;
+    scrollbar-width: thin;
 }
 
 @media (min-width: 576px) {
-  .sidebar-content-container {
-    max-width: 540px;
-  }
+    .sidebar-content-container {
+        max-width: 540px;
+    }
 
-  .sidebar-toggle {
-    top: 60px;
-    bottom: 60px;
-  }
+    .sidebar-toggle {
+        top: 60px;
+        bottom: 60px;
+    }
 }
 
 @media (max-width: 575.98px) {
-  .sidebar-content-container {
-    width: 100%;
-  }
+    .sidebar-content-container {
+        width: 100%;
+    }
 
-  .sidebar-toggle {
-    bottom: 20px;
-    height: 50px;
-  }
+    .sidebar-toggle {
+        bottom: 20px;
+        height: 50px;
+    }
 }
 
 .sidebar-toggle {
-  background: #b2b2b2;
-  border: none;
-  border-top-right-radius:12px;
-  border-bottom-right-radius:12px;
-  z-index: 999;
-  align-items: stretch;
-  position: fixed;
+    background: #b2b2b2;
+    border: none;
+    border-top-right-radius:12px;
+    border-bottom-right-radius:12px;
+    z-index: 999;
+    align-items: stretch;
+    position: fixed;
 }
 
 .sidebar-toggle:hover {
-  background-color: #d57f7f;
+    background-color: #d57f7f;
+}
+
+.sidebar-toggle:focus {
+    background-color: #d57f7f;
 }
 
 .right {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
 }
 
 .left {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 
 button:focus{
-  outline: none;
+    outline: none;
 }
