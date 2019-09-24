@@ -39,7 +39,7 @@
 			<div class="edit-link position-absolute">
 				<a [routerLink]="['/courses', listing.id]">edit</a>
 			</div>
-			<span *ngIf="showDescriptionTooltip" class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave">
+			<span *ngIf="showDescriptionTooltip" tabindex=0 class="description-tooltip position-absolute" [placement]="['right','bottom','left','top','auto']" [ngbPopover]="tooltipDescription" container="body" triggers="mouseenter:mouseleave:focus:blur"> <!--Not displaying for now with focus... investigating-->
 				<img src="assets/images/info.svg" />
 			</span>
 			<span  *ngIf="showRemoveButton" (click)="removeButtonClick()" (keydown)="onKeydown($event)" tabindex=0 class="remove-button position-absolute"  [placement]="['right','bottom','left','top','auto']" ngbPopover="Click on this button to remove class from sidebar" container="body" triggers="mouseenter:mouseleave:focus:blur">
