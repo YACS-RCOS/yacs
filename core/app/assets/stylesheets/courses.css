@@ -83,6 +83,9 @@ section-period {
 period-day {
     font-weight: 400;
 }
+div#selection-container {
+    margin-top: 1em;
+}
 div.conflict-note {
     margin-left:0.4em;
     display:inline;

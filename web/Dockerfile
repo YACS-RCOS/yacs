@@ -6,7 +6,7 @@ RUN mkdir -p $APP_DIR/bin
 RUN mkdir -p $APP_DIR/src
 WORKDIR $APP_DIR
 
-RUN npm install -g @angular/cli@6.0.8 --silent --depth 1
+RUN npm install -g @angular/cli@6.1.3 --silent --depth 1
 COPY package.json $APP_DIR
 RUN npm install --silent --depth 0
 

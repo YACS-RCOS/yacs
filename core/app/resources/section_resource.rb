@@ -3,12 +3,12 @@ class SectionResource < ApplicationResource
 
   belongs_to :listing
 
-  attribute :shortname, :string
-  attribute :crn, :string
-  attribute :seats, :integer
-  attribute :seats_taken, :integer
-  attribute :conflict_ids, :array
-  attribute :periods, :array
-  attribute :instructors, :array
-  attribute :listing_id, :integer, only: [:filterable]
+  attribute :shortname, :string, writable: true
+  attribute :crn, :string, writable: true
+  attribute :seats, :integer, writable: true
+  attribute :seats_taken, :integer, writable: true
+  attribute :conflict_ids, :array, writable: true
+  attribute :periods, :array, writable: true
+  attribute :instructors, :array, writable: true
+  attribute :listing_id, :integer, only: [:filterable], writable: true
 end

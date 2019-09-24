@@ -21,7 +21,7 @@ export class InterestedCoursesComponent implements OnInit {
   private listingIds: Set<string>;
   private subscription;
 
-  @Input() showStatusText: boolean = false;
+  @Input() isEmpty: boolean = false;
 
   constructor (
       public sidebarService : SidebarService,
@@ -47,7 +47,7 @@ export class InterestedCoursesComponent implements OnInit {
     // display interested courses on sidebar
     // display message to try selecting some if none
     if (this.listingIds.size > 0) {
-      this.showStatusText = false;
+      this.isEmpty = false;
       this.isLoaded = false;
       Listing
         .where({ id: Array.from(this.listingIds) })
@@ -55,13 +55,36 @@ export class InterestedCoursesComponent implements OnInit {
         .includes('sections.listing')
         .includes('course')
         .includes('course.subject')
-        .all().then((listings) => {
-          this.listings = listings.data;
+        .all().then((newListings) => {
+          // Create sets from the ids of the two arrays to check for memebership
+          // This allows the runtime to be linear
+          let oldListingsSet =  new Set(this.listings.map((listing) => listing.id));
+          let newListingsSet = new Set(newListings.data.map((newListing) => newListing.id));
+
+          // Iterate over new listings, and add each new listing if it is not already
+          // present in the current listings
+          newListings.data.forEach((newListing) => {
+            let inCurList: boolean  = oldListingsSet.has(newListing.id);
+
+            if (!inCurList) {
+              this.listings.push(newListing);
+            }
+          });
+
+          // Remove listings that are not in the array of new listings
+          this.listings.forEach((listing, index) => {
+            let removeCurList: boolean = !newListingsSet.has(listing.id);
+
+            if (removeCurList) {
+              this.listings.splice(index, 1);
+            }
+          });
+
           this.conflictsService.populateConflictsCache(this.listings);
           this.isLoaded = true;
         });
     } else {
-      this.showStatusText = true;
+      this.isEmpty = true;
     }
   }
 }

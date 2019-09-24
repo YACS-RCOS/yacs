@@ -23,10 +23,32 @@ export class ListingComponent implements OnInit{
     public sidebarService : SidebarService,
     private conflictsService: ConflictsService) { }
 
+  onKeydown(evt: KeyboardEvent) {
+    const keyCode = evt.which;
+    const enterKey = 13;
+    if(document.activeElement.className == "course"){
+      if(enterKey == keyCode){
+        this.clickCourse();
+      }
+    }
+    else if(document.activeElement.className == "menu position-absolute"){
+      if(enterKey == keyCode){
+        this.expandDescripAndListings();
+      }
+    }
+    else if(document.activeElement.className == "remove-button position-absolute ng-star-inserted"){
+      if(enterKey == keyCode){
+        this.removeButtonClick();
+      }
+    }
+  }
 
   public showingMenu;
   public showingDescription;
   public hovered;
+
+  public mouseMove: boolean = false;
+  public mouseDown: boolean = false; 
 
   ngOnInit () {
     this.showingMenu = false;
@@ -69,9 +91,24 @@ export class ListingComponent implements OnInit{
     return this.conflictsService.doesConflict(section);
   }
 
-  public descriptionClick (): void {
-    // this.selectionService.toggleCourse(this.listing);
-    this.showingDescription= !(this.showingDescription);
+  public mouseDownFunc (): void { 
+    this.mouseDown = true;
+  }
+
+  public mouseMoveFunc (): void { 
+    if (this.mouseDown) {
+      this.mouseMove = true;
+    }
+  }
+
+  public descriptionClick (event): void { 
+    event.stopPropagation();
+    if (this.mouseMove) {
+      this.selectionService.toggleCourse(this.listing);
+    } 
+    
+    this.mouseMove = false;
+    this.mouseDown = false;
   }
 
   public get tooltipDescription (): string {
@@ -104,4 +141,10 @@ export class ListingComponent implements OnInit{
     this.sidebarService.removeListing(this.listing);
     this.selectionService.removeListing(this.listing);
   }
+
+  public expandDescripAndListings (): void {
+    this.showingDescription = !this.showingDescription;
+    this.showingMenu = !this.showingMenu;
+  }
+  
 }

@@ -3,4 +3,4 @@ cd $(cd -P -- "$(dirname -- "$0")" && pwd -P)/../
 
 bin/yacs-compose-production build
 bin/yacs-compose-development run --rm core bin/setup.sh
-bin/yacs-compose-development run --rm users bin/setup.sh
+# bin/yacs-compose-development run --rm users bin/setup.sh

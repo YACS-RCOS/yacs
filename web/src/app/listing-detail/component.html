@@ -1,0 +1,83 @@
+<div class="container" *ngIf="listing">
+  <div class="detail-heading">
+    {{listing.subjectShortname}} {{listing.courseShortname}}
+  </div>
+
+  <div id="credField" class="form-group form-inline">
+    <label for="longnameInput">Course Name&nbsp;</label>
+    <input id="longnameInput" class="form-control" [(ngModel)]="listing.longname" placeholder="{{listing.longname}}" #newLongname>
+  </div>
+
+  <div id="credField" class="form-group form-inline">
+    <label for="minCredInput">Min Credits&nbsp;</label>
+    <input id="minCredInput" class="form-control" [(ngModel)]="listing.minCredits" placeholder="{{listing.minCredits}}" #newMinCred>
+    &nbsp;&nbsp;&nbsp;
+    <label for="maxCredInput">Max Credits&nbsp;</label>
+    <input id="maxCredInput" class="form-control" [(ngModel)]="listing.maxCredits" placeholder="{{listing.maxCredits}}" #newMaxCred>
+  </div>
+
+  <div id="descField" class="form-group form-inline">
+    <label for="descInput">Description&nbsp;</label>
+    <textarea id="descInput" class="form-control" [(ngModel)]="listing.description" rows="5" #newDesc></textarea>
+  </div>
+
+  <!-- <div *ngFor="let section of listing.sections; let i=index">
+    <form [formGroup]="myForm" *ngIf="myForm">
+     <table formArrayName="scheduleDetail">
+
+            <tr *ngFor="let item of myForm.controls.scheduleDetail.controls; let i=index"
+                [formGroupName]="i" >
+
+                <td><input type='text' formControlName="description"></td>
+                <td><input type='text' formControlName="openTime"></td>
+                <td><input type='text' formControlName="closeTime"></td>
+
+            </tr>
+
+     </table>
+    </form>
+  </div> -->
+
+  <div id="sectionTable">
+  <div class="theme-text table-header">Sections</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="shortname">Id</th>
+        <th class="crn">CRN</th>
+        <th class="seatsTaken">Seats Taken</th>
+        <th class="seats">Seats</th>
+        <th class="instructors">Instructors</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let section of listing.sections">
+        <td>
+          {{section.shortname}}
+        </td>
+        <td>
+          <input class="crn-input" [(ngModel)]="section.crn" placeholder="{{section.crn}}" [disabled]="!section.isEditable"/>
+        </td>
+        <td>
+          <input class="seatsTaken-input" [(ngModel)]="section.seatsTaken" placeholder="{{section.seatsTaken}}" [disabled]="!section.isEditable"/>
+        </td>
+        <td>
+          <input class="seats-input" [(ngModel)]="section.seats" placeholder="{{section.seats}}" [disabled]="!section.isEditable"/>
+        </td>
+        <td>
+          <input class="instructors-input" [(ngModel)]="section.instructors" placeholder="{{section.instructors}}" [disabled]="!section.isEditable"/>
+        </td>
+        <td>
+           <button class="edit-button" (click)="section.isEditable=!section.isEditable" *ngIf="!section.isEditable">Edit</button>
+           <button class="save-button" (click)="section.isEditable=!section.isEditable" *ngIf="section.isEditable" >Save</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div id="buttonHolder">
+    <button class="schedule-button" id="save" (click)="saveListing()">Save Changes</button>
+    <button class="schedule-button" id="cancel" (click)="goBack()">Cancel</button>
+  </div>
+
+</div>
