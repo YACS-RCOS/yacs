@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./component.scss']
 })
 
-export class NoResultsComponent {
-
+export class NoResultsComponent implements OnInit {
+	ngOnInit (){}
 }
