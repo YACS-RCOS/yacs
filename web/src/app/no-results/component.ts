@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'no-results',
@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
 })
 
 export class NoResultsComponent implements OnInit {
+	
 	ngOnInit (){}
 }
