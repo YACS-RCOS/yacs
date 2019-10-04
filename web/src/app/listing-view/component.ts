@@ -19,6 +19,7 @@ export class ListingViewComponent implements OnInit, OnDestroy {
   termSubscription: Subscription;
 
   constructor (
+    private router : Router,
     private yacsService : YacsService,
     private activatedRoute: ActivatedRoute,
     private conflictsService: ConflictsService,
@@ -37,9 +38,13 @@ export class ListingViewComponent implements OnInit, OnDestroy {
       .includes('course.subject')
       .order('course_shortname')
       .all().then((listings) => {
-        this.listings = listings.data;
-        this.conflictsService.populateConflictsCache(this.listings);
-        this.isLoaded = true;
+        if (listings.data.length == 0) {
+          this.router.navigate(['no-results'], {});
+        } else {
+          this.listings = listings.data;
+          this.conflictsService.populateConflictsCache(this.listings);
+          this.isLoaded = true;
+        }
       });
   }
 
