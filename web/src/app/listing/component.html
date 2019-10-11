@@ -33,6 +33,7 @@
 						  <div *ngIf="getSectionClosedCount() < listing.sections.length && getSectionClosedCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
 						  <div *ngIf="getSectionClosedCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
 					  </ng-template>
+					  <div *ngIf="showingMenu && findProf('Goldschmidt')" placement="top" container="body"><a  target = "_blank" href = "https://www.cs.rpi.edu/~goldsd/index.php"><img src="assets/images/Goldschmidt_bitmoji2.png" alt="Home" width="102" height="120" ngbPopover="Course Webpage" triggers="mouseenter:mouseleave"></a></div>
 				  </td>
 			  </tr>
 		  </table>

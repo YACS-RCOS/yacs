@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Listing, Section } from 'yacs-api-client';
+import { Listing, Section, Period } from 'yacs-api-client';
 import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
@@ -84,6 +84,17 @@ export class ListingComponent implements OnInit{
 
   public clickSection (section: Section): void {
     this.selectionService.toggleSection(section);
+  }
+
+  public findProf (teacher: string): boolean{
+    for(let sec of this.listing.sections){
+      for(let prof of sec.instructors){
+        if(prof == teacher){
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public doesConflict (section: Section): boolean {
