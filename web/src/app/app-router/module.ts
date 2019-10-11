@@ -5,6 +5,7 @@ import { ListingViewComponent } from '../listing-view/component';
 import { ListingDetailComponent } from '../listing-detail/component';
 import { ScheduleViewComponent } from '../schedule-view/component';
 import { AboutComponent } from '../about/component';
+import { NoResultsComponent } from '../no-results/component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/schools', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'courses/:id', component: ListingDetailComponent },
   { path: 'schedules', component: ScheduleViewComponent },
   { path: 'about', component: AboutComponent},
+  { path: 'no-results', component: NoResultsComponent},
 ];
 
 @NgModule({
