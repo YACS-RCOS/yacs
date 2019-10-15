@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Listing, Section} from 'yacs-api-client';
+import { Listing, Section } from 'yacs-api-client';
 import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
