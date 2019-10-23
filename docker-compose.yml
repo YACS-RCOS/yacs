@@ -30,6 +30,7 @@ services:
       - COURSES_TOPIC_NAME=course_change     # Customize Kafka topic name for courses here 
       - SECTIONS_TOPIC_NAME=section_change   # Customize Kafka topic name for sections here 
       - TERM_SHORTNAME
+      - UNI_SHORTNAME
     depends_on:
       - postgres
       - redis
