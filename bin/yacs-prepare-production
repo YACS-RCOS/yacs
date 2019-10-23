@@ -6,9 +6,4 @@ if ! [[ -f ssl/cert.pem && -f ssl/chain.pem && -f ssl/fullchain.pem && -f ssl/pr
 	exit 1
 fi
 
-if [ ! -f .env ]; then
-  (>&2 echo "ERROR: Please configure your environment before continuing.")
-  exit 1
-fi
-
 bin/yacs-build-production

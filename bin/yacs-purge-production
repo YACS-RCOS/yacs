@@ -7,4 +7,3 @@ bin/yacs-compose-production rm -vf kafka
 bin/yacs-compose-production rm -vf zookeeper
 bin/yacs-compose-production rm -vf redis
 echo "Term.create(shortname: \"202001\", longname: \"Spring 2020\")" | bin/yacs-compose-production run --rm core rails c
-# echo "Term.create(shortname: \"201901\", longname: \"Spring 2019\")" | bin/yacs-compose-production run --rm core rails c

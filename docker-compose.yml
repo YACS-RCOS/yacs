@@ -5,7 +5,7 @@ version: '3.2'
 services:
   # Application services
   core:
-    image: yacsrcos/yacs
+    build: ./core
     environment:
       - RAILS_ENV
       - SECRET_KEY_BASE
@@ -24,11 +24,12 @@ services:
       - "kafka-server:138.197.2.46"
 
   core-consumer:
-    image: yacsrcos/yacs
+    build: ./core
     environment:
       - RAILS_ENV
       - COURSES_TOPIC_NAME=course_change     # Customize Kafka topic name for courses here 
       - SECTIONS_TOPIC_NAME=section_change   # Customize Kafka topic name for sections here 
+      - TERM_SHORTNAME
     depends_on:
       - postgres
       - redis
@@ -36,7 +37,7 @@ services:
     command: bin/start-consumer.sh
 
   web:
-    image: yacsrcos/yacs-web
+    build: ./web
     volumes:
       - dist-web:/usr/src/app/dist-web
     depends_on:
@@ -45,7 +46,7 @@ services:
       - "4200"
 
   malg:
-    image: yacsrcos/yacs-malg
+    build: ./malg
     depends_on:
       - kafka
       - zookeeper
@@ -66,14 +67,14 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
-
+      
   redis:
     image: redis:5.0-rc-alpine
     expose:
       - "6379"
 
   nginx:
-    image: yacsrcos/yacs-nginx
+    build: ./nginx
     ports:
       - "80:80"
       - "443:443"
@@ -139,7 +140,7 @@ services:
   #     - "3000"
 
   users:
-    image: yacsrcos/yacs-users
+    build: ./users
     environment:
       - RAILS_ENV
       - SECRET_KEY_BASE
