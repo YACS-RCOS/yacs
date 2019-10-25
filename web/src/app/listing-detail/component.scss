@@ -103,6 +103,19 @@
   font-weight: 600;
 }
 
+.add-button {
+  color: #ffffff;
+  background-color: #c65353;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  float: right;
+}
+
+.add-button:hover {
+  background-color: #d57f7f;
+}
+
 .edit-button {
   color: #ffffff;
   background-color: #c65353;
@@ -113,7 +126,20 @@
 }
 
 .edit-button:hover {
-    background-color: #d57f7f;
+  background-color: #d57f7f;
+}
+
+.delete-button {
+  color: #ffffff;
+  background-color: #c65353;
+  font-size: 14px;
+  outline: none;
+  border: none;
+  float: right;
+}
+
+.delete-button:hover {
+  background-color: #d57f7f;
 }
 
 .save-button {
@@ -125,23 +151,23 @@
 }
 
 .save-button:hover {
-    background-color: #afafaf;
+  background-color: #afafaf;
 }
 
 // Taken from schedule-view/component.scss
 .schedule-button {
-    color: #ffffff;
-    background-color: #c65353;
-    font-size: 14px;
-    outline: none;
-    border: none;
-    padding: 5px 15px;
-    margin-right: 5px;
-    margin-top: 20px;
+  color: #ffffff;
+  background-color: #c65353;
+  font-size: 14px;
+  outline: none;
+  border: none;
+  padding: 5px 15px;
+  margin-right: 5px;
+  margin-top: 20px;
 }
 
 .schedule-button:hover {
-    background-color: #d57f7f;
+  background-color: #d57f7f;
 }
 
 .schedule-button[disabled] {

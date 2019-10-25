@@ -39,7 +39,10 @@
   </div> -->
 
   <div id="sectionTable">
-  <div class="theme-text table-header">Sections</div>
+  <div class="theme-text table-header">
+    Sections
+    <button class="add-button" (click)="addSection()">+</button>
+  </div>
   <table>
     <thead>
       <tr>
@@ -50,7 +53,7 @@
         <th class="instructors">Instructors</th></tr>
     </thead>
     <tbody>
-      <tr *ngFor="let section of listing.sections">
+      <tr *ngFor="let section of listing.sections; let i = index" [attr.data-index]="i">
         <td>
           {{section.shortname}}
         </td>
@@ -64,11 +67,14 @@
           <input class="seats-input" [(ngModel)]="section.seats" placeholder="{{section.seats}}" [disabled]="!section.isEditable"/>
         </td>
         <td>
-          <input class="instructors-input" [(ngModel)]="section.instructors" placeholder="{{section.instructors}}" [disabled]="!section.isEditable"/>
+          <input class="instructors-input" [(ngModel)]="section.instructors" (ngModelChange)="inputStringToArray($event, i)" placeholder="{{section.instructors}}" [disabled]="!section.isEditable"/>
         </td>
         <td>
            <button class="edit-button" (click)="section.isEditable=!section.isEditable" *ngIf="!section.isEditable">Edit</button>
            <button class="save-button" (click)="section.isEditable=!section.isEditable" *ngIf="section.isEditable" >Save</button>
+           <button class="delete-button" (click)="deleteSection(section)">Delete</button>
+        </td>
+        <td>
         </td>
       </tr>
     </tbody>

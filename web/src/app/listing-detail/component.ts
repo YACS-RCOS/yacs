@@ -25,19 +25,33 @@ export class ListingDetailComponent implements OnInit {
     async getListingByID (id: number): Promise<void> {
       Listing.includes('sections').find(id).then((listing) => {
         this.listing = listing.data;
-        //this.sections = this.listing.sections;
-        this.sections = [];
-        console.log(this.sections);
+        this.sections = this.listing.sections;
       });
     }
 
     async saveListing (): Promise<void> {
+      // this.listing.save({with: 'sections'});
       this.listing.save();
       this.goBack();
     }
 
     goBack (): void {
       this.location.back();
+    }
+
+    inputStringToArray (event, index): void {
+      this.listing.sections[index].instructors = event.split();
+    }
+
+    addSection (): void {
+      this.listing.sections.push(new Section());
+    }
+
+    deleteSection (section: Section): void {
+      const index: number = this.listing.sections.indexOf(section);
+      if (index !== -1) {
+          this.listing.sections.splice(index, 1);
+      }
     }
 
     ngOnInit (): void {
