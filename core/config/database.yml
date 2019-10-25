@@ -6,7 +6,7 @@
 #
 default: &default
   adapter: postgresql
-  pool: 5
+  pool: <%= ENV["MAX_THREADS"] %>
   timeout: 5000
   host: postgres
   username: postgres
