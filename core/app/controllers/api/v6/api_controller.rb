@@ -6,11 +6,11 @@ class Api::V6::ApiController < ApplicationController
     status: 404
 
   rescue_from Exception do |e|
-    handle_exception(e, show_raw_error: Rails.env.development?)
+    handle_exception(e, show_raw_error: true)
   end
 
   def allow_graphiti_debug_json?
-    Rails.env.development?
+    true
   end
 
   # self.page_cache_directory = Rails.public_path

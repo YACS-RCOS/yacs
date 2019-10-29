@@ -7,26 +7,31 @@ services:
       - adapter-banner
       - adapter-yaml
       - adapter-csv
+      - adapter-textbooks
+    volumes:
+      - ./pipelines/${UNI_SHORTNAME}/config/sources.yml:/usr/src/app/config/sources.yml
 
   adapter-acalog:
-    image: yacsrcos/adapter-acalog-rpi
-    restart: unless-stopped
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/acalog-rpi
     expose:
       - "4600"
   adapter-banner:
-    image: yacsrcos/adapter-banner-rpi
-    restart: unless-stopped
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/banner-rpi
     expose:
       - "4600"
   adapter-yaml:
-    image: yacsrcos/adapter-yaml-rpi
-    restart: unless-stopped
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/yaml-rpi
     expose:
       - "4600"
   adapter-csv:
-    image: yacsrcos/adapter-csv-rpi
-    restart: unless-stopped
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/csv-rpi
+    expose:
+      - "4600"
+  adapter-textbooks:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/textbooks-rpi
+    depends_on:
+      - adapter-banner
     expose:
       - "4600"
     environment:
-      - CSV_SOURCE_201809=https://docs.google.com/spreadsheets/d/e/2PACX-1vThsxFovHKq-FpIx7keMhgvhPjBPS59EWOiMPEcFTKCi883GGmFLdKS4YFNbA8jfDzGciFYOZHZdE-x/pub?gid=0&single=true&output=csv
+      - EFOLLET_BOOKSTORE_ID=1461
