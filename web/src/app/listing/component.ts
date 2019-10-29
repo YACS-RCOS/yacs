@@ -5,6 +5,12 @@ import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
 import { SidebarService } from '../services/sidebar.service';
 
+const BITPROFS: string[] = [
+  'Goldschmidt',
+  'Turner',
+  'Cutler'
+]
+
 @Component({
   selector: 'course',
   templateUrl: './component.html',
@@ -86,15 +92,17 @@ export class ListingComponent implements OnInit{
     this.selectionService.toggleSection(section);
   }
 
-  public findProf (teacher: string): boolean{
+  public findProfs (): string[]{
+    let profs: string[] = [];
     for(let sec of this.listing.sections){
       for(let prof of sec.instructors){
-        if(prof == teacher){
-          return true;
+        if(BITPROFS.indexOf(prof) >= 0 && !(profs.indexOf(prof) >= 0)){
+          profs.push(prof);
         }
       }
     }
-    return false;
+    profs.sort();
+    return profs;
   }
 
   public doesConflict (section: Section): boolean {
