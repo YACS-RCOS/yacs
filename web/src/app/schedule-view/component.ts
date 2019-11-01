@@ -47,6 +47,8 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   isTemporary: boolean = false;
   scheduleNode;
 
+  showInfo: boolean = true;
+
   private subscription;
 
   constructor (
@@ -69,6 +71,10 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     this.ScheduleList.changes.subscribe((comps: QueryList <ScheduleComponent>) => {
       this.scheduleNode = comps.first.scheduleNode;
     });
+  }
+
+  public toggleInfoShow () : void {
+    this.showInfo = false;
   }
 
   private getSchedules (): void {

@@ -4,6 +4,15 @@
   border-opacity: 1;
   overflow: hidden;
   height: 100%;
+  z-index: 0;
+  position: absolute;
+}
+
+.schedule-event:hover{
+	overflow: visible;
+	height: auto;
+	background-color: inherit;
+	z-index: 1;
 }
 
 .event-text {

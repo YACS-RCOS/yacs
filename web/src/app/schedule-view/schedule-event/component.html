@@ -1,8 +1,29 @@
+<!-- <div class="schedule-event">
+	<div class="event-text">
+		{{ period.section.listing.subjectShortname }} {{ period.section.listing.courseShortname }} - {{ period.section.shortname }} &nbsp; {{period.type}}<br>
+		{{ period.section.crn }}<br>
+		{{ period.section.instructors.join(', ') }}<br>
+		{{ period.location }}
+	</div>
+</div> -->
+
 <div class="schedule-event">
 	<div class="event-text">
-		{{ period.section.listing.subjectShortname }} {{ period.section.listing.courseShortname }} - {{ period.section.shortname }}<br>
+		{{ period.section.listing.longname }}<br>
+		{{ period.type }} <br>
 		{{ period.section.crn }}<br>
 		{{ period.section.instructors.join(', ') }}<br>
 		{{ period.location }}
 	</div>
 </div>
+
+<!-- <button class="btn schedule-event" (click) = "ScheduleViewComponent.toggleInfoShow()">
+	<h2> YOLO! </h2>
+	<div class="event-text">
+		{{ period.section.listing.longname }}<br>
+		{{ period.type }} <br>
+		{{ period.section.crn }}<br>
+		{{ period.section.instructors.join(', ') }}<br>
+		{{ period.location }}
+	</div>
+</button> -->
