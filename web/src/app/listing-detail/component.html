@@ -21,23 +21,6 @@
     <textarea id="descInput" class="form-control" [(ngModel)]="listing.description" rows="5" #newDesc></textarea>
   </div>
 
-  <!-- <div *ngFor="let section of listing.sections; let i=index">
-    <form [formGroup]="myForm" *ngIf="myForm">
-     <table formArrayName="scheduleDetail">
-
-            <tr *ngFor="let item of myForm.controls.scheduleDetail.controls; let i=index"
-                [formGroupName]="i" >
-
-                <td><input type='text' formControlName="description"></td>
-                <td><input type='text' formControlName="openTime"></td>
-                <td><input type='text' formControlName="closeTime"></td>
-
-            </tr>
-
-     </table>
-    </form>
-  </div> -->
-
   <div id="sectionTable">
   <div class="theme-text table-header">
     Sections
@@ -52,31 +35,41 @@
         <th class="seats">Seats</th>
         <th class="instructors">Instructors</th></tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let section of listing.sections; let i = index" [attr.data-index]="i">
-        <td>
-          {{section.shortname}}
-        </td>
-        <td>
-          <input class="crn-input" [(ngModel)]="section.crn" placeholder="{{section.crn}}" [disabled]="!section.isEditable"/>
-        </td>
-        <td>
-          <input class="seatsTaken-input" [(ngModel)]="section.seatsTaken" placeholder="{{section.seatsTaken}}" [disabled]="!section.isEditable"/>
-        </td>
-        <td>
-          <input class="seats-input" [(ngModel)]="section.seats" placeholder="{{section.seats}}" [disabled]="!section.isEditable"/>
-        </td>
-        <td>
-          <input class="instructors-input" [(ngModel)]="section.instructors" (ngModelChange)="inputStringToArray($event, i)" placeholder="{{section.instructors}}" [disabled]="!section.isEditable"/>
-        </td>
-        <td>
-           <button class="edit-button" (click)="section.isEditable=!section.isEditable" *ngIf="!section.isEditable">Edit</button>
-           <button class="save-button" (click)="section.isEditable=!section.isEditable" *ngIf="section.isEditable" >Save</button>
-           <button class="delete-button" (click)="deleteSection(section)">Delete</button>
-        </td>
-        <td>
-        </td>
-      </tr>
+    <tbody *ngFor="let section of listing.sections; let i = index" [attr.data-index]="i">
+        <tr class="view" [class.open]="section.showPeriods" [class.striped]="i%2">
+          <td>
+            {{section.shortname}}
+          </td>
+          <td>
+            <input class="crn-input" [(ngModel)]="section.crn" placeholder="{{section.crn}}"/>
+          </td>
+          <td>
+            <input class="seatsTaken-input" [(ngModel)]="section.seatsTaken" placeholder="{{section.seatsTaken}}"/>
+          </td>
+          <td>
+            <input class="seats-input" [(ngModel)]="section.seats" placeholder="{{section.seats}}"/>
+          </td>
+          <td>
+            <input class="instructors-input" [(ngModel)]="section.instructors" (ngModelChange)="inputStringToArray($event, i)" placeholder="{{section.instructors}}"/>
+          </td>
+          <td>
+            <button class="delete-button" (click)="section.showPeriods=!section.showPeriods">Periods</button>
+          </td>
+          <td>
+             <button class="delete-button" (click)="deleteSection(section)">Delete</button>
+          </td>
+        </tr>
+        <tr class="fold" [class.open]="section.showPeriods">
+          <td colspan="7">
+            <p *ngFor="let period of section.periods;">
+              <span>{{period.day}}</span>
+              <span>{{period.end}}</span>
+              <span>{{period.location}}</span>
+              <span>{{period.start}}</span>
+              <span>{{period.type}}</span>
+            </p>
+          </td>
+        </tr>
     </tbody>
   </table>
   </div>

@@ -35,7 +35,7 @@
   }
 
   .crn-input {
-    width: 6em !important;
+    width: 4em !important;
   }
 
   .seatsTaken-input {
@@ -50,12 +50,6 @@
     width: 24em !important;
   }
 
-
-  table {
-    padding: 5px;
-    width: 100%;
-  }
-
   tr {
     width: 100%;
   }
@@ -67,10 +61,6 @@
 
   th, td {
     padding: 10px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #efefef;
   }
 
   th.shortname {
@@ -88,6 +78,27 @@
   th.instructors {
   }
 
+  tr.view {
+    &.open {
+      background: #d57f7f;
+      color: white;
+    }
+  }
+
+  tr.fold {
+    display: none;
+    &.open {
+      display:table-row;
+    }
+
+    td.periodContent {
+      width: 100%
+    }
+  }
+
+  tr.striped{
+    background-color: #efefef;
+  }
 }
 
 .container{
