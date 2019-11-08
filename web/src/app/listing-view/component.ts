@@ -39,7 +39,7 @@ export class ListingViewComponent implements OnInit, OnDestroy {
       .order('course_shortname')
       .all().then((listings) => {
         if (listings.data.length == 0) {
-          this.router.navigate(['no-results'], {});
+          this.router.navigate(['no-results', query.search], {});
         } else {
           this.listings = listings.data;
           this.conflictsService.populateConflictsCache(this.listings);
