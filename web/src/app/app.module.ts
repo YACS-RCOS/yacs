@@ -14,7 +14,6 @@ import { NoticeBarComponent } from './notice-bar/component';
 import { FooterComponent } from './footer/component';
 import { AboutComponent } from './about/component';
 import { TermSelectorComponent } from './header/term-selector/component';
-import { NoResultsComponent } from './no-results/component';
 
 import { SidebarModule } from './sidebar/module';
 import { SchoolViewModule } from './school-view/module';
@@ -54,7 +53,7 @@ import { SidebarService } from './services/sidebar.service';
     AboutComponent,
     NavUserComponent,
     TermSelectorComponent,
-    NoResultsComponent
+    // NoResultsComponent
   ],
   providers: [
     SelectionService,

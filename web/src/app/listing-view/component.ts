@@ -5,6 +5,7 @@ import { YacsService } from '../services/yacs.service';
 import { ConflictsService } from '../services/conflicts.service';
 import { SelectedTermService } from '../services/selected-term.service';
 import { Subscription } from 'rxjs';
+import { NoResultsComponent } from '../../app/no-results/component';
 
 @Component({
   selector: 'listing-view',
@@ -17,6 +18,7 @@ export class ListingViewComponent implements OnInit, OnDestroy {
   cachedTermId: string;
   cachedQuery: Params;
   termSubscription: Subscription;
+  // noResults: boolean = false;
 
   constructor (
     private router : Router,
@@ -38,13 +40,14 @@ export class ListingViewComponent implements OnInit, OnDestroy {
       .includes('course.subject')
       .order('course_shortname')
       .all().then((listings) => {
-        if (listings.data.length == 0) {
-          this.router.navigate(['no-results', query.search], {});
-        } else {
+        // if (listings.data.length == 0) {
+          // this.router.navigate(['no-results', query.search], {});
+          // this.noResults = true;
+        // } else {
           this.listings = listings.data;
           this.conflictsService.populateConflictsCache(this.listings);
           this.isLoaded = true;
-        }
+        // }
       });
   }
 
@@ -55,6 +58,10 @@ export class ListingViewComponent implements OnInit, OnDestroy {
       if (this.cachedTermId !== undefined) {
         this.getCourses(this.cachedQuery, this.cachedTermId);
       }
+
+      // if (this.listings.data.length == 0) {
+      //   this.router.navigate(['no-results', query.search], {});
+      // }
     });
     this.termSubscription = this.selectedTermService.subscribeToTerm((term: Term) => {
       this.cachedTermId = term.id;

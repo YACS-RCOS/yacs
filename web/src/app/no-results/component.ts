@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'no-results',
@@ -7,21 +6,6 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./component.scss']
 })
 
-export class NoResultsComponent implements OnInit, OnDestroy {
-  search: string;
-  fromSearch: boolean;
-  private sub: any;
-
-  constructor (private route: ActivatedRoute) {}
-
-	ngOnInit () {
-    this.sub = this.route.params.subscribe(params => {
-      this.search = params['search'] ? params['search'] : "";
-      this.fromSearch = this.search.length > 0;
-    });
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+export class NoResultsComponent {
+  @Input() search: string;
 }
