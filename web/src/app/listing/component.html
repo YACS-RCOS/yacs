@@ -33,6 +33,23 @@
 						  <div *ngIf="getSectionClosedCount() < listing.sections.length && getSectionClosedCount() != 0" class="closed-conflict some" placement="top" ngbPopover="Some sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
 						  <div *ngIf="getSectionClosedCount() === listing.sections.length" class="closed-conflict all" placement="top" ngbPopover="All sections are closed" container="body" triggers="mouseenter:mouseleave">Full Sections</div>
 					  </ng-template>
+					  <table>
+						<tr>
+							<td *ngFor="let prof of findProfs();">
+								<div *ngIf="showingMenu">
+									<div *ngIf="prof == 'Goldschmidt'">
+										<a target = "_blank" href = "https://www.cs.rpi.edu/~goldsd/index.php"><img src="assets/images/bitmojis/Goldschmidt.png" alt="Home" width="64" height="75" ngbPopover="Goldschmidt's Webpage" triggers="mouseenter:mouseleave"></a>
+									</div>
+									<div *ngIf="prof == 'Turner'">
+										<a target = "_blank" href = "https://science.rpi.edu/computer-science/faculty/wes-turner"><img src="assets/images/bitmojis/Turner.png" alt="Home" width="41" height="90" ngbPopover="Turner's Webpage" triggers="mouseenter:mouseleave"></a>
+									</div>
+									<div *ngIf="prof == 'Cutler'">
+										<a target = "_blank" href = "https://www.cs.rpi.edu/~cutler/"><img src="assets/images/bitmojis/Cutler.png" alt="Home" width="57.5" height="57.5" ngbPopover="Cutler's Webpage" triggers="mouseenter:mouseleave"></a>
+									</div>
+								</div>
+							</td>
+						</tr>
+					  </table>
 				  </td>
 			  </tr>
 		  </table>
