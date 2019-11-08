@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Listing, Period } from 'yacs-api-client';
+import { ScheduleViewComponent } from '../component';
 
 @Component({
   selector: 'schedule-event',
@@ -21,5 +22,14 @@ export class ScheduleEventComponent {
 
   public get height (): string {
     return this.hover ? 'auto' : this.normalHeight + 'px';
+  }
+
+  public showInf (): void {
+    console.log("Showing!");
+    /*ScheduleViewComponent.showInfo = true;*/
+  }
+  public hideInfo () : void {
+    console.log("Removing!");
+   /*ScheduleViewComponent.showInfo = false;*/
   }
 }

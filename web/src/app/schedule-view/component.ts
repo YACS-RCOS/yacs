@@ -73,10 +73,6 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  public toggleInfoShow () : void {
-    this.showInfo = false;
-  }
-
   private getSchedules (): void {
     this.isLoaded = false;
     const sectionIds = this.selectionService.getSelectedSectionIds();
