@@ -2,7 +2,7 @@
   <div class="center"><h1>Uh oh! No results!</h1></div>
 
     <div class="speech-bubble">
-        <p *ngIf="search">What even is "{{search}}"</p>
+        <p *ngIf="search">What even is "{{search|slice:0:40}}{{search.length > 30 ? '...' : ''}}"</p>
         <p *ngIf="!search">Are you lost?</p>
     </div>
 
