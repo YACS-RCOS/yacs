@@ -24,6 +24,7 @@ export class HeaderComponent {
   //keyup.enter generic search
   search (term: string) {
     if (this.isValidSearchTerm(term) && !this.dropDownSelected) {
+      console.log(term);//TODO send the search term to the backend
       this.router.navigate(['/courses'], { queryParams: { search: term } });
     }
     this.dropDownSelected = false;
@@ -50,6 +51,7 @@ export class HeaderComponent {
 
   //function for on-click typeahead bar
   selectedCourse ($event: any) {
+    console.log($event.item);//TODO send the search to the backend
     this.router.navigate(['/courses'],
       { queryParams: {
         longname: $event.item

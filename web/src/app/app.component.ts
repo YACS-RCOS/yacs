@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NoticeService } from './services/notice.service';
+import { v4 as uuid } from 'uuid';
 
 @Component({
     selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent {
 
     ngOnInit () {
         this.showingSidebar = true;
+        sessionStorage.setItem('userID', uuid());
     }
 
     public toggleSidebar (): void {
