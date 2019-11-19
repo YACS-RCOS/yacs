@@ -61,4 +61,42 @@ export class ListingDetailComponent implements OnInit {
 
       this.getListingByID(this.id);
     }
+
+    constructPeriodsArray(periods: Period[]): any[][] {
+      const periodsByDay = [Array(5)];
+      periods.forEach(period => {
+        if (period.day >= 1 && period.day <= 5) {
+          if (periodsByDay.slice(-1)[0][period.day-1]) {
+            periodsByDay.push(Array(5));
+          }
+          periodsByDay.slice(-1)[0][period.day-1] = period;
+        }
+      });
+      console.log(periodsByDay);
+      return periodsByDay;
+    }
+
+    private timeToString(time: number) : string {
+      let hour = Math.floor(time / 100);
+      let minute = Math.floor(time % 100);
+
+      let ampm = 'a';
+      if (hour >= 12) {
+        ampm = 'p';
+        if (hour > 12) {
+          hour -= 12;
+        }
+      }
+
+      let minuteShow = '';
+      if (minute != 0) {
+        minuteShow = ':' + (minute < 10 ? '0' : '') + minute;
+      }
+
+      return hour + minuteShow + ampm;
+    }
+
+    getHours (period: any) : string {
+      return this.timeToString(period.start) + '-' + this.timeToString(period.end);
+    }
   }

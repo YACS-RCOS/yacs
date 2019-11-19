@@ -22,61 +22,94 @@
   </div>
 
   <div id="sectionTable">
-  <div class="theme-text table-header">
-    Sections
-    <button class="add-button" (click)="addSection()">+</button>
-  </div>
-  <table>
-    <thead>
-      <tr>
-        <th class="shortname">Id</th>
-        <th class="crn">CRN</th>
-        <th class="seatsTaken">Seats Taken</th>
-        <th class="seats">Seats</th>
-        <th class="instructors">Instructors</th></tr>
-    </thead>
-    <tbody *ngFor="let section of listing.sections; let i = index" [attr.data-index]="i">
-        <tr class="view" [class.open]="section.showPeriods" [class.striped]="i%2">
-          <td>
-            {{section.shortname}}
-          </td>
-          <td>
-            <input class="crn-input" [(ngModel)]="section.crn" placeholder="{{section.crn}}"/>
-          </td>
-          <td>
-            <input class="seatsTaken-input" [(ngModel)]="section.seatsTaken" placeholder="{{section.seatsTaken}}"/>
-          </td>
-          <td>
-            <input class="seats-input" [(ngModel)]="section.seats" placeholder="{{section.seats}}"/>
-          </td>
-          <td>
-            <input class="instructors-input" [(ngModel)]="section.instructors" (ngModelChange)="inputStringToArray($event, i)" placeholder="{{section.instructors}}"/>
-          </td>
-          <td>
-            <button class="delete-button" (click)="section.showPeriods=!section.showPeriods">Periods</button>
-          </td>
-          <td>
-             <button class="delete-button" (click)="deleteSection(section)">Delete</button>
-          </td>
+    <div class="theme-text table-header">
+      Sections
+      <button class="add-section-button" (click)="addSection()">+</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th class="shortname">Id</th>
+          <th class="crn">CRN</th>
+          <th class="seatsTaken">Seats Taken</th>
+          <th class="seats">Seats</th>
+          <th class="instructors">Instructors</th>
+          <th></th>
+          <th></th>
         </tr>
-        <tr class="fold" [class.open]="section.showPeriods">
-          <td colspan="7">
-            <p *ngFor="let period of section.periods;">
-              <span>{{period.day}}</span>
-              <span>{{period.end}}</span>
-              <span>{{period.location}}</span>
-              <span>{{period.start}}</span>
-              <span>{{period.type}}</span>
-            </p>
-          </td>
-        </tr>
-    </tbody>
-  </table>
-  </div>
+        </thead>
+        <tbody *ngFor="let section of listing.sections; let i = index" [attr.data-index]="i">
+          <tr class="view" [class.open]="section.showPeriods" [class.striped]="i%2">
+            <td>
+              <i class="arrow down" *ngIf="!section.showPeriods"></i>
+              <i class="arrow up" *ngIf="section.showPeriods"></i>
+            </td>
+            <td>
+                {{section.shortname}}
+            </td>
+            <td>
+              <input class="crn-input" [(ngModel)]="section.crn" placeholder="{{section.crn}}"/>
+            </td>
+            <td>
+              <input class="seatsTaken-input" [(ngModel)]="section.seatsTaken" placeholder="{{section.seatsTaken}}"/>
+            </td>
+            <td>
+              <input class="seats-input" [(ngModel)]="section.seats" placeholder="{{section.seats}}"/>
+            </td>
+            <td>
+              <input class="instructors-input" [(ngModel)]="section.instructors" (ngModelChange)="inputStringToArray($event, i)" placeholder="{{section.instructors}}"/>
+            </td>
+            <td>
+              <button class="delete-button" (click)="section.showPeriods=!section.showPeriods">Periods</button>
+            </td>
+            <td>
+              <button class="delete-button" (click)="deleteSection(section)">Delete</button>
+            </td>
+          </tr>
+          <tr class="fold" [class.open]="section.showPeriods">
+            <td colspan="8">
+              <table id="periodTable">
+                <thead>
+                  <th>
+                    Mon
+                    <button class="add-period-button">+</button>
+                  </th>
+                  <th>
+                    Tues
+                    <button class="add-period-button">+</button>
+                  </th>
+                  <th>
+                    Wed
+                    <button class="add-period-button">+</button>
+                  </th>
+                  <th>
+                    Thurs
+                    <button class="add-period-button">+</button>
+                  </th>
+                  <th>
+                    Fri
+                    <button class="add-period-button">+</button>
+                  </th>
+                </thead>
+                <tbody >
+                  <tr *ngFor="let week of constructPeriodsArray(section.periods);" colspan="5">
+                    <td *ngFor="let period of week; let i = index">
+                      <input *ngIf="period" placeholder="{{ getHours(period) }}" />
+                      <span *ngIf="!period">&nbsp;</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <div id="buttonHolder">
-    <button class="schedule-button" id="save" (click)="saveListing()">Save Changes</button>
-    <button class="schedule-button" id="cancel" (click)="goBack()">Cancel</button>
-  </div>
+    <div id="buttonHolder">
+      <button class="schedule-button" id="save" (click)="saveListing()">Save Changes</button>
+      <button class="schedule-button" id="cancel" (click)="goBack()">Cancel</button>
+    </div>
 
-</div>
+  </div>

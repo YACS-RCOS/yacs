@@ -28,10 +28,15 @@
   box-shadow: 2px 2px 5px 2px #efefef;
   overflow-y: auto;
 
+  table {
+    width: 100%;
+  }
+
   .table-header {
     padding: 5px;
     font-size: 1.2em;
     background-color: $yacs_bgs;
+    width: 100%;
   }
 
   .crn-input {
@@ -61,6 +66,11 @@
 
   th, td {
     padding: 10px;
+  }
+
+  th:first-child {
+    position: relative;
+    padding-left: 20px;
   }
 
   th.shortname {
@@ -99,6 +109,48 @@
   tr.striped{
     background-color: #efefef;
   }
+
+  i.arrow {
+    $amount-of-time: 1s;
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transition: transform $amount-of-time ease;
+    -webkit-transition: -webkit-transform $amount-of-time ease;
+  }
+
+  .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+}
+
+#periodTable {
+  table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  tr {
+    border: solid;
+    border-width: 1px 0;
+    border-color: #efefef;
+  }
+
+  tr:last-child {
+    border: none;
+  }
+
+  td {
+    width: 20%;
+  }
 }
 
 .container{
@@ -114,7 +166,7 @@
   font-weight: 600;
 }
 
-.add-button {
+.add-section-button {
   color: #ffffff;
   background-color: #c65353;
   font-size: 16px;
@@ -123,7 +175,19 @@
   float: right;
 }
 
-.add-button:hover {
+.add-section-button:hover {
+  background-color: #d57f7f;
+}
+
+.add-period-button {
+  font-size: 16px;
+  outline: none;
+  border: none;
+  float: right;
+}
+
+.add-period-button:hover {
+  color: #ffffff;
   background-color: #d57f7f;
 }
 
