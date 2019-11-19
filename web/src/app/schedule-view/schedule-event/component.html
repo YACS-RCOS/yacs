@@ -17,8 +17,7 @@
 	</div>
 </div> -->
 
-<div class="schedule-event" (mouseenter) = "showInf()" (mouseleave) = "hideInfo()">
-	<!-- <h2> YOLO! </h2> -->
+<button class="schedule-event" (click) = "this.toggleInf(period)">
 	<div class="event-text">
 		{{ period.section.listing.longname }}<br>
 		{{ period.type }} <br>
@@ -26,4 +25,4 @@
 		{{ period.section.instructors.join(', ') }}<br>
 		{{ period.location }}
 	</div>
-</div>
+</button>

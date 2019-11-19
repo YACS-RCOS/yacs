@@ -24,12 +24,9 @@ export class ScheduleEventComponent {
     return this.hover ? 'auto' : this.normalHeight + 'px';
   }
 
-  public showInf (): void {
-    console.log("Showing!");
-    /*ScheduleViewComponent.showInfo = true;*/
-  }
-  public hideInfo () : void {
-    console.log("Removing!");
-   /*ScheduleViewComponent.showInfo = false;*/
+  public toggleInf(period: Period){
+    let temp: boolean = !(sessionStorage.getItem('showInfo') == "true");
+    sessionStorage.setItem('showInfo', String(temp));
+    console.log(period.type);
   }
 }
