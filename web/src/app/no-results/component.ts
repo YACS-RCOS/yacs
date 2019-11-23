@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 
 export class NoResultsComponent {
-  @Input() search: string;
+  @Input() query: Object;
 }

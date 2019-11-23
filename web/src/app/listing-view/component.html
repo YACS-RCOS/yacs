@@ -1,5 +1,5 @@
 <div *ngIf="!isLoaded" class="loader"></div>
 <div class="">
 	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="true"></course>
-	<no-results *ngIf="listings.length == 0 && isLoaded" [search]="cachedQuery.search"></no-results>
+	<no-results *ngIf="listings.length == 0 && isLoaded" [query]="cachedQuery" ></no-results>
 </div>

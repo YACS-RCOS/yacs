@@ -19,12 +19,14 @@ export class HeaderComponent {
   dropDownSelected: boolean = false;
   navbarCollapsed: boolean = true;
 
+  similarSearches: string[] = [];
+
   constructor (private router: Router) { }
 
   //keyup.enter generic search
   search (term: string) {
     if (this.isValidSearchTerm(term) && !this.dropDownSelected) {
-      this.router.navigate(['/courses'], { queryParams: { search: term } });
+      this.router.navigate(['/courses'], { queryParams: { search: term, similarSearches: this.similarSearches } });
     }
     this.dropDownSelected = false;
   }
@@ -41,6 +43,13 @@ export class HeaderComponent {
           .select({ listings: ['longname'] })
           .all().then(listings => {
             const listingLongnames = listings.data.map(listing => listing.longname);
+
+            // this.similarSearches = listingLongnames.length > 0 ? 
+            //   listingLongnames.concat(this.similarSearches).slice(0, 5) : [];
+            this.similarSearches = listingLongnames.concat(listingLongnames.length > 0 ? this.similarSearches : []).slice(0, 5);
+            console.log("ll: " + JSON.stringify(listingLongnames));
+            console.log("ss: " + JSON.stringify(this.similarSearches));
+
             return listingLongnames
               .filter((listingLongname, i) => { // remove duplicates
                 return listingLongnames.indexOf(listingLongname) == i;

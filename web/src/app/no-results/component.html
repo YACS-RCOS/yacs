@@ -2,7 +2,8 @@
   <div class="center"><h1>Uh oh! No results!</h1></div>
 
     <div class="speech-bubble">
-        <p *ngIf="search">What even is "{{search|slice:0:40}}{{search.length > 30 ? '...' : ''}}"</p>
+        <p *ngIf="query">What even is "{{query.search|slice:0:40}}{{query.search.length > 30 ? '...' : ''}}"</p>
+        <p *ngFor="let possible of query.similarSearches">{{possible}}</p>
         <p *ngIf="!search">Are you lost?</p>
     </div>
 

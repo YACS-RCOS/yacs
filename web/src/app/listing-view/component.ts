@@ -30,7 +30,13 @@ export class ListingViewComponent implements OnInit, OnDestroy {
 
   async getCourses (params: Params, termId: string): Promise<void> {
     this.isLoaded = false;
+
+    // if (params.similarSearches) { delete params.similarSearches; }
     const query = Object.assign({ term_id: termId }, params);
+    if (query.similarSearches) { 
+      console.log("gc " + JSON.stringify(query.similarSearches));
+      delete query.similarSearches; 
+    }
     Listing
       .where(query)
       .includes('sections')
