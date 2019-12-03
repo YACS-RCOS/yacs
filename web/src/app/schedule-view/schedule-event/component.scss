@@ -1,6 +1,7 @@
 
 .schedule-event{
 
+  margin-top: 2px;
   border-left: 4px solid;
   border-color: inherit;
   border-opacity: 1;
@@ -13,19 +14,20 @@
   overflow: hidden;
   height: 100%;
   width: 100%;
-  z-index: 0;
+  z-index: 1;
   position: absolute;
  
   display: block;
 
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 
 .schedule-event:hover{
 	overflow: visible;
 	height: auto;
-	z-index: 1;
-  //width:100%;
+	z-index: 2;
 }
 
 .event-text {
