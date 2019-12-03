@@ -24,9 +24,11 @@ export class ScheduleEventComponent {
     return this.hover ? 'auto' : this.normalHeight + 'px';
   }
 
+  /*
   public toggleInf(period: Period){
     let temp: boolean = !(sessionStorage.getItem('showInfo') == "true");
     sessionStorage.setItem('showInfo', String(temp));
     console.log(period.type);
   }
+  */
 }
