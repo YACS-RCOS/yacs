@@ -47,7 +47,7 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
   isTemporary: boolean = false;
   scheduleNode;
 
-  show: boolean = true;
+  //show: boolean = true;
 
   private subscription;
 
@@ -65,14 +65,16 @@ export class ScheduleViewComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public ngOnInit (): void {
     this.getSchedules();
-    sessionStorage.setItem('showInfo', "true");
+    //sessionStorage.setItem('showInfo', "true");
   }
 
+  /*
   public showing(): boolean{
     //console.log("Here");
     //return this.show;
     return (sessionStorage.getItem('showInfo') == "true");
   }
+  */
 
   public ngAfterViewInit (): void {
     this.ScheduleList.changes.subscribe((comps: QueryList <ScheduleComponent>) => {
