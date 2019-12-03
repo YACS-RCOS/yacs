@@ -4,7 +4,6 @@ import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
 import { SidebarService } from '../services/sidebar.service';
-import { v4 as uuid } from 'uuid';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -76,8 +75,6 @@ export class ListingComponent implements OnInit{
   }
 
   public clickCourse () {
-
-
     let event: string;
     if(this.isCourseSelected()){
       event = "2";
@@ -85,7 +82,6 @@ export class ListingComponent implements OnInit{
       event = "1";
     }
     let time: number = Date.now();
-    //console.log(time);
 
     for(let sec of this.listing.sections){
       if(event == "1" || this.isSectionSelected(sec)){
@@ -120,9 +116,9 @@ export class ListingComponent implements OnInit{
 
     let event: string;
      if(this.isSectionSelected(section)){
-      event = "2";
-     }else{
       event = "1";
+     }else{
+      event = "2";
      }
       //Sends the info about the course to the user system backend
       this.http.post('https://api.yacs.maoyu.wang/userEvent', {

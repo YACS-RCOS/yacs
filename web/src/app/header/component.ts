@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Listing } from 'yacs-api-client';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import qs from 'qs';
 
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
@@ -19,12 +21,24 @@ export class HeaderComponent {
   dropDownSelected: boolean = false;
   navbarCollapsed: boolean = true;
 
-  constructor (private router: Router) { }
+  constructor (private router: Router, private http: HttpClient) { }
 
   //keyup.enter generic search
   search (term: string) {
     if (this.isValidSearchTerm(term) && !this.dropDownSelected) {
-      console.log(term);//TODO send the search term to the backend
+      //Sends the info about the user's search to the user system backend
+      this.http.post('https://api.yacs.maoyu.wang/userEvent', {
+        "uid": sessionStorage.getItem('userID'),
+        "eventID": "3",
+        "data": {
+            'Search' : term
+
+        },
+        "createdAt": Date.now()
+      }).subscribe(
+        data => {console.log(data)},
+        err => {console.log(err)}
+      );
       this.router.navigate(['/courses'], { queryParams: { search: term } });
     }
     this.dropDownSelected = false;
@@ -51,7 +65,18 @@ export class HeaderComponent {
 
   //function for on-click typeahead bar
   selectedCourse ($event: any) {
-    console.log($event.item);//TODO send the search to the backend
+    this.http.post('https://api.yacs.maoyu.wang/userEvent', {
+      "uid": sessionStorage.getItem('userID'),
+      "eventID": "3",
+      "data": {
+          'Search' : $event.item
+      },
+      "createdAt": Date.now()
+    }).subscribe(
+      data => {console.log(data)},
+      err => {console.log(err)}
+    );
+  
     this.router.navigate(['/courses'],
       { queryParams: {
         longname: $event.item
