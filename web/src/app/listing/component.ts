@@ -5,6 +5,12 @@ import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
 import { SidebarService } from '../services/sidebar.service';
 
+const BITPROFS: string[] = [
+  'Goldschmidt',
+  'Turner',
+  'Cutler'
+]
+
 @Component({
   selector: 'course',
   templateUrl: './component.html',
@@ -84,6 +90,19 @@ export class ListingComponent implements OnInit{
 
   public clickSection (section: Section): void {
     this.selectionService.toggleSection(section);
+  }
+
+  public findProfs (): string[]{
+    let profs: string[] = [];
+    for(let sec of this.listing.sections){
+      for(let prof of sec.instructors){
+        if(BITPROFS.indexOf(prof) >= 0 && !(profs.indexOf(prof) >= 0)){
+          profs.push(prof);
+        }
+      }
+    }
+    profs.sort();
+    return profs;
   }
 
   public doesConflict (section: Section): boolean {
