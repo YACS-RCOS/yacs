@@ -1,7 +1,6 @@
 <div *ngIf="!isLoaded" class="loader"></div>
 <div class="">
-	<course *ngIf="listings.length == 0; else noresults" *ngFor="let listing of listings" [listing]="listing" [showDescription]="true"></course>
-	<ng-template #noresults>
-		<no-results *ngIf="listings.length == 0 && isLoaded" [query]="cachedQuery" ></no-results>
-	</ng-template>
+	<ng-container *ngIf="isLoaded && listings.length > 0; then course; else noresults"></ng-container>
+	<course *ngFor="let listing of listings" [listing]="listing" [showDescription]="true"></course>
+	<no-results *ngIf="listings.length == 0 && isLoaded" [query]="cachedQuery" ></no-results>
 </div>

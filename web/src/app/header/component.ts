@@ -19,14 +19,12 @@ export class HeaderComponent {
   dropDownSelected: boolean = false;
   navbarCollapsed: boolean = true;
 
-  similarSearches: string[] = [];
-
   constructor (private router: Router) { }
 
   //keyup.enter generic search
   search (term: string) {
     if (this.isValidSearchTerm(term) && !this.dropDownSelected) {
-      this.router.navigate(['/courses'], { queryParams: { search: term, similarSearches: this.similarSearches } });
+      this.router.navigate(['/courses'], { queryParams: { search: term } });
     }
     this.dropDownSelected = false;
   }
@@ -42,19 +40,13 @@ export class HeaderComponent {
           .where({ search: term })
           .select({ listings: ['longname'] })
           .all().then(listings => {
-            const listingLongnames = listings.data.map(listing => listing.longname);
+            let listingLongnames = listings.data.map(listing => listing.longname);
 
-            // this.similarSearches = listingLongnames.length > 0 ? 
-            //   listingLongnames.concat(this.similarSearches).slice(0, 5) : [];
-            this.similarSearches = listingLongnames.concat(listingLongnames.length > 0 ? this.similarSearches : []).slice(0, 5);
-            console.log("ll: " + JSON.stringify(listingLongnames));
-            console.log("ss: " + JSON.stringify(this.similarSearches));
+            listingLongnames = listingLongnames.filter((listingLongname, i) => { // remove duplicates
+                              return listingLongnames.indexOf(listingLongname) == i;
+                            }).slice(0, 10); //only return top 10
 
-            return listingLongnames
-              .filter((listingLongname, i) => { // remove duplicates
-                return listingLongnames.indexOf(listingLongname) == i;
-              })
-              .slice(0, 10); //only return top 10
+            return listingLongnames;
           }))
 
   //function for on-click typeahead bar
