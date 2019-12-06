@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Term, Course, Listing, Section } from 'yacs-api-client';
+import { Term, Course, Listing, Section, Period } from 'yacs-api-client';
 import { ConflictsService } from '../services/conflicts.service';
 
 @Component({
@@ -13,7 +13,6 @@ import { ConflictsService } from '../services/conflicts.service';
 export class ListingDetailComponent implements OnInit {
   id: number;
   listing: Listing;
-  sections: Section[];
 
   constructor (
     private activatedRoute: ActivatedRoute,
@@ -21,11 +20,9 @@ export class ListingDetailComponent implements OnInit {
     private location: Location,
     private conflictsService: ConflictsService) { }
 
-
     async getListingByID (id: number): Promise<void> {
       Listing.includes('sections').find(id).then((listing) => {
         this.listing = listing.data;
-        this.sections = this.listing.sections;
       });
     }
 
@@ -39,9 +36,14 @@ export class ListingDetailComponent implements OnInit {
       this.location.back();
     }
 
-    inputStringToArray (event, index): void {
-      this.listing.sections[index].instructors = event.split();
+    ngOnInit (): void {
+      this.activatedRoute.params.subscribe((params: Params) => {
+        this.id = params['id'];
+      });
+
+      this.getListingByID(this.id);
     }
+
 
     addSection (): void {
       this.listing.sections.push(new Section());
@@ -54,26 +56,76 @@ export class ListingDetailComponent implements OnInit {
       }
     }
 
-    ngOnInit (): void {
-      this.activatedRoute.params.subscribe((params: Params) => {
-        this.id = params['id'];
-      });
-
-      this.getListingByID(this.id);
+    addPeriod (section: Section, day: number): void {
+      let period = new Period();
+      period.day = day;
+      period.start = "1200";
+      period.end = "1350";
+      period.type = "LEC";
+      section.periods.push(period);
     }
 
-    constructPeriodsArray(periods: Period[]): any[][] {
-      const periodsByDay = [Array(5)];
-      periods.forEach(period => {
-        if (period.day >= 1 && period.day <= 5) {
-          if (periodsByDay.slice(-1)[0][period.day-1]) {
-            periodsByDay.push(Array(5));
+    inputStringToArray (event, index): void {
+      this.listing.sections[index].instructors = event.split();
+    }
+
+    constructPeriodsArrayByDay(periods: Period[]): Period[][] {
+      const periodsByDay: Period[][] = new Array<Array<Period>>(5);
+      let mode = this.mode(periods.map(x => x.day));
+      var depth = 0;
+      for(var i = 0; i < periods.length; ++i){
+          if(periods[i].day == mode) {
+              depth++;
           }
-          periodsByDay.slice(-1)[0][period.day-1] = period;
-        }
+      }
+
+      for (let i = 0; i < 5; i++) {
+        periodsByDay[i] = new Array<Period>();
+      }
+
+      periods.forEach(period => {
+        periodsByDay[period.day-1].push(period);
       });
-      console.log(periodsByDay);
+
+      periodsByDay = this.transposeArray(periodsByDay, depth);
+
       return periodsByDay;
+    }
+
+    private transposeArray(array, arrayLength){
+        var newArray = [];
+        for(var i = 0; i < array.length; i++){
+            newArray.push([]);
+        };
+
+        for(var i = 0; i < array.length; i++){
+            for(var j = 0; j < arrayLength; j++){
+                newArray[j].push(array[i][j]);
+            };
+        };
+
+        return newArray;
+    }
+
+    private mode(array: any[]): any {
+        if(array.length == 0)
+            return null;
+        var modeMap = {};
+        var maxEl = array[0], maxCount = 1;
+        for(var i = 0; i < array.length; i++)
+        {
+            var el = array[i];
+            if(modeMap[el] == null)
+                modeMap[el] = 1;
+            else
+                modeMap[el]++;
+            if(modeMap[el] > maxCount)
+            {
+                maxEl = el;
+                maxCount = modeMap[el];
+            }
+        }
+        return maxEl;
     }
 
     private timeToString(time: number) : string {

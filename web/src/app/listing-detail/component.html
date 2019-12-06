@@ -73,27 +73,27 @@
                 <thead>
                   <th>
                     Mon
-                    <button class="add-period-button">+</button>
+                    <button class="add-period-button" (click)="addPeriod(section, 1)">+</button>
                   </th>
                   <th>
                     Tues
-                    <button class="add-period-button">+</button>
+                    <button class="add-period-button" (click)="addPeriod(section, 2)">+</button>
                   </th>
                   <th>
                     Wed
-                    <button class="add-period-button">+</button>
+                    <button class="add-period-button" (click)="addPeriod(section, 3)">+</button>
                   </th>
                   <th>
                     Thurs
-                    <button class="add-period-button">+</button>
+                    <button class="add-period-button" (click)="addPeriod(section, 4)">+</button>
                   </th>
                   <th>
                     Fri
-                    <button class="add-period-button">+</button>
+                    <button class="add-period-button" (click)="addPeriod(section, 5)">+</button>
                   </th>
                 </thead>
                 <tbody >
-                  <tr *ngFor="let week of constructPeriodsArray(section.periods);" colspan="5">
+                  <tr *ngFor="let week of constructPeriodsArrayByDay(section.periods);" colspan="5">
                     <td *ngFor="let period of week; let i = index">
                       <input *ngIf="period" placeholder="{{ getHours(period) }}" />
                       <span *ngIf="!period">&nbsp;</span>
