@@ -70,8 +70,8 @@ export class ListingDetailComponent implements OnInit {
     }
 
     constructPeriodsArrayByDay(periods: Period[]): Period[][] {
-      const periodsByDay: Period[][] = new Array<Array<Period>>(5);
-      let mode = this.mode(periods.map(x => x.day));
+      var periodsByDay: Period[][] = new Array<Array<Period>>(5);
+      var mode = this.mode(periods.map(x => x.day));
       var depth = 0;
       for(var i = 0; i < periods.length; ++i){
           if(periods[i].day == mode) {
@@ -87,9 +87,7 @@ export class ListingDetailComponent implements OnInit {
         periodsByDay[period.day-1].push(period);
       });
 
-      periodsByDay = this.transposeArray(periodsByDay, depth);
-
-      return periodsByDay;
+      return this.transposeArray(periodsByDay, depth);
     }
 
     private transposeArray(array, arrayLength){
