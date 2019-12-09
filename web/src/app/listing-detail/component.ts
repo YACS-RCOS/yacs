@@ -44,7 +44,6 @@ export class ListingDetailComponent implements OnInit {
       this.getListingByID(this.id);
     }
 
-
     addSection (): void {
       this.listing.sections.push(new Section());
     }
