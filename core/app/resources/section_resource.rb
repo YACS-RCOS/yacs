@@ -11,4 +11,5 @@ class SectionResource < ApplicationResource
   attribute :periods, :array, writable: true
   attribute :instructors, :array, writable: true
   attribute :listing_id, :integer, only: [:filterable], writable: true
+  attribute :status, :string
 end
