@@ -73,7 +73,7 @@ GEM
       bundler (~> 1.14)
       iodine (>= 0.4, < 0.5)
       rack (>= 2.0.0)
-    rack (2.0.5)
+    rack (2.0.8)
     rake (12.3.1)
     require_all (2.0.0)
     rouge (2.2.1)
