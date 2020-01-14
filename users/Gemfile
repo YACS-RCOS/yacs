@@ -33,7 +33,7 @@ gem 'redis', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'devise', '~> 4.3'
+gem 'devise', '~> 4.7'
 gem 'yacs-auth', git:"https://github.com/YACS-RCOS/yacs-auth.git", branch: 'master'
 gem 'jwt'
 
