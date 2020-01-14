@@ -27,8 +27,8 @@ services:
     build: ./core
     environment:
       - RAILS_ENV
-      - COURSES_TOPIC_NAME=course_change     # Customize Kafka topic name for courses here 
-      - SECTIONS_TOPIC_NAME=section_change   # Customize Kafka topic name for sections here 
+      - COURSES_TOPIC_NAME=course_change     # Customize Kafka topic name for courses here
+      - SECTIONS_TOPIC_NAME=section_change   # Customize Kafka topic name for sections here
       - TERM_SHORTNAME
       - UNI_SHORTNAME
     depends_on:
@@ -68,7 +68,7 @@ services:
       interval: 10s
       timeout: 10s
       retries: 3
-      
+
   redis:
     image: redis:5.0-rc-alpine
     expose:
@@ -81,7 +81,7 @@ services:
       - "443:443"
     links:
       - core
-      - users
+      - user_backend
     volumes:
       - ./ssl:/etc/ssl/yacs
       - dist-web:/usr/src/app/dist-web
@@ -92,11 +92,6 @@ services:
       - "2181"
   kafka:
     image: wurstmeister/kafka:1.0.0
-    # ports:
-    #  - target: 9094
-    #    published: 9094
-    #    protocol: tcp
-    #    mode: host
     depends_on:
       - zookeeper
     expose:
@@ -104,7 +99,7 @@ services:
       - "9092"
     hostname: kafka
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: "kafka"      
+      KAFKA_ADVERTISED_HOST_NAME: "kafka"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_ADVERTISED_PROTOCOL_NAME: OUTSIDE
@@ -116,29 +111,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     healthcheck:
       test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper:2181 --list"]
-
-  # Future/abandoned services
-  # admin:
-  #   image: yacsrcos/yacs-admin
-  #   depends_on:
-  #     - core
-  #   expose:
-  #     - "4300"
-
-  # notices:
-  #   image: yacsrcos/yacs-notices
-  #   depends_on:
-  #     - postgres
-  #     - redis
-  #   expose:
-  #     - "4900"
-
-  # notifications:
-  #   image: yacsrcos/yacs-notifications
-  #   depends_on:
-  #     - kafka
-  #   expose: 
-  #     - "3000"
 
   users:
     build: ./users
@@ -154,6 +126,14 @@ services:
     command: bin/start.sh
     expose:
       - "4400"
+
+  user_backend:
+    build: https://github.com/YACS-RCOS/yacs-user-backend.git
+    tty: true
+    volumes:
+      - ./user-backend:/usr/src/app/user-backend
+    expose:
+      - "5000"
 
 volumes:
   dist-web:
