@@ -5,7 +5,7 @@ GEM
     multi_json (1.12.2)
     mustermann (1.0.1)
     oj (3.3.9)
-    rack (2.0.3)
+    rack (2.0.8)
     rack-protection (2.0.0)
       rack
     sinatra (2.0.0)
