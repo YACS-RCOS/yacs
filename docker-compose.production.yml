@@ -17,6 +17,9 @@ services:
   web:
     restart: unless-stopped
 
+  user_backend:
+    restart: unless-stopped
+
   malg:
     restart: unless-stopped
 
