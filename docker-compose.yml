@@ -112,21 +112,6 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "/opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper:2181 --list"]
 
-  users:
-    build: ./users
-    environment:
-      - RAILS_ENV
-      - SECRET_KEY_BASE
-      - SECRET_TOKEN
-    volumes:
-      - ./ssl:/etc/ssl/yacs
-    depends_on:
-      - postgres
-      - redis
-    command: bin/start.sh
-    expose:
-      - "4400"
-
   user_backend:
     build: https://github.com/YACS-RCOS/yacs-user-backend.git
     tty: true

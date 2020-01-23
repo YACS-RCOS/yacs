@@ -17,6 +17,9 @@ services:
   web:
     restart: unless-stopped
 
+  user_backend:
+    restart: unless-stopped
+
   malg:
     restart: unless-stopped
 
@@ -29,15 +32,3 @@ services:
 
   nginx:
     restart: unless-stopped
-
-  # Future/abandoned services
-  # admin:
-  #   restart: unless-stopped
-
-  # notifications:
-  #   restart: unless-stopped
-
-  # users:
-  #   restart: unless-stopped
-  #   environment:
-  #     - RAILS_ENV=production
