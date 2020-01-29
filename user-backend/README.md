@@ -4,6 +4,8 @@ The backend API for the user management system of YACS Project.
 
 ## Getting Started
 
+### Step 0 : Make sure you have docker installed
+
 ### Step 1 : clone the repo
 ```bash
 git clone https://github.com/YACS-RCOS/yacs-user-backend

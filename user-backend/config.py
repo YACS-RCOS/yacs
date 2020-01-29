@@ -1,10 +1,10 @@
 import os
 
 # Database Settings
-DB_NAME=os.getenv('DB_NAME', 'yacs')
-DB_USER=os.getenv('DB_USER', 'root')
-DB_HOST=os.getenv('DB_HOST', 'localhost:5432')
-DB_PASSWORD=os.getenv('DB_PASSWORD', '')
+DB_NAME=os.getenv('DB_NAME', 'main')
+DB_USER=os.getenv('DB_USER', 'postgres')
+DB_HOST=os.getenv('DB_HOST', 'user_psql')
+DB_PASSWORD=os.getenv('DB_PASSWORD', 'yacs@rpi')
 
 # App Settings
 APP_DEBUG_MODE=os.getenv('APP_DEBUG_MODE', True)
