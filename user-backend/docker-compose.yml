@@ -1,0 +1,28 @@
+version: '3'
+
+services: 
+  user_backend:
+    container_name: user_backend
+    build: .
+    stdin_open: true
+    tty: true
+    environment:
+      - DB_NAME=yacs
+      - DB_USER=postgres
+      - DB_PASSWORD=yacs@rpi
+      - DB_HOST=user_psql
+    volumes:
+      - ./:/app
+    ports:
+      - "5000:5000"
+
+  user_psql:
+    container_name: user_psql
+    image: "postgres"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=yacs@rpi
+      - POSTGRES_DB=yacs
+    ports:
+      - 5432:5432
+    
