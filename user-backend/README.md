@@ -8,39 +8,17 @@ The backend API for the user management system of YACS Project.
 
 ### Step 1 : clone the repo
 ```bash
-git clone https://github.com/YACS-RCOS/yacs-user-backend
-cd yacs-user-backend
-cp config.py.example config.py
-vim config.py # Modify the database connection
+git clone https://github.com/YACS-RCOS/yacs.git
+git checkout user_backend
+cd ./yacs/user-backend
 ```
 
-### Step 2 : edit the config file to setup auth for the DB
-
-
-
-### Docker
+### Step 2 : Run the starting scripts
 ```bash
-git clone https://github.com/YACS-RCOS/yacs-user-backend
-cd yacs-user-backend
-cp config.py.example config.py
-vim config.py # Modify the database connection
-docker build -t userbackend .
-docker run -d --name userbackend -p 5674:80 userbackend
+./scripts/init.sh
 ```
 
-### Development
+### Step 3 : Try it
 ```bash
-git clone https://github.com/YACS-RCOS/yacs-user-backend
-cd yacs-user-backend
-pip3 install -r requirements.txt
-cp config.py.example config.py
-vim config.py # Modify the database connection
-python3 app.py
+curl localhost:5000 
 ```
-
-
-docker cp init.sql user_psql:/home
-
-docker exec -ti -u root user_psql sh
-
-psql -U postgres -d yacs -a -f init.sql
