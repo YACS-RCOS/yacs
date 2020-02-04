@@ -18,11 +18,7 @@ services:
 
   user_psql:
     container_name: user_psql
-    image: "postgres"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=yacs@rpi
-      - POSTGRES_DB=yacs
+    build: ./postgres
     ports:
       - 5432:5432
     

@@ -43,4 +43,4 @@ docker cp init.sql user_psql:/home
 
 docker exec -ti -u root user_psql sh
 
-psql -U root -d yacs -a -f init.sql
+psql -U postgres -d yacs -a -f init.sql
