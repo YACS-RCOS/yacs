@@ -11,36 +11,37 @@ CORS(app)
 
 @app.route('/', methods=['GET'])
 def root():
+    # Testing connection to the database
     return "user-backend service up"
 
-@app.route('/users', methods=['GET'])
+@app.route('/user', methods=['GET'])
 def getUserInfo():
     return userController.getUserInfo(request.json)
 
 
-@app.route('/users', methods=['POST'])
+@app.route('/user', methods=['POST'])
 def addUser():
     return userController.addUser(request.json)
 
-@app.route('/users', methods=['DELETE'])
+@app.route('/user', methods=['DELETE'])
 def deleteUser():
     return userController.deleteUser(request.json)
 
 
-@app.route('/users', methods=['PUT'])
+@app.route('/user', methods=['PUT'])
 def updateUserInfo():
     return userController.updateUser(request.json)
 
 
-@app.route('/sessions', methods=['POST'])
+@app.route('/session', methods=['POST'])
 def login():
     return sessionController.addSession(request.json)
 
-@app.route('/sessions', methods=['DELETE'])
+@app.route('/session', methods=['DELETE'])
 def logout():
     return sessionController.deleteSession(request.json)
 
-@app.route('/userEvent', methods=['POST'])
+@app.route('/event', methods=['POST'])
 def addUserEvent():
     return eventController.addEvent(json.loads(request.data))
 

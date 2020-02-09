@@ -1,6 +1,6 @@
 create table users
 (
-	uid serial not null
+	user_id serial not null
 		constraint users_pk
 			primary key,
 	name text,
@@ -19,10 +19,10 @@ create unique index users_email_uindex
 
 create table sessions
 (
-	sessionid uuid not null
+	session_id uuid not null
 		constraint sessions_pk
 			primary key,
-	uid integer not null,
+	user_id integer not null,
 	start_time timestamp with time zone,
 	end_time timestamp with time zone
 );
@@ -31,28 +31,28 @@ alter table sessions owner to postgres;
 
 create table watchlist
 (
-	"ID" integer not null
+	"id" integer not null
 		constraint watchlist_pkey
 			primary key,
-	uid integer not null,
-	"courseID" integer not null
+	user_id integer not null,
+	"course_id" integer not null
 );
 
 alter table watchlist owner to postgres;
 
 create table userevents
 (
-	"eventID" integer,
-	uid uuid,
-	data varchar(255),
-	"createdAt" bigint
+	event_id integer,
+	user_id uuid,
+	content varchar(255),
+	created_at bigint
 );
 
 alter table userevents owner to postgres;
 
 create table events
 (
-	"eventID" integer not null
+	event_id integer not null
 		constraint events_pkey
 			primary key,
 	description varchar(255)
