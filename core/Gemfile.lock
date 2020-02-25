@@ -231,7 +231,7 @@ GEM
     multi_test (0.1.2)
     newrelic_rpm (6.0.0.351)
     nio4r (2.3.1)
-    nokogiri (1.10.1)
+    nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
     null-logger (0.1.5)
     pg (0.21.0)
