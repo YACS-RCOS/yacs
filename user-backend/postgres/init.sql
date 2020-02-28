@@ -1,63 +1,63 @@
-create table users
+CREATE TABLE users
 (
-	user_id serial not null
-		constraint users_pk
-			primary key,
-	name text,
-	email text not null,
-	phone text,
-	password text,
-	major text,
-	degree text,
-	enable boolean default true
+	user_id SERIAL NOT NULL
+		CONSTRAINT users_pk
+			PRIMARY KEY,
+	name TEXT,
+	email TEXT NOT NULL,
+	phone TEXT,
+	password TEXT,
+	major TEXT,
+	degree TEXT,
+	enable BOOLEAN DEFAULT TRUE
 );
 
-alter table users owner to postgres;
+ALTER TABLE users owner TO postgres;
 
-create unique index users_email_uindex
-	on users (email);
+CREATE UNIQUE index users_email_uindex
+	ON users (email);
 
-create table sessions
+CREATE TABLE sessions
 (
-	session_id uuid not null
-		constraint sessions_pk
-			primary key,
-	user_id integer not null,
-	start_time timestamp with time zone,
-	end_time timestamp with time zone
+	session_id UUID NOT NULL
+		CONSTRAINT sessions_pk
+			PRIMARY KEY,
+	user_id INTEGER NOT NULL,
+	start_time TIMESTAMP WITH TIME ZONE,
+	end_time TIMESTAMP WITH TIME ZONE
 );
 
-alter table sessions owner to postgres;
+ALTER TABLE sessions owner TO postgres;
 
-create table watchlist
+CREATE TABLE watchlist
 (
-	"id" integer not null
-		constraint watchlist_pkey
-			primary key,
-	user_id integer not null,
-	"course_id" integer not null
+	id INTEGER NOT NULL
+		CONSTRAINT watchlist_pkey
+			PRIMARY KEY,
+	user_id INTEGER NOT NULL,
+	course_id INTEGER NOT NULL
 );
 
-alter table watchlist owner to postgres;
+ALTER TABLE watchlist owner TO postgres;
 
-create table userevents
+CREATE TABLE userevents
 (
-	event_id integer,
-	user_id uuid,
-	content varchar(255),
-	created_at bigint
+	event_id INTEGER,
+	user_id UUID,
+	content VARCHAR(255),
+	created_at BIGINT
 );
 
-alter table userevents owner to postgres;
+ALTER TABLE userevents owner TO postgres;
 
-create table events
+CREATE TABLE events
 (
-	event_id integer not null
-		constraint events_pkey
-			primary key,
-	description varchar(255)
+	event_id INTEGER NOT NULL
+		CONSTRAINT events_pkey
+			PRIMARY KEY,
+	description VARCHAR(255)
 );
 
-alter table events owner to postgres;
+ALTER TABLE events owner TO postgres;
 
 
