@@ -4,9 +4,9 @@ class User(Model):
         super().__init__()
 
     def getUser(self, uid='%', name='%',email='%', password='%',phone='%',major='%',degree='%',enable=True):
-        sql = """   SELECT uid, name, email, phone,password,major,degree,enable
+        sql = """   SELECT user_id, name, email, phone,password,major,degree,enable
                     FROM public.users
-                    WHERE   uid::text   LIKE %s AND
+                    WHERE   user_id::text   LIKE %s AND
                             name        LIKE %s AND 
                             email       LIKE %s AND 
                             phone       LIKE %s AND 
@@ -26,7 +26,7 @@ class User(Model):
 
 
     def deleteUser(self,uid):
-        sql = """UPDATE public.users SET enable = FALSE WHERE uid = %s;"""
+        sql = """UPDATE public.users SET enable = FALSE WHERE user_id = %s;"""
         args = (uid,)
         return self.pg.execute(sql,args,False)
 
@@ -39,6 +39,6 @@ class User(Model):
                     password = %s   ,
                     major = %s      ,
                     degree = %s
-                    WHERE uid = %s;"""
+                    WHERE user_id = %s;"""
         args = (name,email,phone,password,major,degree,uid)
         return self.pg.execute(sql, args, False)

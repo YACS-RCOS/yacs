@@ -44,6 +44,12 @@ def updateUser(form):
     if newPassword.strip() == "":
         return msg.errMsg("Password cannot be empty.")
 
+    if len(name) > 255:
+        return msg.errMsg("Username cannot exceed 255 characters.")
+
+    if len(newPassword) > 255:
+        return msg.errMsg("Password cannot exceed 255 characters.")
+
     # Get User according to sessionID
     session = sessions.getSession(sessionID)
     if len(session) == 0:
@@ -51,7 +57,7 @@ def updateUser(form):
 
     (sessionid, uid, start_time, end_time) = session[0]
 
-    ret = users.updateUser(uid,name,email,phone,newPassword,major,degree)
+    ret = users.updateUser(uid,name,email,phone,encrypt(newPassword),major,degree)
 
     if ret == None:
         return msg.errMsg("Failed to update user profile.")
@@ -84,7 +90,7 @@ def deleteUser(form):
     if password.strip() == "":
         return msg.errMsg("Password cannot be empty.")
 
-    findUser = users.getUser(uid=uid,password=password,enable=True)
+    findUser = users.getUser(uid=uid,password=encrypt(password),enable=True)
     if findUser == None:
         return msg.errMsg("Failed to find user.")
 
@@ -122,6 +128,12 @@ def addUser(form):
     if password.strip() == "":
         return msg.errMsg("Password cannot be empty.")
 
+    if len(name) > 255:
+        return msg.errMsg("Username cannot exceed 255 characters.")
+
+    if len(password) > 255:
+        return msg.errMsg("Password cannot exceed 255 characters.")
+
     findUser = users.getUser(email=email,enable=True)
     if findUser == None:
         return msg.errMsg("Failed to find user.")
@@ -129,7 +141,7 @@ def addUser(form):
     if len(findUser) != 0:
         return msg.errMsg("User already exists.")
 
-    addUserResult = users.addUser(name=name, email=email, phone=phone, password=password, major=major, degree=degree)
+    addUserResult = users.addUser(name=name, email=email, phone=phone, password=encrypt(password), major=major, degree=degree)
     if addUserResult == None:
         return msg.errMsg("Failed to add user.")
 

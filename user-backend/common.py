@@ -1,3 +1,5 @@
+import hashlib
+
 def checkKeys(form, keys):
 
     if form == None:
@@ -16,3 +18,6 @@ def checkKeys(form, keys):
 
     return True
 
+def encrypt(str):
+    encrypt_str = hashlib.sha256(str.encode()).hexdigest()
+    return encrypt_str

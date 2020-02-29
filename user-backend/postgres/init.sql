@@ -14,7 +14,7 @@ CREATE TABLE users
 
 ALTER TABLE users owner TO postgres;
 
-CREATE UNIQUE index users_email_uindex
+CREATE UNIQUE INDEX users_email_uindex
 	ON users (email);
 
 CREATE TABLE sessions
