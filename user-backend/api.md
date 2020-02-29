@@ -1,4 +1,4 @@
-# GET /users
+# GET /user
 Get the profile of the current user.
 ## Request
 ### Header
@@ -32,7 +32,7 @@ application/json
     } 
 }
 ```
-# PUT /users
+# PUT /user
 Update the profile of the current user.
 ## Request
 ### Header
@@ -64,7 +64,7 @@ application/json
     content: {}
 }
 ```
-# POST /users
+# POST /user
 Create a new user.
 ## Request
 ### Header
@@ -98,7 +98,7 @@ application/json
     }
 }
 ```
-# DELETE /users
+# DELETE /user
 Delete current user.
 ## Request
 ### Header
