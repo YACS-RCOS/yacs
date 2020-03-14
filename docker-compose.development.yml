@@ -25,7 +25,7 @@ services:
     build: ./core
     environment:
       - RAILS_ENV=development
-      - TERM_SHORTNAME=202001
+      - TERM_SHORTNAME=202009
       - UNI_SHORTNAME
     volumes:
       - ./core:/usr/src/app
@@ -47,7 +47,7 @@ services:
     volumes:
       - "./malg:/usr/src/app"
     environment:
-      - TERM_SHORTNAME=202001
+      - TERM_SHORTNAME=202009
       - UNI_SHORTNAME
 
   # Dependency services
