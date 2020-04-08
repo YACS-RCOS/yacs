@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+ruby '2.6.0'
+
+gem 'faraday'
+gem 'pry'
+gem 'byebug'
+gem 'pry-byebug'
+gem 'oj'
+gem 'activesupport'
+gem 'redis'
+gem 'concurrent-ruby'
+gem 'ougai'
