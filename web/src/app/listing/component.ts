@@ -4,6 +4,7 @@ import { ScheduleEvent } from '../models/schedule-event.model';
 import { SelectionService } from '../services/selection.service';
 import { ConflictsService } from '../services/conflicts.service';
 import { SidebarService } from '../services/sidebar.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const BITPROFS: string[] = [
   'Goldschmidt',
@@ -27,7 +28,10 @@ export class ListingComponent implements OnInit{
   constructor (
     public selectionService : SelectionService,
     public sidebarService : SidebarService,
-    private conflictsService: ConflictsService) { }
+    private conflictsService: ConflictsService,
+    private http: HttpClient
+  ) { }
+    
 
   onKeydown(evt: KeyboardEvent) {
     const keyCode = evt.which;
@@ -77,6 +81,31 @@ export class ListingComponent implements OnInit{
   }
 
   public clickCourse () {
+    let event: string;
+    if(this.isCourseSelected()){
+      event = "2";
+    }else{
+      event = "1";
+    }
+    let time: number = Date.now();
+
+    for(let sec of this.listing.sections){
+      if(event == "1" || this.isSectionSelected(sec)){
+        this.http.post('https://api.yacs.maoyu.wang/userEvent', {
+            "uid": sessionStorage.getItem('userID'),
+            "eventID": event,
+            "data": {
+                'Course CRN' : sec.crn
+  
+            },
+            "createdAt": time
+          }).subscribe(
+            data => {console.log(data)},
+            err => {console.log(err)}
+          );
+      }
+    }
+
     this.selectionService.toggleCourse(this.listing);
   }
 
@@ -90,6 +119,26 @@ export class ListingComponent implements OnInit{
 
   public clickSection (section: Section): void {
     this.selectionService.toggleSection(section);
+
+    let event: string;
+     if(this.isSectionSelected(section)){
+      event = "1";
+     }else{
+      event = "2";
+     }
+      //Sends the info about the course to the user system backend
+      this.http.post('https://api.yacs.maoyu.wang/userEvent', {
+          "uid": sessionStorage.getItem('userID'),
+          "eventID": event,
+          "data": {
+              'Course CRN' : section.crn
+
+          },
+          "createdAt": Date.now()
+        }).subscribe(
+          data => {console.log(data)},
+          err => {console.log(err)}
+        );
   }
 
   public findProfs (): string[]{
