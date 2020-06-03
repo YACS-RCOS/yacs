@@ -40,12 +40,13 @@ export class HeaderComponent {
           .where({ search: term })
           .select({ listings: ['longname'] })
           .all().then(listings => {
-            const listingLongnames = listings.data.map(listing => listing.longname);
-            return listingLongnames
-              .filter((listingLongname, i) => { // remove duplicates
-                return listingLongnames.indexOf(listingLongname) == i;
-              })
-              .slice(0, 10); //only return top 10
+            let listingLongnames = listings.data.map(listing => listing.longname);
+
+            listingLongnames = listingLongnames.filter((listingLongname, i) => { // remove duplicates
+                              return listingLongnames.indexOf(listingLongname) == i;
+                            }).slice(0, 10); //only return top 10
+
+            return listingLongnames;
           }))
 
   //function for on-click typeahead bar

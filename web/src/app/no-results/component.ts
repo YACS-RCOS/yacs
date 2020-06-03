@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'no-results',
@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./component.scss']
 })
 
-export class NoResultsComponent implements OnInit {
-	
-	ngOnInit (){}
+export class NoResultsComponent {
+  @Input() query: Object;
 }

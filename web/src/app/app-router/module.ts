@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'courses', component: ListingViewComponent },
   { path: 'schedules', component: ScheduleViewComponent },
   { path: 'about', component: AboutComponent},
-  { path: 'no-results', component: NoResultsComponent},
+  { path: '**', component: NoResultsComponent },
 ];
 
 @NgModule({

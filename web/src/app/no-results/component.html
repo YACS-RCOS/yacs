@@ -1,9 +1,14 @@
-
 <article id="no-results">
   <div class="center"><h1>Uh oh! No results!</h1></div>
 
     <div class="speech-bubble">
-        <p>Try searching something else</p>
+    	<ng-container *ngIf="query; then nosearch; else nopage"></ng-container>
+		<ng-template #nosearch>
+    		<p>What even is "{{query.search|slice:0:40}}{{query.search.length > 30 ? '...' : ''}}"</p>
+    	</ng-template>
+    	<ng-template #nopage>
+    		<p>Are you lost?</p>
+    	</ng-template>
     </div>
 
     <span><img class="sis-man" src="assets/images/sismanhigh.svg" /></span>

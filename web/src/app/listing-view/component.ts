@@ -5,6 +5,7 @@ import { YacsService } from '../services/yacs.service';
 import { ConflictsService } from '../services/conflicts.service';
 import { SelectedTermService } from '../services/selected-term.service';
 import { Subscription } from 'rxjs';
+import { NoResultsComponent } from '../../app/no-results/component';
 
 @Component({
   selector: 'listing-view',
@@ -29,7 +30,13 @@ export class ListingViewComponent implements OnInit, OnDestroy {
 
   async getCourses (params: Params, termId: string): Promise<void> {
     this.isLoaded = false;
+
+    // if (params.similarSearches) { delete params.similarSearches; }
     const query = Object.assign({ term_id: termId }, params);
+    if (query.similarSearches) { 
+      console.log("gc " + JSON.stringify(query.similarSearches));
+      delete query.similarSearches; 
+    }
     Listing
       .where(query)
       .includes('sections')
@@ -38,13 +45,9 @@ export class ListingViewComponent implements OnInit, OnDestroy {
       .includes('course.subject')
       .order('course_shortname')
       .all().then((listings) => {
-        if (listings.data.length == 0) {
-          this.router.navigate(['no-results'], {});
-        } else {
-          this.listings = listings.data;
-          this.conflictsService.populateConflictsCache(this.listings);
-          this.isLoaded = true;
-        }
+        this.listings = listings.data;
+        this.conflictsService.populateConflictsCache(this.listings);
+        this.isLoaded = true;
       });
   }
 
