@@ -1,8 +1,32 @@
+<!-- 
+// Old schedule element
 <div class="schedule-event">
 	<div class="event-text">
-		{{ period.section.listing.subjectShortname }} {{ period.section.listing.courseShortname }} - {{ period.section.shortname }}<br>
+		{{ period.section.listing.subjectShortname }} {{ period.section.listing.courseShortname }} - {{ period.section.shortname }} &nbsp; {{period.type}}<br>
+		{{ period.section.crn }}<br>
+		{{ period.section.instructors.join(', ') }}<br>
+		{{ period.location }}
+	</div>
+</div> -->
+
+<div class="schedule-event">
+	<div class="event-text">
+		{{ period.section.listing.longname }}<br>
+		{{ this.secType(period.type) }} <br>
 		{{ period.section.crn }}<br>
 		{{ period.section.instructors.join(', ') }}<br>
 		{{ period.location }}
 	</div>
 </div>
+
+<!-- 
+// Development schedule element
+<button class="schedule-event" type = "button" (click) = "this.toggleInf(period)">
+	<div class="event-text">
+		{{ period.section.listing.longname }}<br>
+		{{ period.type }} <br>
+		{{ period.section.crn }}<br>
+		{{ period.section.instructors.join(', ') }}<br>
+		{{ period.location }}
+	</div>
+</button> -->

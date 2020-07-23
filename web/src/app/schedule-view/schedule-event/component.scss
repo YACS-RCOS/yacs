@@ -1,9 +1,30 @@
+
 .schedule-event{
-  //margin-top: 1px;
+
+  margin-top: 2px;
   border-left: 4px solid;
+  border-color: inherit;
   border-opacity: 1;
+
+  background-color: inherit;
+
+  color: inherit;
+  text-align: left;
+
   overflow: hidden;
   height: 100%;
+  width: 100%;
+  z-index: 1;
+  position: absolute;
+ 
+  display: block;
+}
+
+
+.schedule-event:hover{
+	overflow: visible;
+	height: auto;
+	z-index: 2;
 }
 
 .event-text {
