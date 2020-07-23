@@ -37,6 +37,36 @@
   }
 }
 
+@media (max-width: 575.98px){
+  .showDescription {
+    text-align: left !important;
+  }
+
+  .hideDescription {
+    text-align: left !important;
+  }
+
+  .vertical-separators {
+    width: 60px !important;
+    top: 1.1em !important;
+  }
+  .thurs {
+    right: 70.4px !important;
+  }
+  .tues {
+    right: 191px !important;
+  }
+
+  .period-days {
+    padding-right: 0.9em !important;
+    font-size: 68% !important;
+  }
+
+  .padded {
+    width: 60px !important;
+  }
+}
+
 .description-tooltip {
 	bottom: 67px;
 	right: 29px;
@@ -75,7 +105,7 @@
 
 .padded {
   display: inline-block;
-  width: 63px;
+  width: 70px;
   text-align: center;
   border-bottom: solid 1px #efefef;
 }
@@ -83,16 +113,16 @@
 .vertical-separators {
   display: block;
   background: #fbfbfb;
-  width: 63px;
+  width: 70px;
   border-left: solid 1px #fbfbfb;
   top: 1.2em;
-  bottom: 0.5em;
+  bottom: 0.0em;
 }
 .thurs {
-  right: 6.4em;
+  right: 6.65em;
 }
 .tues {
-  right: 14.65em;
+  right: 15.36em;
 }
 
 i {
