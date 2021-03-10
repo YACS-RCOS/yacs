@@ -1,7 +1,15 @@
-version: '1'
+version: "1"
 
 sources:
   sources:
+    quacs:
+      location: http://adapter-quacs:4600
+      poll: 43200 # 12 hours
+      root: subjects
+    quacs-seats:
+      location: http://adapter-quacs:4600/seats
+      poll: 43200 # 12 hours
+      root: sections
     acalog:
       location: http://adapter-acalog:4600
       poll: 86400 # 1 day
@@ -36,6 +44,8 @@ priorities:
   default:
     fields:
       # - admin
+      - quacs-seats
+      - quacs
       - banner-seats
       - csv-topics
       - acalog
@@ -47,10 +57,11 @@ priorities:
   subjects:
     existence: yaml-schools
   listings:
-    existence: banner
+    existence: quacs
     fields:
       longname:
         # - admin
+        - quacs
         - csv-topics
         - acalog
         - banner
@@ -59,13 +70,17 @@ priorities:
         - admin
         - acalog
   sections:
-    existence: banner
+    existence: quacs
     fields:
       seats:
         # - admin
+        - quacs-seats
+        - quacs
         - banner-seats
         - banner
       seats_available:
         # - admin
+        - quacs-seats
+        - quacs
         - banner-seats
         - banner
