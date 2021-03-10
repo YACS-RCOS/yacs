@@ -19,22 +19,18 @@ class ApplicationConsumer < Karafka::BaseConsumer
       { instructors: [], periods: %i(day start end type location) }
   }.with_indifferent_access.freeze
 
-  include Karafka::Consumers::Callbacks
-
-  after_fetch do
-    @type = params['type']
-    @method = params['method']
+  def consume
+    @params = params['payload']
+    @type = @params['type']
+    @method = @params['method']
     unless ALLOWED_TYPES.include? @type
-      STDERR.puts params
+      STDERR.puts @params
       throw "ERROR: Disallowed Type: #{@type}"
     end
     unless ALLOWED_METHODS.include? @method
       throw "ERROR: Disallowed Method: #{@method}"
     end
     @data = safe_params
-  end
-
-  def consume
     begin
       send "transform_#{@type}"
       send "consume_#{@type}"
@@ -86,7 +82,7 @@ class ApplicationConsumer < Karafka::BaseConsumer
   private
 
   def safe_params
-    safe_params = ActionController::Parameters.new params
+    safe_params = ActionController::Parameters.new @params
     safe_params.require(@type).permit(*ALLOWED_PARAMS[@type])
   end
 
