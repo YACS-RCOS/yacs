@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+
+ruby '2.6.3'
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'oj'
+gem 'httpclient'
+gem 'pry'

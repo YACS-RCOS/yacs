@@ -1,8 +1,9 @@
-version: '3.2'
+version: "3.2"
 
 services:
   malg:
     links:
+      - adapter-quacs
       - adapter-acalog
       - adapter-banner
       - adapter-yaml
@@ -11,6 +12,10 @@ services:
     volumes:
       - ./pipelines/${UNI_SHORTNAME}/config/sources.yml:/usr/src/app/config/sources.yml
 
+  adapter-quacs:
+    build: ./pipelines/${UNI_SHORTNAME}/adapters/quacs-rpi
+    expose:
+      - "4600"
   adapter-acalog:
     build: ./pipelines/${UNI_SHORTNAME}/adapters/acalog-rpi
     expose:
