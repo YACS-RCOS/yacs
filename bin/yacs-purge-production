@@ -6,4 +6,8 @@ bin/yacs-compose-production stop kafka zookeeper redis core-consumer
 bin/yacs-compose-production rm -vf kafka
 bin/yacs-compose-production rm -vf zookeeper
 bin/yacs-compose-production rm -vf redis
+echo "Term.create(shortname: \"201901\", longname: \"Spring 2019\")" | bin/yacs-compose-production run --rm core rails c
 echo "Term.create(shortname: \"202009\", longname: \"Fall 2020\")" | bin/yacs-compose-production run --rm core rails c
+echo "Term.create(shortname: \"202101\", longname: \"Spring 2021\")" | bin/yacs-compose-production run --rm core rails c
+echo "Term.create(shortname: \"202105\", longname: \"Summer 2021\")" | bin/yacs-compose-production run --rm core rails c
+echo "Term.create(shortname: \"202109\", longname: \"Fall 2021\")" | bin/yacs-compose-production run --rm core rails c
