@@ -59,7 +59,7 @@ class QuacsClient
   end
 
   def parse_day day
-    "MTWRF".index(day)
+    "MTWRFSU".index(day) + 1
   end
 
   def parse_timeslot_day timeslot, day
